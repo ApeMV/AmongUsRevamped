@@ -115,11 +115,11 @@ namespace HNSRevamped
                     __instance.MenuDescriptionText.DestroyTranslator();
                     switch ((TabGroup)(tabNum - 3))
                     {
+                        case TabGroup.SystemSettings:
+                            __instance.MenuDescriptionText.text = "System Settings";
+                            break;
                         case TabGroup.ModSettings:
                             __instance.MenuDescriptionText.text = "Mod Settings";
-                            break;
-                        case TabGroup.GameModifiers:
-                            __instance.MenuDescriptionText.text = "Game Modifiers";
                             break;
 
                     }

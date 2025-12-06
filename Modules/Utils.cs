@@ -24,16 +24,23 @@ namespace HNSRevamped;
         public static string ColorString(Color32 color, string str) => $"<#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}>{str}</color>";
         public static string ColorToHex(Color32 color) => $"#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}";
 
+    public static bool IsPlayerModerator(string friendCode)
+    {
+        if (friendCode == "") return false;
 
+        var friendCodesFilePath = @"./HNSR-DATA/Moderators.txt";
+        var friendCodes = File.ReadAllLines(friendCodesFilePath);
+        return friendCodes.Any(code => code.Contains(friendCode));
+    }
 
         public static string GetTabName(TabGroup tab)
         {
             switch (tab)
             {
+                case TabGroup.SystemSettings:
+                    return "System Settings";
                 case TabGroup.ModSettings:
                     return "Mod Settings";
-                case TabGroup.GameModifiers:
-                    return "Game Modifiers";
 
                 default:
                     return "";

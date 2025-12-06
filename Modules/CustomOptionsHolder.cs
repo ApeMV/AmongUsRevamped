@@ -23,9 +23,18 @@ namespace HNSRevamped
             taskOptionsLoad.Wait();
         }
 
-        public static OptionItem Testy;
-        public static OptionItem Testy1;
-        public static OptionItem Testy2;
+        //System
+        public static OptionItem KickLowLevelPlayer;
+        public static OptionItem TempBanLowLevelPlayer;
+
+        public static OptionItem KickInvalidFriendCodes;
+        public static OptionItem TempBanInvalidFriendCodes;
+
+        public static OptionItem ApplyBanList;
+        public static OptionItem ApplyModeratorList;
+
+        //Mod
+        public static OptionItem DisableTasks;
 
 
         public static bool IsLoaded = false;
@@ -35,11 +44,20 @@ namespace HNSRevamped
             if (IsLoaded) return;
 
             //Main settings
-            Testy = IntegerOptionItem.Create(3, "Testy", new IntegerValueRule(0, 50, 5), 10, TabGroup.GameModifiers, false);
-            Testy1 = BooleanOptionItem.Create(4, "Testy1", true, TabGroup.ModSettings, false)
-                .SetColor(Color.red);
-            Testy2 = BooleanOptionItem.Create(5, "Testy2", true, TabGroup.ModSettings, false)
-                .SetParent(Testy1);
+            KickLowLevelPlayer = IntegerOptionItem.Create(60050, "KickLowLevelPlayer", new(0, 100, 1), 0, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Level)
+                .SetHeader(true);
+            TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, "TempBanLowLevelPlayer", false, TabGroup.SystemSettings, false)
+                .SetParent(KickLowLevelPlayer)
+                .SetValueFormat(OptionFormat.Times);
+
+            KickInvalidFriendCodes = BooleanOptionItem.Create(60080, "KickInvalidFriendCodes", true, TabGroup.SystemSettings, false);
+            TempBanInvalidFriendCodes = BooleanOptionItem.Create(60081, "TempBanInvalidFriendCodes", false, TabGroup.SystemSettings, false)
+                .SetParent(KickInvalidFriendCodes);
+
+            ApplyBanList = BooleanOptionItem.Create(60110, "ApplyBanList", true, TabGroup.SystemSettings, true);
+            ApplyModeratorList = BooleanOptionItem.Create(60120, "ApplyModeratorList", false, TabGroup.SystemSettings, false);
+
             IsLoaded = true;
         }
     }

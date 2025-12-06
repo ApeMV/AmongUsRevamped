@@ -21,6 +21,8 @@ public partial class Main : BasePlugin
         HNSRevamped.Logger.Enable();
         Instance = this;
 
+        BanManager.Init();
+        
         Harmony.PatchAll();
     }
 

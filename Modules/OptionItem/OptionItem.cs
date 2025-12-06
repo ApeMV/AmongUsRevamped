@@ -213,8 +213,8 @@ namespace HNSRevamped
 
     public enum TabGroup
     {
+        SystemSettings,
         ModSettings,
-        GameModifiers,
 
     }
     
@@ -225,5 +225,7 @@ namespace HNSRevamped
         Seconds,
         Percent,
         Multiplier,
+        Level,
+        Times,
     }
 }

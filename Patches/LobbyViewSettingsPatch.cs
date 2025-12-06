@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using Object = UnityEngine.Object;
 
+// https://github.com/Rabek009/MoreGamemodes/blob/master/Patches/LobbyViewSettingsPatch.cs
 namespace HNSRevamped
 {
     [HarmonyPatch(typeof(LobbyViewSettingsPane))]
