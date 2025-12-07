@@ -121,7 +121,9 @@ namespace HNSRevamped
                         case TabGroup.ModSettings:
                             __instance.MenuDescriptionText.text = "Mod Settings";
                             break;
-
+                        case TabGroup.HNSSettings:
+                            __instance.MenuDescriptionText.text = "HNS Settings";
+                            break;
                     }
                 }
             }

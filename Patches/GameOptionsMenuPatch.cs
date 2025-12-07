@@ -11,9 +11,9 @@ namespace HNSRevamped
     public static class ModGameOptionsMenu
     {
         public static int TabIndex = 0;
-        public static Dictionary<OptionBehaviour, int> OptionList = new();
-        public static Dictionary<int, OptionBehaviour> BehaviourList = new();
-        public static Dictionary<int, CategoryHeaderMasked> CategoryHeaderList = new();
+        public static Il2CppSystem.Collections.Generic.Dictionary<OptionBehaviour, int> OptionList = new();
+        public static Il2CppSystem.Collections.Generic.Dictionary<int, OptionBehaviour> BehaviourList = new();
+        public static Il2CppSystem.Collections.Generic.Dictionary<int, CategoryHeaderMasked> CategoryHeaderList = new();
     }
 
     [HarmonyPatch(typeof(GameOptionsMenu))]
@@ -26,7 +26,7 @@ namespace HNSRevamped
             if (__instance.Children == null || __instance.Children.Count == 0)
             {
                 __instance.MapPicker.gameObject.SetActive(false);
-                __instance.Children = new List<OptionBehaviour>();
+                __instance.Children = new Il2CppSystem.Collections.Generic.List<OptionBehaviour>();
                 __instance.CreateSettings();
                 __instance.cachedData = GameOptionsManager.Instance.CurrentGameOptions;
                 for (int i = 0; i < __instance.Children.Count; i++)

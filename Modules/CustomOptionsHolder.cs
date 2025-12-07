@@ -33,6 +33,10 @@ namespace HNSRevamped
         public static OptionItem ApplyBanList;
         public static OptionItem ApplyModeratorList;
 
+        public static OptionItem AutoRejoinLobby;
+
+        public static OptionItem NoGameEnd;
+        
         //Mod
         public static OptionItem DisableTasks;
 
@@ -44,19 +48,25 @@ namespace HNSRevamped
             if (IsLoaded) return;
 
             //Main settings
-            KickLowLevelPlayer = IntegerOptionItem.Create(60050, "KickLowLevelPlayer", new(0, 100, 1), 0, TabGroup.SystemSettings, false)
+            KickLowLevelPlayer = IntegerOptionItem.Create(60050, "Kick Players Under Level", new(0, 100, 1), 0, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Level)
                 .SetHeader(true);
-            TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, "TempBanLowLevelPlayer", false, TabGroup.SystemSettings, false)
+            TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, "Ban Instead Of Kick", false, TabGroup.SystemSettings, false)
                 .SetParent(KickLowLevelPlayer)
                 .SetValueFormat(OptionFormat.Times);
 
-            KickInvalidFriendCodes = BooleanOptionItem.Create(60080, "KickInvalidFriendCodes", true, TabGroup.SystemSettings, false);
-            TempBanInvalidFriendCodes = BooleanOptionItem.Create(60081, "TempBanInvalidFriendCodes", false, TabGroup.SystemSettings, false)
+            KickInvalidFriendCodes = BooleanOptionItem.Create(60080, "Kick Invalid FriendCodes", true, TabGroup.SystemSettings, false);
+            TempBanInvalidFriendCodes = BooleanOptionItem.Create(60081, "Ban Instead Of Kick", false, TabGroup.SystemSettings, false)
                 .SetParent(KickInvalidFriendCodes);
 
-            ApplyBanList = BooleanOptionItem.Create(60110, "ApplyBanList", true, TabGroup.SystemSettings, true);
-            ApplyModeratorList = BooleanOptionItem.Create(60120, "ApplyModeratorList", false, TabGroup.SystemSettings, false);
+            ApplyBanList = BooleanOptionItem.Create(60110, "Apply BanList", true, TabGroup.SystemSettings, true);
+            ApplyModeratorList = BooleanOptionItem.Create(60120, "Apply ModeratorList", false, TabGroup.SystemSettings, false);
+
+            AutoRejoinLobby = BooleanOptionItem.Create(60210, "Auto Rejoin Lobby", false, TabGroup.SystemSettings, false);
+
+            NoGameEnd = BooleanOptionItem.Create(60380, "No Game End", false, TabGroup.SystemSettings, false)
+                .SetColor(Color.red)
+                .SetHeader(true);
 
             IsLoaded = true;
         }

@@ -1,6 +1,4 @@
-﻿using HarmonyLib;
-using InnerNet;
-using System.Collections.Generic;
+﻿using InnerNet;
 using UnityEngine;
 
 // https://github.com/tukasa0001/TownOfHost/blob/main/Patches/ClientPatch.cs
@@ -19,7 +17,7 @@ internal class KickPlayerPatch
             AttemptedKickPlayerList.Add(HashedPuid, 0);
         else if (AttemptedKickPlayerList[HashedPuid] < 10)
         {
-            Logger.Fatal($"Kick player Request too fast! Canceled.", "KickPlayerPatch");
+            Logger.Fatal($"Kick player Request was too fast and has been canceled.", "KickPlayerPatch");
             return false;
         }
         if (ban) BanManager.AddBanPlayer(AmongUsClient.Instance.GetRecentClient(clientId));

@@ -1,7 +1,10 @@
-﻿using BepInEx;
+﻿global using HarmonyLib;
+global using System.Collections.Generic;
+global using System.Linq;
+
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
-using HarmonyLib;
 
 namespace HNSRevamped;
 
@@ -12,7 +15,6 @@ public partial class Main : BasePlugin
     public Harmony Harmony { get; } = new(Id);
     public static BepInEx.Logging.ManualLogSource Logger;
     public static BasePlugin Instance;
-
 
     public override void Load()
     {

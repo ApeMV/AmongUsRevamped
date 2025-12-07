@@ -215,6 +215,7 @@ namespace HNSRevamped
     {
         SystemSettings,
         ModSettings,
+        HNSSettings,
 
     }
     
