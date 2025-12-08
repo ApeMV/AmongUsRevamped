@@ -40,6 +40,8 @@ namespace HNSRevamped
         //Mod
         public static OptionItem DisableTasks;
 
+        // HNS
+        public static OptionItem NumSeekers;
 
         public static bool IsLoaded = false;
 
@@ -68,6 +70,11 @@ namespace HNSRevamped
                 .SetColor(Color.red)
                 .SetHeader(true);
 
+
+
+            NumSeekers = IntegerOptionItem.Create(70000, "# Seekers", new(0, 15, 1), 1, TabGroup.HNSSettings, false)
+                .SetValueFormat(OptionFormat.Level)
+                .SetHeader(true);
             IsLoaded = true;
         }
     }

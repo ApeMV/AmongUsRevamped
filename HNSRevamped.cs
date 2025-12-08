@@ -5,6 +5,7 @@ global using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
+using UnityEngine;
 
 namespace HNSRevamped;
 
@@ -34,6 +35,7 @@ public partial class Main : BasePlugin
         public static void Prefix(ModManager __instance)
         {
             __instance.ShowModStamp();
+            LateTask.Update(Time.deltaTime);
         }
     }
 }
