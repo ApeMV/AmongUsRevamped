@@ -16,6 +16,42 @@
    - **Microsoft Store:** Check [this support article](https://answers.microsoft.com/en-us/xbox/forum/all/where-can-i-find-the-gamefiles-of-a-game/5cb9a0c3-7948-4316-abc5-f27d1767b932) on how to find and access your Among Us folder.
  - Your game folder should look similar to this after installation:
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
+‎ 
+
+# 🎮 Features (v1.0.0):
+- <b>🔶 Client Side settings:
+- Game Master
+- Unlock FPS
+- Show FPS
+- Dark Theme
+- Toggle Lobby Music
+- <b>🔷 Technical settings:
+- Kick/Ban players under a certain level
+- Kick/Ban invalid FriendCodes
+- Enable No Game End
+- Banlist
+- <b>🔶 Automatic settings:
+- Auto start game + conditions for it
+- Auto rejoin lobby
+- <b>🔷 Gameplay Settings:
+- Disable critical sabotages
+- Disable door sabotages
+- Disable body reporting
+- Enable/Disable any desired tasks
+- All players have same tasks
+- Hide and Seek: Custom Impostor count
+- <b>🔶 Custom Gamemodes:
+- 0 Kill Cooldown
+- Shift and Seek
+- <b>🔷 Extra features:
+- Shift + L + Enter - Force End Game
+- Shift + M + Enter - Force Call/Close Meeting
+- Zoom out in lobby or when dead
+- Kick players while in game
+- Unlimited Option ranges
+- Logging for useful information
+- <b>🎉 And this all without Modded Protocol!
+‎ 
 
 **Credit to these mods and their developers for their code:**
 ### :star: [AUnlocker](https://github.com/astra1dev/AUnlocker)
