@@ -72,3 +72,6 @@
 ---
 This project is licensed under the GNU General Public License version 3.0. For more details, please refer to the [LICENSE](https://github.com/0xDrLime/TownofHost-Enhanced/blob/main/LICENSE) file.
 ---
+#
+
+<b>This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.</b>
