@@ -11,6 +11,18 @@ public static class FixedUpdate
 {
     public static void Postfix()
     {
+        GameObject n = GameObject.Find("NewRequestInactive");
+        if (n != null)
+        {
+            n.SetActive(false);
+        }
+
+        GameObject nr = GameObject.Find("NewRequest");
+        if (nr != null)
+        {
+            nr.SetActive(false);
+        }
+
         if (!AmongUsClient.Instance.AmHost) return;
 
         if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance)

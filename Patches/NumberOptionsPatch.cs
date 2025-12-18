@@ -9,6 +9,8 @@ public static class NumberOption_Increase
 {
     public static bool Prefix(NumberOption __instance)
     {
+        if (ModGameOptionsMenu.TabIndex >= 3) return true;
+
         if (Utils.isHideNSeek || !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
             __instance.Value +=  __instance.Increment;
@@ -26,6 +28,8 @@ public static class NumberOption_Decrease
 {
     public static bool Prefix(NumberOption __instance)
     {
+        if (ModGameOptionsMenu.TabIndex >= 3) return true;
+
         if (Utils.isHideNSeek || !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
             __instance.Value -=  __instance.Increment;
@@ -45,7 +49,7 @@ public static class NumberOption_Initialize
     {
         if (Utils.isHideNSeek || !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
-            __instance.ValidRange = new FloatRange(-999f, 999f);
+            __instance.ValidRange = new FloatRange(-900f, 900f);
         }
     }
 }

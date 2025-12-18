@@ -114,7 +114,9 @@ namespace AmongUsRevamped
 
             if (instance.name != "HNSR_SettingsText")
             {
-                instance.aspectPosition.DistanceFromEdge = !AmongUsClient.Instance.IsGameStarted ? instance.lobbyPos : instance.gamePos;
+                Vector3 pos = !AmongUsClient.Instance.IsGameStarted ? instance.lobbyPos : instance.gamePos;
+                pos.y += 0.1f;
+                instance.aspectPosition.DistanceFromEdge = pos;
                 instance.text.alignment = TextAlignmentOptions.Center;
                 instance.text.text = Sb.ToString();
             }
@@ -125,7 +127,7 @@ namespace AmongUsRevamped
 
             Sb.Clear();
 
-            Sb.Append(Utils.IsLobby ? "\r\n<size=2>" : "<size=1.5>");
+            Sb.Append(Utils.IsLobby ? "\r\n<size=2.5>" : "<size=2.5>");
             Sb.Append(Main.CredentialsText);
 
             int ping = AmongUsClient.Instance.Ping;
@@ -138,7 +140,7 @@ namespace AmongUsRevamped
                 _ => "#ff4500"
             };
 
-            Sb.Append(Utils.InGame ? "    -    " : "\r\n");
+            Sb.Append(Utils.InGame ? "  -  " : "\r\n");
             Sb.Append($"<color={color}>Ping: {ping}</color>");
             AppendSeparator();
             Sb.Append($"Server: {Utils.GetRegionName()}");
@@ -162,7 +164,7 @@ namespace AmongUsRevamped
 
             return false;
 
-            void AppendSeparator() => Sb.Append(Utils.InGame ? "    -    " : "  -  ");
+            void AppendSeparator() => Sb.Append(Utils.InGame ? "  -  " : " - ");
         }
 
         private static class FpsSampler

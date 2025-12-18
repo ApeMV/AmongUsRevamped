@@ -7,93 +7,97 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
 public static class Zoom
 {
-    private static bool ResetButtons = false;
+    private const float DefaultZoom = 3.0f;
+    private const float MaxZoom = 18.0f;
+    private const float ZoomFactor = 1.2f;
+    private const float Epsilon = 0.01f;
+
+    private static float LastZoom = DefaultZoom;
+
     public static void Postfix()
     {
-        if (Utils.IsShip && !Utils.IsMeeting && Utils.IsCanMove && PlayerControl.LocalPlayer.Data.IsDead || Utils.IsLobby && Utils.IsCanMove)
-        {
-            if (Camera.main.orthographicSize > 3.0f)
-                ResetButtons = true;
+        bool canZoom =
+            (Utils.IsShip && !Utils.IsMeeting && Utils.IsCanMove && PlayerControl.LocalPlayer.Data.IsDead)
+            || (Utils.IsLobby && Utils.IsCanMove);
 
-            if (Input.mouseScrollDelta.y > 0)
-            {
-                if (Camera.main.orthographicSize > 3.0f)
-                {
-                    SetZoomSize(times: false);
-                }
-
-            }
-            if (Input.mouseScrollDelta.y < 0)
-            {
-                if (Utils.IsDead || Utils.IsFreePlay || Utils.IsLobby)
-                {
-                    if (Camera.main.orthographicSize < 18.0f)
-                    {
-                        SetZoomSize(times: true);
-                    }
-                }
-            }
-            Flag.NewFlag("Zoom");
-        }
-        else
+        if (!canZoom)
         {
-            Flag.Run(() =>
-            {
-                SetZoomSize(reset: true);
-            }, "Zoom");
+            ResetZoom();
+            return;
         }
+
+        if (Input.mouseScrollDelta.y > 0)
+            ChangeZoom(1f / ZoomFactor);
+
+        if (Input.mouseScrollDelta.y < 0 && (Utils.IsDead || Utils.IsFreePlay || Utils.IsLobby))
+            ChangeZoom(ZoomFactor);
     }
 
-    private static void SetZoomSize(bool times = false, bool reset = false)
+    private static void ChangeZoom(float multiplier)
     {
-        var size = 1.5f;
-        if (!times) size = 1 / size;
-        if (reset)
-        {
-            Camera.main.orthographicSize = 3.0f;
-            HudManager.Instance.UICamera.orthographicSize = 3.0f;
-            HudManager.Instance.Chat.transform.localScale = Vector3.one;
-            if (Utils.IsMeeting) MeetingHud.Instance.transform.localScale = Vector3.one;
-        }
-        else
-        {
-            Camera.main.orthographicSize *= size;
-            HudManager.Instance.UICamera.orthographicSize *= size;
-        }
-        DestroyableSingleton<HudManager>.Instance?.ShadowQuad?.gameObject?.SetActive((reset || Camera.main.orthographicSize == 3.0f) && !Utils.IsDead);
+        float target = Camera.main.orthographicSize * multiplier;
+        target = Mathf.Clamp(target, DefaultZoom, MaxZoom);
 
-        if (ResetButtons)
-        {
-            ResolutionManager.ResolutionChanged.Invoke((float)Screen.width / Screen.height, Screen.width, Screen.height, Screen.fullScreen);
-            ResetButtons = false;
-        }
+        if (Mathf.Abs(target - DefaultZoom) < Epsilon)
+            target = DefaultZoom;
+
+        ApplyZoom(target);
     }
 
-    public static void OnFixedUpdate()
-        => DestroyableSingleton<HudManager>.Instance?.ShadowQuad?.gameObject?.SetActive((Camera.main.orthographicSize == 3.0f) && !Utils.IsDead);
+    private static void ResetZoom()
+    {
+        ApplyZoom(DefaultZoom);
+    }
+
+    private static void ApplyZoom(float size)
+    {
+        if (Mathf.Abs(size - LastZoom) < Epsilon)
+            return;
+
+        LastZoom = size;
+
+        Camera.main.orthographicSize = size;
+        HudManager.Instance.UICamera.orthographicSize = size;
+
+        bool isDefault = Mathf.Abs(size - DefaultZoom) < Epsilon;
+
+        DestroyableSingleton<HudManager>.Instance?.ShadowQuad?.gameObject
+            ?.SetActive(isDefault && !Utils.IsDead);
+
+        ResolutionManager.ResolutionChanged.Invoke(
+            (float)Screen.width / Screen.height,
+            Screen.width,
+            Screen.height,
+            Screen.fullScreen
+        );
+    }
 }
 
 public static class Flag
 {
-    private static readonly List<string> OneTimeList = [];
-    private static readonly List<string> FirstRunList = [];
-    public static void Run(Action action, string type, bool firstrun = false)
+    private static readonly List<string> OneTimeList = new();
+    private static readonly List<string> FirstRunList = new();
+
+    public static void Run(Action action, string type, bool firstRun = false)
     {
-        if (OneTimeList.Contains(type) || (firstrun && !FirstRunList.Contains(type)))
+        if (OneTimeList.Contains(type) || (firstRun && !FirstRunList.Contains(type)))
         {
-            if (!FirstRunList.Contains(type)) FirstRunList.Add(type);
+            if (!FirstRunList.Contains(type))
+                FirstRunList.Add(type);
+
             OneTimeList.Remove(type);
             action();
         }
-
     }
+
     public static void NewFlag(string type)
     {
-        if (!OneTimeList.Contains(type)) OneTimeList.Add(type);
+        if (!OneTimeList.Contains(type))
+            OneTimeList.Add(type);
     }
 
     public static void DeleteFlag(string type)
     {
-        if (OneTimeList.Contains(type)) OneTimeList.Remove(type);
+        OneTimeList.Remove(type);
     }
 }

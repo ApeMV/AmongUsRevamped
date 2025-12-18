@@ -37,7 +37,7 @@ internal static class AddVotePatch
         {
             AmongUsClient.Instance.KickPlayer(target.Data.ClientId, false);
 
-            Logger.Info($" Kicked {target.Data.PlayerName}, {target.Data.FriendCode}", "VoteKick");
+            Logger.Info($" Kicked {target.Data.PlayerName}, {target.Data.FriendCode}", "KickPatch");
         }
         return false;
         
@@ -51,5 +51,21 @@ internal static class CmdAddVotePatch
     {
         if (!AmongUsClient.Instance.AmHost) return true;
         else return false;
+    }
+}
+
+[HarmonyPatch(typeof(BanMenu), nameof(BanMenu.SetVisible))]
+internal static class BanMenuSetVisiblePatch
+{
+    public static bool Prefix(BanMenu __instance, bool show)
+    {
+        if (!AmongUsClient.Instance.AmHost) return true;
+
+        show &= PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.Data != null;
+        __instance.BanButton.gameObject.SetActive(true);
+        __instance.KickButton.gameObject.SetActive(true);
+        __instance.MenuButton.gameObject.SetActive(show);
+        
+        return false;
     }
 }
