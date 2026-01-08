@@ -61,7 +61,12 @@ internal class ApplyCustomImpostorCount
                         new LateTask(() =>
                         {
                             p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
-                        }, 9f, "Secondary RPCSetRole");
+                        }, 5f, "Secondary RPCSetRole");
+
+                        new LateTask(() =>
+                        {
+                            p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
+                        }, 9f, "Tertairy RPCSetRole");
                     }
                 }
             }
