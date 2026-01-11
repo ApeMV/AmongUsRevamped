@@ -18,7 +18,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.0.1):
+# 🎮 Features (v1.1.0):
 - <b>🔶 Client Side settings:</b>
 - Game Master
 - Unlock FPS
@@ -28,6 +28,8 @@
 - <b>🔷 Technical settings:</b>
 - Kick/Ban players under a certain level
 - Kick/Ban invalid FriendCodes
+- Kick\Ban command using names instead of ID's
+- Moderator system
 - Enable No Game End
 - Banlist
 - <b>🔶 Automatic settings:</b>
@@ -43,9 +45,11 @@
 - <b>🔶 Custom Gamemodes:</b>
 - 0 Kill Cooldown
 - Shift and Seek
+- Speedrun
 - <b>🔷 Extra features:</b>
 - Shift + L + Enter - Force End Game
 - Shift + M + Enter - Force Call/Close Meeting
+- Gamemode info commands -> /0kc /0killcooldown | /sns /shiftandseek |/sp /speedrun
 - Zoom out in lobby or when dead
 - Kick players while in game
 - Unlimited Option ranges
