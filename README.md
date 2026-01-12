@@ -1,6 +1,19 @@
 # 📎 AmongUsRevamped
 - AmongUsRevamped is a Host-Only mod with one goal: Creating the best Among Us experience possible without Modded Protocol. This includes new settings, utilities and even custom Gamemodes! Enjoy the countless features and feel free to contact me for anything regarding this mod. Happy gaming!
-‎ 
+
+<br>
+
+</p>
+<p align="center">
+
+<center>
+<a href="https://discord.gg/83Zhzhyhya" target="_blank"><img src="https://img.shields.io/badge/Discord%20-%231DA1F2.svg?&style=for-the-badge&logo=discord&logoColor=white&color=5662f6"/></a>
+<a href="https://github.com/apemv/AmongUsRevamped/releases/latest" target="_blank"><img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/></a>
+</center>
+
+
+
+</p>
 
 # 💡 How To Install:
 - <b>If you have BepInEx, download AmongUsRevamped.dll in releases and move it into Among Us → BepinEx → Plugins</b>
