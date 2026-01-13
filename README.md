@@ -1,6 +1,3 @@
-# 📎 AmongUsRevamped
-- AmongUsRevamped is a Host-Only mod with one goal: Creating the best Among Us experience possible without Modded Protocol. This includes new settings, utilities and even custom Gamemodes! Enjoy the countless features and feel free to contact me for anything regarding this mod. Happy gaming!
-
 <br>
 
 </p>
@@ -31,7 +28,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.1.0):
+# 🎮 Features (v1.1.1):
 - <b>🔶 Client Side settings:</b>
 - Game Master
 - Unlock FPS
@@ -42,6 +39,7 @@
 - Kick/Ban players under a certain level
 - Kick/Ban invalid FriendCodes
 - Kick/Ban command using names instead of ID's
+- DenyName system
 - Moderator system
 - Enable No Game End
 - Banlist
