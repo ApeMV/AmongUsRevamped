@@ -52,6 +52,7 @@ namespace AmongUsRevamped
         private static void Postfix(VersionShower __instance)
         {
             Utils.ClearLeftoverData();
+            NormalGameEndChecker.LastWinReason = "";
 
             Main.CredentialsText = $"<color=#FFD700>Among Us Revamped</color><color=#ffffff> {Main.ModVersion}</color>";
 

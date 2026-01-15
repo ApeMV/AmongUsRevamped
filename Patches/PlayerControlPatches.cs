@@ -9,9 +9,17 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 class FixedUpdateInGamePatch
 {
+    public static readonly HashSet<byte> ProcessedModerators = new HashSet<byte>();
+
     public static void Postfix(PlayerControl __instance)
     {
         if (__instance == null || __instance.PlayerId == 255) return;
+        
+        if (Utils.IsPlayerModerator(__instance.Data.FriendCode) && !ProcessedModerators.Contains(__instance.PlayerId))
+        {
+            __instance.SetName($"★{__instance.Data.PlayerName}★");
+            ProcessedModerators.Add(__instance.PlayerId);
+        }
 
         GameObject g = GameObject.Find("GameSettingsLabel");
 
@@ -64,9 +72,10 @@ class FixedUpdateInGamePatch
 
                 new LateTask(() =>
                 {
-                MessageWriter writer = AmongUsClient.Instance.StartEndGame();
-                writer.Write((byte)GameOverReason.ImpostorsByVote);
-                AmongUsClient.Instance.FinishEndGame(writer);
+                    NormalGameEndChecker.LastWinReason = $"★ {__instance.Data.PlayerName} Wins! (Completed tasks first)";
+                    MessageWriter writer = AmongUsClient.Instance.StartEndGame();
+                    writer.Write((byte)GameOverReason.ImpostorsByVote);
+                    AmongUsClient.Instance.FinishEndGame(writer);
                 }, 1f, "SpeedrunSetWinner");
             }
         }

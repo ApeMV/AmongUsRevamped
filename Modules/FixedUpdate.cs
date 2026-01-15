@@ -40,6 +40,7 @@ public static class FixedUpdate
                     writer.Write((byte)GameOverReason.ImpostorDisconnect);
                     AmongUsClient.Instance.FinishEndGame(writer);
                     Logger.Info($" Crewmates won because the game took longer than {Options.CrewAutoWinsGameAfter.GetInt()}s", "SNSManager");
+                    NormalGameEndChecker.LastWinReason = $"★ Crewmates win! (Timer)\n\nImpostors:\n" + string.Join("\n", NormalGameEndChecker.imps.Select(p => p.Data.PlayerName));
                 }
             }
             // 3 = Speedrun
@@ -55,6 +56,7 @@ public static class FixedUpdate
                     writer.Write((byte)GameOverReason.CrewmatesByVote);
                     AmongUsClient.Instance.FinishEndGame(writer);
                     Logger.Info($" No one won because the game took longer than {Options.GameAutoEndsAfter.GetInt()}s", "SpeedrunManager");
+                    NormalGameEndChecker.LastWinReason = $"★ No one wins! (Timer)";
                 }
             }
         }

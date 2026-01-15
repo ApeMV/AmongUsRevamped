@@ -10,17 +10,39 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameJoined))]
 internal static class OnGameJoinedPatch
 {
+    public static bool WaitingForChat;
     public static bool AutoStartCheck;
-    public static void Postfix(AmongUsClient __instance)
+    public static void Postfix()
     {
-        if (!AmongUsClient.Instance.AmHost || !Main.AutoStart.Value) return;
+        if (!AmongUsClient.Instance.AmHost) return;
 
-        LateTask.Tasks.Clear();
+        WaitingForChat = false;
+        AutoStartCheck = false;
 
-        new LateTask(() =>
+        if (Main.AutoStart.Value)
         {
-            AutoStartCheck = true;
-        }, Options.WaitAutoStart.GetFloat(), "AutoStartTimer");
+            LateTask.Tasks.Clear();
+
+            new LateTask(() =>
+            {
+                AutoStartCheck = true;
+            }, Options.WaitAutoStart.GetFloat(), "AutoStartTimer");
+        }
+
+        if (Options.AutoSendGameInfo.GetBool() && !string.IsNullOrEmpty(NormalGameEndChecker.LastWinReason))
+        {      
+            WaitingForChat = true;
+
+            new LateTask(() =>
+            {        
+                Utils.ShowLastResult();
+            }, 3f, "AutoSendGameInfo");
+
+            new LateTask(() =>
+            {        
+                WaitingForChat = false;
+            }, 5.2f, "AutoSendGameInfo2");
+        }
     }
 }
 
@@ -79,5 +101,15 @@ class OnPlayerJoinedPatch
                 }
             }
         }
+    }
+}
+
+[HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerLeft))]
+class OnPlayerLeftPatch
+{
+    static void Prefix([HarmonyArgument(0)] ClientData client)
+    {
+        if (client?.Character == null) return;
+        FixedUpdateInGamePatch.ProcessedModerators.Remove(client.Character.PlayerId);
     }
 }

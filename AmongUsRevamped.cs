@@ -29,7 +29,7 @@ public partial class Main : BasePlugin
     public static NormalGameOptionsV10 NormalOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentNormalGameOptions : null;
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.1.1";
+    public const string ModVersion = "v1.2.0";
 
     public static float GameTimer;
 
@@ -83,5 +83,26 @@ public partial class Main : BasePlugin
             __instance.ShowModStamp();
             LateTask.Update(Time.deltaTime);
         }
+    }
+
+    public enum ColorToString
+    {
+        Red = 0,
+        Blue = 1,
+        Green = 2,
+        Pink = 3,
+        Orange = 4,
+        Yellow = 5,
+        Black = 6,
+        White = 7,
+        Purple = 8,
+        Brown = 9,
+        Cyan = 10,
+        Lime = 11,
+        Maroon = 12,
+        Rose = 13,
+        Banana = 14,
+        Gray = 15,
+        Tan = 16
     }
 }

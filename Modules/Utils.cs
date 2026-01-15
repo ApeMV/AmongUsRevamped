@@ -26,6 +26,8 @@ public static class Utils
     public static long TimeStamp => EpochStartSeconds + (long)Stopwatch.Elapsed.TotalSeconds;
 
     public static int allAlivePlayersCount => AllAlivePlayerControls.Count();
+    public static int AliveCrewmates => AllAlivePlayerControls.Count(pc => !pc.Data.Role.IsImpostor);
+    public static int AliveImpostors => AllAlivePlayerControls.Count(pc => pc.Data.Role.IsImpostor);
 
     public static bool IsLobby => AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Joined;
     public static bool InGame => AmongUsClient.Instance && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started;
@@ -198,7 +200,9 @@ public static class Utils
         OnGameJoinedPatch.AutoStartCheck = false;
         Main.GameTimer = 0f;
         MurderPlayerPatch.misfireCount.Clear();
-        LateTask.Tasks.Clear();        
+        LateTask.Tasks.Clear();
+        FixedUpdateInGamePatch.ProcessedModerators.Clear();   
+        NormalGameEndChecker.ImpCheckComplete = false;
     }
 
     public static PlayerControl[] AllAlivePlayerControls
@@ -221,5 +225,35 @@ public static class Utils
             Array.Resize(ref result, i);
             return result;
         }
+    }
+
+    public static void ShowLastResult(byte playerId = byte.MaxValue)
+    {
+        if (InGame)
+        {
+            Logger.SendInGame($"Hi, you're currently in-game. Let's use this command afterwards");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(NormalGameEndChecker.LastWinReason))
+        {
+            Logger.SendInGame($"Your command was canceled due to not having the required info");
+            return;
+        }
+
+        PlayerControl.LocalPlayer.RpcSendChat($"{NormalGameEndChecker.LastWinReason}");
+    }
+
+    public static bool TryGetColorId(string input, out byte colorId)
+    {
+        colorId = 0;
+
+        if (Enum.TryParse<Main.ColorToString>(input, true, out var color))
+        {
+            colorId = (byte)color;
+            return true;
+        }
+
+        return false;
     }
 }

@@ -41,6 +41,9 @@ namespace AmongUsRevamped
         public static OptionItem ApplyDenyNameList;
         public static OptionItem ApplyModeratorList;
 
+        public static OptionItem TabGroupAutomation;
+
+        public static OptionItem AutoSendGameInfo;
         public static OptionItem AutoRejoinLobby;
         public static OptionItem AutoStartTimer;
         public static OptionItem WaitAutoStart;
@@ -190,8 +193,8 @@ namespace AmongUsRevamped
                 .SetColor(Color.green)
                 .SetHeader(true);
 
-            TabGroupMain = TextOptionItem.Create(60000, "Main", TabGroup.SystemSettings)
-                .SetColor(Color.yellow);
+            TabGroupMain = TextOptionItem.Create(60000, "Moderation", TabGroup.SystemSettings)
+                .SetColor(Color.blue);
 
             KickLowLevelPlayer = IntegerOptionItem.Create(60050, "Kick Players Under Level", new(0, 100, 1), 0, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Level);
@@ -206,17 +209,20 @@ namespace AmongUsRevamped
             ApplyDenyNameList = BooleanOptionItem.Create(60120, "Apply DenyName List", true, TabGroup.SystemSettings, false);
             ApplyModeratorList = BooleanOptionItem.Create(60121, "Apply Moderator List", true, TabGroup.SystemSettings, false);
 
+            TabGroupAutomation = TextOptionItem.Create(60149, "Automation", TabGroup.SystemSettings)
+                .SetColor(Color.yellow);
+
+            AutoSendGameInfo = BooleanOptionItem.Create(60150, "Automatically send winner info", true, TabGroup.SystemSettings, false);
             AutoRejoinLobby = BooleanOptionItem.Create(60210, "Auto Rejoin Lobby", false, TabGroup.SystemSettings, false);
-            AutoStartTimer = IntegerOptionItem.Create(44420, "Countdown For Auto Start", new(1, 600, 1), 5, TabGroup.SystemSettings, false)
+            AutoStartTimer = IntegerOptionItem.Create(64420, "Countdown For Auto Start", new(1, 600, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
-            WaitAutoStart = IntegerOptionItem.Create(44421, "Auto Start After", new(10, 600, 10), 300, TabGroup.SystemSettings, false)
+            WaitAutoStart = IntegerOptionItem.Create(64421, "Auto Start After", new(10, 600, 10), 300, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
-            PlayerAutoStart = IntegerOptionItem.Create(44422, "Players Needed To Auto Start", new(1, 15, 1), 1, TabGroup.SystemSettings, false);
+            PlayerAutoStart = IntegerOptionItem.Create(64422, "Players Needed To Auto Start", new(1, 15, 1), 1, TabGroup.SystemSettings, false);
 
             NoGameEnd = BooleanOptionItem.Create(60380, "No Game End", false, TabGroup.SystemSettings, false)
                 .SetColor(Color.red)
                 .SetHeader(true);
-
 
             // Gamemode Settings
             TabGroupHNS = TextOptionItem.Create(70000, "Hide and Seek", TabGroup.GamemodeSettings)
@@ -264,7 +270,7 @@ namespace AmongUsRevamped
                 .SetColor(new Color32(255, 255, 153, byte.MaxValue))
                 .SetParent(OverrideTaskSettings);
 
-            DisableMiraTasks = BooleanOptionItem.Create(23000, "Disable Mira Tasks", false, TabGroup.ModSettings, false)
+            DisableMiraTasks = BooleanOptionItem.Create(23000, "Disable Mira HQ Tasks", false, TabGroup.ModSettings, false)
                 .SetColor(new Color32(173, 216, 230, byte.MaxValue))
                 .SetParent(OverrideTaskSettings);
 

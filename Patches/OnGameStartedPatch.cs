@@ -11,6 +11,9 @@ internal class ApplyCustomImpostorCount
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
+        NormalGameEndChecker.imps.Clear();
+        NormalGameEndChecker.LastWinReason = "";
+
         // Normal game = Impostor to prevent blocking task win. HNS = Crewmate to prevent Seeker detection range bugging.
         if (Main.GM.Value)
         {
