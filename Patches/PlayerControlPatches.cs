@@ -31,13 +31,8 @@ class FixedUpdateInGamePatch
             if (Options.NoKcdSettingsOverride.GetBool() && g == null)
             {
                 Main.NormalOptions.EmergencyCooldown = 0;
-                Main.NormalOptions.DiscussionTime = 0;
-                Main.NormalOptions.VotingTime = 30;
 
                 Main.NormalOptions.TaskBarMode = 0;
-                Main.NormalOptions.NumCommonTasks = 0;
-                Main.NormalOptions.NumShortTasks = 1;
-                Main.NormalOptions.NumLongTasks = 0;
             }
         }
 
@@ -51,10 +46,6 @@ class FixedUpdateInGamePatch
                 Main.NormalOptions.NumEmergencyMeetings = 0;
 
                 Main.NormalOptions.TaskBarMode = 0;
-
-                Options.DisableSabotage.SetValue(1);
-                Options.DisableCloseDoor.SetValue(1);
-                Options.DisableReport.SetValue(1);
             }
         }
 
@@ -113,7 +104,7 @@ class ReportDeadBodyPatch
     {
         if (!AmongUsClient.Instance.AmHost) return true;
 
-        if (Options.DisableReport.GetBool() && target != null)
+        if (Options.DisableReport.GetBool() && target != null || Options.Gamemode.GetValue() == 2)
         {
             Logger.Info($" Stopped {__instance.Data.PlayerName} reporting the body of {target.PlayerName}", "ReportDeadBodyPatch");
             return false;

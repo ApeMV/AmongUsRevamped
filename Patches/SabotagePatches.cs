@@ -20,7 +20,7 @@ public static class SabotageSystemTypeRepairDamagePatch
         var Sabo = (SystemTypes)amount;
 
         Logger.Info($" {player.Data.PlayerName} is trying to sabotage: {Sabo}", "SabotageCheck");
-        if (Options.DisableSabotage.GetBool())
+        if (Options.DisableSabotage.GetBool() || Options.Gamemode.GetValue() == 2)
         {
             Logger.Info($" Sabotage {Sabo} by: {player.Data.PlayerName} was blocked", "SabotageCheck");
             return false;
@@ -38,7 +38,7 @@ class ShipStatusCloseDoorsPatch
         
         Logger.Info($" Trying to close the door in: {room}", "DoorCheck");
 
-        if (Options.DisableCloseDoor.GetBool())
+        if (Options.DisableCloseDoor.GetBool() || Options.Gamemode.GetValue() == 2)
         {
             Logger.Info($" Door sabotage in: {room} was blocked", "DoorCheck");
             return false;

@@ -29,6 +29,10 @@ internal static class SendChatPatch
     public static bool Prefix(ChatController __instance)
     {
         string text = __instance.freeChatField.textArea.text.Trim();
+        string noKcdMode = "0 Kill Cooldown Mode:\n\nImpostors have no kill cooldown, Crewmates have low tasks.\nThink fast and pay attention.";
+        string SnSModeOne = "Shift and Seek Mode:\n\nImps can only kill someone while shapeshifted as them.\nSabotages & Meetings = Off.";
+        string SnSModeTwo = $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s.\nImp wins by killing Crew.\n1 Wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s.\n{Options.MisfiresToSuicide.GetInt()} Wrong kills = suicide.";
+        string speedrunMode = $"Speedrun Mode:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s";
 
         if (text == "/h" || text == "/help")
         {
@@ -38,7 +42,7 @@ internal static class SendChatPatch
         
         if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
 
-        if (text == "/l" || text == "/lastgame")
+        if (text == "/l" || text == "/lastgame" || text == "/win" || text == "/winner")
         {
             Utils.ShowLastResult();
             __instance.timeSinceLastMessage = 0.8f;
@@ -49,7 +53,7 @@ internal static class SendChatPatch
 
         if (text == "/0kc" || text == "/0kcd" || text == "/0killcooldown")
         {
-            PlayerControl.LocalPlayer.RpcSendChat("0 Kill Cooldown Mode:\n\nImpostors have no kill cooldown, Crewmates have low tasks.\nThink fast and pay attention.");
+            PlayerControl.LocalPlayer.RpcSendChat($"{noKcdMode}");
             __instance.timeSinceLastMessage = 0.8f;
             __instance.freeChatField.textArea.Clear();
             __instance.freeChatField.textArea.SetText(string.Empty);
@@ -58,7 +62,7 @@ internal static class SendChatPatch
 
         if (text == "/sns" || text == "/shiftandseek" || text == "/shift&seek")
         {
-            PlayerControl.LocalPlayer.RpcSendChat("Shift and Seek Mode:\n\nImps can only kill someone while shapeshifted as them.\nSabotages & Meetings = Off.");
+            PlayerControl.LocalPlayer.RpcSendChat($"{SnSModeOne}");
             __instance.timeSinceLastMessage = 0.8f;
             __instance.freeChatField.textArea.Clear();
             __instance.freeChatField.textArea.SetText(string.Empty);
@@ -66,7 +70,7 @@ internal static class SendChatPatch
             new LateTask(() =>
             {
                 if (!Utils.IsLobby) return;
-                PlayerControl.LocalPlayer.RpcSendChat($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s.\nImp wins by killing Crew.\n1 Wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s.\n{Options.MisfiresToSuicide.GetInt()} Wrong kills = suicide.");
+                PlayerControl.LocalPlayer.RpcSendChat($"{SnSModeTwo}");
                 __instance.timeSinceLastMessage = 0.8f;
             }, 2.2f, "SNSTutorial2");                
             return false;
@@ -74,10 +78,52 @@ internal static class SendChatPatch
 
         if (text == "/sp" || text == "/sr" || text == "/speedrun")
         {
-            PlayerControl.LocalPlayer.RpcSendChat($"Speedrun Mode:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s");
+            PlayerControl.LocalPlayer.RpcSendChat($"{speedrunMode}");
             __instance.timeSinceLastMessage = 0.8f;
             __instance.freeChatField.textArea.Clear();
             __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;
+        }
+
+        if (text == "/r" || text == "/roles" || text == "/gamemode" || text == "/gm")
+        {
+            switch (Options.Gamemode.GetValue())
+            {
+                case 0:
+                    PlayerControl.LocalPlayer.RpcSendChat($"Custom roles:\nThere are no custom roles.");
+                    __instance.timeSinceLastMessage = 0.8f;
+                    __instance.freeChatField.textArea.Clear();
+                    __instance.freeChatField.textArea.SetText(string.Empty);
+                break;
+
+                case 1:
+                    PlayerControl.LocalPlayer.RpcSendChat($"{noKcdMode}");
+                    __instance.timeSinceLastMessage = 0.8f;
+                    __instance.freeChatField.textArea.Clear();
+                    __instance.freeChatField.textArea.SetText(string.Empty);
+                break;
+
+                case 2:
+                    PlayerControl.LocalPlayer.RpcSendChat($"{SnSModeOne}");
+                    __instance.timeSinceLastMessage = 0.8f;
+                    __instance.freeChatField.textArea.Clear();
+                    __instance.freeChatField.textArea.SetText(string.Empty);
+
+                    new LateTask(() =>
+                    {
+                        PlayerControl.LocalPlayer.RpcSendChat($"{SnSModeTwo}");
+                        __instance.timeSinceLastMessage = 0.8f;
+                    }, 2.2f, "SNSTutorial2");                
+                break;
+
+                case 3:
+                    PlayerControl.LocalPlayer.RpcSendChat($"{speedrunMode}");
+                    __instance.timeSinceLastMessage = 0.8f;
+                    __instance.freeChatField.textArea.Clear();
+                    __instance.freeChatField.textArea.SetText(string.Empty);
+                break;
+
+            }
             return false;
         }
 
