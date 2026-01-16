@@ -14,17 +14,10 @@ internal class ApplyCustomImpostorCount
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
 
-        // Normal game = Impostor to prevent blocking task win. HNS = Crewmate to prevent Seeker detection range bugging.
         if (Main.GM.Value)
         {
-            if (!Utils.isHideNSeek)
-            {
-            PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.ImpostorGhost, false);
-            }
-            if (Utils.isHideNSeek)
-            {
             PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
-            }
+            PlayerControl.LocalPlayer.myTasks.Clear();
         }
 
         if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)

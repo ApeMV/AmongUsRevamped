@@ -128,6 +128,12 @@ internal static class RpcSetTasksPatch
         PlayerControl pc = __instance.Object;
         if (pc == null) return;
 
+        if (Main.GM.Value && pc == PlayerControl.LocalPlayer)
+        {
+            taskTypeIds = new Il2CppStructArray<byte>(0);
+            return;
+        }
+
         if (!Options.AllPlayersSameTasks.GetBool())
         {
             RerollTasks(ref taskTypeIds);

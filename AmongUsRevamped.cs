@@ -29,7 +29,7 @@ public partial class Main : BasePlugin
     public static NormalGameOptionsV10 NormalOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentNormalGameOptions : null;
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.2.0";
+    public const string ModVersion = "v1.2.1";
 
     public static float GameTimer;
 
@@ -104,5 +104,21 @@ public partial class Main : BasePlugin
         Banana = 14,
         Gray = 15,
         Tan = 16
+    }
+
+    // Innersloth now censors messages with more than 5 numbers. This is the best bypass I can give
+    public enum BasicNumberToLetter
+    {
+        Zero = 0,
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4,
+        Five = 5,
+        Six = 6,
+        Seven = 7,
+        Eight = 8,
+        Nine = 9,
+        Ten = 10
     }
 }

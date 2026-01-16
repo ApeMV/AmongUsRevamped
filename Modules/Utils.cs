@@ -256,4 +256,87 @@ public static class Utils
 
         return false;
     }
+
+    public static void SendPrivateMessage(PlayerControl target, string message)
+    {
+        if (!AmongUsClient.Instance.AmHost || PlayerControl.LocalPlayer == null || target == null || target.Data.ClientId == 255) return;
+
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 13, SendOption.Reliable, target.Data.ClientId);
+
+        writer.Write(message);
+        writer.Write(PlayerControl.LocalPlayer.PlayerId);
+
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+    }
+
+    public static void ChatCommand(ChatController __instance, string msg, string msg2, bool multi)
+    {
+        OnGameJoinedPatch.WaitingForChat = true;
+
+        __instance.freeChatField.textArea.Clear();
+        __instance.freeChatField.textArea.SetText(string.Empty); 
+
+        PlayerControl.LocalPlayer.RpcSendChat($"{msg}");
+
+        new LateTask(() =>
+        {
+            if (multi && msg2 != "") 
+            {
+                PlayerControl.LocalPlayer.RpcSendChat($"{msg2}");
+            }
+
+            if (!multi) 
+            {
+                OnGameJoinedPatch.WaitingForChat = false;
+            }
+        }, 2.2f, "ChatCommand1");
+
+        if (!multi || msg2 == "") return;
+
+        new LateTask(() =>
+        {
+            OnGameJoinedPatch.WaitingForChat = false;
+        }, 4.4f, "ChatCommand2");
+    }
+
+    public static void ModeratorChatCommand(string msg, string msg2, bool multi)
+    {
+        OnGameJoinedPatch.WaitingForChat = true;
+
+        new LateTask(() =>
+        {
+            PlayerControl.LocalPlayer.RpcSendChat($"{msg}");
+        }, 2.2f, "ModeratorChatCommand1");
+
+        new LateTask(() =>
+        {
+            if (multi && msg2 != "") 
+            {
+                PlayerControl.LocalPlayer.RpcSendChat($"{msg2}");
+            }
+
+            if (!multi) 
+            {
+                OnGameJoinedPatch.WaitingForChat = false;
+            }
+        }, 4.4f, "ModeratorChatCommand2");
+
+        if (!multi || msg2 == "") return;
+
+        new LateTask(() =>
+        {
+            OnGameJoinedPatch.WaitingForChat = false;
+        }, 6.6f, "ModeratorChatCommand3");
+    }
+
+    public static string BasicIntToWord(int value)
+    {
+        if (Enum.IsDefined(typeof(Main.BasicNumberToLetter), value))
+        {
+            return ((Main.BasicNumberToLetter)value).ToString();
+        }
+
+        return value.ToString();
+    }
 }

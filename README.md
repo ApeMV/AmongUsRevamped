@@ -14,7 +14,7 @@
 </p>
 
 # 💡 How To Install:
-- <b>If you have BepInEx, download AmongUsRevamped.dll in releases and move it into Among Us → BepinEx → Plugins</b>
+- <b>If you have BepInEx, download AUR.dll in releases and move it into Among Us → BepinEx → Plugins</b>
 - <b> If you don't have BepInEx:</b>
 - Download the latest .zip file in the releases tab
 - Extract the contents of the zip into your Among Us folder
@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.1.1):
+# 🎮 Features (v1.2.1):
 - <b>🔶 Client Side settings:</b>
 - Game Master
 - Unlock FPS
@@ -39,14 +39,16 @@
 - <b>🔷 Technical settings:</b>
 - Kick/Ban players under a certain level
 - Kick/Ban invalid FriendCodes
-- Kick/Ban command using names instead of ID's
+- Kick/Ban command using names
+- Ckick/Cban command using colors
 - DenyName system
 - Moderator system
+- Banlist system
 - Enable No Game End
-- Banlist
-- <b>🔶 Automatic settings:</b>
-- Auto start game + conditions for it
+- <b>🔶 Automation settings:</b>
+- Auto start game and conditions for it
 - Auto rejoin lobby
+- Auto send winner info
 - <b>🔷 Gameplay Settings:</b>
 - Disable critical sabotages
 - Disable door sabotages
@@ -61,10 +63,11 @@
 - <b>🔷 Extra features:</b>
 - Shift + L + Enter - Force End Game
 - Shift + M + Enter - Force Call/Close Meeting
-- Gamemode info commands -> /0kc /0killcooldown | /sns /shiftandseek |/sp /speedrun
+- /help command
+- Specific gamemode info commands -> /0kc, /sns, /sp
+- Current gamemode info command -> /r
 - Zoom out in lobby or when dead
-- Kick players while in game
-- Unlimited Option ranges
+- Unlimited default Option ranges
 - Logging for useful information
 - <b>🎉 And this all without Modded Protocol!</b>
 ‎ 

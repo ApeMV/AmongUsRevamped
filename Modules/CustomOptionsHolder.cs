@@ -40,6 +40,7 @@ namespace AmongUsRevamped
         public static OptionItem ApplyBanList;
         public static OptionItem ApplyDenyNameList;
         public static OptionItem ApplyModeratorList;
+        public static OptionItem ModeratorCanUseCommand;
 
         public static OptionItem TabGroupAutomation;
 
@@ -208,6 +209,7 @@ namespace AmongUsRevamped
             ApplyBanList = BooleanOptionItem.Create(60110, "Apply BanList", true, TabGroup.SystemSettings, true);
             ApplyDenyNameList = BooleanOptionItem.Create(60120, "Apply DenyName List", true, TabGroup.SystemSettings, false);
             ApplyModeratorList = BooleanOptionItem.Create(60121, "Apply Moderator List", true, TabGroup.SystemSettings, false);
+            ModeratorCanUseCommand = BooleanOptionItem.Create(60122, "Moderators can use commands", true, TabGroup.SystemSettings, false);
 
             TabGroupAutomation = TextOptionItem.Create(60149, "Automation", TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
@@ -240,7 +242,7 @@ namespace AmongUsRevamped
             SNSSettingsOverride = BooleanOptionItem.Create(70051, "Auto Update Settings", true, TabGroup.GamemodeSettings, false);
             CantKillTime = IntegerOptionItem.Create(70053, "After Misfiring, Can't kill for", new(0, 60, 5), 20, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
-            MisfiresToSuicide = IntegerOptionItem.Create(70052, "Suicide After Amount Of Misfires", new(1, 15, 1), 2, TabGroup.GamemodeSettings, false);
+            MisfiresToSuicide = IntegerOptionItem.Create(70052, "Suicide After Amount Of Misfires", new(1, 10, 1), 2, TabGroup.GamemodeSettings, false);
             CrewAutoWinsGameAfter = IntegerOptionItem.Create(70054, "Crewmates Automatically Win After", new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
 
