@@ -28,7 +28,7 @@ class NormalGameEndChecker
     public static bool Prefix()
     {
 
-        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3 || Options.Gamemode.GetValue() == 2 && Main.NormalOptions.NumImpostors*2 < Utils.allAlivePlayersCount) return false;
+        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3) return false;
 
         var allPlayers = PlayerControl.AllPlayerControls.ToArray();
 

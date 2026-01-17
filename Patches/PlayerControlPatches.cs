@@ -141,16 +141,19 @@ internal static class MurderPlayerPatch
 
                 misfireCount[playerId]++;
 
-                __instance.RpcSetRole(RoleTypes.Crewmate);
-                __instance.isNew = true;
-                Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName} incorrectly and can't kill for {Options.CantKillTime.GetInt()}s", "SNSKillManager");
-                Logger.SendInGame($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}, incorrectly and can't kill for {Options.CantKillTime.GetInt()}s");
-
-                new LateTask(() =>
+                if (misfireCount[__instance.Data.PlayerId] < Options.MisfiresToSuicide.GetFloat())
                 {
-                    __instance.isNew = false;
-                    if (!__instance.Data.IsDead) {__instance.RpcSetRole(RoleTypes.Shapeshifter, false);}
-                }, Options.CantKillTime.GetInt(), "SNSResetRole");
+                    __instance.RpcSetRole(RoleTypes.Crewmate);
+                    __instance.isNew = true;
+                    Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName} incorrectly and can't kill for {Options.CantKillTime.GetInt()}s", "SNSKillManager");
+                    Logger.SendInGame($" {__instance.Data.PlayerName} killed {target.Data.PlayerName} incorrectly and can't kill for {Options.CantKillTime.GetInt()}s");
+
+                    new LateTask(() =>
+                    {
+                        __instance.isNew = false;
+                        if (!__instance.Data.IsDead) {__instance.RpcSetRole(RoleTypes.Shapeshifter, false);}
+                    }, Options.CantKillTime.GetInt(), "SNSResetRole");
+                }
 
                 if (misfireCount[__instance.Data.PlayerId] >= Options.MisfiresToSuicide.GetFloat())
                 {
