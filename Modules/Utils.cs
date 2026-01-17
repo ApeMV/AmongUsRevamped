@@ -32,9 +32,10 @@ public static class Utils
     public static bool IsLobby => AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Joined;
     public static bool InGame => AmongUsClient.Instance && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started;
     public static bool isHideNSeek => GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek;
+    public static bool IsOnlineGame => AmongUsClient.Instance.NetworkMode == NetworkModes.OnlineGame;
 
     public static bool IsShip => ShipStatus.Instance != null;
-    public static bool IsCanMove => PlayerControl.LocalPlayer?.CanMove is true;
+    public static bool CanMove => PlayerControl.LocalPlayer?.CanMove is true;
     public static bool IsDead => PlayerControl.LocalPlayer?.Data?.IsDead is true;
 
     public static bool IsFreePlay => AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay;

@@ -103,7 +103,9 @@ public partial class Main : BasePlugin
         Rose = 13,
         Banana = 14,
         Gray = 15,
-        Tan = 16
+        Tan = 16,
+        Coral = 17,
+        Fortegreen = 18
     }
 
     // Innersloth now censors messages with more than 5 numbers. This is the best bypass I can give

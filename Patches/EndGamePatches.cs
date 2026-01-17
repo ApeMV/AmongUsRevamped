@@ -68,27 +68,3 @@ class HNSGameEndChecker
         else return true;
     }
 }
-
-[HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
-internal class ControllerManagerUpdatePatch
-{
-    public static void Postfix()
-    {
-        if (Input.GetKey(KeyCode.L) && Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Return))
-        {
-            MessageWriter writer = AmongUsClient.Instance.StartEndGame();
-            writer.Write((byte)GameOverReason.ImpostorDisconnect);
-            AmongUsClient.Instance.FinishEndGame(writer);
-        }
-        
-        if (Input.GetKey(KeyCode.M) && Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Return) && Utils.InGame)
-        {
-            if (Utils.IsMeeting)
-            {
-                MeetingHud.Instance.RpcClose();
-            }
-            else
-                PlayerControl.LocalPlayer.ReportDeadBody(PlayerControl.LocalPlayer.Data);
-        }
-    }
-}

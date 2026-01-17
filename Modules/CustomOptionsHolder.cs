@@ -26,6 +26,11 @@ namespace AmongUsRevamped
             "None", "0 Kill Cooldown", "Shift And Seek", "Speedrun"
         };
 
+        public static readonly string[] colorLevels =
+        {
+            "Moderators", "Everyone", "Nobody"
+        };
+
         //System
         public static OptionItem Gamemode;
 
@@ -50,6 +55,11 @@ namespace AmongUsRevamped
         public static OptionItem WaitAutoStart;
         public static OptionItem PlayerAutoStart;
 
+        public static OptionItem TabGroupMisc;
+
+        public static OptionItem StartCountdown;
+        public static OptionItem ColorCommandLevel;
+        public static OptionItem AllowFortegreen;
         public static OptionItem NoGameEnd;
         
         //Mod
@@ -222,9 +232,15 @@ namespace AmongUsRevamped
                 .SetValueFormat(OptionFormat.Seconds);
             PlayerAutoStart = IntegerOptionItem.Create(64422, "Players Needed To Auto Start", new(1, 15, 1), 1, TabGroup.SystemSettings, false);
 
-            NoGameEnd = BooleanOptionItem.Create(60380, "No Game End", false, TabGroup.SystemSettings, false)
-                .SetColor(Color.red)
-                .SetHeader(true);
+            TabGroupMisc = TextOptionItem.Create(60379, "Miscelleneous", TabGroup.SystemSettings)
+                .SetColor(Color.green);
+
+            StartCountdown = IntegerOptionItem.Create(60380, "Default Starting Countdown", new(1, 600, 1), 5, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            ColorCommandLevel = StringOptionItem.Create(60381, "Who Can use Color Commands", colorLevels, 0, TabGroup.SystemSettings, false);
+            AllowFortegreen = BooleanOptionItem.Create(60382, "Allow Fortegreen Color", false, TabGroup.SystemSettings, false);
+            NoGameEnd = BooleanOptionItem.Create(60383, "No Game End", false, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
 
             // Gamemode Settings
             TabGroupHNS = TextOptionItem.Create(70000, "Hide and Seek", TabGroup.GamemodeSettings)

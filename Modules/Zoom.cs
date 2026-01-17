@@ -17,8 +17,8 @@ public static class Zoom
     public static void Postfix()
     {
         bool canZoom =
-            (Utils.IsShip && !Utils.IsMeeting && Utils.IsCanMove && PlayerControl.LocalPlayer.Data.IsDead)
-            || (Utils.IsLobby && Utils.IsCanMove);
+            (Utils.IsShip && !Utils.IsMeeting && Utils.CanMove && PlayerControl.LocalPlayer.Data.IsDead)
+            || (Utils.IsLobby && Utils.CanMove);
 
         if (!canZoom)
         {

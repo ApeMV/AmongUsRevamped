@@ -39,8 +39,6 @@ internal static class SendChatPatch
     {
         string text = __instance.freeChatField.textArea.text.Trim();
 
-        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
-
         if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
         {
             HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{allCommandsFull}");
@@ -48,6 +46,8 @@ internal static class SendChatPatch
             __instance.freeChatField.textArea.SetText(string.Empty);
             return false;
         }
+
+        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
 
         if (text == "/l" || text == "/lastgame" || text == "/win" || text == "/winner")
         {
@@ -103,6 +103,20 @@ internal static class SendChatPatch
 
         else
         {
+            bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
+            bool col2  = text.StartsWith("/color ");
+
+            bool col3 = text.StartsWith("/colour ");
+
+            string argCol = text.Substring(col1 ? 5 : col2 ? 7 : col3 ? 8 : 0).Trim();
+
+            if (Utils.TryGetColorId(argCol, out byte colId))
+            {
+                PlayerControl.LocalPlayer.RpcSetColor(colId);
+                __instance.freeChatField.textArea.Clear();
+                __instance.freeChatField.textArea.SetText(string.Empty);
+            }
+
             bool isKick = text.StartsWith("/kick ");
             bool isBan  = text.StartsWith("/ban ");
 
@@ -170,10 +184,9 @@ public static class RPCHandlerPatch
                 string text = subReader.ReadString();
                 Logger.Info($" {__instance.Data.PlayerName}: {text}", "SendChat");
 
-                if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
-
                 if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
                 {
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
                     OnGameJoinedPatch.WaitingForChat = true;
 
                     new LateTask(() =>
@@ -194,26 +207,31 @@ public static class RPCHandlerPatch
 
                 if (text == "/l" || text == "/lastgame" || text == "/win" || text == "/winner")
                 {
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
                     if (string.IsNullOrEmpty(NormalGameEndChecker.LastWinReason) || Utils.InGame) return;
                     Utils.ModeratorChatCommand($"{NormalGameEndChecker.LastWinReason}", "", false);
                 }
 
                 if (text == "/0kc" || text == "/0kcd" || text == "/0killcooldown")
                 {
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
                     Utils.ModeratorChatCommand($"{SendChatPatch.noKcdMode}", "", false);
                 }
                 if (text == "/sns" || text == "/shiftandseek" || text == "/shift&seek")
                 {
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
                     Utils.ModeratorChatCommand($"{SendChatPatch.SnSModeOne}", $"{SendChatPatch.SnSModeTwo}", true);   
                 }
 
                 if (text == "/sp" || text == "/sr" || text == "/speedrun")
                 {
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
                     Utils.ModeratorChatCommand($"{SendChatPatch.speedrunMode}", "", false);
                 }
 
                 if (text == "/r" || text == "/roles" || text == "/gamemode" || text == "/gm")
                 {
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
                     switch (Options.Gamemode.GetValue())
                     {
                         case 0:
@@ -236,6 +254,24 @@ public static class RPCHandlerPatch
 
                 else
                 {
+
+                    bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
+                    bool col2  = text.StartsWith("/color ");
+
+                    bool col3 = text.StartsWith("/colour ");
+
+                    string argCol = text.Substring(col1 ? 5 : col2 ? 7 : col3 ? 8 : 0).Trim();
+
+                    if (Utils.TryGetColorId(argCol, out byte colId))
+                    {
+                        if (Options.ColorCommandLevel.GetValue() == 0 && Utils.IsPlayerModerator(__instance.Data.FriendCode) || Options.ColorCommandLevel.GetValue() == 1)
+                        {
+                            if (colId > 17 && !Options.AllowFortegreen.GetBool()) return;
+                            __instance.RpcSetColor(colId);
+                        }    
+                    }
+
+                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode)) return;
                     // Banning works by name and color. Commands are seperated incase someone has a color as their name
                     bool isKick = text.StartsWith("/kick ");
                     bool isBan  = text.StartsWith("/ban ");
@@ -282,6 +318,19 @@ public static class RPCHandlerPatch
                 }
                 break;
             }
+        }
+    }
+}
+
+[HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+public static class HudManager_Update
+{
+	public static void Postfix(HudManager __instance)
+    {
+        if (Main.GM.Value)
+        {
+			__instance.Chat.gameObject.SetActive(true);
+			__instance.MapButton.gameObject.SetActive(true); 
         }
     }
 }

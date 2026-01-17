@@ -43,8 +43,6 @@ class FixedUpdateInGamePatch
 
             if (Options.SNSSettingsOverride.GetBool() && g == null)
             {
-                Main.NormalOptions.NumEmergencyMeetings = 0;
-
                 Main.NormalOptions.TaskBarMode = 0;
             }
         }

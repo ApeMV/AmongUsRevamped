@@ -1,0 +1,45 @@
+﻿using AmongUs.Data;
+using Hazel;
+using InnerNet;
+using UnityEngine;
+
+namespace AmongUsRevamped;
+
+[HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
+internal class Hotkeys
+{
+    public static void Postfix()
+    {
+        bool Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        bool Enter = Input.GetKeyDown(KeyCode.Return);
+
+        if (Input.GetKey(KeyCode.L) && Shift && Enter)
+        {
+            MessageWriter writer = AmongUsClient.Instance.StartEndGame();
+            writer.Write((byte)GameOverReason.ImpostorDisconnect);
+            AmongUsClient.Instance.FinishEndGame(writer);
+        }
+        
+        if (Input.GetKey(KeyCode.M) && Shift && Enter && Utils.InGame)
+        {
+            if (Utils.IsMeeting)
+            {
+                MeetingHud.Instance.RpcClose();
+            }
+            else
+            {
+                PlayerControl.LocalPlayer.ReportDeadBody(PlayerControl.LocalPlayer.Data);
+            }
+        }
+
+        if (Shift && GameStartManager.InstanceExists && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening)
+        {
+            GameStartManager.Instance.countDownTimer = 0;
+        }
+
+        if ((!AmongUsClient.Instance.IsGameStarted || !Utils.IsOnlineGame) && Utils.CanMove && PlayerControl.LocalPlayer.Collider != null)
+        {
+            PlayerControl.LocalPlayer.Collider.enabled = !Input.GetKey(KeyCode.LeftControl);
+        }
+    }
+}
