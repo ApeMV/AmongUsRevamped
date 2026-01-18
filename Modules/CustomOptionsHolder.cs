@@ -21,6 +21,16 @@ namespace AmongUsRevamped
             taskOptionsLoad.Wait();
         }
 
+        public const int PresetId = 0;
+
+        private static readonly string[] presets =
+        {
+            Main.Preset1.Value, Main.Preset2.Value, Main.Preset3.Value,
+            Main.Preset4.Value, Main.Preset5.Value, Main.Preset6.Value,
+            Main.Preset7.Value, Main.Preset8.Value, Main.Preset9.Value,
+            Main.Preset10.Value
+        };
+
         public static readonly string[] gameModes =
         {
             "None", "0 Kill Cooldown", "Shift And Seek", "Speedrun"
@@ -199,6 +209,10 @@ namespace AmongUsRevamped
         public static void Load()
         {
             if (IsLoaded) return;
+
+            _ = PresetOptionItem.Create(0, TabGroup.SystemSettings)
+                .SetColor(new Color32(204, 204, 0, 255))
+                .SetHeader(true);
 
             Gamemode = StringOptionItem.Create(1, "Gamemode", gameModes, 0, TabGroup.SystemSettings, false)
                 .SetColor(Color.green)

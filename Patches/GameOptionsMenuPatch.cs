@@ -290,6 +290,16 @@ namespace AmongUsRevamped
                     Index = stringItem.GetInt(),
                 };
             }
+            else if (item is PresetOptionItem)
+            {
+                PresetOptionItem presetItem = item as PresetOptionItem;
+                baseGameSetting = new StringGameSetting
+                {
+                    Type = OptionTypes.String,
+                    Values = new StringNames[10],
+                    Index = presetItem.GetInt(),
+                };
+            }
             if (baseGameSetting != null)
                 baseGameSetting.Title = StringNames.Accept;
             return baseGameSetting;

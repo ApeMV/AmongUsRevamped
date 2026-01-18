@@ -39,6 +39,8 @@ internal static class SendChatPatch
     {
         string text = __instance.freeChatField.textArea.text.Trim();
 
+        if (!AmongUsClient.Instance.AmHost) return true;
+
         if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
         {
             HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{allCommandsFull}");

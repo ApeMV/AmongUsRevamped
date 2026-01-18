@@ -80,7 +80,7 @@ namespace AmongUsRevamped
             }
             else
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     AllConfigEntries[i] = Main.Instance.Config.Bind($"Preset{i + 1}", id.ToString(), DefaultValue);
                 }
@@ -174,7 +174,7 @@ namespace AmongUsRevamped
 
         public static void SwitchPreset(int newPreset)
         {
-            CurrentPreset = Math.Clamp(newPreset, 0, 1);
+            CurrentPreset = Math.Clamp(newPreset, 0, 9);
 
             foreach (var op in AllOptions)
                 op.Refresh();

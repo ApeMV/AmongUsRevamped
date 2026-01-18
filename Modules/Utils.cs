@@ -42,6 +42,7 @@ public static class Utils
     public static bool IsMeeting => InGame && (MeetingHud.Instance);
     public static bool GamePastRoleSelection => Main.GameTimer > 10f;
     public static bool HandlingGameEnd;
+    public static byte CustomGameOverReason;
 
     public static string ColorString(Color32 color, string str) => $"<#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}>{str}</color>";
     public static string ColorToHex(Color32 color) => $"#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}";
@@ -339,5 +340,51 @@ public static class Utils
         }
 
         return value.ToString();
+    }
+
+    // 0 = no winner. 1 = solo winner. 2 = add winner.
+    public static void CustomWinnerEndGame(PlayerControl winner, int winnerType)
+    {
+        HandlingGameEnd = true;
+        MessageWriter writer = AmongUsClient.Instance.StartEndGame();
+
+        if (winnerType == 0)
+        {
+            foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
+            {
+                CustomGameOverReason = (byte)GameOverReason.ImpostorsByVote;
+                pc.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
+            }
+        }
+
+        if (winnerType == 1)
+        {
+            foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
+            {
+                CustomGameOverReason = (byte)GameOverReason.ImpostorsByVote;
+
+                if (pc != winner) 
+                {
+                    pc.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
+                }
+                else
+                {
+                    pc.RpcSetRole(AmongUs.GameOptions.RoleTypes.ImpostorGhost, false);                    
+                }
+            }
+        }
+
+        new LateTask(() =>
+        {
+            ContinueEndGame((byte)CustomGameOverReason);
+        }, 1f, "CustomWinnerEndGame");     
+    }
+
+    public static void ContinueEndGame(byte gameOverReason)
+    {
+        MessageWriter writer = AmongUsClient.Instance.StartEndGame();
+        writer.Write(gameOverReason);
+        AmongUsClient.Instance.FinishEndGame(writer);
+        HandlingGameEnd = false;
     }
 }
