@@ -50,11 +50,12 @@ class NormalGameEndChecker
         {
             LastWinReason = $"★ Crewmates win! (Tasks)\n\nImpostors:\n" + string.Join("\n", imps.Select(p => p.Data.PlayerName));
         }
-        else
+        else if (Options.Gamemode.GetValue() < 2)
         {
             LastWinReason = $"★ Impostors win! (Sabotage)\n\nImpostors:\n★" + string.Join("\n★", imps.Select(p => p.Data.PlayerName));
         }
 
+        Logger.Info(" -------- GAME ENDED --------", "EndGame");
         return true;
     }
 }

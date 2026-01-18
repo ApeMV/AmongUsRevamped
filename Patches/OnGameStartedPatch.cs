@@ -11,12 +11,22 @@ internal class ApplyCustomImpostorCount
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
+        Logger.Info(" -------- GAME STARTED --------", "StartGame");
+
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
 
         if (Main.GM.Value)
         {
-            PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
+            if (Options.Gamemode.GetValue() == 3)
+            {
+                PlayerControl.LocalPlayer.CoSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
+            }
+            else
+            {
+                PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
+            }
+
             PlayerControl.LocalPlayer.myTasks.Clear();
         }
 
@@ -24,17 +34,14 @@ internal class ApplyCustomImpostorCount
         {
             foreach (var p in PlayerControl.AllPlayerControls)
             {
-                p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate, false);
-
-                new LateTask(() =>
+                if (p != PlayerControl.LocalPlayer)
                 {
                     p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate, false);
-                }, 5f, "Speedrun Secondary RPCSetRole");
-
-                new LateTask(() =>
+                }
+                if (p == PlayerControl.LocalPlayer)
                 {
-                    p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate, false);
-                }, 9f, "Speedrun Tertiary RPCSetRole");
+                    p.CoSetRole(AmongUs.GameOptions.RoleTypes.Crewmate, false);
+                }
             }
         }
 

@@ -11,6 +11,11 @@ public static class FixedUpdate
 {
     public static void Postfix()
     {
+        if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance)
+        {
+            Main.GameTimer += Time.fixedDeltaTime;
+        }
+
         GameObject n = GameObject.Find("NewRequestInactive");
         if (n != null)
         {
@@ -69,8 +74,6 @@ class FixedUpdateInGamePatch
         // Speedrun
         if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek && g == null)
         {
-            Main.NormalOptions.NumEmergencyMeetings = 0;
-
             Main.NormalOptions.TaskBarMode = 0;
 
             if (__instance.AllTasksCompleted() && Utils.InGame && Utils.GamePastRoleSelection && !Utils.HandlingGameEnd)
@@ -111,9 +114,7 @@ class FixedUpdateInGamePatch
         {
             // 2 = Shift and Seek
             if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek && Options.CrewAutoWinsGameAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
-            {
-                Main.GameTimer += Time.fixedDeltaTime;
-                        
+            {                        
                 if (Main.GameTimer > Options.CrewAutoWinsGameAfter.GetInt())
                 {
                     Main.GameTimer = 0f;
@@ -125,9 +126,7 @@ class FixedUpdateInGamePatch
             }
             // 3 = Speedrun
             if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek && Options.GameAutoEndsAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
-            {
-                Main.GameTimer += Time.fixedDeltaTime;
-                        
+            {                        
                 if (Main.GameTimer > Options.GameAutoEndsAfter.GetInt())
                 {
                     Main.GameTimer = 0f;

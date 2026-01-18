@@ -14,7 +14,7 @@ class ReportDeadBodyPatch
     {
         if (!AmongUsClient.Instance.AmHost) return true;
 
-        if (Options.DisableReport.GetBool() && target != null || Options.Gamemode.GetValue() == 2)
+        if (Options.DisableReport.GetBool() && target != null || Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
         {
             Logger.Info($" Stopped {__instance.Data.PlayerName} reporting the body of {target.PlayerName}", "ReportDeadBodyPatch");
             return false;

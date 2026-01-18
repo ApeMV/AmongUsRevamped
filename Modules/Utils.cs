@@ -386,5 +386,6 @@ public static class Utils
         writer.Write(gameOverReason);
         AmongUsClient.Instance.FinishEndGame(writer);
         HandlingGameEnd = false;
+        Logger.Info(" -------- GAME ENDED --------", "ManualEndGame");
     }
 }
