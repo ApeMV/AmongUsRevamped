@@ -388,4 +388,21 @@ public static class Utils
         HandlingGameEnd = false;
         Logger.Info(" -------- GAME ENDED --------", "ManualEndGame");
     }
+
+    public static void DumpLog()
+    {
+        string f = $"{Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/AUR-logs/";
+        string t = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
+        string filename = $"{f}AUR-{Main.ModVersion}-{t}.log";
+        if (!Directory.Exists(f)) Directory.CreateDirectory(f);
+        FileInfo file = new(@$"{Environment.CurrentDirectory}/BepInEx/LogOutput.log");
+        file.CopyTo(@filename);
+
+        if (PlayerControl.LocalPlayer != null)
+        {
+            HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"/Dump command activated\n\nFile: AUR-{Main.ModVersion}-{t}");
+            ProcessStartInfo psi = new("Explorer.exe") { Arguments = "/e,/select," + @filename.Replace("/", "\\") };
+            Process.Start(psi);
+        }
+    }
 }

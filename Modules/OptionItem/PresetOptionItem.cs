@@ -9,7 +9,7 @@ namespace AmongUsRevamped
         public PresetOptionItem(int defaultValue, TabGroup tab)
         : base(0, "Preset", defaultValue, tab, true)
         {
-            Rule = (0, 9, 1);
+            Rule = (0, 4, 1);
         }
         public static PresetOptionItem Create(int defaultValue, TabGroup tab)
         {
@@ -27,11 +27,6 @@ namespace AmongUsRevamped
                 2 => Main.Preset3.Value == (string)Main.Preset3.DefaultValue ? "Preset 3" : Main.Preset3.Value,
                 3 => Main.Preset4.Value == (string)Main.Preset4.DefaultValue ? "Preset 4" : Main.Preset4.Value,
                 4 => Main.Preset5.Value == (string)Main.Preset5.DefaultValue ? "Preset 5" : Main.Preset5.Value,
-                5 => Main.Preset6.Value == (string)Main.Preset6.DefaultValue ? "Preset 6" : Main.Preset6.Value,
-                6 => Main.Preset7.Value == (string)Main.Preset7.DefaultValue ? "Preset 7" : Main.Preset7.Value,
-                7 => Main.Preset8.Value == (string)Main.Preset8.DefaultValue ? "Preset 8" : Main.Preset8.Value,
-                8 => Main.Preset9.Value == (string)Main.Preset9.DefaultValue ? "Preset 9" : Main.Preset9.Value,
-                9 => Main.Preset10.Value == (string)Main.Preset10.DefaultValue ? "Preset 10" : Main.Preset10.Value,
                 _ => null,
             };
         }

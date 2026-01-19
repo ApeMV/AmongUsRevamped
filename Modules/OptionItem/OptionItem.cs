@@ -174,7 +174,7 @@ namespace AmongUsRevamped
 
         public static void SwitchPreset(int newPreset)
         {
-            CurrentPreset = Math.Clamp(newPreset, 0, 9);
+            CurrentPreset = Math.Clamp(newPreset, 0, 4);
 
             foreach (var op in AllOptions)
                 op.Refresh();

@@ -2,6 +2,8 @@
 using InnerNet;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 // https://github.com/SuperNewRoles/SuperNewRoles/blob/master/SuperNewRoles/Patches/LobbyBehaviourPatch.cs
 namespace AmongUsRevamped;
@@ -15,11 +17,38 @@ internal static class ChatControllerUpdatePatch
         if (Main.DarkTheme.Value)
         {
             __instance.freeChatField.background.color = new Color32(40, 40, 40, byte.MaxValue);
+            __instance.freeChatField.textArea.compoText.Color(Color.white);
+            __instance.freeChatField.textArea.outputText.color = Color.white;
 
             __instance.quickChatField.background.color = new Color32(40, 40, 40, byte.MaxValue);
             __instance.quickChatField.text.color = Color.white;
         }
-        else __instance.freeChatField.textArea.outputText.color = Color.black;
+        else
+        {
+            __instance.freeChatField.background.color = Color.white;
+            __instance.freeChatField.textArea.compoText.Color(Color.black);
+            __instance.freeChatField.textArea.outputText.color = Color.black;
+
+            __instance.quickChatField.background.color = Color.white;
+            __instance.quickChatField.text.color = Color.black;
+        }
+    }
+}
+
+[HarmonyPatch(typeof(ChatBubble), nameof(ChatBubble.SetName))]
+internal static class ChatBubbleSetNamePatch
+{
+    public static void Postfix(ChatBubble __instance, [HarmonyArgument(2)] bool voted)
+    {
+        PlayerControl seer = PlayerControl.LocalPlayer;
+        PlayerControl target = __instance.playerInfo.Object;
+
+        if (Main.DarkTheme.Value)
+        {
+            __instance.Background.color = new(0.1f, 0.1f, 0.1f, 1f);
+            __instance.TextArea.color = Color.white;
+            if (__instance.playerInfo.Object.Data.IsDead && Utils.InGame) __instance.Background.color = new(0.1f, 0.1f, 0.1f, 0.7f);
+        }
     }
 }
 
@@ -40,6 +69,14 @@ internal static class SendChatPatch
         string text = __instance.freeChatField.textArea.text.Trim();
 
         if (!AmongUsClient.Instance.AmHost) return true;
+
+        if (text == "/dump")
+        {
+            Utils.DumpLog();
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;
+        }
 
         if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
         {
@@ -102,22 +139,27 @@ internal static class SendChatPatch
             }
             return false;
         }
+        
+        bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
+        bool col2  = text.StartsWith("/color ");
+        bool col3 = text.StartsWith("/colour ");
 
-        else
+        if (col1 || col2 || col3)
         {
-            bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
-            bool col2  = text.StartsWith("/color ");
-
-            bool col3 = text.StartsWith("/colour ");
-
             string argCol = text.Substring(col1 ? 5 : col2 ? 7 : col3 ? 8 : 0).Trim();
 
-            if (Utils.TryGetColorId(argCol, out byte colId))
+            if (Utils.TryGetColorId(argCol, out byte colId) && (col1 || col2 || col3))
             {
                 PlayerControl.LocalPlayer.RpcSetColor(colId);
                 __instance.freeChatField.textArea.Clear();
                 __instance.freeChatField.textArea.SetText(string.Empty);
             }
+
+            return false;
+        }
+
+        else
+        {
 
             bool isKick = text.StartsWith("/kick ");
             bool isBan  = text.StartsWith("/ban ");
@@ -254,14 +296,12 @@ public static class RPCHandlerPatch
                     }
                 }
 
-                else
+                bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
+                bool col2  = text.StartsWith("/color ");
+                bool col3 = text.StartsWith("/colour ");
+
+                if ((col1 || col2 || col3) && !Utils.InGame)
                 {
-
-                    bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
-                    bool col2  = text.StartsWith("/color ");
-
-                    bool col3 = text.StartsWith("/colour ");
-
                     string argCol = text.Substring(col1 ? 5 : col2 ? 7 : col3 ? 8 : 0).Trim();
 
                     if (Utils.TryGetColorId(argCol, out byte colId))
@@ -272,6 +312,9 @@ public static class RPCHandlerPatch
                             __instance.RpcSetColor(colId);
                         }    
                     }
+                }
+                else
+                {
 
                     if (!Utils.IsPlayerModerator(__instance.Data.FriendCode)) return;
                     // Banning works by name and color. Commands are seperated incase someone has a color as their name

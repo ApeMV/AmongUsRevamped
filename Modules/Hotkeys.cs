@@ -41,5 +41,12 @@ internal class Hotkeys
         {
             PlayerControl.LocalPlayer.Collider.enabled = !Input.GetKey(KeyCode.LeftControl);
         }
+
+        if (Input.GetKeyDown(KeyCode.C) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening && Utils.IsLobby)
+        {
+            Logger.Info("Resetted start countdown", "KeyCommand");
+            GameStartManager.Instance.ResetStartState();
+            Logger.SendInGame("Starting countdown canceled");
+        }
     }
 }

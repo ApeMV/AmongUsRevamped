@@ -296,7 +296,7 @@ namespace AmongUsRevamped
                 baseGameSetting = new StringGameSetting
                 {
                     Type = OptionTypes.String,
-                    Values = new StringNames[10],
+                    Values = new StringNames[5],
                     Index = presetItem.GetInt(),
                 };
             }

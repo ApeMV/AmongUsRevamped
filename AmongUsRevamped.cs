@@ -24,11 +24,6 @@ public partial class Main : BasePlugin
     public static ConfigEntry<string> Preset3 { get; private set; }
     public static ConfigEntry<string> Preset4 { get; private set; }
     public static ConfigEntry<string> Preset5 { get; private set; }
-    public static ConfigEntry<string> Preset6 { get; private set; }
-    public static ConfigEntry<string> Preset7 { get; private set; }
-    public static ConfigEntry<string> Preset8 { get; private set; }
-    public static ConfigEntry<string> Preset9 { get; private set; }
-    public static ConfigEntry<string> Preset10 { get; private set; }
 
     public static ConfigEntry<bool> GM { get; private set; }
     public static ConfigEntry<bool> UnlockFps { get; private set; }
@@ -40,7 +35,7 @@ public partial class Main : BasePlugin
     public static NormalGameOptionsV10 NormalOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentNormalGameOptions : null;
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.3.1";
+    public const string ModVersion = "v1.3.2";
 
     public static float GameTimer;
 
@@ -78,11 +73,6 @@ public partial class Main : BasePlugin
         Preset3 = Config.Bind("Preset Name Options", "Preset3", "Preset 3");
         Preset4 = Config.Bind("Preset Name Options", "Preset4", "Preset 4");
         Preset5 = Config.Bind("Preset Name Options", "Preset5", "Preset 5");
-        Preset6 = Config.Bind("Preset Name Options", "Preset6", "Preset 6");
-        Preset7 = Config.Bind("Preset Name Options", "Preset7", "Preset 7");
-        Preset8 = Config.Bind("Preset Name Options", "Preset8", "Preset 8");
-        Preset9 = Config.Bind("Preset Name Options", "Preset9", "Preset 9");
-        Preset10 = Config.Bind("Preset Name Options", "Preset10", "Preset 10");
 
         AutoStart = Config.Bind("Client Options", "Auto Start", false);
         GM = Config.Bind("Client Options", "Game Master", false);
