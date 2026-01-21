@@ -35,7 +35,7 @@ public partial class Main : BasePlugin
     public static NormalGameOptionsV10 NormalOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentNormalGameOptions : null;
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.3.2";
+    public const string ModVersion = "v1.3.3";
 
     public static float GameTimer;
 

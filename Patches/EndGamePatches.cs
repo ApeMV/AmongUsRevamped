@@ -10,6 +10,7 @@ public static class EndGameManagerPatch
 {
     public static void Postfix(EndGameManager __instance)
     {
+        Logger.Info(" -------- GAME ENDED --------", "EndGame");
         Utils.ClearLeftoverData();
         
         EndGameNavigation navigation = __instance.Navigation;
@@ -54,8 +55,6 @@ class NormalGameEndChecker
         {
             LastWinReason = $"★ Impostors win! (Sabotage)\n\nImpostors:\n★" + string.Join("\n★", imps.Select(p => p.Data.PlayerName));
         }
-
-        Logger.Info(" -------- GAME ENDED --------", "EndGame");
         return true;
     }
 }

@@ -46,6 +46,7 @@ public static class Utils
 
     public static string ColorString(Color32 color, string str) => $"<#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}>{str}</color>";
     public static string ColorToHex(Color32 color) => $"#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}";
+    public static byte GetActiveMapId() => GameOptionsManager.Instance.CurrentGameOptions.MapId;
 
     public static bool IsPlayerModerator(string friendCode)
     {
@@ -79,6 +80,8 @@ public static class Utils
         {
             case TabGroup.SystemSettings:
                 return "System Settings";
+            case TabGroup.CustomRoleSettings:
+                return "Custom Roles";
             case TabGroup.ModSettings:
                 return "Gameplay Settings";
             case TabGroup.GamemodeSettings:

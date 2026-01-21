@@ -182,6 +182,19 @@ public static class MainMenuManagerStartPatch
             bg.SetActive(false);
         }
 
+        var leftPanel = GameObject.Find("LeftPanel");
+        if (leftPanel != null)
+        {
+            leftPanel.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+
+        var div = GameObject.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/Divider");
+        if (div != null)
+        {
+            div.SetActive(false);
+        }
+
+
         Transform tintTrans = __instance.transform.Find("MainUI/Tint");
         var tint = tintTrans.gameObject;
         if (tint != null)

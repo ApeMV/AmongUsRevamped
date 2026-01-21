@@ -10,7 +10,9 @@ internal class Hotkeys
 {
     public static void Postfix()
     {
+        // I don't know which psychopath would use right keys, but I know someday, someone will complain
         bool Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        bool Ctrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
         bool Enter = Input.GetKeyDown(KeyCode.Return);
 
         if (Input.GetKey(KeyCode.L) && Shift && Enter)
@@ -39,7 +41,7 @@ internal class Hotkeys
 
         if ((!AmongUsClient.Instance.IsGameStarted || !Utils.IsOnlineGame) && Utils.CanMove && PlayerControl.LocalPlayer.Collider != null)
         {
-            PlayerControl.LocalPlayer.Collider.enabled = !Input.GetKey(KeyCode.LeftControl);
+            PlayerControl.LocalPlayer.Collider.enabled = !Ctrl;
         }
 
         if (Input.GetKeyDown(KeyCode.C) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening && Utils.IsLobby)

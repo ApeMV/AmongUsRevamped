@@ -21,6 +21,28 @@ namespace AmongUsRevamped
             taskOptionsLoad.Wait();
         }
 
+    public static class CL
+    {
+        public static Color32 Hex(string hex)
+        {
+            if (hex.StartsWith("#"))
+            hex = hex.Substring(1);
+
+            if (hex.Length == 3)
+            {
+                hex = $"{hex[0]}{hex[0]}{hex[1]}{hex[1]}{hex[2]}{hex[2]}";
+            }
+
+            if (hex.Length != 6)
+                throw new System.ArgumentException("Hex color must be 6 or 3 characters long.");
+
+            byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+
+            return new Color32(r, g, b, 255);
+    }
+}
         public const int PresetId = 0;
 
         private static readonly string[] presets =
@@ -70,12 +92,14 @@ namespace AmongUsRevamped
         public static OptionItem AllowFortegreen;
         public static OptionItem NoGameEnd;
         
-        //Mod
+        //Gameplay
+        public static OptionItem TabGroupGameplayGeneral;
         public static OptionItem DisableSabotage;
         public static OptionItem DisableCloseDoor;
 
         public static OptionItem DisableReport;
 
+        public static OptionItem TabGroupTasks;
         public static OptionItem OverrideTaskSettings;
 
         public static OptionItem AllPlayersSameTasks;
@@ -201,6 +225,13 @@ namespace AmongUsRevamped
         public static OptionItem SpeedrunSettingsOverride;
         public static OptionItem GameAutoEndsAfter;
 
+        // Roles
+        public static OptionItem TabGroupCrewmate;
+
+        public static OptionItem TabGroupNeutral;
+        public static OptionItem JesterPerc;        
+
+        public static OptionItem TabGroupImpostor;
 
         public static bool IsLoaded = false;
 
@@ -254,6 +285,24 @@ namespace AmongUsRevamped
             NoGameEnd = BooleanOptionItem.Create(60383, "No Game End", false, TabGroup.SystemSettings, false)
                 .SetColor(Color.red);
 
+
+
+
+            // Custom role settings
+            TabGroupCrewmate = TextOptionItem.Create(100000, "Crewmate Roles", TabGroup.CustomRoleSettings)
+                .SetColor(CL.Hex("#8cffff"));
+
+            TabGroupNeutral = TextOptionItem.Create(101000, "Neutral Roles", TabGroup.CustomRoleSettings)
+                .SetColor(CL.Hex("#FFFF99"));
+            JesterPerc = IntegerOptionItem.Create(101001, "PLACEHOLDER", new(0, 100, 5), 0, TabGroup.CustomRoleSettings, false)
+                .SetValueFormat(OptionFormat.Percent)
+                .SetColor(CL.Hex("#ec62a5"));
+
+            TabGroupImpostor = TextOptionItem.Create(102000, "Impostor Roles", TabGroup.CustomRoleSettings)
+                .SetColor(CL.Hex("#ff1919"));
+
+
+
             // Gamemode Settings
             TabGroupHNS = TextOptionItem.Create(70000, "Hide and Seek", TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
@@ -282,23 +331,22 @@ namespace AmongUsRevamped
 
 
             // Gameplay Settings
+            TabGroupGameplayGeneral = TextOptionItem.Create(60564, "General", TabGroup.ModSettings)
+                .SetColor(Color.blue);
             DisableSabotage = BooleanOptionItem.Create(60565, "Disable Critical Sabotages", false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue))
-                .SetHeader(true);
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisableCloseDoor = BooleanOptionItem.Create(60566, "Disable Door Sabotages", false, TabGroup.ModSettings, false)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisableReport = BooleanOptionItem.Create(60520, "Disable Body Reports", false, TabGroup.ModSettings, false)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
 
 
-
-            OverrideTaskSettings = BooleanOptionItem.Create(22998, "<#ffd>Ove<#ffb>rri<#ff9>de T<#ffb>ask <#ffd>Set<#ffb>tin<#ff9>gs", false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(239, 89, 175, byte.MaxValue))
-                .SetHeader(true);
-
-            AllPlayersSameTasks = BooleanOptionItem.Create(22999, "Everyone has same tasks", false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(255, 255, 153, byte.MaxValue))
-                .SetParent(OverrideTaskSettings);
+            TabGroupTasks = TextOptionItem.Create(22997, "Tasks", TabGroup.ModSettings)
+                .SetColor(Color.yellow);
+            AllPlayersSameTasks = BooleanOptionItem.Create(22998, "Everyone has same tasks", false, TabGroup.ModSettings, false)
+                .SetColor(new Color32(255, 255, 153, byte.MaxValue));
+            OverrideTaskSettings = BooleanOptionItem.Create(22999, "<#ffd>Di<#ffb>sa<#ff9>bl<#ffb>e T<#ffd>as<#ffb>ks", false, TabGroup.ModSettings, false)
+                .SetColor(new Color32(239, 89, 175, byte.MaxValue));
 
             DisableMiraTasks = BooleanOptionItem.Create(23000, "Disable Mira HQ Tasks", false, TabGroup.ModSettings, false)
                 .SetColor(new Color32(173, 216, 230, byte.MaxValue))
