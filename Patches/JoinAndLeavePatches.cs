@@ -14,6 +14,8 @@ internal static class OnGameJoinedPatch
     public static bool AutoStartCheck;
     public static void Postfix()
     {
+        Logger.Info(" -------- JOINED GAME --------", "OnGameJoined");
+
         if (!AmongUsClient.Instance.AmHost) return;
 
         WaitingForChat = false;

@@ -14,6 +14,10 @@ internal static class ChatControllerUpdatePatch
 
     public static void Postfix(ChatController __instance)
     {
+        if (__instance == null || __instance.freeChatField == null || __instance.freeChatField.textArea == null || __instance.freeChatField.background == null || __instance.freeChatField.textArea.compoText == null || __instance.freeChatField.textArea.outputText == null) return;
+
+        if (__instance.quickChatField == null || __instance.quickChatField.background == null || __instance.quickChatField.text == null) return;
+
         if (Main.DarkTheme.Value)
         {
             __instance.freeChatField.background.color = new Color32(40, 40, 40, byte.MaxValue);
@@ -40,6 +44,8 @@ internal static class ChatBubbleSetNamePatch
 {
     public static void Postfix(ChatBubble __instance, [HarmonyArgument(2)] bool voted)
     {
+        if (__instance == null || __instance.playerInfo == null || __instance.playerInfo.Object == null || __instance.playerInfo?.Object?.Data == null || __instance.TextArea == null) return;
+
         PlayerControl seer = PlayerControl.LocalPlayer;
         PlayerControl target = __instance.playerInfo.Object;
 
@@ -47,6 +53,7 @@ internal static class ChatBubbleSetNamePatch
         {
             __instance.Background.color = new(0.1f, 0.1f, 0.1f, 1f);
             __instance.TextArea.color = Color.white;
+
             if (__instance.playerInfo.Object.Data.IsDead && Utils.InGame) __instance.Background.color = new(0.1f, 0.1f, 0.1f, 0.7f);
         }
     }
@@ -55,14 +62,14 @@ internal static class ChatBubbleSetNamePatch
 [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendChat))]
 internal static class SendChatPatch
 {
-    public static string noKcdMode = "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!";
-    public static string SnSModeOne = "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nSabotages & Meetings = Off";
-    public static string SnSModeTwo = $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Utils.BasicIntToWord(Options.MisfiresToSuicide.GetInt())} wrong kills = suicide";
-    public static string speedrunMode = $"Speedrun:\n\nEveryone is a crewmate The 1st player to finish tasks wins the game Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s";
+    public static string noKcdMode => "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!";
+    public static string SnSModeOne => "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nSabotages & Meetings = Off";
+    public static string SnSModeTwo => $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Utils.BasicIntToWord(Options.MisfiresToSuicide.GetInt())} wrong kills = suicide";
+    public static string speedrunMode => $"Speedrun:\n\nEveryone is a crewmate The 1st player to finish tasks wins the game Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s";
 
-    public static string allCommandsFull = "Commands:\n/r - Current mode description\n/0kc, /sns, /sp - Specific mode description\n/l - Shows last winner info\n/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color";
-    public static string allCommandsOne = "Commands:\n/r - Current mode description\n/0kc, /sns, /sp - Specific mode description\n/l - Shows last winner info";
-    public static string allCommandsTwo = "/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color";
+    public static string allCommandsFull => "Commands:\n/r - Current mode description\n/0kc, /sns, /sp - Specific mode description\n/l - Shows last winner info\n/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color";
+    public static string allCommandsOne => "Commands:\n/r - Current mode description\n/0kc, /sns, /sp - Specific mode description\n/l - Shows last winner info";
+    public static string allCommandsTwo => "/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color";
 
     public static bool Prefix(ChatController __instance)
     {

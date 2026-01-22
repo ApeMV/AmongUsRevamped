@@ -12,22 +12,23 @@ public static class GameStartManagerUpdatePatch
 
     public static void Prefix(GameStartManager __instance)
     {
-        if (!GameStartManager.InstanceExists || AmongUsClient.Instance == null || !AmongUsClient.Instance.AmHost) return;
+        if (__instance == null) return;
+        if (AmongUsClient.Instance == null || !AmongUsClient.Instance.AmHost) return;
 
-        var data = GameData.Instance;
+        // Only run our custom logic when safe
+        if (__instance.StartButton == null || __instance.GameStartText == null) return;
 
         __instance.MinPlayers = 1;
 
-        if (Main.AutoStart.Value && OnGameJoinedPatch.AutoStartCheck && GameStartManager.InstanceExists && GameStartManager.Instance.startState != GameStartManager.StartingStates.Countdown && data != null && data.PlayerCount >= Options.PlayerAutoStart.GetInt())
+        if (Main.AutoStart.Value &&
+            OnGameJoinedPatch.AutoStartCheck &&
+            GameStartManager.InstanceExists &&
+            __instance.startState != GameStartManager.StartingStates.Countdown &&
+            GameData.Instance?.PlayerCount >= Options.PlayerAutoStart.GetInt())
         {
-            GameStartManager.Instance.startState = GameStartManager.StartingStates.Countdown;
-            GameStartManager.Instance.countDownTimer = Options.AutoStartTimer.GetFloat();
-
-            var sb = GameStartManager.Instance?.StartButton;
-            if (sb != null)
-            {
-                sb.gameObject.SetActive(false);
-            }
+            __instance.startState = GameStartManager.StartingStates.Countdown;
+            __instance.countDownTimer = Options.AutoStartTimer.GetFloat();
+            __instance.StartButton.gameObject.SetActive(false);
             Autostarting = true;
         }
 
@@ -35,7 +36,6 @@ public static class GameStartManagerUpdatePatch
         {
             __instance.countDownTimer = Options.StartCountdown.GetInt();
             CustomTimerApplied = true;
-
         }
 
         if (__instance.startState != GameStartManager.StartingStates.Countdown)
@@ -66,54 +66,61 @@ public static class GameStartManagerUpdatePatch
 
         if (__instance.GameStartText != null)
         {
-            __instance.GameStartText.transform.localPosition = new Vector3(__instance.GameStartText.transform.localPosition.x, 2f, __instance.GameStartText.transform.localPosition.z);
+            __instance.GameStartText.transform.localPosition =
+                new Vector3(__instance.GameStartText.transform.localPosition.x, 2f, __instance.GameStartText.transform.localPosition.z);
         }
 
         if (GameStartManagerStartPatch.cancelButton != null)
         {
-            GameStartManagerStartPatch.cancelButton.gameObject.SetActive(__instance.startState == GameStartManager.StartingStates.Countdown);
+            GameStartManagerStartPatch.cancelButton.gameObject.SetActive(
+                __instance.startState == GameStartManager.StartingStates.Countdown);
         }
     }
 }
 
-[HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
-public class GameStartManagerStartPatch
-{
-    public static TextMeshPro warningText;
-    private static Vector3 GameStartTextlocalPosition;
-    public static PassiveButton cancelButton;
-
-    public static void Postfix(GameStartManager __instance)
+    [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
+    public class GameStartManagerStartPatch
     {
-        warningText = UnityEngine.Object.Instantiate(__instance.GameStartText, __instance.transform.parent);
-        warningText.name = "WarningText";
-        warningText.transform.localPosition = new(0f, __instance.transform.localPosition.y + 3f, -1f);
-        warningText.gameObject.SetActive(false);
+        public static TextMeshPro warningText;
+        public static PassiveButton cancelButton;
 
-        cancelButton = UnityEngine.Object.Instantiate(__instance.StartButton, __instance.transform);
-        cancelButton.name = "CancelButton";
-        var cancelLabel = cancelButton.buttonText;
-        cancelLabel.DestroyTranslator();
-        cancelLabel.text = "Cancel";
-        //cancelButton.transform.localScale = new(0.5f, 0.5f, 1f);
-        var cancelButtonInactiveRenderer = cancelButton.inactiveSprites.GetComponent<SpriteRenderer>();
-        cancelButtonInactiveRenderer.color = new(0.8f, 0f, 0f, 1f);
-        var cancelButtonActiveRenderer = cancelButton.activeSprites.GetComponent<SpriteRenderer>();
-        cancelButtonActiveRenderer.color = Color.red;
-        var cancelButtonInactiveShine = cancelButton.inactiveSprites.transform.Find("Shine");
-        if (cancelButtonInactiveShine)
+        public static bool Prefix(GameStartManager __instance)
         {
-            cancelButtonInactiveShine.gameObject.SetActive(false);
+            // If we are not in lobby, skip vanilla Start
+            if (__instance == null) return false;
+            if (!Utils.IsLobby) return false;
+
+            // Ensure all required objects exist
+            if (__instance.GameStartText == null || __instance.StartButton == null)
+                return false;
+
+            return true;
         }
-        cancelButton.activeTextColor = cancelButton.inactiveTextColor = Color.white;
-        //cancelButton.transform.localPosition = new(2f, 0.13f, 0f);
-        GameStartTextlocalPosition = __instance.GameStartText.transform.localPosition;
-        cancelButton.OnClick = new();
-        cancelButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+
+        public static void Postfix(GameStartManager __instance)
         {
-            __instance.ResetStartState();
-        }));
-        cancelButton.gameObject.SetActive(false);
+            if (__instance == null || !Utils.IsLobby) return;
+
+            warningText = UnityEngine.Object.Instantiate(__instance.GameStartText, __instance.transform.parent);
+            warningText.name = "WarningText";
+            warningText.transform.localPosition = new Vector3(0f, __instance.transform.localPosition.y + 3f, -1f);
+            warningText.gameObject.SetActive(false);
+
+            cancelButton = UnityEngine.Object.Instantiate(__instance.StartButton, __instance.transform);
+            cancelButton.name = "CancelButton";
+
+            var cancelLabel = cancelButton.buttonText;
+            cancelLabel.DestroyTranslator();
+            cancelLabel.text = "Cancel";
+
+            cancelButton.activeTextColor = cancelButton.inactiveTextColor = Color.white;
+            cancelButton.gameObject.SetActive(false);
+
+            cancelButton.OnClick = new();
+            cancelButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+            {
+                __instance.ResetStartState();
+            }));
+        }
     }
-}
     
