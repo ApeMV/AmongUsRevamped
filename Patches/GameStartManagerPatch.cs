@@ -12,15 +12,22 @@ public static class GameStartManagerUpdatePatch
 
     public static void Prefix(GameStartManager __instance)
     {
-        if (!AmongUsClient.Instance.AmHost || AmongUsClient.Instance == null) return;
+        if (!GameStartManager.InstanceExists || AmongUsClient.Instance == null || !AmongUsClient.Instance.AmHost) return;
+
+        var data = GameData.Instance;
 
         __instance.MinPlayers = 1;
 
-        if (Main.AutoStart.Value && OnGameJoinedPatch.AutoStartCheck && GameStartManager.InstanceExists && GameStartManager.Instance.startState != GameStartManager.StartingStates.Countdown && GameData.Instance?.PlayerCount >= Options.PlayerAutoStart.GetInt())
+        if (Main.AutoStart.Value && OnGameJoinedPatch.AutoStartCheck && GameStartManager.InstanceExists && GameStartManager.Instance.startState != GameStartManager.StartingStates.Countdown && data != null && data.PlayerCount >= Options.PlayerAutoStart.GetInt())
         {
             GameStartManager.Instance.startState = GameStartManager.StartingStates.Countdown;
             GameStartManager.Instance.countDownTimer = Options.AutoStartTimer.GetFloat();
-            GameStartManager.Instance?.StartButton.gameObject.SetActive(false);
+
+            var sb = GameStartManager.Instance?.StartButton;
+            if (sb != null)
+            {
+                sb.gameObject.SetActive(false);
+            }
             Autostarting = true;
         }
 
@@ -37,24 +44,35 @@ public static class GameStartManagerUpdatePatch
             CustomTimerApplied = false;
         }
     }
+
     public static void Postfix(GameStartManager __instance)
     {
         string warningMessage = "";
 
         if (!AmongUsClient.Instance.AmHost) return;
 
-        if (warningMessage == "")
+        if (GameStartManagerStartPatch.warningText != null)
         {
-            GameStartManagerStartPatch.warningText.gameObject.SetActive(false);
-        }
-        else
-        {
-            GameStartManagerStartPatch.warningText.text = warningMessage;
-            GameStartManagerStartPatch.warningText.gameObject.SetActive(true);
+            if (warningMessage == "")
+            {
+                GameStartManagerStartPatch.warningText.gameObject.SetActive(false);
+            }
+            else
+            {
+                GameStartManagerStartPatch.warningText.text = warningMessage;
+                GameStartManagerStartPatch.warningText.gameObject.SetActive(true);
+            }
         }
 
-        __instance.GameStartText.transform.localPosition = new Vector3(__instance.GameStartText.transform.localPosition.x, 2f, __instance.GameStartText.transform.localPosition.z);
-        GameStartManagerStartPatch.cancelButton.gameObject.SetActive(__instance.startState == GameStartManager.StartingStates.Countdown);
+        if (__instance.GameStartText != null)
+        {
+            __instance.GameStartText.transform.localPosition = new Vector3(__instance.GameStartText.transform.localPosition.x, 2f, __instance.GameStartText.transform.localPosition.z);
+        }
+
+        if (GameStartManagerStartPatch.cancelButton != null)
+        {
+            GameStartManagerStartPatch.cancelButton.gameObject.SetActive(__instance.startState == GameStartManager.StartingStates.Countdown);
+        }
     }
 }
 
