@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.2.1):
+# 🎮 Features (v1.4.0):
 - <b>🔶 Client Side settings:</b>
 - Game Master
 - Unlock FPS
@@ -45,6 +45,7 @@
 - Moderator system
 - Banlist system
 - Enable No Game End
+- Custom starting countdown
 - <b>🔶 Automation settings:</b>
 - Auto start game and conditions for it
 - Auto rejoin lobby
@@ -53,30 +54,51 @@
 - Disable critical sabotages
 - Disable door sabotages
 - Disable body reporting
-- Enable/Disable any desired tasks
+- Enable/Disable any task
 - All players have same tasks
 - Hide and Seek: Custom Impostor count
 - <b>🔶 Custom Gamemodes:</b>
 - 0 Kill Cooldown
 - Shift and Seek
 - Speedrun
-- <b>🔷 Extra features:</b>
-- Shift + L + Enter - Force End Game
-- Shift + M + Enter - Force Call/Close Meeting
-- /help command
-- Specific gamemode info commands -> /0kc, /sns, /sp
-- Current gamemode info command -> /r
+- <b>🔷 Other:</b>
+- Ability to cancel starting countdown
+- Improved main menu
+- Custom anticheat system
 - Zoom out in lobby or when dead
 - Unlimited default Option ranges
 - Logging for useful information
+
 - <b>🎉 And this all without Modded Protocol!</b>
+
+### Hotkeys
+| HotKey              | Function                                    | Usable Scene                       |
+| ------------------- | ------------------------------------------- | ---------------------------------- |
+| `Shift`+`L`+`Enter` | Force End Game                              | In Game                            |
+| `Shift`+`M`+`Enter` | Skip meeting or call meeting                | In Game                            |
+| `C`                 | Cancel game start                           | In Countdown                       |
+| `Shift`             | Start the game immediately                  | In Countdown                       |
+| `Ctrl`              | Noclip in lobby                             | In Lobby                           |
+
+### Chat Commands
+| Command                                     | Function                                          |
+| ------------------------------------------- | ------------------------------------------------- |
+| /h<br>/help                                 | Show command help                                 |
+| /l<br>/win                                  | Show winner                                       |
+| /r                                          | Show current gamemode/roles description           |
+| /0kc<br>/sns</br>/sp                        | Show respective gamemode description              |
+| /ban <name>                                 | Ban a player by name                              |
+| /kick <name>                                | Kick a player by name                             |
+| /cban <color>                               | Ban a player by color                             |
+| /ckick <color>                              | Kick a player by color                            |
+| /dump                                       | Copy your LogOutput file                          |
+| /color <color>                              | Set color                                         |
 ‎ 
 
 **Credit to these mods and their developers for their code:**
 ### :star: [AUnlocker](https://github.com/astra1dev/AUnlocker)
 > - NumberOptionsPatch
 ### :star: [EHR (Formerly TOHE+)](https://github.com/Gurge44/EndlessHostRoles)
-> - Dark Theme
 > - Task Patching
 ### :star: [TOH](https://github.com/tukasa0001/TownOfHost) :
 > - Ban Manager
