@@ -30,77 +30,91 @@ class CreateOptionsPickerPatch
         [HarmonyPostfix]
         public static void Postfix_Initialize(CreateGameMapPicker __instance)
         {
+            float delay = SceneManager.GetActiveScene().name == "MainMenu" ? 0.2f : 0f;
             if (SceneManager.GetActiveScene().name == "FindAGame") return;
-            if (SetDleks2 && SceneManager.GetActiveScene().name == "MainMenu") return;
 
             new LateTask(() =>
             {
-            SetDleks2 = true;
-            int DleksPos = 3;
-            MapSelectButton[] AllMapButton = __instance.transform.GetComponentsInChildren<MapSelectButton>();
+                int DleksPos = 3;
+            
+                MapSelectButton[] AllMapButton = __instance.transform.GetComponentsInChildren<MapSelectButton>();
+                AllMapButton = AllMapButton.Where(x => x.gameObject.name != "DleksButton").ToArray();
 
-            if (AllMapButton != null)
-            {
-                GameObject dlekS_ehT = UnityEngine.Object.Instantiate(AllMapButton[0].gameObject, __instance.transform);
-                dlekS_ehT.transform.position = AllMapButton[DleksPos].transform.position;
-                dlekS_ehT.transform.SetSiblingIndex(DleksPos + 2);
-                MapSelectButton dlekS_ehT_MapButton = dlekS_ehT.GetComponent<MapSelectButton>();
-                DleksButton = dlekS_ehT_MapButton;
-                foreach (var icon in dlekS_ehT_MapButton.MapIcon)
+                if (AllMapButton != null)
                 {
-                    if (icon == null || icon.transform == null) continue;
-                    icon.flipX = true;
-                }
-                dlekS_ehT_MapButton.Button.OnClick.RemoveAllListeners();
-                dlekS_ehT_MapButton.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
-                {
-                    __instance.SelectMap(__instance.AllMapIcons[0]);
-
-                    if (__instance.selectedButton)
+                    GameObject dlekS_ehT = null;
+                    if (!SetDleks2 || SceneManager.GetActiveScene().name != "MainMenu")
                     {
-                        __instance.selectedButton.Button.SelectButton(false);
+                        dlekS_ehT = UnityEngine.Object.Instantiate(AllMapButton[0].gameObject, __instance.transform);
+                        dlekS_ehT.name = "DleksButton";
+                        SetDleks2 = true;
                     }
-                    __instance.selectedButton = dlekS_ehT_MapButton;
-                    __instance.selectedButton.Button.SelectButton(true);
-                    __instance.selectedMapId = 3;
-
-                    if (!Utils.isHideNSeek)
-                        Main.NormalOptions.MapId = 0;
-                    else if (Utils.isHideNSeek)
-                        Main.HideNSeekOptions.MapId = 0;
-
-                    __instance.MapImage.sprite = Utils.LoadSprite($"AmongUsRevamped.Resources.Images.DleksBanner.png", 100f);
-                    __instance.MapName.sprite = Utils.LoadSprite($"AmongUsRevamped.Resources.Images.DleksBanner-Wordart.png", 100f);
-                }));
-
-                for (int i = DleksPos; i < AllMapButton.Length; i++)
-                {
-                    AllMapButton[i].transform.localPosition += new Vector3(0.625f, 0f, 0f);
-                }
-
-                if (DleksButton != null)
-                {
-                    if (SetDleks)
+                    else
                     {
+                        dlekS_ehT = __instance.transform.Find("DleksButton")?.gameObject;
+                    }
+
+                    if (dlekS_ehT == null) return;
+                    dlekS_ehT.name = "DleksButton";
+                    dlekS_ehT.transform.position = AllMapButton[DleksPos].transform.position;
+                    dlekS_ehT.transform.SetSiblingIndex(DleksPos + 2);
+                    MapSelectButton dlekS_ehT_MapButton = dlekS_ehT.GetComponent<MapSelectButton>();
+                    DleksButton = dlekS_ehT_MapButton;
+                
+                    foreach (var icon in dlekS_ehT_MapButton.MapIcon)
+                    {
+                        if (icon == null || icon.transform == null) continue;
+                        icon.flipX = true;
+                    }
+                    dlekS_ehT_MapButton.Button.OnClick.RemoveAllListeners();
+                    dlekS_ehT_MapButton.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+                    {
+                        __instance.SelectMap(__instance.AllMapIcons[0]);
+
                         if (__instance.selectedButton)
                         {
                             __instance.selectedButton.Button.SelectButton(false);
                         }
-                        DleksButton.Button.SelectButton(true);
-                        __instance.selectedButton = DleksButton;
+                        __instance.selectedButton = dlekS_ehT_MapButton;
+                        __instance.selectedButton.Button.SelectButton(true);
                         __instance.selectedMapId = 3;
+
+                        if (!Utils.isHideNSeek)
+                            Main.NormalOptions.MapId = 0;
+                        else if (Utils.isHideNSeek)
+                            Main.HideNSeekOptions.MapId = 0;
 
                         __instance.MapImage.sprite = Utils.LoadSprite($"AmongUsRevamped.Resources.Images.DleksBanner.png", 100f);
                         __instance.MapName.sprite = Utils.LoadSprite($"AmongUsRevamped.Resources.Images.DleksBanner-Wordart.png", 100f);
-                    }
-                    else
+                    }));
+
+                    for (int i = DleksPos; i < AllMapButton.Length; i++)
                     {
-                        DleksButton.Button.SelectButton(false);
+                        AllMapButton[i].transform.localPosition += new Vector3(0.625f, 0f, 0f);
+                    }
+
+                    if (DleksButton != null)
+                    {
+                        if (SetDleks)
+                        {
+                            if (__instance.selectedButton)
+                            {
+                                __instance.selectedButton.Button.SelectButton(false);
+                            }
+                            DleksButton.Button.SelectButton(true);
+                            __instance.selectedButton = DleksButton;
+                            __instance.selectedMapId = 3;
+
+                            __instance.MapImage.sprite = Utils.LoadSprite($"AmongUsRevamped.Resources.Images.DleksBanner.png", 100f);
+                            __instance.MapName.sprite = Utils.LoadSprite($"AmongUsRevamped.Resources.Images.DleksBanner-Wordart.png", 100f);
+                        }
+                        else
+                        {
+                            DleksButton.Button.SelectButton(false);
+                        }
                     }
                 }
-            }
-
-            }, 0.2f, "ApplyDleks");
+            }, delay, "ApplyDleks");
         }
 
         [HarmonyPatch(typeof(GameOptionsMapPicker), nameof(GameOptionsMapPicker.FixedUpdate))]

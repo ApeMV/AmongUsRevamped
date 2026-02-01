@@ -134,9 +134,16 @@ public static class Utils
 
         string name = region.Name;
 
+        // Joining games shows incorrect regions
+        if (!AmongUsClient.Instance.AmHost)
+        {
+            name = "";
+            return name;
+        }
+
         if (AmongUsClient.Instance.NetworkMode != NetworkModes.OnlineGame)
         {
-            name = "Local Game";
+            name = "Server: Local Game";
             return name;
         }
 
@@ -145,9 +152,9 @@ public static class Utils
             // Official servers
             name = name switch
             {
-                "North America" => "NA",
-                "Europe" => "EU",
-                "Asia" => "AS",
+                "North America" => "Server: NA",
+                "Europe" => "Server: EU",
+                "Asia" => "Server: AS",
                 _ => name
             };
 
@@ -160,11 +167,11 @@ public static class Utils
         {
             // Modded Servers
             if (ip.Contains("au-eu"))
-                name = "MEU";
+                name = "Server: MEU";
             else if (ip.Contains("au-as"))
-                name = "MAS";
+                name = "Server: MAS";
             else
-                name = "MNA";
+                name = "Server: MNA";
 
             return name;
         }
@@ -191,6 +198,7 @@ public static class Utils
         LateTask.Tasks.Clear();
         FixedUpdateInGamePatch.ProcessedModerators.Clear();   
         NormalGameEndChecker.ImpCheckComplete = false;
+        CreateOptionsPickerPatch.SetDleks2 = false;
     }
 
     public static PlayerControl[] AllAlivePlayerControls

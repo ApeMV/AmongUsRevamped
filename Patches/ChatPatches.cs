@@ -113,7 +113,7 @@ internal static class SendChatPatch
             return false;
         }
 
-        if (text == "/aur" || text == "/amongusrevamped")
+        if (text == "/aur" || text == "/amongusrevamped" || text == "/socials" || text == "/github" || text == "/discord")
         {
             Utils.ChatCommand(__instance, $"{String.SocialsAll}", "", false);
             return false;
@@ -142,10 +142,7 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                PlayerControl.LocalPlayer.RpcSendChat($"Custom roles:\nThere are no custom roles.");
-                __instance.timeSinceLastMessage = 0.8f;
-                __instance.freeChatField.textArea.Clear();
-                __instance.freeChatField.textArea.SetText(string.Empty);
+                Utils.ChatCommand(__instance, $"CUSTOM ROLES:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
                 break;
 
                 case 1:
@@ -161,6 +158,9 @@ internal static class SendChatPatch
                 break;
 
             }
+            __instance.timeSinceLastMessage = 0.8f;
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
             return false;
         }
         

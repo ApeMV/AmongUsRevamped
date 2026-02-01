@@ -1,0 +1,28 @@
+﻿using Hazel;
+using InnerNet;
+using System;
+using UnityEngine;
+
+namespace AmongUsRevamped;
+
+[HarmonyPatch(typeof(HudManager), nameof(HudManager.CoShowIntro))]
+internal static class CoShowIntroPatch
+{
+    public static void Postfix(IntroCutscene __instance)
+    {
+        Logger.Info("Intro initiated", "d");
+
+        if (!AmongUsClient.Instance.AmHost) return;
+
+        if ((Options.Gamemode.GetValue() == 0 || Options.Gamemode.GetValue() == 1) && !Utils.isHideNSeek)
+        {
+            CustomRoleManagement.AssignRoles();
+        }
+
+        CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
+        {
+            { "Jester", $"{String.Jester}"},
+            { "Mayor", $"{String.Mayor}"}
+        });
+    }
+}

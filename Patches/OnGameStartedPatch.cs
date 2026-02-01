@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AmongUsRevamped;
 
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.CoStartGame))]
-internal class ApplyCustomImpostorCount
+internal class CoStartGamePatch
 {
     public static void Postfix(AmongUsClient __instance)
     {
@@ -15,11 +15,6 @@ internal class ApplyCustomImpostorCount
 
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
-
-        if ((Options.Gamemode.GetValue() == 0 || Options.Gamemode.GetValue() == 1) && !Utils.isHideNSeek)
-        {
-            CustomRolesAssigner.AssignRoles();
-        }
 
         if (Main.GM.Value)
         {

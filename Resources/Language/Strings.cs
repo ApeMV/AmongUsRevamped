@@ -33,5 +33,11 @@ public static class String
     return $"/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color";}}
 
     public static string SocialsAll{get{
-    return $"AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g / 83Zhzhyhya";}}
+    return $"AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya";}}
+
+    public static string Mayor{get{
+    return $"PRIVATE:\n\nYour role is Mayor!\n\nYou are a crewmate with i total votes. Use your voting power to eject Impostors.";}}
+
+    public static string Jester{get{
+    return $"PRIVATE:\n\nYour role is Jester!\nYou are NOT a crewmate!\n\nYou win by getting voted. Act as suspicious as possible.";}}
 }

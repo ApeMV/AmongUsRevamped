@@ -11,7 +11,7 @@ public static class NumberOption_Increase
     {
         if (ModGameOptionsMenu.TabIndex >= 3) return true;
 
-        if (Utils.isHideNSeek || Utils.InGame && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
+        if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
             __instance.Value +=  __instance.Increment;
             __instance.UpdateValue();
@@ -30,7 +30,7 @@ public static class NumberOption_Decrease
     {
         if (ModGameOptionsMenu.TabIndex >= 3) return true;
 
-        if (Utils.isHideNSeek || Utils.InGame && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
+        if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
             __instance.Value -=  __instance.Increment;
             __instance.UpdateValue();
@@ -49,7 +49,7 @@ public static class NumberOption_Initialize
     {
         if (ModGameOptionsMenu.TabIndex >= 3) return;
 
-        if (Utils.isHideNSeek || Utils.InGame && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
+        if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
             __instance.ValidRange = new FloatRange(-900f, 900f);
         }
