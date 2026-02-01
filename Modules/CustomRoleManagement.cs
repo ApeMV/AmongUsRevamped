@@ -69,9 +69,9 @@ public static class CustomRoleManagement
         var impostorRoles = new List<string>();
         var lines = new List<string>();
 
-        if (Options.MayorPerc.GetInt() > 1) crewmateRoles.Add($"Mayor ({Options.MayorPerc.GetInt()}%)");
+        if (Options.MayorPerc.GetInt() > 1) crewmateRoles.Add($"Mayor");
 
-        if (Options.JesterPerc.GetInt() > 1) neutralRoles.Add($"Jester ({Options.JesterPerc.GetInt()})%");
+        if (Options.JesterPerc.GetInt() > 1) neutralRoles.Add($"Jester");
 
         void AddCategory(string header, List<string> roles)
         {

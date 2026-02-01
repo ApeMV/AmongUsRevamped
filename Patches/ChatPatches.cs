@@ -142,7 +142,7 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                Utils.ChatCommand(__instance, $"CUSTOM ROLES:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
+                Utils.ChatCommand(__instance, $"ENABLED CUSTOM ROLES:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
                 break;
 
                 case 1:
@@ -253,6 +253,35 @@ public static class RPCHandlerPatch
                 string text = msgtext.ToLower();
 
                 Logger.Info($" {__instance.Data.PlayerName}: {msgtext}", "SendChat");
+
+                string[] keywords = Options.AutoKickStartStrength.GetBool() ? new[] { "start", "begin", "commence" } : new[] { "start", "begin", "commence", "s t a r t", "go" };
+
+                bool c = false;
+
+                if (Options.AutoKickStartStrength.GetBool())
+                {
+                    c = keywords.Any(k => text.Contains(k));
+                }
+                else
+                {
+                    c = keywords.Any(k => text == k);
+                }
+                if (c && !Utils.IsPlayerModerator(__instance.Data.FriendCode))
+                {
+                    int clientId = __instance.Data.ClientId;
+
+                    if (!Main.SayStartTimes.ContainsKey(clientId))
+                    Main.SayStartTimes.Add(clientId, 0);
+                    Main.SayStartTimes[clientId]++;
+
+                    if (Main.SayStartTimes[clientId] >= Options.AutoKickStartTimes.GetInt())
+                    {
+                        bool sBan = Options.AutoKickStartAsBan.GetBool();
+                        AmongUsClient.Instance.KickPlayer(clientId, sBan);
+                        Logger.Info($" {__instance.Data.PlayerName} was {(sBan ? "banned" : "kicked")} for saying start", "KickAnnoyingKids");
+                        Logger.SendInGame($" {__instance.Data.PlayerName} was {(sBan ? "banned" : "kicked")} for saying start");
+                    }
+                }
 
                 if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
                 {

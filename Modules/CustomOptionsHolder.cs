@@ -78,6 +78,11 @@ namespace AmongUsRevamped
         public static OptionItem ApplyModeratorList;
         public static OptionItem ModeratorCanUseCommand;
 
+        public static OptionItem AutoKickStart;
+        public static OptionItem AutoKickStartAsBan;
+        public static OptionItem AutoKickStartTimes;
+        public static OptionItem AutoKickStartStrength;
+
         public static OptionItem TabGroupAutomation;
 
         public static OptionItem AutoSendGameInfo;
@@ -265,6 +270,15 @@ namespace AmongUsRevamped
             ApplyDenyNameList = BooleanOptionItem.Create(60120, "Apply DenyName List", true, TabGroup.SystemSettings, false);
             ApplyModeratorList = BooleanOptionItem.Create(60121, "Apply Moderator List", true, TabGroup.SystemSettings, false);
             ModeratorCanUseCommand = BooleanOptionItem.Create(60122, "Moderators can use commands", true, TabGroup.SystemSettings, false);
+
+            AutoKickStart = BooleanOptionItem.Create(60123, "Kick Players Who Say Start", false, TabGroup.SystemSettings, false);
+            AutoKickStartAsBan = BooleanOptionItem.Create(60124, "Ban Instead Of Kick", false, TabGroup.SystemSettings, false)
+                .SetParent(AutoKickStart);
+            AutoKickStartTimes = IntegerOptionItem.Create(60125, "Start messages needed to kick", new(1, 10, 1), 1, TabGroup.SystemSettings, false)
+                .SetParent(AutoKickStart)
+                .SetValueFormat(OptionFormat.Times);
+            AutoKickStartStrength = BooleanOptionItem.Create(60126, "Strict detection mode", false, TabGroup.SystemSettings, false)
+                .SetParent(AutoKickStart);
 
             TabGroupAutomation = TextOptionItem.Create(60149, "Automation", TabGroup.SystemSettings)
                 .SetColor(Color.yellow);

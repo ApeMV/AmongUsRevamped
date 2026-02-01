@@ -39,9 +39,11 @@ public partial class Main : BasePlugin
     public static HideNSeekGameOptionsV10 HideNSeekOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentHideNSeekGameOptions : null;
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.4.1";
+    public const string ModVersion = "v1.5.0";
 
     public static float GameTimer;
+
+    public static readonly Dictionary<int, int> SayStartTimes = [];
 
     public static PlayerControl[] AllPlayerControls
     {
