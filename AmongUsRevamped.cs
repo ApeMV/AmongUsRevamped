@@ -11,6 +11,9 @@ using UnityEngine;
 
 namespace AmongUsRevamped;
 
+// dotnet build -c release
+// dotnet build -c android
+
 [BepInAutoPlugin]
 [BepInProcess("Among Us.exe")]
 public partial class Main : BasePlugin

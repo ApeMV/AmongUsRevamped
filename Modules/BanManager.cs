@@ -5,22 +5,30 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using UnityEngine;
 
 // https://github.com/EnhancedNetwork/TownofHost-Enhanced/blob/main/Modules/BanManager.cs
 namespace AmongUsRevamped;
 
 public static class BanManager
 {
+    public static readonly string DataPath =
+#if ANDROID
+        Application.persistentDataPath;
+#else
+        ".";
+#endif
+
     public static string RemoveHtmlTags(this string str) => Regex.Replace(str, "<[^>]*?>", "");
-    private static readonly string DenyNameListPath = "./AUR-DATA/DenyNameList.txt";
-    private static string BanListPath = "./AUR-DATA/BanList.txt";
-    private static string ModeratorListPath = "./AUR-DATA/ModeratorList.txt";
+    private static readonly string DenyNameListPath = $"{DataPath}/AUR-DATA/DenyNameList.txt";
+    private static string BanListPath = $"{DataPath}/AUR-DATA/BanList.txt";
+    private static string ModeratorListPath = $"{DataPath}/AUR-DATA/ModeratorList.txt";
     public static List<string> TempBanWhiteList = [];
     public static void Init()
     {
         try
         {
-            Directory.CreateDirectory("AUR-DATA");
+            if (!Directory.Exists($"{DataPath}/AUR-DATA")) Directory.CreateDirectory($"{DataPath}/AUR-DATA");
 
             if (!File.Exists(DenyNameListPath))
             {
@@ -120,8 +128,9 @@ public static class BanManager
 
         try
         {
-            Directory.CreateDirectory("AUR-DATA");
+            if (!Directory.Exists($"{DataPath}/AUR-DATA")) Directory.CreateDirectory($"{DataPath}/AUR-DATA");
             if (!File.Exists(BanListPath)) File.Create(BanListPath).Close();
+
             using StreamReader sr = new(BanListPath);
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -140,6 +149,21 @@ public static class BanManager
             Logger.Exception(ex, "CheckBanList");
         }
         return false;
+    }
+    public static bool IsPlayerInDenyName(ClientData client, string name)
+    {
+        if (name == "" || !AmongUsClient.Instance.AmHost || !Options.ApplyDenyNameList.GetBool()) return false;
+
+        var deniedNames = File.ReadAllLines(DenyNameListPath);
+
+        if (deniedNames.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => name.Contains(code, StringComparison.OrdinalIgnoreCase)))
+        {
+            AmongUsClient.Instance.KickPlayer(client.Id, false);    
+            Logger.Info($" {name} was kicked because their name was in DenyNameList.txt", "Kick");      
+            Logger.SendInGame($" {name} was kicked because their name was in DenyNameList.txt");    
+            return true;
+        }
+        else return false;
     }
 
 }

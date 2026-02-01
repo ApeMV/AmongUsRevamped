@@ -21,6 +21,7 @@ public static class AmongUsDateTime_UtcNow
 class CreateOptionsPickerPatch
 {
     public static bool SetDleks = false;
+    public static bool SetDleks2;
     private static MapSelectButton DleksButton;
     [HarmonyPatch]
     public static class GameOptionsMapPickerPatch
@@ -30,9 +31,12 @@ class CreateOptionsPickerPatch
         public static void Postfix_Initialize(CreateGameMapPicker __instance)
         {
             if (SceneManager.GetActiveScene().name == "FindAGame") return;
+            if (SetDleks2 && SceneManager.GetActiveScene().name == "MainMenu") return;
 
+            new LateTask(() =>
+            {
+            SetDleks2 = true;
             int DleksPos = 3;
-
             MapSelectButton[] AllMapButton = __instance.transform.GetComponentsInChildren<MapSelectButton>();
 
             if (AllMapButton != null)
@@ -95,6 +99,8 @@ class CreateOptionsPickerPatch
                     }
                 }
             }
+
+            }, 0.2f, "ApplyDleks");
         }
 
         [HarmonyPatch(typeof(GameOptionsMapPicker), nameof(GameOptionsMapPicker.FixedUpdate))]
@@ -105,17 +111,7 @@ class CreateOptionsPickerPatch
 
             if (__instance.MapName == null) return false;
 
-            if (DleksButton != null)
-            {
-                if (__instance.selectedMapId == 3)
-                {
-                    SetDleks = true;
-                }
-                else
-                {
-                    SetDleks = false;
-                }
-            }
+            if (DleksButton != null) SetDleks = __instance.selectedMapId == 3;
 
             if (__instance.selectedMapId == 3)
             {
@@ -203,8 +199,7 @@ class CreateOptionsPickerPatch
             Vector3 position1 = two.transform.position;
             Vector3 position2 = one.transform.position;
             transform1.position = position1;
-            Vector3 vector3 = position2;
-            transform2.position = vector3;
+            transform2.position = position2;
         }
     }
 }

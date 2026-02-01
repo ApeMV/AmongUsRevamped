@@ -52,26 +52,9 @@ public static class Utils
     {
         if (friendCode == "") return false;
 
-        var friendCodesFilePath = @"./AUR-DATA/ModeratorList.txt";
+        var friendCodesFilePath = @$"{BanManager.DataPath}/AUR-DATA/ModeratorList.txt";
         var friendCodes = File.ReadAllLines(friendCodesFilePath);
         return friendCodes.Any(code => code.Contains(friendCode));
-    }
-
-    public static bool IsPlayerInDenyName(ClientData client, string name)
-    {
-        if (name == "" || !AmongUsClient.Instance.AmHost || !Options.ApplyDenyNameList.GetBool()) return false;
-
-        var denyNameFilePath = @"./AUR-DATA/DenyNameList.txt";
-        var deniedNames = File.ReadAllLines(denyNameFilePath);
-
-        if (deniedNames.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => name.Contains(code, StringComparison.OrdinalIgnoreCase)))
-        {
-            AmongUsClient.Instance.KickPlayer(client.Id, false);    
-            Logger.Info($" {name} was kicked because their name was in DenyNameList.txt", "Kick");      
-            Logger.SendInGame($" {name} was kicked because their name was in DenyNameList.txt");    
-            return true;
-        }
-        else return false;
     }
 
     public static string GetTabName(TabGroup tab)
@@ -394,8 +377,12 @@ public static class Utils
 
     public static void DumpLog()
     {
-        string f = $"{Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/AUR-logs/";
         string t = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
+#if ANDROID
+        var f = $"{BanManager.DataPath}/AUR-Logs/{t}";
+#else
+        string f = $"{Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/AUR-logs/";
+#endif
         string filename = $"{f}AUR-{Main.ModVersion}-{t}.log";
         if (!Directory.Exists(f)) Directory.CreateDirectory(f);
         FileInfo file = new(@$"{Environment.CurrentDirectory}/BepInEx/LogOutput.log");
@@ -404,8 +391,10 @@ public static class Utils
         if (PlayerControl.LocalPlayer != null)
         {
             HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"/Dump command activated\n\nFile: AUR-{Main.ModVersion}-{t}");
+#if !ANDROID
             ProcessStartInfo psi = new("Explorer.exe") { Arguments = "/e,/select," + @filename.Replace("/", "\\") };
             Process.Start(psi);
+#endif
         }
     }
 

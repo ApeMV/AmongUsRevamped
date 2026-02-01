@@ -82,6 +82,28 @@ internal static class SendChatPatch
             return false;
         }
 
+        if (text == "/eg" || text == "/endgame")
+        {
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+
+            if (!Utils.InGame) return false;
+            MessageWriter writer = AmongUsClient.Instance.StartEndGame();
+            writer.Write((byte)GameOverReason.ImpostorDisconnect);
+            AmongUsClient.Instance.FinishEndGame(writer);
+            return false;
+        }
+
+        if (text == "/em" || text == "/endmeeting")
+        {
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            
+            if ( !Utils.InGame || !Utils.IsMeeting) return false;
+            MeetingHud.Instance.RpcClose();
+            return false;
+        }
+
         if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
 
         if (text == "/l" || text == "/lastgame" || text == "/win" || text == "/winner")

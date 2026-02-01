@@ -5,15 +5,22 @@ using UnityEngine;
 
 namespace AmongUsRevamped;
 
+#if !ANDROID
 [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
 internal class Hotkeys
 {
     public static void Postfix()
     {
-        // I don't know which psychopath would use right keys, but I know someday, someone will complain
         bool Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         bool Ctrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
         bool Enter = Input.GetKeyDown(KeyCode.Return);
+
+        if ((!AmongUsClient.Instance.IsGameStarted || !Utils.IsOnlineGame) && Utils.CanMove && PlayerControl.LocalPlayer.Collider != null)
+        {
+            PlayerControl.LocalPlayer.Collider.enabled = !Ctrl;
+        }
+        
+        if (!AmongUsClient.Instance.AmHost) return;
 
         if (Input.GetKey(KeyCode.L) && Shift && Enter)
         {
@@ -34,14 +41,9 @@ internal class Hotkeys
             }
         }
 
-        if (Shift && GameStartManager.InstanceExists && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening)
+        if (Shift && GameStartManager.InstanceExists  && GameStartManager.Instance != null && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening)
         {
             GameStartManager.Instance.countDownTimer = 0;
-        }
-
-        if ((!AmongUsClient.Instance.IsGameStarted || !Utils.IsOnlineGame) && Utils.CanMove && PlayerControl.LocalPlayer.Collider != null)
-        {
-            PlayerControl.LocalPlayer.Collider.enabled = !Ctrl;
         }
 
         if (Input.GetKeyDown(KeyCode.C) && GameStartManager.InstanceExists && GameStartManager.Instance != null && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening && Utils.IsLobby)
@@ -52,3 +54,4 @@ internal class Hotkeys
         }
     }
 }
+#endif

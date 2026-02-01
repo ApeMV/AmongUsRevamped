@@ -1,6 +1,11 @@
 ﻿using System;
-using Il2CppSystem.Collections.Generic;
 using UnityEngine;
+
+#if ANDROID
+using System.Collections.Generic;
+#else
+using Il2CppSystem.Collections.Generic;
+#endif
 
 using Object = UnityEngine.Object;
 

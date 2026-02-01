@@ -44,7 +44,10 @@ public static class GameStartManagerUpdatePatch
     {
         string warningMessage = "";
 
-        if (!AmongUsClient.Instance.AmHost || __instance.GameStartText == null) return;
+        if (__instance == null || MeetingHud.Instance != null) return;
+        if (AmongUsClient.Instance == null || !AmongUsClient.Instance.AmHost) return;
+
+        if (__instance.StartButton == null || __instance.GameStartText == null) return;
 
         if (GameStartManagerStartPatch.warningText != null)
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 namespace AmongUsRevamped;
 
 // https://github.com/Yumenopai/TownOfHost_Y
+#if !ANDROID
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
 public static class Zoom
 {
@@ -16,9 +17,7 @@ public static class Zoom
 
     public static void Postfix()
     {
-        bool canZoom =
-            (Utils.IsShip && !Utils.IsMeeting && Utils.CanMove && PlayerControl.LocalPlayer.Data.IsDead)
-            || (Utils.IsLobby && Utils.CanMove);
+        bool canZoom = (Utils.IsShip && !Utils.IsMeeting && Utils.CanMove && PlayerControl.LocalPlayer.Data.IsDead) || (Utils.IsLobby && Utils.CanMove);
 
         if (!canZoom)
         {
@@ -101,3 +100,4 @@ public static class Flag
         OneTimeList.Remove(type);
     }
 }
+#endif
