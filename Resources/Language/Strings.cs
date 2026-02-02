@@ -18,7 +18,7 @@ public static class String
     return $"Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nSabotages & Meetings = Off";}}
 
     public static string SnSModeTwo{get{
-    return $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Utils.BasicIntToWord(Options.MisfiresToSuicide.GetInt())} wrong kills = suicide";}}
+    return $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\n" + "Imp wins by killing\n" + (Options.MisfiresToSuicide.GetInt() == 1 ? "" : $"One wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n") + $"{Utils.BasicIntToWord(Options.MisfiresToSuicide.GetInt())} wrong kill{(Options.MisfiresToSuicide.GetInt() == 1 ? "" : "s")} = suicide";}}
 
     public static string speedrunMode{get{
     return $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s";}}

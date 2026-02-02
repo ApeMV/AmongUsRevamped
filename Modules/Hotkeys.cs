@@ -9,6 +9,7 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
 internal class Hotkeys
 {
+    public static int IncrementMultiplier;
     public static void Postfix()
     {
         bool Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -52,6 +53,10 @@ internal class Hotkeys
             GameStartManager.Instance.ResetStartState();
             Logger.SendInGame("Starting countdown canceled");
         }
+
+        if (Shift) IncrementMultiplier = 5;
+        else if (Ctrl) IncrementMultiplier = 10;
+        else IncrementMultiplier = 1;
     }
 }
 #endif

@@ -67,28 +67,11 @@ internal class CoStartGamePatch
                 (candidates[i], candidates[j]) = (candidates[j], candidates[i]);
             }
 
-            // 1st RpcSetRole forces the role on that user. 2nd is needed to allow them to kill.
             for (int i = 0; i < toAdd; i++)
             {
                 var player = candidates[i];
 
                 player.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
-
-                foreach (var p in PlayerControl.AllPlayerControls)
-                {
-                    if (p.Data.Role.TeamType == RoleTeamTypes.Impostor)
-                    {
-                        new LateTask(() =>
-                        {
-                            p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
-                        }, 5f, "HNS Secondary RPCSetRole");
-
-                        new LateTask(() =>
-                        {
-                            p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
-                        }, 9f, "HNS Tertiary RPCSetRole");
-                    }
-                }
             }
         }
     }

@@ -8,6 +8,11 @@
         <Authors>apemv</Authors>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Configurations>Release;Android</Configurations>
+        <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+      <Configuration>Release</Configuration>
     </PropertyGroup>
 
     <ItemGroup>

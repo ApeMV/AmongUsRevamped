@@ -16,7 +16,7 @@ public class DiscordRPC
     {
         if (activity == null) return;
 
-        var details = $"AmongUsRevamped {Main.ModVersion}";
+        var details = $"Revamped {Main.ModVersion}";
         activity.Details = details;
 
         try
@@ -31,10 +31,10 @@ public class DiscordRPC
                         Region = Utils.GetRegionName();
                     }
 
-                    if (Lobbycode != "" && Region != "") details = $"AmongUsRevamped - {Lobbycode} ({Region})";
+                    if (Lobbycode != "" && Region != "") details = $"Revamped - {Lobbycode} ({Region})";
                 }
                 else
-                    details = $"AmongUsRevamped {Main.ModVersion}";
+                    details = $"Revamped {Main.ModVersion}";
 
                 activity.Details = details;
             }
@@ -43,7 +43,7 @@ public class DiscordRPC
         {
             Logger.Error("Error in updating discord rpc", "DiscordPatch");
             Logger.Exception(ex, "DiscordPatch");
-            details = $"AmongUsRevamped v{Main.ModVersion}";
+            details = $"Revamped v{Main.ModVersion}";
             activity.Details = details;
         }
     }

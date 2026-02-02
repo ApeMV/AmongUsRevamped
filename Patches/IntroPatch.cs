@@ -10,7 +10,7 @@ internal static class CoShowIntroPatch
 {
     public static void Postfix(IntroCutscene __instance)
     {
-        Logger.Info("Intro initiated", "d");
+        Logger.Info("Intro initiated", "CoShowIntro");
 
         if (!AmongUsClient.Instance.AmHost) return;
 
@@ -24,5 +24,15 @@ internal static class CoShowIntroPatch
             { "Jester", $"{String.Jester}"},
             { "Mayor", $"{String.Mayor}"}
         });
+
+        if (!Utils.isHideNSeek) return;
+        
+        foreach (var p in PlayerControl.AllPlayerControls)
+        {
+            if (p.Data.Role.TeamType == RoleTeamTypes.Impostor)
+            {
+                p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
+            }
+        }
     }
 }
