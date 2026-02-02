@@ -19,6 +19,11 @@ public class DiscordRPC
         var details = $"Revamped {Main.ModVersion}";
         activity.Details = details;
 
+        activity.Assets = new ActivityAssets
+        {
+            LargeImage = "https://i.imgur.com/cxqgNyW.png"
+        };
+
         try
         {
             if (activity.State != "In Menus")
