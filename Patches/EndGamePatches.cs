@@ -39,21 +39,24 @@ class NormalGameEndChecker
             ImpCheckComplete = true;
         }
 
+        var customRoles = CustomRoleManagement.PlayerToCustomRole();
+        var impostorList = string.Join(", ", imps.Select(p => p.Data.PlayerName));
+
         if (Utils.AliveImpostors == 0) 
         {
-            LastWinReason = $"★ Crewmates win!\n\nImpostors:\n" + string.Join("\n", imps.Select(p => p.Data.PlayerName));
+            LastWinReason = $"Crewmates win!\n\nImpostors: {impostorList}" + (string.IsNullOrEmpty(customRoles) ? "" : "\n\n" + customRoles);
         }
         else if (Utils.AliveImpostors >= Utils.AliveCrewmates) 
         {
-            LastWinReason = $"★ Impostors win!\n\nImpostors:\n★" + string.Join("\n★", imps.Select(p => p.Data.PlayerName));
+            LastWinReason = $"Impostors win!\n\nImpostor: {impostorList}" + (string.IsNullOrEmpty(customRoles) ? "" : "\n\n" + customRoles);
         }
         else if (GameData.Instance != null && GameData.Instance.TotalTasks > 0 && GameData.Instance.CompletedTasks >= GameData.Instance.TotalTasks)
         {
-            LastWinReason = $"★ Crewmates win! (Tasks)\n\nImpostors:\n" + string.Join("\n", imps.Select(p => p.Data.PlayerName));
+            LastWinReason = $"Crewmates win! (Tasks)\n\nImpostors: {impostorList}" + (string.IsNullOrEmpty(customRoles) ? "" : "\n\n" + customRoles);
         }
         else if (Options.Gamemode.GetValue() < 2)
         {
-            LastWinReason = $"★ Impostors win! (Sabotage)\n\nImpostors:\n★" + string.Join("\n★", imps.Select(p => p.Data.PlayerName));
+            LastWinReason = $"Impostors win! (Sabotage)\n\nImpostors: {impostorList}" + (string.IsNullOrEmpty(customRoles) ? "" : "\n\n" + customRoles);
         }
         return true;
     }

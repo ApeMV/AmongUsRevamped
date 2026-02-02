@@ -14,50 +14,47 @@ public static class CustomRoleManagement
     {
         // crewmateRoles = assigned with crewmate role base
         // impostorRoles = assigned with impostor role base
-        List<(string roleName, int percentage)> crewmateRoles = new List<(string, int)>
+        List<(string roleName, int percentage)> crewmateRoles = new()
         {
             ("Jester", Options.JesterPerc.GetInt()),
             ("Mayor", Options.MayorPerc.GetInt())
         };
 
-        List<(string roleName, int percentage)> impostorRoles = new List<(string, int)>
+        List<(string roleName, int percentage)> impostorRoles = new()
         {
 
         };
 
-        List<PlayerControl> availablePlayers = new List<PlayerControl>();
-        foreach (var player in PlayerControl.AllPlayerControls)
-        {
-            availablePlayers.Add(player);
-        }
-
+        List<PlayerControl> availablePlayers = new();
+        foreach (var player in PlayerControl.AllPlayerControls) availablePlayers.Add(player);
         availablePlayers = availablePlayers.OrderBy(x => random.Next()).ToList();
         PlayerRoles.Clear();
+
         HashSet<string> assignedRoles = new HashSet<string>();
+        HashSet<string> attemptedRoles = new HashSet<string>();
 
         foreach (var player in availablePlayers)
         {
             bool isCrewmate = !player.Data.Role.IsImpostor;
-
-            List<(string roleName, int percentage)> rolesToAssign = isCrewmate ? crewmateRoles : impostorRoles;
+            var rolesToAssign = isCrewmate ? crewmateRoles : impostorRoles;
 
             foreach (var (roleName, percentage) in rolesToAssign)
             {
-                if (assignedRoles.Contains(roleName))
-                    continue;
+                if (attemptedRoles.Contains(roleName)) continue;
+
+                attemptedRoles.Add(roleName);
 
                 int randomValue = random.Next(0, 101);
-
                 Logger.Info($"{roleName}, Value: {randomValue}, Percentage: {percentage}", "StartGameCustomRole1");
 
-                if (randomValue <= percentage && !PlayerRoles.ContainsKey(player.PlayerId))
-                {
-                    PlayerRoles[player.PlayerId] = roleName;
-                    assignedRoles.Add(roleName);
-                    Logger.Info($"({player.PlayerId}) {player.Data.PlayerName} -> {roleName}", "StartGameCustomRole2");
+                if (randomValue >= percentage) continue;
+                if (PlayerRoles.ContainsKey(player.PlayerId)) continue;
 
-                    break;
-                }
+                PlayerRoles[player.PlayerId] = roleName;
+                assignedRoles.Add(roleName);
+
+                Logger.Info($"({player.PlayerId}) {player.Data.PlayerName} -> {roleName}", "StartGameCustomRole2");
+                break;
             }
         }
     }
@@ -90,6 +87,8 @@ public static class CustomRoleManagement
         return lines.Count > 0 ? string.Join("\n", lines) : string.Empty;
     }
 
+    public static bool HandlingRoleMessages = false;
+    private static int PendingRoleMessages = 0;
     public static void SendRoleMessages(Dictionary<string, string> roleMessages)
     {
         HashSet<string> sentRoles = new HashSet<string>();
@@ -97,19 +96,68 @@ public static class CustomRoleManagement
         var players = PlayerControl.AllPlayerControls.ToArray().ToList();
         float delay = 0f;
 
+        PendingRoleMessages = 0;
+        HandlingRoleMessages = false;
         foreach (var player in players)
         {
             if (!PlayerRoles.TryGetValue(player.PlayerId, out string role)) continue;
             if (!roleMessages.ContainsKey(role)) continue;
             if (sentRoles.Contains(role)) continue;
 
+            PendingRoleMessages++;
             new LateTask(() => 
             {
                 Utils.SendPrivateMessage(player, roleMessages[role]);
+                PendingRoleMessages--;
+
+                if (PendingRoleMessages <= 0)
+                {
+                    PendingRoleMessages = 0;
+                    HandlingRoleMessages = false;
+                }
             }, delay, "SendRoleMessage");
 
             sentRoles.Add(role);
             delay += 2.2f;
         }
+    }
+
+    public static string PlayerToCustomRole()
+    {
+        if (CustomRoleManagement.PlayerRoles.Count == 0) return string.Empty;
+
+        Dictionary<string, List<string>> roleToPlayers = new Dictionary<string, List<string>>();
+
+        foreach (var kvp in CustomRoleManagement.PlayerRoles)
+        {
+            byte playerId = kvp.Key;
+            string role = kvp.Value;
+
+            PlayerControl pc = null;
+            foreach (var p in PlayerControl.AllPlayerControls)
+            {
+                if (p.PlayerId == playerId)
+                {
+                    pc = p;
+                    break;
+                }
+            }
+
+            if (pc == null) continue;
+
+            if (!roleToPlayers.ContainsKey(role)) roleToPlayers[role] = new List<string>();
+            roleToPlayers[role].Add(pc.Data.PlayerName);
+        }
+
+        if (roleToPlayers.Count == 0) return string.Empty;
+
+        var lines = new List<string>();
+
+        foreach (var entry in roleToPlayers)
+        {
+            string players = string.Join(", ", entry.Value);
+            lines.Add($"{entry.Key}: {players}");
+        }
+        return string.Join("\n", lines);
     }
 }

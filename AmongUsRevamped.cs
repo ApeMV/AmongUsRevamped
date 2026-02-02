@@ -39,7 +39,7 @@ public partial class Main : BasePlugin
     public static HideNSeekGameOptionsV10 HideNSeekOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentHideNSeekGameOptions : null;
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.5.0";
+    public const string ModVersion = "v1.5.1";
 
     public static float GameTimer;
 

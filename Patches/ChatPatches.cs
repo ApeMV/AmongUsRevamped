@@ -104,7 +104,7 @@ internal static class SendChatPatch
             return false;
         }
 
-        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
+        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat || CustomRoleManagement.HandlingRoleMessages) return false;
 
         if (text == "/l" || text == "/lastgame" || text == "/win" || text == "/winner")
         {
@@ -142,7 +142,7 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                Utils.ChatCommand(__instance, $"ENABLED CUSTOM ROLES:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
+                Utils.ChatCommand(__instance, $"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
                 break;
 
                 case 1:
@@ -266,7 +266,7 @@ public static class RPCHandlerPatch
                 {
                     c = keywords.Any(k => text == k);
                 }
-                if (c && !Utils.IsPlayerModerator(__instance.Data.FriendCode))
+                if (c && !Utils.IsPlayerModerator(__instance.Data.FriendCode) && Options.AutoKickStart.GetBool())
                 {
                     int clientId = __instance.Data.ClientId;
 
@@ -372,7 +372,7 @@ public static class RPCHandlerPatch
                 {
 
                     if (!Utils.IsPlayerModerator(__instance.Data.FriendCode)) return;
-                    // Banning works by name and color. Commands are seperated incase someone has a color as their name
+                    // Banning works by name and color. Commands are separated incase someone has a color as their name
                     bool isKick = text.StartsWith("/kick ");
                     bool isBan  = text.StartsWith("/ban ");
 
