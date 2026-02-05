@@ -76,9 +76,11 @@
 | ------------------- | ------------------------------------------- | ---------------------------------- |
 | `Shift`+`L`+`Enter` | Force End Game                              | In Game                            |
 | `Shift`+`M`+`Enter` | Skip meeting when active                    | In Game                            |
-| `C`                 | Cancel game start                           | In Countdown                       |
-| `Shift`             | Start the game immediately                  | In Countdown                       |
+| `C`                 | Cancel game start                           | In Starting Countdown              |
+| `Shift`             | Start the game immediately                  | In Starting Countdown              |
+| `Shift`             | 5x Option increment                         | In Options Menu                    |
 | `Ctrl`              | Noclip in lobby                             | In Lobby                           |
+| `Ctrl`              | 10x Option increment                        | In Options Menu                    |
 
 ### Chat Commands
 | Command                                     | Function                                          |
