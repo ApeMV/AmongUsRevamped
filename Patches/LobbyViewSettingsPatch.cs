@@ -2,8 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 
-using Object = UnityEngine.Object;
-
 // https://github.com/Rabek009/MoreGamemodes/blob/master/Patches/LobbyViewSettingsPatch.cs
 namespace AmongUsRevamped
 {

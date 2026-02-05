@@ -29,7 +29,7 @@ class NormalGameEndChecker
     public static bool Prefix()
     {
 
-        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3) return false;
+        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3 || Utils.HandlingGameEnd) return false;
 
         var allPlayers = PlayerControl.AllPlayerControls.ToArray();
 

@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using Il2CppSystem.Collections.Generic;
 #endif
 
-using Object = UnityEngine.Object;
-
 // https://github.com/Yumenopai/TownOfHost_Y/blob/main/Patches/GameOptionsPatch.cs
 namespace AmongUsRevamped
 {

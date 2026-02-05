@@ -4,8 +4,6 @@ using UnityEngine;
 using System;
 using AmongUs.GameOptions;
 
-using Object = UnityEngine.Object;
-
 namespace AmongUsRevamped
 {
     public enum CustomRPC

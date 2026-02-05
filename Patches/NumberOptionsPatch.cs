@@ -9,7 +9,11 @@ public static class NumberOption_Increase
 {
     public static bool Prefix(NumberOption __instance)
     {
+#if ANDROID
+        float increment = __instance.Increment;
+#else
         float increment = Hotkeys.IncrementMultiplier * __instance.Increment;
+#endif
 
         if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
@@ -35,7 +39,11 @@ public static class NumberOption_Decrease
 {
     public static bool Prefix(NumberOption __instance)
     {
+#if ANDROID
+        float increment = __instance.Increment;
+#else
         float increment = Hotkeys.IncrementMultiplier * __instance.Increment;
+#endif
 
         if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
@@ -71,17 +79,24 @@ public static class NumberOption_Initialize
         {
             case StringNames.GameVotingTime:
             case StringNames.GameDiscussTime:
+            case StringNames.EscapeTime:
+            case StringNames.FinalEscapeTime:
             __instance.Increment = 5f;
             break;
+
             case StringNames.GameKillCooldown:
             __instance.Increment = 0.5f;
             break;
+
             case StringNames.GamePlayerSpeed:
+            case StringNames.SeekerFinalSpeed:
             case StringNames.GameCrewLight:
             case StringNames.GameImpostorLight:
+            case StringNames.CrewmateFlashlightSize:
+            case StringNames.ImpostorFlashlightSize:
             __instance.Increment = 0.05f;
             break;
-            
+
             default:
             __instance.Increment = 1f;
             break;

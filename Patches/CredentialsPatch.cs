@@ -172,82 +172,149 @@ namespace AmongUsRevamped
             }
         }
     }
-}
 
-// https://github.com/3X3CODE/MainMenuEnhanced/blob/main/MainMenuEnhanced/VisualPatch.cs
-[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-public static class MainMenuManagerStartPatch
-{
-    public static void Postfix(MainMenuManager __instance)
+    // https://github.com/3X3CODE/MainMenuEnhanced/blob/main/MainMenuEnhanced/VisualPatch.cs
+    [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
+    public static class MainMenuManagerStartPatch
     {
-        if (__instance == null) return;
-
-        var bg = GameObject.Find("BackgroundTexture");
-        if (bg != null)
+        private static PassiveButton template;
+        private static PassiveButton discordButton;
+        private static PassiveButton gitHubButton;
+        private static Transform buttonParent;
+        public static void Postfix(MainMenuManager __instance)
         {
-            bg.SetActive(false);
-        }
+            if (__instance == null) return;
+            if (template == null) template = __instance.quitButton;
+            if (template == null) return;
 
-        var leftPanel = GameObject.Find("LeftPanel");
-        if (leftPanel != null)
-        {
-            leftPanel.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        }
-
-        var div = GameObject.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/Divider");
-        if (div != null)
-        {
-            div.SetActive(false);
-        }
-
-
-        Transform tintTrans = __instance.transform.Find("MainUI/Tint");
-        var tint = tintTrans.gameObject;
-        if (tint != null)
-        {
-            tint.SetActive(false);
-        }
-
-        DisableObject("WindowShine");
-        DisableComponent("RightPanel");
-        DisableComponent("MaskedBlackScreen");
-
-        Transform playTransform = __instance.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/PlayButton/FontPlacer/Text_TMP");
-        if (playTransform != null) 
-        {
-            var playbutton = playTransform.gameObject;
-            if (playbutton != null)
+            if (buttonParent == null) buttonParent = template.transform.parent;
+            if (discordButton == null)
             {
-                if (playbutton.TryGetComponent<TextTranslatorTMP>(out var tmp))
+                discordButton = CreateButton(
+                    __instance,
+                    "DiscordButton",
+                    new(2.1f, 4.05f, 1f),
+                    new(88, 101, 242, byte.MaxValue),
+                    new(148, 161, byte.MaxValue, byte.MaxValue),
+                    () => Application.OpenURL("https://discord.gg/83Zhzhyhya"),
+                    "Discord");
+            }
+
+            if (gitHubButton == null)
+            {
+                gitHubButton = CreateButton(
+                    __instance,
+                    "GitHubButton",
+                    new(3.8f, 4.05f, 1f),
+                    new(153, 153, 153, byte.MaxValue),
+                    new(209, 209, 209, byte.MaxValue),
+                    () => Application.OpenURL("https://github.com/ApeMV/AmongUsRevamped"),
+                    "GitHub");
+            }
+
+            var bg = GameObject.Find("BackgroundTexture");
+            if (bg != null)
+            {
+                bg.SetActive(false);
+            }
+
+            var leftPanel = GameObject.Find("LeftPanel");
+            if (leftPanel != null)
+            {
+                leftPanel.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+
+            var div = GameObject.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/Divider");
+            if (div != null)
+            {
+                div.SetActive(false);
+            }
+
+
+            Transform tintTrans = __instance.transform.Find("MainUI/Tint");
+            var tint = tintTrans.gameObject;
+            if (tint != null)
+            {
+                tint.SetActive(false);
+            }
+
+            DisableObject("WindowShine");
+            DisableComponent("RightPanel");
+            DisableComponent("MaskedBlackScreen");
+
+            Transform playTransform = __instance.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/PlayButton/FontPlacer/Text_TMP");
+            if (playTransform != null) 
+            {
+                var playbutton = playTransform.gameObject;
+                if (playbutton != null)
                 {
-                    tmp.enabled = false;
-                }
-                if (playbutton.TryGetComponent<TextMeshPro>(out var text))
-                {
-                    text.text = "Start";
+                    if (playbutton.TryGetComponent<TextTranslatorTMP>(out var tmp))
+                    {
+                        tmp.enabled = false;
+                    }
+                    if (playbutton.TryGetComponent<TextMeshPro>(out var text))
+                    {
+                        text.text = "Start";
+                    }
                 }
             }
-        }
             
-        static void DisableObject(string name)
-        {
-            var obj = GameObject.Find(name);
-            if (obj != null)
+            static void DisableObject(string name)
             {
-                obj.SetActive(false);
+                var obj = GameObject.Find(name);
+                if (obj != null)
+                {
+                    obj.SetActive(false);
+                }
+            }
+
+            static void DisableComponent(string name)
+            {
+                var obj = GameObject.Find(name);
+                if (obj != null)
+                {
+                    if (obj.TryGetComponent<SpriteRenderer>(out var renderer))
+                    {
+                        renderer.enabled = false;
+                    }
+                }
             }
         }
 
-        static void DisableComponent(string name)
+        private static PassiveButton CreateButton(MainMenuManager menu, string name, Vector3 localPosition, Color32 normalColor, Color32 hoverColor, Action action, string label)
         {
-            var obj = GameObject.Find(name);
-            if (obj != null)
+            var parent = menu.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons");
+            if (parent == null) return null;
+
+            var button = Object.Instantiate(menu.quitButton, parent);
+            button.name = name;
+
+            button.transform.localPosition = localPosition;
+            button.transform.localScale = new Vector3(0.8f, 1f, 1f);
+
+            var aspect = button.GetComponent<AspectPosition>();
+            if (aspect != null)
             {
-                if (obj.TryGetComponent<SpriteRenderer>(out var renderer))
-                {
-                    renderer.enabled = false;
-                }
+                aspect.enabled = false;
             }
+
+            button.OnClick = new();
+            button.OnClick.AddListener(action);
+
+            var buttonText = button.transform.Find("FontPlacer/Text_TMP").GetComponent<TMP_Text>();
+            Utils.DestroyTranslator(buttonText);
+            buttonText.text = label;
+            buttonText.fontSize = buttonText.fontSizeMax = buttonText.fontSizeMin = 3.5f;
+            buttonText.enableWordWrapping = false;
+            buttonText.horizontalAlignment = HorizontalAlignmentOptions.Center;
+
+            var normalSprite = button.inactiveSprites.GetComponent<SpriteRenderer>();
+            var hoverSprite = button.activeSprites.GetComponent<SpriteRenderer>();
+            normalSprite.color = normalColor;
+            hoverSprite.color = hoverColor;
+
+            button.gameObject.SetActive(true);
+            return button;
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 // https://github.com/Yumenopai/TownOfHost_Y/blob/main/Patches/GameSettingMenuPatch.cs
 namespace AmongUsRevamped

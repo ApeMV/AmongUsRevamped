@@ -36,10 +36,6 @@ internal class Hotkeys
             {
                 MeetingHud.Instance.RpcClose();
             }
-            else
-            {
-                PlayerControl.LocalPlayer.ReportDeadBody(PlayerControl.LocalPlayer.Data);
-            }
         }
 
         if (Shift && GameStartManager.InstanceExists  && GameStartManager.Instance != null && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown && !HudManager.Instance.Chat.IsOpenOrOpening)

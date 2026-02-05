@@ -12,8 +12,6 @@ using System.Security.Cryptography;
 using System.Text;
 using AmongUs.InnerNet.GameDataMessages;
 
-using Object = UnityEngine.Object;
-
 namespace AmongUsRevamped;
 
 public static class Utils
@@ -380,7 +378,8 @@ public static class Utils
         writer.Write(gameOverReason);
         AmongUsClient.Instance.FinishEndGame(writer);
         HandlingGameEnd = false;
-        Logger.Info(" -------- GAME ENDED --------", "ManualEndGame");
+        Logger.Info($"{gameOverReason}", "ContinueEndGame");
+        Logger.Info(" -------- GAME ENDED --------", "ContinueEndGame");
     }
 
     public static void DumpLog()
