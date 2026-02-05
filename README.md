@@ -29,53 +29,53 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.4.0):
-- <b>🔶 Client Side settings:</b>
+# 🎮 Features (v1.5.1):
+## <b>♠️ Client Side settings:</b>
 - Game Master
 - Unlock FPS
 - Show FPS
 - Dark Theme
 - Toggle Lobby Music
-- <b>🔷 Technical settings:</b>
+## <b>⚙️ Technical settings:</b>
 - Kick/Ban players under a certain level
 - Kick/Ban invalid FriendCodes
-- Kick/Ban command using names
-- Ckick/Cban command using colors
+- Kick/Ban players who say "start"
 - DenyName system
 - Moderator system
 - Banlist system
 - Enable No Game End
 - Custom starting countdown
-- <b>🔶 Automation settings:</b>
-- Auto start game and conditions for it
-- Auto rejoin lobby
-- Auto send winner info
-- <b>🔷 Gameplay Settings:</b>
+## <b>♻️ Automation settings:</b>
+- Automatically start game and conditions for it
+- Automatically rejoin lobby
+- Automatically send winner info
+## <b>🔧 Gameplay Settings:</b>
 - Disable critical sabotages
 - Disable door sabotages
 - Disable body reporting
 - Enable/Disable any task
 - All players have same tasks
 - Hide and Seek: Custom Impostor count
-- <b>🔶 Custom Gamemodes:</b>
+## <b>🏆 Custom Gamemodes:</b>
 - 0 Kill Cooldown
 - Shift and Seek
 - Speedrun
-- <b>🔷 Other:</b>
+## <b>❓ Other Improvements:</b>
+- ehT dlekS map (reverse Skeld)
 - Ability to cancel starting countdown
 - Improved main menu
 - Custom anticheat system
 - Zoom out in lobby or when dead
-- Unlimited default Option ranges
+- Near unlimited default Option ranges
+- More accurate Option incrementing
 - Logging for useful information
-
-- <b>🎉 And this all without Modded Protocol!</b>
+- <b>🎉 And this all works in public lobbies!</b>
 
 ### Hotkeys
 | HotKey              | Function                                    | Usable Scene                       |
 | ------------------- | ------------------------------------------- | ---------------------------------- |
 | `Shift`+`L`+`Enter` | Force End Game                              | In Game                            |
-| `Shift`+`M`+`Enter` | Skip meeting or call meeting                | In Game                            |
+| `Shift`+`M`+`Enter` | Skip meeting when active                    | In Game                            |
 | `C`                 | Cancel game start                           | In Countdown                       |
 | `Shift`             | Start the game immediately                  | In Countdown                       |
 | `Ctrl`              | Noclip in lobby                             | In Lobby                           |
@@ -92,8 +92,11 @@
 | /cban <color>                               | Ban a player by color                             |
 | /ckick <color>                              | Kick a player by color                            |
 | /dump                                       | Copy your LogOutput file                          |
-| /color <color>                              | Set color                                         |
-‎ 
+| /endgame                                    | Instantly end the game                            |
+| /endmeeting                                 | Instantly end an ongoing meeting                  |
+| /aur                                        | Sends AUR socials (GitHub, Discord)               |
+| /color                                      | Sets color. Can be used to bypass color limit     | 
+‎
 
 **Credit to these mods and their developers for their code:**
 ### :star: [AUnlocker](https://github.com/astra1dev/AUnlocker)
