@@ -59,10 +59,35 @@ internal static class ChatBubbleSetNamePatch
 [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendChat))]
 internal static class SendChatPatch
 {
+    public static string ConvertNum(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return input;
+        int digitCount = 0;
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            if (char.IsDigit(input[i]) && ++digitCount > 5)
+            {
+                var sb = new System.Text.StringBuilder(input.Length);
+
+                foreach (char c in input)
+                {
+                    if (char.IsDigit(c))
+                        sb.Append(Main.CircledDigits[c - '0']);
+                    else
+                        sb.Append(c);
+                }
+                return sb.ToString();
+            }
+        }
+        return input;
+    }
+
     public static bool Prefix(ChatController __instance)
     {
         string msgtext = __instance.freeChatField.textArea.text.Trim();
         string text = msgtext.ToLower();
+        string converted = ConvertNum(msgtext);
 
         if (!AmongUsClient.Instance.AmHost) return true;
 
@@ -76,7 +101,7 @@ internal static class SendChatPatch
 
         if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
         {
-            HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{String.allCommandsFull}");
+            HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{Translator.Get("allCommandsFull")}");
             __instance.freeChatField.textArea.Clear();
             __instance.freeChatField.textArea.SetText(string.Empty);
             return false;
@@ -115,25 +140,25 @@ internal static class SendChatPatch
 
         if (text == "/aur" || text == "/amongusrevamped" || text == "/socials" || text == "/github" || text == "/discord")
         {
-            Utils.ChatCommand(__instance, $"{String.SocialsAll}", "", false);
+            Utils.ChatCommand(__instance, Translator.Get("socialsAll"), "", false);
             return false;
         }
 
         if (text == "/0kc" || text == "/0kcd" || text == "/0killcooldown")
         {
-            Utils.ChatCommand(__instance, $"{String.noKcdMode}", "", false);
+            Utils.ChatCommand(__instance, Translator.Get("noKcdMode"), "", false);
             return false;
         }
 
         if (text == "/sns" || text == "/shiftandseek" || text == "/shift&seek")
         {
-            Utils.ChatCommand(__instance, $"{String.SnSModeOne}", $"{String.SnSModeTwo}", true);
+            Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
             return false;
         }
 
         if (text == "/sp" || text == "/sr" || text == "/speedrun")
         {
-            Utils.ChatCommand(__instance, $"{String.speedrunMode}", "", false);
+            Utils.ChatCommand(__instance, Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
             return false;
         }
 
@@ -146,15 +171,15 @@ internal static class SendChatPatch
                 break;
 
                 case 1:
-                Utils.ChatCommand(__instance, $"{String.noKcdMode}", "", false);
+                Utils.ChatCommand(__instance, Translator.Get("noKcdMode"), "", false);
                 break;
 
                 case 2:
-                Utils.ChatCommand(__instance, $"{String.SnSModeOne}", $"{String.SnSModeTwo}", true);              
+                Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);           
                 break;
 
                 case 3:
-                Utils.ChatCommand(__instance, $"{String.speedrunMode}", "", false);
+                Utils.ChatCommand(__instance, Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
                 break;
 
             }
@@ -195,8 +220,11 @@ internal static class SendChatPatch
 
             if (!isKick && !isBan && !isColorKick && !isColorBan)
             {
+                
+                __instance.freeChatField.textArea.SetText(converted);
+                Utils.ChatCommand(__instance, $"{converted}", "", false);
                 Logger.Info($" {PlayerControl.LocalPlayer.Data.PlayerName}: {msgtext}", "SendChat");
-                return true;
+                return false;
             }
 
             string arg = text.Substring(isKick ? 6 : isBan ? 5 : isColorKick ? 7 : isColorBan ? 6 : 0).Trim();
@@ -291,12 +319,12 @@ public static class RPCHandlerPatch
 
                     new LateTask(() =>
                     {
-                        Utils.SendPrivateMessage(__instance, $"{String.allCommandsOne}");
+                        Utils.SendPrivateMessage(__instance, Translator.Get("allCommandsOne"));
                     }, 2.2f, "MHP1");
 
                     new LateTask(() =>
                     {
-                        Utils.SendPrivateMessage(__instance, $"{String.allCommandsTwo}");
+                        Utils.SendPrivateMessage(__instance, Translator.Get("allCommandsTwo"));
                     }, 4.4f, "MHP2");
 
                     new LateTask(() =>
@@ -315,18 +343,18 @@ public static class RPCHandlerPatch
                 if (text == "/0kc" || text == "/0kcd" || text == "/0killcooldown")
                 {
                     if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
-                    Utils.ModeratorChatCommand($"{String.noKcdMode}", "", false);
+                    Utils.ModeratorChatCommand(Translator.Get("noKcdMode"), "", false);
                 }
                 if (text == "/sns" || text == "/shiftandseek" || text == "/shift&seek")
                 {
                     if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
-                    Utils.ModeratorChatCommand($"{String.SnSModeOne}", $"{String.SnSModeTwo}", true);   
+                    Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
                 }
 
                 if (text == "/sp" || text == "/sr" || text == "/speedrun")
                 {
                     if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
-                    Utils.ModeratorChatCommand($"{String.speedrunMode}", "", false);
+                    Utils.ModeratorChatCommand(Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
                 }
 
                 if (text == "/r" || text == "/roles" || text == "/gamemode" || text == "/gm")
@@ -338,15 +366,15 @@ public static class RPCHandlerPatch
                         break;
 
                         case 1:
-                        Utils.ModeratorChatCommand($"{String.noKcdMode}", "", false);
+                        Utils.ModeratorChatCommand(Translator.Get("noKcdMode"), "", false);
                         break;
 
                         case 2:
-                        Utils.ModeratorChatCommand($"{String.SnSModeOne}", $"{String.SnSModeTwo}", true);              
+                        Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);             
                         break;
 
                         case 3:
-                        Utils.ModeratorChatCommand($"{String.speedrunMode}", "", false);
+                        Utils.ModeratorChatCommand(Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
                         break;
 
                     }

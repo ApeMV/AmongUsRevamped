@@ -405,16 +405,6 @@ public static class Utils
         }, 6.6f, "ModeratorChatCommand3");
     }
 
-    public static string BasicIntToWord(int value)
-    {
-        if (Enum.IsDefined(typeof(Main.BasicNumberToLetter), value))
-        {
-            return ((Main.BasicNumberToLetter)value).ToString();
-        }
-
-        return value.ToString();
-    }
-
     // 0 = no winner. 1 = solo winner. 2 = add winner.
     public static void CustomWinnerEndGame(PlayerControl winner, int winnerType)
     {

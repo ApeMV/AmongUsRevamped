@@ -91,6 +91,7 @@ public partial class Main : BasePlugin
         DarkTheme = Config.Bind("Client Options", "Dark Theme", false);
         LobbyMusic = Config.Bind("Client Options", "Lobby Music", false);
 
+        Translator.Init();
         BanManager.Init();
         
         Harmony.PatchAll();
@@ -129,19 +130,18 @@ public partial class Main : BasePlugin
         Fortegreen = 18
     }
 
-    // Innersloth now censors messages with more than 5 numbers. This is the best bypass I can give
-    public enum BasicNumberToLetter
+    // Innersloth now censors messages with more than 5 numbers. Sucks to be them.
+    public static readonly char[] CircledDigits =
     {
-        Zero = 0,
-        One = 1,
-        Two = 2,
-        Three = 3,
-        Four = 4,
-        Five = 5,
-        Six = 6,
-        Seven = 7,
-        Eight = 8,
-        Nine = 9,
-        Ten = 10
-    }
+        '⓪', // 0
+        '①', // 1
+        '②', // 2
+        '③', // 3
+        '④', // 4
+        '⑤', // 5
+        '⑥', // 6
+        '⑦', // 7
+        '⑧', // 8
+        '⑨'  // 9
+    };
 }

@@ -21,8 +21,8 @@ internal static class CoShowIntroPatch
 
         CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
         {
-            { "Jester", $"{String.Jester}"},
-            { "Mayor", $"{String.Mayor}"}
+            { "Jester", Translator.Get("Jester")},
+            { "Mayor", Translator.Get("Mayor")}
         });
 
         if (!Utils.isHideNSeek) return;
