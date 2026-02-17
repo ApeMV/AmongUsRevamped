@@ -1,4 +1,5 @@
-﻿using Hazel;
+﻿using AmongUs.GameOptions;
+using Hazel;
 using InnerNet;
 using System;
 using UnityEngine;
@@ -25,6 +26,12 @@ internal static class CoShowIntroPatch
             { "Mayor", Translator.Get("Mayor")}
         });
 
+        if (Main.GM.Value)
+        {
+            PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
+            PlayerControl.LocalPlayer.myTasks.Clear();
+        }
+
         if (!Utils.isHideNSeek) return;
         
         foreach (var p in PlayerControl.AllPlayerControls)
@@ -33,6 +40,20 @@ internal static class CoShowIntroPatch
             {
                 p.RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor, false);
             }
+        }
+    }
+}
+
+[HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
+class BeginCrewmatePatch
+{
+    public static void Postfix(IntroCutscene __instance)
+    {
+        if (!AmongUsClient.Instance.AmHost) return;
+
+        if (Main.GM.Value)
+        {
+            __instance.TeamTitle.text = "Game Master";
         }
     }
 }

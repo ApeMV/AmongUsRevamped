@@ -16,20 +16,6 @@ internal class CoStartGamePatch
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
 
-        if (Main.GM.Value)
-        {
-            if (Options.Gamemode.GetValue() == 3)
-            {
-                PlayerControl.LocalPlayer.CoSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
-            }
-            else
-            {
-                PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
-            }
-
-            PlayerControl.LocalPlayer.myTasks.Clear();
-        }
-
         if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)
         {
             foreach (var p in PlayerControl.AllPlayerControls)

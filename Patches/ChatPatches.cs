@@ -312,6 +312,71 @@ public static class RPCHandlerPatch
                     }
                 }
 
+                bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
+                bool col2  = text.StartsWith("/color ");
+                bool col3 = text.StartsWith("/colour ");
+
+                if ((col1 || col2 || col3) && !Utils.InGame)
+                {
+                    string argCol = text.Substring(col1 ? 5 : col2 ? 7 : col3 ? 8 : 0).Trim();
+
+                    if (Utils.TryGetColorId(argCol, out byte colId))
+                    {
+                        if (Options.ColorCommandLevel.GetValue() == 0 && Utils.IsPlayerModerator(__instance.Data.FriendCode) || Options.ColorCommandLevel.GetValue() == 1)
+                        {
+                            if (colId > 17 && !Options.AllowFortegreen.GetBool()) return;
+                            __instance.RpcSetColor(colId);
+                        }    
+                    }
+                }
+
+                // Banning works by name and color. Commands are separated incase someone has a color as their name
+                bool isKick = text.StartsWith("/kick ");
+                bool isBan  = text.StartsWith("/ban ");
+
+                bool isColorKick = text.StartsWith("/ckick ");
+                bool isColorBan  = text.StartsWith("/cban ");
+
+                bool banLog = isBan || isColorBan;
+
+                if (isKick || isBan || isColorKick || isColorBan)
+                {
+                    if (Utils.IsPlayerModerator(__instance.Data.FriendCode))
+                    {
+                        string arg = text.Substring(isKick ? 6 : isBan ? 5 : isColorKick ? 7 : isColorBan ? 6 : 0).Trim();
+
+                        PlayerControl target = null;
+
+                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                        {
+                            if (p.Data == null || p == PlayerControl.LocalPlayer || Utils.IsPlayerModerator(p.Data.FriendCode)) continue;
+
+                            if ((isKick || isBan) && p.Data.PlayerName.Equals(arg, StringComparison.OrdinalIgnoreCase))
+                            {
+                                target = p;
+                                break;
+                            }
+
+                            if ((isColorKick || isColorBan) && Utils.TryGetColorId(arg, out byte colorId))
+                            {
+                                if (p.Data.DefaultOutfit.ColorId == colorId)
+                                {
+                                    target = p;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (target != null)
+                        {
+                            AmongUsClient.Instance.KickPlayer(target.Data.ClientId, isBan || isColorBan);
+                            Logger.Info($" {__instance.Data.PlayerName} {(banLog ? "banned" : "kicked")} {target.Data.PlayerName}", "Kick&BanCommand");
+                        }
+                    }
+                }
+
+                if (CustomRoleManagement.HandlingRoleMessages || OnGameJoinedPatch.WaitingForChat) return;
+
                 if (text == "/h" || text == "/help" || text == "/cmd" || text == "/commands")
                 {
                     if (!Utils.IsPlayerModerator(__instance.Data.FriendCode) || !Options.ModeratorCanUseCommand.GetBool()) return;
@@ -379,87 +444,8 @@ public static class RPCHandlerPatch
 
                     }
                 }
-
-                bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
-                bool col2  = text.StartsWith("/color ");
-                bool col3 = text.StartsWith("/colour ");
-
-                if ((col1 || col2 || col3) && !Utils.InGame)
-                {
-                    string argCol = text.Substring(col1 ? 5 : col2 ? 7 : col3 ? 8 : 0).Trim();
-
-                    if (Utils.TryGetColorId(argCol, out byte colId))
-                    {
-                        if (Options.ColorCommandLevel.GetValue() == 0 && Utils.IsPlayerModerator(__instance.Data.FriendCode) || Options.ColorCommandLevel.GetValue() == 1)
-                        {
-                            if (colId > 17 && !Options.AllowFortegreen.GetBool()) return;
-                            __instance.RpcSetColor(colId);
-                        }    
-                    }
-                }
-                else
-                {
-
-                    if (!Utils.IsPlayerModerator(__instance.Data.FriendCode)) return;
-                    // Banning works by name and color. Commands are separated incase someone has a color as their name
-                    bool isKick = text.StartsWith("/kick ");
-                    bool isBan  = text.StartsWith("/ban ");
-
-                    bool isColorKick = text.StartsWith("/ckick ");
-                    bool isColorBan  = text.StartsWith("/cban ");
-
-                    bool banLog = isBan || isColorBan;
-
-                    if (!isKick && !isBan && !isColorKick && !isColorBan) return;
-
-                    if (Utils.IsPlayerModerator(__instance.Data.FriendCode))
-                    {
-                        string arg = text.Substring(isKick ? 6 : isBan ? 5 : isColorKick ? 7 : isColorBan ? 6 : 0).Trim();
-
-                        PlayerControl target = null;
-
-                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                        {
-                            if (p.Data == null || p == PlayerControl.LocalPlayer || Utils.IsPlayerModerator(p.Data.FriendCode)) continue;
-
-                            if ((isKick || isBan) && p.Data.PlayerName.Equals(arg, StringComparison.OrdinalIgnoreCase))
-                            {
-                                target = p;
-                                break;
-                            }
-
-                            if ((isColorKick || isColorBan) && Utils.TryGetColorId(arg, out byte colorId))
-                            {
-                                if (p.Data.DefaultOutfit.ColorId == colorId)
-                                {
-                                    target = p;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (target != null)
-                        {
-                            AmongUsClient.Instance.KickPlayer(target.Data.ClientId, isBan || isColorBan);
-                            Logger.Info($" {__instance.Data.PlayerName} {(banLog ? "banned" : "kicked")} {target.Data.PlayerName}", "Kick&BanCommand");
-                        }
-                    }
-                }
                 break;
             }
-        }
-    }
-}
-
-[HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
-public static class HudManager_Update
-{
-	public static void Postfix(HudManager __instance)
-    {
-        if (Main.GM.Value)
-        {
-			__instance.Chat.gameObject.SetActive(true);
-			__instance.MapButton.gameObject.SetActive(true); 
         }
     }
 }

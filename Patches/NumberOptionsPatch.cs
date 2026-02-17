@@ -17,11 +17,19 @@ public static class NumberOption_Increase
 
         if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
-
-            if (__instance.Value + increment > __instance.ValidRange.max)
+            if (__instance.Value <= __instance.ValidRange.min)
             {
                 return true;
             }
+
+            if (__instance.Value + increment > __instance.ValidRange.max)
+            {
+                __instance.Value = __instance.ValidRange.max;
+                __instance.UpdateValue();
+                __instance.OnValueChanged.Invoke(__instance);
+                return false;
+            }
+
             else
             {
                 __instance.Value += increment;
@@ -47,10 +55,19 @@ public static class NumberOption_Decrease
 
         if (Utils.isHideNSeek || Utils.IsLobby && !Utils.isHideNSeek && __instance.Title != StringNames.GameNumImpostors && __instance.Title != StringNames.GamePlayerSpeed)
         {
-            if (__instance.Value - increment < __instance.ValidRange.min)
+            if (__instance.Value >= __instance.ValidRange.max)
             {
                 return true;
             }
+
+            if (__instance.Value - increment < __instance.ValidRange.min)
+            {
+                __instance.Value = __instance.ValidRange.min;
+                __instance.UpdateValue();
+                __instance.OnValueChanged.Invoke(__instance);
+                return false;
+            }
+
             else
             {
                 __instance.Value -= increment;

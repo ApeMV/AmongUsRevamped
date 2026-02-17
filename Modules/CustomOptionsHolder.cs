@@ -38,11 +38,11 @@ namespace AmongUsRevamped
             taskOptionsLoad = Task.Run(Load);
         }
 
-        [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start)), HarmonyPostfix]
-        public static void WaitOptionsLoad()
-        {
-            taskOptionsLoad.Wait();
-        }
+        //[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start)), HarmonyPostfix]
+        //public static void WaitOptionsLoad()
+        //{
+            //taskOptionsLoad.Wait();
+        //}
 
         public const int PresetId = 0;
 

@@ -94,22 +94,19 @@ class FixedUpdateInGamePatch
             Main.NormalOptions.KillCooldown = 25f;
         }
 
-        if (AmongUsClient.Instance.AmHost)
+        if (__instance.Data.PlayerLevel != 0 && __instance.Data.PlayerLevel < Options.KickLowLevelPlayer.GetInt() && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
         {
-            if (__instance.Data.PlayerLevel != 0 && __instance.Data.PlayerLevel < Options.KickLowLevelPlayer.GetInt() && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
+            if (!Options.TempBanLowLevelPlayer.GetBool()) 
             {
-                if (!Options.TempBanLowLevelPlayer.GetBool()) 
-                {
-                    AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
-                    Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
-                    Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
-                }
-                else
-                {
-                    AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
-                    Logger.Info($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");
-                    Logger.SendInGame($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
-                }
+                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
+                Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
+            }
+            else
+            {
+                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
+                Logger.Info($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
             }
         }
 

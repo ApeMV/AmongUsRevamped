@@ -76,4 +76,27 @@ namespace AmongUsRevamped
             ClientOptionItem.CustomBackground?.gameObject.SetActive(false);
         }
     }
+
+    [HarmonyPatch(typeof(SplashManager), nameof(SplashManager.Update))]
+    internal class SplashLogoAnimatorPatch
+    {
+        public static void Prefix(SplashManager __instance)
+        {
+            __instance.sceneChanger.AllowFinishLoadingScene();
+            __instance.startedSceneLoad = true;
+        }
+    }
+
+    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+    public static class HudManager_Update
+    {
+	    public static void Postfix(HudManager __instance)
+        {
+            if (Main.GM.Value)
+            {
+			    __instance.Chat.gameObject.SetActive(true);
+			    __instance.MapButton.gameObject.SetActive(true); 
+            }
+        }
+    }
 }
