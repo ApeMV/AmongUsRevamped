@@ -29,17 +29,18 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.5.1):
+# 🎮 Features (v1.5.3):
 ## <b>♠️ Client Side settings:</b>
 - Game Master
 - Unlock FPS
 - Show FPS
 - Dark Theme
 - Toggle Lobby Music
+- Customizable strings
 ## <b>⚙️ Technical settings:</b>
 - Kick/Ban players under a certain level
 - Kick/Ban invalid FriendCodes
-- Kick/Ban players who say "start"
+- Kick/Ban players who say "start" and conitions
 - DenyName system
 - Moderator system
 - Banlist system
@@ -50,9 +51,13 @@
 - Automatically rejoin lobby
 - Automatically send winner info
 ## <b>🔧 Gameplay Settings:</b>
-- Disable critical sabotages
+- Dead impostors can sabotage
+- Disable critical sabotages (invividual)
 - Disable door sabotages
-- Disable body reporting
+- Disable meeting calls first 30s
+- Disable body reports
+- Disable devices (per map, individual)
+- Override decontamination time (per map)
 - Enable/Disable any task
 - All players have same tasks
 - Hide and Seek: Custom Impostor count
@@ -64,6 +69,7 @@
 - ehT dlekS map (reverse Skeld)
 - Ability to cancel starting countdown
 - Improved main menu
+- Faster startup time
 - Custom anticheat system
 - Zoom out in lobby or when dead
 - Near unlimited default Option ranges
@@ -98,11 +104,12 @@
 | /endmeeting                                 | Instantly end an ongoing meeting                  |
 | /aur                                        | Sends AUR socials (GitHub, Discord)               |
 | /color                                      | Sets color. Can be used to bypass color limit     | 
+| /reload                                     | Resets the *Language*.JSON file to default        | 
 ‎
 
 **Credit to these mods and their developers for their code:**
 ### :star: [AUnlocker](https://github.com/astra1dev/AUnlocker)
-> - NumberOptionsPatch
+> - Original NumberOptionsPatch
 ### :star: [EHR (Formerly TOHE+)](https://github.com/Gurge44/EndlessHostRoles)
 > - Task Patching
 ### :star: [TOH](https://github.com/tukasa0001/TownOfHost) :
@@ -113,10 +120,10 @@
 ### :star: [TOHY](https://github.com/Yumenopai/TownOfHost_Y) :
 > - Zoom
 ### :star: [MoreGamemodes](https://github.com/Rabek009/MoreGamemodes)
-> - Chat Patches
+> - Some Chat Patches
 > - OptionItem System
 ---
-This project is licensed under the GNU General Public License version 3.0. For more details, please refer to the [LICENSE](https://github.com/0xDrLime/TownofHost-Enhanced/blob/main/LICENSE) file.
+This project is licensed under the GNU General Public License version 3.0. For more details, please refer to the [LICENSE](https://github.com/apemv/AmongUsRevamped/blob/main/LICENSE) file.
 ---
 
 <b>This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.</b>
