@@ -59,6 +59,22 @@ public static class CustomRoleManagement
         }
     }
 
+    public static string TD(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return input;
+
+        var sb = new System.Text.StringBuilder(input.Length);
+
+        foreach (char c in input)
+        {
+            if (char.IsDigit(c))
+                sb.Append(Main.CircledDigits[c - '0']);
+            else
+                sb.Append(c);
+        }
+        return sb.ToString();
+}
+
     public static string GetActiveRoles()
     {
         var crewmateRoles = new List<string>();
@@ -66,9 +82,9 @@ public static class CustomRoleManagement
         var impostorRoles = new List<string>();
         var lines = new List<string>();
 
-        if (Options.MayorPerc.GetInt() > 1) crewmateRoles.Add($"Mayor");
+        if (Options.MayorPerc.GetInt() > 1) crewmateRoles.Add(Translator.Get("Mayor") + TD(Options.MayorPerc.GetInt().ToString()) + "%");
 
-        if (Options.JesterPerc.GetInt() > 1) neutralRoles.Add($"Jester");
+        if (Options.JesterPerc.GetInt() > 1) neutralRoles.Add(Translator.Get("Jester") + TD(Options.JesterPerc.GetInt().ToString()) + "%");
 
         void AddCategory(string header, List<string> roles)
         {

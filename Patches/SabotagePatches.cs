@@ -17,21 +17,32 @@ public static class SabotageSystemTypeRepairDamagePatch
         }
         var Sabo = (SystemTypes)amount;
         Logger.Info($" {player.Data.PlayerName} is trying to sabotage: {Sabo}", "SabotageCheck");
-        
-        if (player.Data.ClientId == AmongUsClient.Instance.HostId) return true;
 
         if (Options.Gamemode.GetValue() == 0 || Options.Gamemode.GetValue() == 1)
         {
-            if (Sabo == SystemTypes.LifeSupp && Options.DisableOxygen.GetBool() || Sabo == SystemTypes.Reactor && Options.DisableReactor.GetBool() || Sabo == SystemTypes.Electrical && Options.DisableLights.GetBool() || Sabo == SystemTypes.Comms && Options.DisableComms.GetBool() || Sabo == SystemTypes.HeliSabotage && Options.DisableHeli.GetBool() || Sabo == SystemTypes.MushroomMixupSabotage && Options.DisableMushroomMixup.GetBool())
+            if (Sabo == SystemTypes.LifeSupp && Options.DisableOxygen.GetBool() ||
+            Sabo == SystemTypes.Reactor && Options.DisableReactor.GetBool() ||
+            Sabo == SystemTypes.Electrical && Options.DisableLights.GetBool() ||
+            Sabo == SystemTypes.Comms && Options.DisableComms.GetBool() ||
+            Sabo == SystemTypes.HeliSabotage && Options.DisableHeli.GetBool() ||
+            Sabo == SystemTypes.MushroomMixupSabotage && Options.DisableMushroomMixup.GetBool() ||
+            player.Data.IsDead && !Options.DeadImpostorsCanSabotage.GetBool())
             {
                 Logger.Info($" Sabotage {Sabo} by: {player.Data.PlayerName} was blocked", "SabotageCheck");
                 return false;
             }
             return true;
         }
+
         if (Options.Gamemode.GetValue() == 2)
         {
-            if (Sabo == SystemTypes.LifeSupp && Options.SNSDisableOxygen.GetBool() || Sabo == SystemTypes.Reactor && Options.SNSDisableReactor.GetBool() || Sabo == SystemTypes.Electrical && Options.SNSDisableLights.GetBool() || Sabo == SystemTypes.Comms && Options.SNSDisableComms.GetBool() || Sabo == SystemTypes.HeliSabotage && Options.SNSDisableHeli.GetBool() || Sabo == SystemTypes.MushroomMixupSabotage && Options.SNSDisableMushroomMixup.GetBool())
+            if (Sabo == SystemTypes.LifeSupp && Options.SNSDisableOxygen.GetBool() ||
+            Sabo == SystemTypes.Reactor && Options.SNSDisableReactor.GetBool() ||
+            Sabo == SystemTypes.Electrical && Options.SNSDisableLights.GetBool() ||
+            Sabo == SystemTypes.Comms && Options.SNSDisableComms.GetBool() ||
+            Sabo == SystemTypes.HeliSabotage && Options.SNSDisableHeli.GetBool() ||
+            Sabo == SystemTypes.MushroomMixupSabotage && Options.SNSDisableMushroomMixup.GetBool() ||
+            player.Data.IsDead && !Options.DeadImpostorsCanSabotage.GetBool())
             {
                 Logger.Info($" Sabotage {Sabo} by: {player.Data.PlayerName} was blocked", "SnSSabotageCheck");
                 return false;
@@ -51,7 +62,7 @@ class ShipStatusCloseDoorsPatch
         
         Logger.Info($" Trying to close the door in: {room}", "DoorCheck");
 
-        if (Options.DisableCloseDoor.GetBool() || Options.Gamemode.GetValue() == 2)
+        if (Options.DisableCloseDoor.GetBool() && (Options.Gamemode.GetValue() == 0 || Options.Gamemode.GetValue() == 1) || Options.Gamemode.GetValue() == 2 && Options.SNSDisableCloseDoor.GetBool())
         {
             Logger.Info($" Door sabotage in: {room} was blocked", "DoorCheck");
             return false;

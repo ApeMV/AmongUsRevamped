@@ -12,7 +12,16 @@ class ReportDeadBodyPatch
 {
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo target)
     {
-        if (!AmongUsClient.Instance.AmHost || target == null || __instance == null) return true;
+        if (!AmongUsClient.Instance.AmHost || __instance == null) return true;
+
+        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && target == null)
+        {
+            Logger.Info($" {__instance.Data.PlayerName} is calling a meeting too fast, attempt blocked", "ReportDeadBodyPatch");
+            return false;
+        }
+
+        // target == null means meeting
+        if (target == null) return true;
 
         if (Options.DisableReport.GetBool() || Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
         {

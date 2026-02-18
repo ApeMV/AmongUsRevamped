@@ -41,6 +41,7 @@ public static class Utils
     public static bool GamePastRoleSelection => Main.GameTimer > 10f;
     public static bool HandlingGameEnd;
     public static byte CustomGameOverReason;
+    public static bool CanCallMeetings;
 
     public static string ColorString(Color32 color, string str) => $"<#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}>{str}</color>";
     public static string ColorToHex(Color32 color) => $"#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}";
@@ -197,6 +198,7 @@ public static class Utils
         FixedUpdateInGamePatch.ProcessedModerators.Clear();   
         NormalGameEndChecker.ImpCheckComplete = false;
         CreateOptionsPickerPatch.SetDleks2 = false;
+        CanCallMeetings = true;
     }
 
     public static PlayerControl[] AllAlivePlayerControls

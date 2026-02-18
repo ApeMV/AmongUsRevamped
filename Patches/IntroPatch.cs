@@ -22,14 +22,23 @@ internal static class CoShowIntroPatch
 
         CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
         {
-            { "Jester", Translator.Get("Jester")},
-            { "Mayor", Translator.Get("Mayor")}
+            { "Jester", Translator.Get("JesterPriv")},
+            { "Mayor", Translator.Get("MayorPriv")}
         });
 
         if (Main.GM.Value)
         {
             PlayerControl.LocalPlayer.RpcSetRole(AmongUs.GameOptions.RoleTypes.CrewmateGhost, false);
             PlayerControl.LocalPlayer.myTasks.Clear();
+        }
+
+        if (Options.DisableAnnoyingMeetingCalls.GetBool())
+        {
+            Utils.CanCallMeetings = false;
+            _ = new LateTask(() =>
+            {       
+                Utils.CanCallMeetings = true;
+            }, 33f, "MeetingEnabled");     
         }
 
         if (!Utils.isHideNSeek) return;

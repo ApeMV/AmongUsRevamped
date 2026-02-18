@@ -91,6 +91,14 @@ internal static class SendChatPatch
 
         if (!AmongUsClient.Instance.AmHost) return true;
 
+        if (text == "/reload" || text == "/translatereload" || text == "/reset" || text == "/translatereset")
+        {
+            Translator.Reload();
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;
+        }
+
         if (text == "/dump")
         {
             Utils.DumpLog();
