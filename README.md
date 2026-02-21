@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.5.3):
+# 🎮 Features (v1.6.0):
 ## <b>♠️ Client Side settings:</b>
 - Game Master
 - Unlock FPS
