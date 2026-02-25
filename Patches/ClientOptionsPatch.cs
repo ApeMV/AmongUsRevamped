@@ -22,18 +22,18 @@ namespace AmongUsRevamped
 
             if (GM == null || GM.ToggleButton == null)
             {
-                GM = ClientOptionItem.Create("Game Master", Main.GM, __instance, GMButtonToggle);
+                GM = ClientOptionItem.Create(Translator.Get("gameMaster"), Main.GM, __instance, GMButtonToggle);
 
                 static void GMButtonToggle()
                 {
                     if (Main.GM.Value)
-                        HudManager.Instance.ShowPopUp("You will now spectate games until GM is turned off.");
+                        HudManager.Instance.ShowPopUp(Translator.Get("gameMasterWarning"));
                 }
             }
 
             if (UnlockFPS == null || UnlockFPS.ToggleButton == null)
             {
-                UnlockFPS = ClientOptionItem.Create("Unlock FPS", Main.UnlockFps, __instance, UnlockFPSButtonToggle);
+                UnlockFPS = ClientOptionItem.Create(Translator.Get("unlockFPS"), Main.UnlockFps, __instance, UnlockFPSButtonToggle);
 
                 static void UnlockFPSButtonToggle()
                 {
@@ -43,11 +43,11 @@ namespace AmongUsRevamped
             }
 
             if (ShowFPS == null || ShowFPS.ToggleButton == null)
-                ShowFPS = ClientOptionItem.Create("Show FPS", Main.ShowFps, __instance);
+                ShowFPS = ClientOptionItem.Create(Translator.Get("showFPS"), Main.ShowFps, __instance);
 
             if (AutoStart == null || AutoStart.ToggleButton == null)
             {
-                AutoStart = ClientOptionItem.Create("Auto Start", Main.AutoStart, __instance, AutoStartButtonToggle);
+                AutoStart = ClientOptionItem.Create(Translator.Get("autoStart"), Main.AutoStart, __instance, AutoStartButtonToggle);
 
                 static void AutoStartButtonToggle()
                 {
@@ -55,16 +55,16 @@ namespace AmongUsRevamped
                         GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
                     {
                         GameStartManager.Instance.ResetStartState();
-                        Logger.SendInGame("CancelStartCountDown");
+                        Logger.SendInGame(Translator.Get("CancelStartCountDown"));
                     }
                 }
             }
 
             if (DarkTheme == null || DarkTheme.ToggleButton == null)
-                DarkTheme = ClientOptionItem.Create("Enable Dark Theme", Main.DarkTheme, __instance);
+                DarkTheme = ClientOptionItem.Create(Translator.Get("enableDarkTheme"), Main.DarkTheme, __instance);
 
             if (LobbyMusic == null || LobbyMusic.ToggleButton == null)
-                LobbyMusic = ClientOptionItem.Create("Lobby Music", Main.LobbyMusic, __instance);
+                LobbyMusic = ClientOptionItem.Create(Translator.Get("enableLobbyMusic"), Main.LobbyMusic, __instance);
         }
     }
 
@@ -92,7 +92,7 @@ namespace AmongUsRevamped
     {
 	    public static void Postfix(HudManager __instance)
         {
-            if (Main.GM.Value)
+            if (Main.GM.Value && AmongUsClient.Instance.AmHost)
             {
 			    __instance.Chat.gameObject.SetActive(true);
 			    __instance.MapButton.gameObject.SetActive(true); 

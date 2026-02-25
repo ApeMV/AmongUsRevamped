@@ -311,7 +311,7 @@ public static class RPCHandlerPatch
                     c = keywords.Any(k => text == k);
                 }
                 
-                if (c && Utils.CheckAccessLevel(__instance.Data.FriendCode) >= 1 && Options.AutoKickStart.GetBool() && !Utils.InGame)
+                if (c && Utils.CheckAccessLevel(__instance.Data.FriendCode) < 1 && Options.AutoKickStart.GetBool() && !Utils.InGame)
                 {
                     int clientId = __instance.Data.ClientId;
 

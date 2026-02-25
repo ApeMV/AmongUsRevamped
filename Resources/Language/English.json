@@ -1,6 +1,17 @@
 {
   "LanguageID": "0",
 
+  "gameMaster": "Game Master",
+  "unlockFPS": "Unlock FPS",
+  "showFPS": "Show FPS",
+  "autoStart": "Auto Start",
+  "enableDarkTheme": "Enable Dark Theme",
+  "enableLobbyMusic": "Lobby Music",
+
+  "gameMasterWarning":"You will now spectate games until GM is turned off. WARNING: Custom role notifications will not work with this setting on!",
+
+  "cancelStartCountdown": "Start countdown canceled",
+  
   "gamemode": "Gamemode",
   "tabGroupMain": "Moderation",
   "kickLowLevelPlayer": "Kick Players Under Level",
