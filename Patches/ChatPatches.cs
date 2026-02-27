@@ -226,9 +226,13 @@ internal static class SendChatPatch
             if (Utils.TryGetColorId(argCol, out byte colId) && (col1 || col2 || col3))
             {
                 PlayerControl.LocalPlayer.RpcSetColor(colId);
+                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"Your color has been changed to: {((Main.ColorToString)colId).ToString()}");
                 __instance.freeChatField.textArea.Clear();
                 __instance.freeChatField.textArea.SetText(string.Empty);
-                Utils.ChatCommand(__instance, $"Color changed to: {((Main.ColorToString)colId).ToString()}", "", false);
+            } else {
+                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"Your color hasn't been changed: invalid color");
+                __instance.freeChatField.textArea.Clear();
+                __instance.freeChatField.textArea.SetText(string.Empty);
             }
 
             return false;
@@ -355,7 +359,10 @@ public static class RPCHandlerPatch
                         {
                             if (colId > 17 && !Options.AllowFortegreen.GetBool()) return;
                             __instance.RpcSetColor(colId);
-                        }    
+                            Utils.SendPrivateMessage(__instance, $"Your color has been changed to: {((Main.ColorToString)colId).ToString()}");
+                        } else {
+                            Utils.SendPrivateMessage(__instance, $"Your color hasn't been changed: invalid color");
+                        }
                     }
                 }
 
