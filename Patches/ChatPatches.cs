@@ -218,6 +218,7 @@ internal static class SendChatPatch
                 PlayerControl.LocalPlayer.RpcSetColor(colId);
                 __instance.freeChatField.textArea.Clear();
                 __instance.freeChatField.textArea.SetText(string.Empty);
+                Utils.ChatCommand(__instance, $"Color changed to: {((Main.ColorToString)colId).ToString()}", "", false);
             }
 
             return false;
