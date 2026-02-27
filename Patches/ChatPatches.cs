@@ -204,6 +204,15 @@ internal static class SendChatPatch
             __instance.freeChatField.textArea.SetText(string.Empty);
             return false;
         }
+
+        if (text == "/s" || text == "/start")
+        {
+            GameStartManager.Instance.BeginGame();
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+
+            return false;
+        }
         
         bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
         bool col2  = text.StartsWith("/color ");
@@ -344,7 +353,8 @@ public static class RPCHandlerPatch
                         {
                             if (colId > 17 && !Options.AllowFortegreen.GetBool()) return;
                             __instance.RpcSetColor(colId);
-                        }    
+                        } else {
+                        }
                     }
                 }
 
