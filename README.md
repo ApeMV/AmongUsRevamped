@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.6.2):
+# 🎮 Features (v1.6.4):
 ## <b> 🌟 Custom Roles:</b>
 - Mayor (Crewmate)
 - The mayor has extra votes and can call meetings by venting, depending on settings.
@@ -50,6 +50,7 @@
 - Banlist system
 - DenyName system
 - Multi layer moderator system
+- To add Admins, Moderators and VIP's, type the user's Friendcode in the designated files located in AUR-DATA
 - Enable No Game End
 - Custom starting countdown
 ## <b>♻️ Automation settings:</b>
