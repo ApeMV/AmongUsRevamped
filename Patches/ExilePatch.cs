@@ -65,8 +65,18 @@ class ExileControllerWrapUpPatch
         }
     }
 
+#if ANDROID
+    [HarmonyPatch(typeof(AirshipExileController), nameof(AirshipExileController.WrapUpAndSpawn))]
+    class AirshipExileControllerPatchAndroid
+    {
+        public static void Postfix(AirshipExileController __instance)
+        {
+            ExileControllerPatch.AfterExile(__instance.initData.networkedPlayer);
+        }
+    }
+#else
     [HarmonyPatch(typeof(AirshipExileController._WrapUpAndSpawn_d__11), nameof(AirshipExileController._WrapUpAndSpawn_d__11.MoveNext))]
-    class AirshipExileControllerPatch
+    class AirshipExileControllerPatchPC
     {
         public static void Postfix(AirshipExileController._WrapUpAndSpawn_d__11 __instance, ref bool __result)
         {
@@ -74,4 +84,5 @@ class ExileControllerWrapUpPatch
             ExileControllerPatch.AfterExile(instance.initData.networkedPlayer);
         }
     }
+#endif
 }
