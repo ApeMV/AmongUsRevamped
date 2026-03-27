@@ -183,7 +183,7 @@ class PlayerControlCompleteTaskPatch
     
     public static void CalculateTaskWin()
     {
-        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek) return;
+        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek || Options.NoGameEnd.GetBool()) return;
 
         //Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
 

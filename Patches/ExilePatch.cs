@@ -7,9 +7,13 @@ class ExileControllerWrapUpPatch
     {
         public static void Postfix(ExileController __instance)
         {
+            AfterExile(__instance.initData.networkedPlayer);
+        }
+
+        public static void AfterExile(NetworkedPlayerInfo ejectedPlayer)
+        {
             if (!AmongUsClient.Instance.AmHost) return;
 
-            var ejectedPlayer = __instance.initData?.networkedPlayer;
             if (ejectedPlayer == null) return;
 
             PlayerControl pc = null;
@@ -58,6 +62,16 @@ class ExileControllerWrapUpPatch
                     { "Mayor", Translator.Get("mayorPriv", Options.MayorExtraVoteCount.GetInt())},
                 });
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(AirshipExileController._WrapUpAndSpawn_d__11), nameof(AirshipExileController._WrapUpAndSpawn_d__11.MoveNext))]
+    class AirshipExileControllerPatch
+    {
+        public static void Postfix(AirshipExileController._WrapUpAndSpawn_d__11 __instance, ref bool __result)
+        {
+            var instance = __instance.__4__this;
+            ExileControllerPatch.AfterExile(instance.initData.networkedPlayer);
         }
     }
 }

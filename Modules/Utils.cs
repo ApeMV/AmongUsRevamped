@@ -220,6 +220,8 @@ public static class Utils
         PlayerControlCompleteTaskPatch.tasksInitiated = false;
         PlayerControlCompleteTaskPatch.ignoredCompletedTasks = 0;
         PlayerControlCompleteTaskPatch.ignoredTasks = 0;
+
+        FixedUpdateInGamePatch.ScheduledKicks.Clear();
     }
 
     public static PlayerControl[] AllAlivePlayerControls

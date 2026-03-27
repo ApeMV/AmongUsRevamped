@@ -36,74 +36,80 @@ public static class FixedUpdate
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 class FixedUpdateInGamePatch
 {
+    public static List<PlayerControl> ScheduledKicks = new();
+    private static Dictionary<byte, string> LastColors = new();
+    private static float t;
+    private static GameObject settingsLabel;
+
     public static void Postfix(PlayerControl __instance)
     {
         if (__instance == null || __instance.PlayerId == 255 || !AmongUsClient.Instance.AmHost) return;
+        
+        t += Time.deltaTime;
+        if (t < 0.2f) return;
+        t = 0f;
 
-        int access = Utils.CheckAccessLevel(__instance.Data.FriendCode);
-        string color = access switch
+        if (Utils.IsLobby)
         {
-            1 => "yellow",
-            2 => "purple",
-            3 => "red",
-            _ => "white"
-        };
-
-        if (!__instance.cosmetics.nameText.text.Contains($"{color}") && Utils.IsLobby)
-        {
-            __instance.cosmetics.nameText.text = $"<color={color}>{__instance.Data.PlayerName}</color>";
-        }
-
-        GameObject g = GameObject.Find("GameSettingsLabel");
-
-        // 0Kc
-        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && Main.NormalOptions.KillCooldown != 0.01f)
-        {
-            Main.NormalOptions.KillCooldown = 0.01f;
-
-            if (Options.NoKcdSettingsOverride.GetBool() && g == null)
+            int access = Utils.CheckAccessLevel(__instance.Data.FriendCode);
+            string color = access switch
             {
-                Main.NormalOptions.EmergencyCooldown = 0;
+                1 => "yellow",
+                2 => "purple",
+                3 => "red",
+                _ => "white"
+            };
 
-                Main.NormalOptions.TaskBarMode = 0;
+            if (!LastColors.TryGetValue(__instance.PlayerId, out var lastColor) || lastColor != color || !__instance.cosmetics.nameText.text.Contains($"<color={color}>"))
+            {
+                __instance.cosmetics.nameText.text = $"<color={color}>{__instance.Data.PlayerName}</color>";
+                LastColors[__instance.PlayerId] = color;
             }
         }
 
-        // SnS
-        if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek && Main.NormalOptions.KillCooldown != 2.5f)
-        {
-            Main.NormalOptions.KillCooldown = 2.5f;
+        if (settingsLabel == null) settingsLabel = GameObject.Find("GameSettingsLabel");
 
-            if (Options.SNSSettingsOverride.GetBool() && g == null)
-            {
-                Main.NormalOptions.TaskBarMode = 0;
-            }
+        int gamemode = Options.Gamemode.GetValue();
+
+        switch (gamemode)
+        {
+            case 1: // 0Kc
+                if (Main.NormalOptions.KillCooldown != 0.01f)
+                    Main.NormalOptions.KillCooldown = 0.01f;
+
+                if (Options.NoKcdSettingsOverride.GetBool() && settingsLabel == null)
+                {
+                    Main.NormalOptions.EmergencyCooldown = 0;
+                    Main.NormalOptions.TaskBarMode = 0;
+                }
+                break;
+
+            case 2: // SnS
+                if (Main.NormalOptions.KillCooldown != 2.5f)
+                    Main.NormalOptions.KillCooldown = 2.5f;
+
+                if (Options.SNSSettingsOverride.GetBool() && settingsLabel == null)
+                    Main.NormalOptions.TaskBarMode = 0;
+                break;
+
+            case 3: // Speedrun
+                if (settingsLabel == null)
+                    Main.NormalOptions.TaskBarMode = 0;
+                break;
+
+            case 0: // Reset
+                if (Main.NormalOptions.KillCooldown <= 0.01f)
+                    Main.NormalOptions.KillCooldown = 25f;
+                break;
         }
 
-        // Speedrun
-        if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek && g == null)
+        if (__instance.CanMove && __instance.Data.PlayerLevel + 1 < Options.KickLowLevelPlayer.GetInt() && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
         {
-            Main.NormalOptions.TaskBarMode = 0;
+            if (ScheduledKicks.Contains(__instance)) return;
 
-            if (__instance.AllTasksCompleted() && Utils.InGame && Utils.GamePastRoleSelection && !Utils.HandlingGameEnd)
-            {
-                if (__instance == PlayerControl.LocalPlayer && Main.GM.Value) return;
-
-                Utils.CustomWinnerEndGame(__instance, 1);
-                NormalGameEndChecker.LastWinReason = $"{__instance.Data.PlayerName} Wins! (Completed tasks first)";
-
-            }
-        }
-
-        if (Options.Gamemode.GetValue() == 0 && Main.NormalOptions.KillCooldown <= 0.01f)
-        {
-            Main.NormalOptions.KillCooldown = 25f;
-        }
-
-        if (__instance.Data.PlayerLevel != 0 && __instance.Data.PlayerLevel < Options.KickLowLevelPlayer.GetInt() && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
-        {
             if (!Options.TempBanLowLevelPlayer.GetBool()) 
             {
+                ScheduledKicks.Add(__instance);
                 AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
                 Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
                 Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
