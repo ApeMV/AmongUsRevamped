@@ -1,4 +1,4 @@
-# Welcome to AmongUsRevamped!
+# Welcome to Among Us Revamped!
 <br>
 
 </p>
