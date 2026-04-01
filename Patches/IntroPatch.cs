@@ -17,7 +17,7 @@ internal static class CoShowIntroPatch
 
         NormalGameEndChecker.customRoles = CustomRoleManagement.PlayerToCustomRole();
 
-        if (CustomRoleManagement.PlayerRoles.Count != 0 && !Utils.isHideNSeek)
+        if (CustomRoleManagement.PlayerRoles.Count != 0 && !Utils.isHideNSeek && Options.Gamemode.GetValue() < 2)
         {
             _ = new LateTask(() =>
             {

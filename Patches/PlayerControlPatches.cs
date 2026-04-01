@@ -23,11 +23,12 @@ class ReportDeadBodyPatch
         }
 
         // target == null means meeting
-        if (target == null) return true;
 
         if (Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
         {
-            Logger.Info($" Stopped {__instance.Data.PlayerName} reporting the body of {target.PlayerName}", "ReportDeadBodyPatch");
+            if (target != null) Logger.Info($" Stopped {__instance.Data.PlayerName} reporting the body of {target.PlayerName}", "ReportDeadBodyPatch");
+            else Logger.Info($" Stopped {__instance.Data.PlayerName} trying to call a meeting", "ReportDeadBodyPatch");
+
             return false;
         }
         else return true;
@@ -173,6 +174,16 @@ class PlayerControlCompleteTaskPatch
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");
 
         if (Options.Gamemode.GetValue() != 3) CalculateTaskWin();
+
+        if (Options.Gamemode.GetValue() == 3)
+        {
+            if (!__instance.Data.IsDead && playerTasksCompleted[__instance] >= __instance.Data.Tasks.Count)
+            {
+                Utils.CustomWinnerEndGame(__instance, 1);
+                NormalGameEndChecker.LastWinReason = $"{__instance.Data.PlayerName} wins! (Completed tasks)";
+                NormalGameEndChecker.canUpdateWinnerText = false;
+            }
+        }
 
         if (PlayerControl.LocalPlayer.Data.IsDead)
         {

@@ -43,9 +43,10 @@ class PlayerControlSetRolePatch
         if (Main.GM.Value && __instance == PlayerControl.LocalPlayer)
         {
             roleType = RoleTypes.CrewmateGhost;
+            return true;
         }
 
-        if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var role) && role == "Mayor")
+        if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var role) && role == "Mayor" && Options.Gamemode.GetValue() < 2)
         {
             if (Options.MayorVentToMeeting.GetBool())
             {
@@ -57,7 +58,7 @@ class PlayerControlSetRolePatch
                 roleType = RoleTypes.Crewmate;
             }
         }
-        if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var r) && r == "Jester")
+        if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var r) && r == "Jester" && Options.Gamemode.GetValue() < 2)
         {
             if (Options.JesterCanVent.GetBool())
             {

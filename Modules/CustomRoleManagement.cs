@@ -19,6 +19,8 @@ public static class CustomRoleManagement
 
     public static void AssignRoles()
     {
+        if (Options.Gamemode.GetValue() > 1) return;
+
         // crewmateRoles = assigned with crewmate role base
         // impostorRoles = assigned with impostor role base
         List<(string roleName, int percentage)> crewmateRoles = new()
