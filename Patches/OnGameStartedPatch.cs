@@ -38,6 +38,8 @@ class PlayerControlSetRolePatch
     {
         if (!FirstAssign || !AmongUsClient.Instance.AmHost) return true;
 
+        var oldRole = roleType;
+
         canOverrideRole = false;
 
         if (Main.GM.Value && __instance == PlayerControl.LocalPlayer)
@@ -57,6 +59,7 @@ class PlayerControlSetRolePatch
             {
                 roleType = RoleTypes.Crewmate;
             }
+            Logger.Info($" {__instance.Data.PlayerName} | {oldRole} -> {roleType}", "ChangedRoleBase");
         }
         if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var r) && r == "Jester" && Options.Gamemode.GetValue() < 2)
         {
@@ -69,6 +72,7 @@ class PlayerControlSetRolePatch
             {
                 roleType = RoleTypes.Crewmate;
             }
+            Logger.Info($" {__instance.Data.PlayerName} | {oldRole} -> {roleType}", "ChangedRoleBase");
         }
 
         if (Utils.isHideNSeek && i == 0)

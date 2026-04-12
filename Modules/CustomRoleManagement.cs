@@ -116,7 +116,12 @@ public static class CustomRoleManagement
     private static int PendingRoleMessages = 0;
     public static void SendRoleMessages(Dictionary<string, string> roleMessages)
     {
-        if (PlayerRoles.Count == 0 || PlayerControl.LocalPlayer.Data.IsDead) return;
+        if (PlayerRoles.Count == 0 || PlayerControl.LocalPlayer.Data.IsDead)
+        {
+            HandlingRoleMessages = false;
+            PendingRoleMessages = 0;
+            return;
+        }
 
         HashSet<string> sentRoles = new HashSet<string>();
 

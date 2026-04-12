@@ -243,10 +243,10 @@ internal static class SendChatPatch
             if (!isKick && !isBan && !isColorKick && !isColorBan)
             {
                 
-                __instance.freeChatField.textArea.SetText(converted);
-                Utils.ChatCommand(__instance, $"{converted}", "", false);
+                //__instance.freeChatField.textArea.SetText(converted);
+                //Utils.ChatCommand(__instance, $"{converted}", "", false);
                 Logger.Info($" {PlayerControl.LocalPlayer.Data.PlayerName}: {msgtext}", "SendChat");
-                return false;
+                return true;
             }
 
             string arg = text.Substring(isKick ? 6 : isBan ? 5 : isColorKick ? 7 : isColorBan ? 6 : 0).Trim();
