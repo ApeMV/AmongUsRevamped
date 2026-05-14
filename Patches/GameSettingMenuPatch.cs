@@ -115,9 +115,11 @@ namespace AmongUsRevamped
                         case TabGroup.SystemSettings:
                             __instance.MenuDescriptionText.text = "Quality settings to improve comfort and testing.";
                             break;
+/*
                         case TabGroup.CustomRoleSettings:
                             __instance.MenuDescriptionText.text = "Custom Role enabling and settings.";
                             break;
+*/
                         case TabGroup.ModSettings:
                             __instance.MenuDescriptionText.text = "Gameplay Settings to improve the in-game experience.";
                             break;

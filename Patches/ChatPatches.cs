@@ -143,7 +143,7 @@ internal static class SendChatPatch
             return false;
         }
 
-        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat || CustomRoleManagement.HandlingRoleMessages) return false;
+        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat /*|| CustomRoleManagement.HandlingRoleMessages*/) return false;
 
         if (text == "/l" || text == "/lastgame" || text == "/win" || text == "/winner")
         {
@@ -151,7 +151,7 @@ internal static class SendChatPatch
             Utils.ChatCommand(__instance, $"{NormalGameEndChecker.LastWinReason}", "", false);
             return false;
         }
-        
+/*        
         if (text == "/r jester"){
             Utils.ChatCommand(__instance, Translator.Get("jesterPublic"), "", false);
             return false;}
@@ -159,7 +159,7 @@ internal static class SendChatPatch
         if (text == "/r mayor"){
             Utils.ChatCommand(__instance, Translator.Get("mayorPublic", Options.MayorExtraVoteCount.GetInt()), "", false);
             return false;}
-
+*/
         if (text == "/aur" || text == "/amongusrevamped" || text == "/socials")
         {
             Utils.ChatCommand(__instance, Translator.Get("socialsAll"), "", false);
@@ -189,7 +189,7 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                Utils.ChatCommand(__instance, $"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
+                //Utils.ChatCommand(__instance, $"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
                 break;
 
                 case 1:
@@ -400,7 +400,7 @@ public static class RPCHandlerPatch
                     }
                 }
 
-                if (CustomRoleManagement.HandlingRoleMessages || OnGameJoinedPatch.WaitingForChat) return;
+                if (/*CustomRoleManagement.HandlingRoleMessages || */OnGameJoinedPatch.WaitingForChat) return;
 
                 if (text == "/h" || text == "/help")
                 {
@@ -476,7 +476,7 @@ public static class RPCHandlerPatch
                     switch (Options.Gamemode.GetValue())
                     {
                         case 0:
-                        Utils.ModeratorChatCommand($"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
+                        //Utils.ModeratorChatCommand($"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
                         break;
 
                         case 1:
@@ -493,13 +493,13 @@ public static class RPCHandlerPatch
 
                     }
                 }
-
+/*
                 if (text == "/r jester"){
                     Utils.ModeratorChatCommand(Translator.Get("jesterPublic"), "", false);}
 
                 if (text == "/r mayor"){
                     Utils.ModeratorChatCommand(Translator.Get("mayorPublic", Options.MayorExtraVoteCount.GetInt()), "", false);}
-
+*/
                 break;
             }
         }

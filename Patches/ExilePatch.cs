@@ -42,7 +42,7 @@ class ExileControllerWrapUpPatch
             }
 
             Logger.Info($" {ejectedPlayer.PlayerName} was ejected", "ExileController");
-
+/*
             if (CustomRoleManagement.PlayerRoles.TryGetValue(ejectedPlayer.PlayerId, out var role) && role == "Jester")
             {
                 Utils.CustomWinnerEndGame(pc, 1);
@@ -62,6 +62,7 @@ class ExileControllerWrapUpPatch
                     { "Mayor", Translator.Get("mayorPriv", Options.MayorExtraVoteCount.GetInt())},
                 });
             }
+*/
         }
     }
 

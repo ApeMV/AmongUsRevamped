@@ -5,7 +5,9 @@ using InnerNet;
 using UnityEngine;
 
 namespace AmongUsRevamped;
+// It was a fun ride, but this won't last.
 
+/*
 public static class CustomRoleManagement
 {
     public static Dictionary<byte, string> PlayerRoles = new Dictionary<byte, string>();
@@ -207,3 +209,4 @@ public static class CustomRoleManagement
         return string.Join("\n", lines);
     }
 }
+*/

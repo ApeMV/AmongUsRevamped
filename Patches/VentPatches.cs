@@ -1,5 +1,8 @@
 ﻿namespace AmongUsRevamped;
 
+//Old Patch for Mayor
+
+/*
 [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
 class EnterVentPatch
 {
@@ -14,3 +17,4 @@ class EnterVentPatch
         }
     }
 }
+*/

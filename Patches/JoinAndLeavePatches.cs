@@ -112,3 +112,30 @@ class OnPlayerLeftPatch
         }
     }
 }
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetLevel))]
+public static class SetLevelPatch
+{
+    public static List<PlayerControl> HandledLevelKicks = [];
+    public static void Prefix(PlayerControl __instance, uint level)
+    {
+        if (AmongUsClient.Instance.AmHost && level < Options.KickLowLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
+        {
+            if (HandledLevelKicks.Contains(__instance)) return;
+
+            if (!Options.TempBanLowLevelPlayer.GetBool()) 
+            {
+                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
+                Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
+            }
+            else
+            {
+                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
+                Logger.Info($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
+            }
+            HandledLevelKicks.Add(__instance);
+        }  
+    }
+}

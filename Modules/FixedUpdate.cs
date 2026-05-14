@@ -102,22 +102,6 @@ class FixedUpdateInGamePatch
                 break;
         }
 
-        if (__instance.Data.PlayerLevel != 0 && __instance.Data.PlayerLevel < Options.KickLowLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
-        {
-            if (!Options.TempBanLowLevelPlayer.GetBool()) 
-            {
-                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
-                Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
-                Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
-            }
-            else
-            {
-                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
-                Logger.Info($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");
-                Logger.SendInGame($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
-            }
-        }
-
         if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance)
         {
             // 2 = Shift and Seek

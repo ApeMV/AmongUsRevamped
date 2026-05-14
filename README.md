@@ -29,12 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.7.1):
-## <b> 🌟 Custom Roles:</b>
-- Mayor (Crewmate)
-- The mayor has extra votes and can call meetings by venting, depending on settings.
-- Jester (Neutral)
-- The jester has to get voted to win alone and does not win with any other team.
+# 🎮 Features (v1.7.2):
 ## <b>♠️ Client Side settings:</b>
 - Game Master
 - Unlock FPS
@@ -75,7 +70,6 @@
 - Shift and Seek
 - Speedrun
 ## <b>❓ Other Improvements:</b>
-- ehT dlekS map (reverse Skeld)
 - Ability to cancel starting countdown
 - Improved main menu
 - Faster startup time

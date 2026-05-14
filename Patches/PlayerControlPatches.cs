@@ -16,7 +16,7 @@ class ReportDeadBodyPatch
     {
         if (!AmongUsClient.Instance.AmHost || __instance == null) return true;
 
-        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && !Options.ChatBeforeFirstMeeting.GetBool() && target == null)
+        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings /*&& !Options.ChatBeforeFirstMeeting.GetBool()*/ && target == null)
         {
             Logger.Info($" {__instance.Data.PlayerName} is calling a meeting too fast, attempt blocked", "ReportDeadBodyPatch");
             return false;
@@ -151,12 +151,13 @@ class PlayerControlCompleteTaskPatch
 
         foreach (var p in PlayerControl.AllPlayerControls)
         {
+/*
             if (ignoredRoles.Contains(CustomRoleManagement.GetRole(p.PlayerId)) && !tasksInitiated)
             {
                 ignoredTasks += p.Data.Tasks.Count;
                 tasksInitiated = true;
             }
-
+*/
             if (!playerTasksCompleted.ContainsKey(p))
             {
                 playerTasksCompleted[p] = 0;                
@@ -165,12 +166,12 @@ class PlayerControlCompleteTaskPatch
         }
 
         playerTasksCompleted[__instance]++;
-
+/*
         if (ignoredRoles.Contains(CustomRoleManagement.GetRole(__instance.PlayerId)))
         {
             ignoredCompletedTasks = playerTasksCompleted[__instance];
         }
-
+*/
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");
 
         if (Options.Gamemode.GetValue() != 3) CalculateTaskWin();

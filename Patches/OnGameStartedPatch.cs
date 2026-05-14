@@ -15,11 +15,12 @@ internal class CoStartGamePatch
         Logger.Info(" -------- GAME STARTED --------", "StartGame");
         Logger.Info($" Gamemode: {Options.Gamemode.GetValue()}", "StartGame");
         Logger.Info($" Players: {PlayerControl.AllPlayerControls.Count}", "StartGame");
-
+/*
         if ((Options.Gamemode.GetValue() == 0 || Options.Gamemode.GetValue() == 1) && !Utils.isHideNSeek)
         {
             CustomRoleManagement.AssignRoles();
         }
+*/
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
 
@@ -47,7 +48,7 @@ class PlayerControlSetRolePatch
             roleType = RoleTypes.CrewmateGhost;
             return true;
         }
-
+/*
         if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var role) && role == "Mayor" && Options.Gamemode.GetValue() < 2)
         {
             if (Options.MayorVentToMeeting.GetBool())
@@ -74,7 +75,7 @@ class PlayerControlSetRolePatch
             }
             Logger.Info($" {__instance.Data.PlayerName} | {oldRole} -> {roleType}", "ChangedRoleBase");
         }
-
+*/
         if (Utils.isHideNSeek && i == 0)
         {
             int seekersCount = Options.NumSeekers.GetInt();

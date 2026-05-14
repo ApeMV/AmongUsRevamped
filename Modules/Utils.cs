@@ -73,8 +73,10 @@ public static class Utils
         {
             case TabGroup.SystemSettings:
                 return "System Settings";
+/*
             case TabGroup.CustomRoleSettings:
                 return "Custom Roles";
+*/
             case TabGroup.ModSettings:
                 return "Gameplay Settings";
             case TabGroup.GamemodeSettings:
@@ -210,9 +212,9 @@ public static class Utils
 
         LateTask.Tasks.Clear(); 
         NormalGameEndChecker.ImpCheckComplete = false;
-        CreateOptionsPickerPatch.SetDleks2 = false;
+        //CreateOptionsPickerPatch.SetDleks2 = false;
         CanCallMeetings = true;
-        CustomRoleManagement.HandlingRoleMessages = false;
+        //CustomRoleManagement.HandlingRoleMessages = false;
         PlayerControlSetRolePatch.FirstAssign = true;
 
         PlayerControlCompleteTaskPatch.playerTasksCompleted.Clear();

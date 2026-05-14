@@ -256,9 +256,10 @@ namespace AmongUsRevamped
         public static OptionItem DisableUploadData;
 
         // Gamemode
+/*
         public static OptionItem TabGroupStandard;
         public static OptionItem ChatBeforeFirstMeeting;
-
+*/
         public static OptionItem TabGroupHNS;
         public static OptionItem NumSeekers;
 
@@ -285,6 +286,7 @@ namespace AmongUsRevamped
         public static OptionItem GameAutoEndsAfter;
 
         // Roles
+/*
         public static OptionItem TabGroupCrewmate;
         public static OptionItem MayorPerc;
         public static OptionItem MayorExtraVoteCount;
@@ -295,7 +297,7 @@ namespace AmongUsRevamped
         public static OptionItem JesterCanVent;        
 
         public static OptionItem TabGroupImpostor;
-
+*/
         public static bool IsLoaded = false;
 
         public static void Load()
@@ -345,7 +347,7 @@ namespace AmongUsRevamped
             TabGroupMisc = TextOptionItem.Create(60379, Translator.Get("tabGroupMisc"), TabGroup.SystemSettings)
                 .SetColor(Color.green);
 
-            StartCountdown = IntegerOptionItem.Create(60380, Translator.Get("startCountdown"), new(1, 600, 1), 5, TabGroup.SystemSettings, false)
+            StartCountdown = IntegerOptionItem.Create(60380, Translator.Get("startCountdown"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             AllowFortegreen = BooleanOptionItem.Create(60382, Translator.Get("allowFortegreen"), false, TabGroup.SystemSettings, false);
             NoGameEnd = BooleanOptionItem.Create(60383, Translator.Get("noGameEnd"), false, TabGroup.SystemSettings, false)
@@ -364,6 +366,7 @@ namespace AmongUsRevamped
 
 
             // Custom role settings
+/*
             TabGroupCrewmate = TextOptionItem.Create(100000, Translator.Get("tabGroupCrewmate"), TabGroup.CustomRoleSettings)
                 .SetColor(CL.Hex("#8cffff"));
             MayorPerc = IntegerOptionItem.Create(100001, Translator.Get("Mayor"), new(0, 100, 5), 0, TabGroup.CustomRoleSettings, false)
@@ -385,12 +388,13 @@ namespace AmongUsRevamped
 
             TabGroupImpostor = TextOptionItem.Create(102000, Translator.Get("tabGroupImpostor"), TabGroup.CustomRoleSettings)
                 .SetColor(CL.Hex("#ff1919"));
-
+*/
             // Gamemode Settings
+/*
             TabGroupStandard = TextOptionItem.Create(69998, Translator.Get("tabGroupStandard"), TabGroup.GamemodeSettings)
                 .SetColor(Color.white);
             ChatBeforeFirstMeeting = BooleanOptionItem.Create(69999, Translator.Get("chatBeforeFirstMeeting"), false, TabGroup.GamemodeSettings, false);
-
+*/
             TabGroupHNS = TextOptionItem.Create(70000, Translator.Get("tabGroupHNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
             NumSeekers = IntegerOptionItem.Create(70001, Translator.Get("numSeekers"), new(1, 15, 1), 1, TabGroup.GamemodeSettings, false)

@@ -148,7 +148,7 @@ public class RemoveDisableDevicesPatch
 {
     public static void Postfix()
     {
-        if (!Options.DisableDevices.GetBool()) return;
+        if (!Options.DisableDevices.GetBool() || !AmongUsClient.Instance.AmHost) return;
 
         UpdateDisableDevices();
     }

@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 namespace AmongUsRevamped;
 
+// DateTime spoofing is patched as of April 2026
+
+/*
 [HarmonyPatch(typeof(AmongUsDateTime), nameof(AmongUsDateTime.UtcNow), MethodType.Getter)]
 public static class AmongUsDateTime_UtcNow
 {
@@ -228,3 +231,4 @@ class CreateOptionsPickerPatch
         }
     }
 }
+*/

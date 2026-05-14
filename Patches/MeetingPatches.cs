@@ -2,6 +2,8 @@
 
 namespace AmongUsRevamped;
 
+//Old Patch for Mayor
+/*
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
 public static class CheckForEndVotingPatch
 {
@@ -44,7 +46,7 @@ public static class CheckForEndVotingPatch
         return false;
     }
 }
-
+*/
 
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
 class MeetingHudStartPatch

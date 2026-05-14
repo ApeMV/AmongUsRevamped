@@ -14,7 +14,7 @@ internal static class CoShowIntroPatch
         Logger.Info(" Intro initiated", "CoShowIntro");
 
         if (!AmongUsClient.Instance.AmHost) return;
-
+/*
         NormalGameEndChecker.customRoles = CustomRoleManagement.PlayerToCustomRole();
 
         if (CustomRoleManagement.PlayerRoles.Count != 0 && !Utils.isHideNSeek && Options.Gamemode.GetValue() < 2)
@@ -28,7 +28,7 @@ internal static class CoShowIntroPatch
                 });
             }, 1f, "BlockACKick");
         }
-        
+*/        
         foreach (var p in PlayerControl.AllPlayerControls)
         {
             p.cosmetics.nameText.text = p.Data.PlayerName;
@@ -45,10 +45,10 @@ internal static class CoShowIntroPatch
             _ = new LateTask(() =>
             {       
                 Utils.CanCallMeetings = true;
-            }, Options.ChatBeforeFirstMeeting.GetBool() ? 39.5f : 33f, "MeetingEnabled");     
+            }, 33f, "MeetingEnabled");     
         }
 
-        if (Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool() || Options.Gamemode.GetValue() == 0 && Options.ChatBeforeFirstMeeting.GetBool())
+        if (Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool() /*|| Options.Gamemode.GetValue() == 0 && Options.ChatBeforeFirstMeeting.GetBool()*/)
         {
             _ = new LateTask(() =>
             {  
