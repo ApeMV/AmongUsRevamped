@@ -120,8 +120,11 @@ namespace AmongUsRevamped
                             __instance.MenuDescriptionText.text = "Custom Role enabling and settings.";
                             break;
 */
+                        case TabGroup.AbilitySettings:
+                            __instance.MenuDescriptionText.text = "Ability settings to enhance vanilla roles.";
+                            break;
                         case TabGroup.ModSettings:
-                            __instance.MenuDescriptionText.text = "Gameplay Settings to improve the in-game experience.";
+                            __instance.MenuDescriptionText.text = "Gameplay settings to improve the in-game experience.";
                             break;
                         case TabGroup.GamemodeSettings:
                             __instance.MenuDescriptionText.text = "Situational settings to apply for specific gamemodes.";

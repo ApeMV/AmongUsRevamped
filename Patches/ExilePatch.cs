@@ -17,6 +17,7 @@ class ExileControllerWrapUpPatch
             if (ejectedPlayer == null) return;
 
             PlayerControl pc = null;
+            PlayerControl exiledPlayer = ejectedPlayer.Object;
             foreach (var p in PlayerControl.AllPlayerControls)
             {
                 if (p.PlayerId == ejectedPlayer.PlayerId)
@@ -42,27 +43,15 @@ class ExileControllerWrapUpPatch
             }
 
             Logger.Info($" {ejectedPlayer.PlayerName} was ejected", "ExileController");
-/*
-            if (CustomRoleManagement.PlayerRoles.TryGetValue(ejectedPlayer.PlayerId, out var role) && role == "Jester")
+
+            if (PlayerControlSetRolePatch.Jesters.Contains(exiledPlayer))
             {
-                Utils.CustomWinnerEndGame(pc, 1);
+                Logger.Info($"Jester {ejectedPlayer.PlayerName} wins", "ExilePatch");
+                Utils.CustomWinnerEndGame(exiledPlayer, 1);
                 NormalGameEndChecker.CheckWinnerText("Jester");
                 return;
             }
 
-            if (CustomRoleManagement.HandlingRoleMessages)
-            {
-                Logger.Info(" SRM2 is called before SRM1 finished. This should not happen.", "ExileController");
-            }
-            else
-            {
-                CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
-                {
-                    { "Jester", Translator.Get("jesterPriv")},
-                    { "Mayor", Translator.Get("mayorPriv", Options.MayorExtraVoteCount.GetInt())},
-                });
-            }
-*/
         }
     }
 

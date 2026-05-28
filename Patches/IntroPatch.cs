@@ -14,21 +14,9 @@ internal static class CoShowIntroPatch
         Logger.Info(" Intro initiated", "CoShowIntro");
 
         if (!AmongUsClient.Instance.AmHost) return;
-/*
-        NormalGameEndChecker.customRoles = CustomRoleManagement.PlayerToCustomRole();
 
-        if (CustomRoleManagement.PlayerRoles.Count != 0 && !Utils.isHideNSeek && Options.Gamemode.GetValue() < 2)
-        {
-            _ = new LateTask(() =>
-            {
-                CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
-                {
-                    { "Jester", Translator.Get("jesterPriv")},
-                    { "Mayor", Translator.Get("mayorPriv", Options.MayorExtraVoteCount.GetInt())},
-                });
-            }, 1f, "BlockACKick");
-        }
-*/        
+        Utils.ModeratorChatCommand(Translator.Get("abilitiesGenericOne", Options.CrewmateAbility.GetString(), Options.ScientistAbility.GetString(), Options.EngineerAbility.GetString(), Options.NoisemakerAbility.GetString(), Options.TrackerAbility.GetString()), Translator.Get("abilitiesGenericTwo", Options.DetectiveAbility.GetString(), Options.ImpostorAbility.GetString(), Options.ShapeshifterAbility.GetString(), Options.PhantomAbility.GetString(), Options.ViperAbility.GetString()), true);
+        
         foreach (var p in PlayerControl.AllPlayerControls)
         {
             p.cosmetics.nameText.text = p.Data.PlayerName;

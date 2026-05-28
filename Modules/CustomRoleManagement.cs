@@ -6,7 +6,146 @@ using UnityEngine;
 
 namespace AmongUsRevamped;
 // It was a fun ride, but this won't last.
+// Edit: WE ARE SO BACK
 
+public static class AbilityManagement
+{
+    public static bool IsMayor(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Crewmate && Options.CrewmateAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Scientist && Options.ScientistAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Engineer && Options.EngineerAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Noisemaker && Options.NoisemakerAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Tracker && Options.TrackerAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Detective && Options.DetectiveAbility.GetValue() == 0)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static bool IsWorkhorse(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Crewmate && Options.CrewmateAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Scientist && Options.ScientistAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Engineer && Options.EngineerAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Noisemaker && Options.NoisemakerAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Tracker && Options.TrackerAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Detective && Options.DetectiveAbility.GetValue() == 1)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static bool IsJester(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Crewmate && Options.CrewmateAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Scientist && Options.ScientistAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Engineer && Options.EngineerAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Noisemaker && Options.NoisemakerAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Tracker && Options.TrackerAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Detective && Options.DetectiveAbility.GetValue() == 2)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static bool IsSpeedrunner(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Crewmate && Options.CrewmateAbility.GetValue() == 3 ||
+            player.Data.RoleType == RoleTypes.Scientist && Options.ScientistAbility.GetValue() == 3 ||
+            player.Data.RoleType == RoleTypes.Engineer && Options.EngineerAbility.GetValue() == 3 ||
+            player.Data.RoleType == RoleTypes.Noisemaker && Options.NoisemakerAbility.GetValue() == 3 ||
+            player.Data.RoleType == RoleTypes.Tracker && Options.TrackerAbility.GetValue() == 3 ||
+            player.Data.RoleType == RoleTypes.Detective && Options.DetectiveAbility.GetValue() == 3)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static bool IsTyrant(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Impostor && Options.ImpostorAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Shapeshifter && Options.ShapeshifterAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Phantom && Options.PhantomAbility.GetValue() == 0 ||
+            player.Data.RoleType == RoleTypes.Viper && Options.ViperAbility.GetValue() == 0)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static bool IsStealer(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Impostor && Options.ImpostorAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Shapeshifter && Options.ShapeshifterAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Phantom && Options.PhantomAbility.GetValue() == 1 ||
+            player.Data.RoleType == RoleTypes.Viper && Options.ViperAbility.GetValue() == 1)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static bool IsJuggernaut(PlayerControl player)
+    {
+        if (player.Data.RoleType == RoleTypes.Impostor && Options.ImpostorAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Shapeshifter && Options.ShapeshifterAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Phantom && Options.PhantomAbility.GetValue() == 2 ||
+            player.Data.RoleType == RoleTypes.Viper && Options.ViperAbility.GetValue() == 2)
+        {
+            return true;
+        }
+        else return false; 
+    }
+
+    public static string RoleList()
+    {
+        var firstLines = new List<string>();
+
+        if (Options.CrewmateAbility.GetValue() != 4) firstLines.Add($"Crewmate: {Options.CrewmateAbility.GetString()}");
+        if (Options.ScientistAbility.GetValue() != 4) firstLines.Add($"Scientist: {Options.ScientistAbility.GetString()}");
+        if (Options.EngineerAbility.GetValue() != 4) firstLines.Add($"Engineer: {Options.EngineerAbility.GetString()}");
+        if (Options.NoisemakerAbility.GetValue() != 4) firstLines.Add($"Noisemaker: {Options.NoisemakerAbility.GetString()}");
+        if (Options.TrackerAbility.GetValue() != 4) firstLines.Add($"Tracker: {Options.TrackerAbility.GetString()}");
+
+        var secondLines = new List<string>();
+
+        if (Options.DetectiveAbility.GetValue() != 4) secondLines.Add($"Detective: {Options.DetectiveAbility.GetString()}");
+        if (Options.ImpostorAbility.GetValue() != 3) secondLines.Add($"Impostor: {Options.ImpostorAbility.GetString()}");
+        if (Options.ShapeshifterAbility.GetValue() != 3) secondLines.Add($"Shapeshifter: {Options.ShapeshifterAbility.GetString()}");
+        if (Options.PhantomAbility.GetValue() != 3) secondLines.Add($"Phantom: {Options.PhantomAbility.GetString()}");
+        if (Options.ViperAbility.GetValue() != 3) secondLines.Add($"Viper: {Options.ViperAbility.GetString()}");
+
+        string firstText = firstLines.Count > 0 ? "ABILITIES:\n\n" + string.Join("\n", firstLines) : "";
+        string secondText = secondLines.Count > 0 ? "\n" + string.Join("\n", secondLines) : "";
+
+        return firstText + secondText;
+    }
+
+    public static void SendRoleList(ChatController c, string text, bool moderator)
+    {
+        if (text.Length <= 120)
+        {
+            if (moderator) Utils.ModeratorChatCommand(text, "", false);
+            else Utils.ChatCommand(c, text, "", false);
+            return;
+        }
+
+        int splitIndex = text.LastIndexOf('\n', 120);
+
+        if (splitIndex <= 0) splitIndex = 120;
+
+        string first = text[..splitIndex];
+        string second = text[(splitIndex + 1)..];
+
+        if (moderator) Utils.ModeratorChatCommand(first, second, true);
+        else Utils.ChatCommand(c, first, second, true);
+    }
+}
 /*
 public static class CustomRoleManagement
 {

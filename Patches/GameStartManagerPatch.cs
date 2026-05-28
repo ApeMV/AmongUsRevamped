@@ -9,6 +9,7 @@ public static class GameStartManagerUpdatePatch
 {
     public static bool CustomTimerApplied;
     public static bool Autostarting;
+    public static bool CountingDown;
 
     public static void Prefix(GameStartManager __instance)
     {
@@ -27,11 +28,16 @@ public static class GameStartManagerUpdatePatch
             Autostarting = true;
         }
 
-        if (__instance.startState == GameStartManager.StartingStates.Countdown && !CustomTimerApplied && !Autostarting)
+        if (__instance.startState == GameStartManager.StartingStates.Countdown)
         {
-            __instance.countDownTimer = Options.StartCountdown.GetInt();
-            CustomTimerApplied = true;
+            CountingDown = true;
+            if (!CustomTimerApplied && !Autostarting)
+            {
+                __instance.countDownTimer = Options.StartCountdown.GetInt();
+                CustomTimerApplied = true;
+            }
         }
+        else CountingDown = false;
 
         if (__instance.startState != GameStartManager.StartingStates.Countdown)
         {

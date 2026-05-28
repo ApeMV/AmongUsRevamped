@@ -57,7 +57,7 @@ internal static class MurderPlayerPatch
             killCount[playerId]++;
             Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
 
-            if (target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead)
+            if ((target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead) && !Main.DisableInfoWhenDead.Value)
             {
                 foreach (var p in PlayerControl.AllPlayerControls)
                 {
@@ -71,6 +71,13 @@ internal static class MurderPlayerPatch
                     }
                 }
             }
+        }
+
+        if (Options.Gamemode.GetValue() < 2 && AbilityManagement.IsJuggernaut(__instance) && killCount[__instance.PlayerId] >= Options.KillsNeededForJuggernaut.GetInt())
+        {
+            Logger.Info("Juggernaut win", "MurderPlayer");
+            Utils.ContinueEndGame((byte)GameOverReason.ImpostorsByVote);
+            NormalGameEndChecker.CheckWinnerText("Juggernaut");
         }
 
         //2 = Shift and Seek
@@ -174,6 +181,16 @@ class PlayerControlCompleteTaskPatch
 */
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");
 
+        if (Options.Gamemode.GetValue() < 2)
+        {
+            if (AbilityManagement.IsSpeedrunner(__instance) && !__instance.Data.IsDead && playerTasksCompleted[__instance] >= __instance.Data.Tasks.Count)
+            {
+                Logger.Info($"Speedrunner {__instance.Data.PlayerName} won", "TaskPatch");
+                Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
+                NormalGameEndChecker.CheckWinnerText("Speedrunner");
+            }
+        }
+
         if (Options.Gamemode.GetValue() != 3) CalculateTaskWin();
 
         if (Options.Gamemode.GetValue() == 3)
@@ -186,7 +203,7 @@ class PlayerControlCompleteTaskPatch
             }
         }
 
-        if (PlayerControl.LocalPlayer.Data.IsDead)
+        if (PlayerControl.LocalPlayer.Data.IsDead && !Main.DisableInfoWhenDead.Value)
         {
             TMP_Text nameText = __instance.cosmetics.nameText;
             nameText.text = $"{__instance.Data.PlayerName}<color=green><size=90%>({playerTasksCompleted[__instance]}/{tasksPerPlayer[__instance]})</color>";

@@ -15,12 +15,7 @@ internal class CoStartGamePatch
         Logger.Info(" -------- GAME STARTED --------", "StartGame");
         Logger.Info($" Gamemode: {Options.Gamemode.GetValue()}", "StartGame");
         Logger.Info($" Players: {PlayerControl.AllPlayerControls.Count}", "StartGame");
-/*
-        if ((Options.Gamemode.GetValue() == 0 || Options.Gamemode.GetValue() == 1) && !Utils.isHideNSeek)
-        {
-            CustomRoleManagement.AssignRoles();
-        }
-*/
+
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
 
@@ -33,6 +28,7 @@ class PlayerControlSetRolePatch
     private static int i;
     public static bool FirstAssign;
     private static HashSet<byte> Seekers = new();
+    public static HashSet<PlayerControl> Jesters = new();
     private static readonly System.Random rand = new System.Random();
 
     public static bool Prefix(PlayerControl __instance, ref RoleTypes roleType, ref bool canOverrideRole)
@@ -48,34 +44,7 @@ class PlayerControlSetRolePatch
             roleType = RoleTypes.CrewmateGhost;
             return true;
         }
-/*
-        if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var role) && role == "Mayor" && Options.Gamemode.GetValue() < 2)
-        {
-            if (Options.MayorVentToMeeting.GetBool())
-            {
-                roleType = RoleTypes.Engineer;
-                Logger.Info($"{__instance.Data.PlayerName} is Engineer due to being Mayor", "SetRolePatch");
-            }
-            else
-            {
-                roleType = RoleTypes.Crewmate;
-            }
-            Logger.Info($" {__instance.Data.PlayerName} | {oldRole} -> {roleType}", "ChangedRoleBase");
-        }
-        if (CustomRoleManagement.PlayerRoles.TryGetValue(__instance.PlayerId, out var r) && r == "Jester" && Options.Gamemode.GetValue() < 2)
-        {
-            if (Options.JesterCanVent.GetBool())
-            {
-                roleType = RoleTypes.Engineer;
-                Logger.Info($"{__instance.Data.PlayerName} is Engineer due to being Jester", "SetRolePatch");
-            }
-            else
-            {
-                roleType = RoleTypes.Crewmate;
-            }
-            Logger.Info($" {__instance.Data.PlayerName} | {oldRole} -> {roleType}", "ChangedRoleBase");
-        }
-*/
+
         if (Utils.isHideNSeek && i == 0)
         {
             int seekersCount = Options.NumSeekers.GetInt();
@@ -113,7 +82,9 @@ class PlayerControlSetRolePatch
                 PlayerControl.LocalPlayer.myTasks.Clear();
                 return true;
             }
-            roleType = RoleTypes.Crewmate;
+
+            if (Options.EngineerMode.GetBool()) roleType = RoleTypes.Engineer;
+            else roleType = RoleTypes.Crewmate;
         }
 
         i++;
@@ -123,6 +94,16 @@ class PlayerControlSetRolePatch
             FirstAssign = false;
             i = 0;
             Logger.Info("PCSRP successful", "RoleManaging");
+        }
+        
+        if (roleType == RoleTypes.Crewmate && Options.CrewmateAbility.GetValue() == 2 ||
+            roleType == RoleTypes.Scientist && Options.ScientistAbility.GetValue() == 2 ||
+            roleType == RoleTypes.Engineer && Options.EngineerAbility.GetValue() == 2 ||
+            roleType == RoleTypes.Noisemaker && Options.NoisemakerAbility.GetValue() == 2 ||
+            roleType == RoleTypes.Tracker && Options.TrackerAbility.GetValue() == 2 ||
+            roleType == RoleTypes.Detective && Options.DetectiveAbility.GetValue() == 2)
+        {
+            Jesters.Add(__instance);
         }
 
         return true;

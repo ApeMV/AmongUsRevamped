@@ -10,11 +10,11 @@ namespace AmongUsRevamped
     public static class OptionsMenuBehaviourStartPatch
     {
         private static ClientOptionItem GM;
-        private static ClientOptionItem UnlockFPS;
         private static ClientOptionItem ShowFPS;
         private static ClientOptionItem AutoStart;
         private static ClientOptionItem DarkTheme;
         private static ClientOptionItem LobbyMusic;
+        private static ClientOptionItem DisableInfoWhenDead;
 
         public static void Postfix(OptionsMenuBehaviour __instance)
         {
@@ -31,19 +31,11 @@ namespace AmongUsRevamped
                 }
             }
 
-            if (UnlockFPS == null || UnlockFPS.ToggleButton == null)
-            {
-                UnlockFPS = ClientOptionItem.Create(Translator.Get("unlockFPS"), Main.UnlockFps, __instance, UnlockFPSButtonToggle);
-
-                static void UnlockFPSButtonToggle()
-                {
-                    Application.targetFrameRate = Main.UnlockFps.Value ? 120 : 60;
-                    Logger.SendInGame($"FPS Set To {Application.targetFrameRate}");
-                }
-            }
-
             if (ShowFPS == null || ShowFPS.ToggleButton == null)
                 ShowFPS = ClientOptionItem.Create(Translator.Get("showFPS"), Main.ShowFps, __instance);
+
+            if (DisableInfoWhenDead == null || DisableInfoWhenDead.ToggleButton == null)
+                DisableInfoWhenDead = ClientOptionItem.Create(Translator.Get("disableInfoWhenDead"), Main.DisableInfoWhenDead, __instance);
 
             if (AutoStart == null || AutoStart.ToggleButton == null)
             {

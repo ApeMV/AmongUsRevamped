@@ -136,7 +136,7 @@ internal static class RpcSetTasksPatch
 
         if (!Options.AllPlayersSameTasks.GetBool())
         {
-            RerollTasks(ref taskTypeIds);
+            RerollTasks(pc, ref taskTypeIds);
             return;
         }
 
@@ -155,23 +155,26 @@ internal static class RpcSetTasksPatch
 
 
     }
-
-    private static void RerollTasks(ref Il2CppStructArray<byte> taskTypeIds)
+    private static void RerollTasks(PlayerControl pc, ref Il2CppStructArray<byte> taskTypeIds)
     {
         // Default number of tasks
         bool hasCommonTasks = true;
+        int numCommonTasks = Main.NormalOptions.NumCommonTasks;
         int numLongTasks = Main.NormalOptions.NumLongTasks;
         int numShortTasks = Main.NormalOptions.NumShortTasks;
+
+        if (AbilityManagement.IsSpeedrunner(pc))
+        {
+            numLongTasks = Options.SpeedrunnerLongTasks.GetInt();
+            numShortTasks = Options.SpeedrunnerShortTasks.GetInt();
+        }
 
         if (taskTypeIds.Length == 0) hasCommonTasks = false;
 
         switch (hasCommonTasks)
         {
-            case false when numLongTasks == 0 && numShortTasks == 0:
-                numShortTasks = 1;
-                break;
-            case true when numLongTasks == Main.NormalOptions.NumLongTasks && numShortTasks == Main.NormalOptions.NumShortTasks:
-                return;
+            case false when numLongTasks == 0 && numShortTasks == 0: numShortTasks = 1; break;
+            case true when numLongTasks == Main.NormalOptions.NumLongTasks && numShortTasks == Main.NormalOptions.NumShortTasks: return;
         }
 
         Il2CppSystem.Collections.Generic.List<byte> TasksList = new();
@@ -180,24 +183,28 @@ internal static class RpcSetTasksPatch
 
         Il2CppSystem.Collections.Generic.HashSet<TaskTypes> UsedTaskTypes = new();
 
+        var start0 = 0;
         var start1 = 0;
         var start2 = 0;
 
-        // Long tasks
+        Il2CppSystem.Collections.Generic.List<NormalPlayerTask> CommonTasks = new();
+        foreach (var task in ShipStatus.Instance.CommonTasks) CommonTasks.Add(task);
+        Shuffle(CommonTasks);
+
+        ShipStatus.Instance.AddTasksFromList(ref start0, numCommonTasks, TasksList, UsedTaskTypes, CommonTasks);
+
         Il2CppSystem.Collections.Generic.List<NormalPlayerTask> LongTasks = new();
         foreach (var task in ShipStatus.Instance.LongTasks) LongTasks.Add(task);
         Shuffle(LongTasks);
 
         ShipStatus.Instance.AddTasksFromList(ref start1, numLongTasks, TasksList, UsedTaskTypes, LongTasks);
 
-        // Short tasks
         Il2CppSystem.Collections.Generic.List<NormalPlayerTask> ShortTasks = new();
         foreach (var task in ShipStatus.Instance.ShortTasks) ShortTasks.Add(task);
         Shuffle(ShortTasks);
 
         ShipStatus.Instance.AddTasksFromList(ref start2, numShortTasks, TasksList, UsedTaskTypes, ShortTasks);
 
-        // Apply result
         taskTypeIds = new Il2CppStructArray<byte>(TasksList.Count);
         for (int i = 0; i < TasksList.Count; i++) taskTypeIds[i] = TasksList[i];
     }
@@ -212,4 +219,5 @@ internal static class RpcSetTasksPatch
             list[r] = tmp;
         }
     }
+    
 }

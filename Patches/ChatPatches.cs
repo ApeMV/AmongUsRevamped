@@ -150,16 +150,35 @@ internal static class SendChatPatch
             if (string.IsNullOrEmpty(NormalGameEndChecker.LastWinReason) || Utils.InGame) return false;
             Utils.ChatCommand(__instance, $"{NormalGameEndChecker.LastWinReason}", "", false);
             return false;
-        }
-/*        
+        }        
         if (text == "/r jester"){
             Utils.ChatCommand(__instance, Translator.Get("jesterPublic"), "", false);
             return false;}
 
         if (text == "/r mayor"){
-            Utils.ChatCommand(__instance, Translator.Get("mayorPublic", Options.MayorExtraVoteCount.GetInt()), "", false);
+            Utils.ChatCommand(__instance, Translator.Get("mayorPublic", Options.ExtraVotesCrewmate.GetInt()), "", false);
             return false;}
-*/
+
+        if (text == "/r tyrant"){
+            Utils.ChatCommand(__instance, Translator.Get("tyrantPublic", Options.ExtraVotesImpostor.GetInt()), "", false);
+            return false;}
+
+        if (text == "/r workhorse"){
+            Utils.ChatCommand(__instance, Translator.Get("workhorsePublic", Options.ExtraVotesPerTask.GetFloat()), "", false);
+            return false;}
+
+        if (text == "/r stealer"){
+            Utils.ChatCommand(__instance, Translator.Get("stealerPublic", Options.ExtraVotesPerKill.GetFloat()), "", false);
+            return false;}
+
+        if (text == "/r juggernaut"){
+            Utils.ChatCommand(__instance, Translator.Get("juggernautPublic", Options.KillsNeededForJuggernaut.GetInt()), "", false);
+            return false;}
+
+        if (text == "/r speedrunner"){
+            Utils.ChatCommand(__instance, Translator.Get("speedrunnerPublic"), "", false);
+            return false;}
+
         if (text == "/aur" || text == "/amongusrevamped" || text == "/socials")
         {
             Utils.ChatCommand(__instance, Translator.Get("socialsAll"), "", false);
@@ -189,7 +208,7 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                //Utils.ChatCommand(__instance, $"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
+                AbilityManagement.SendRoleList(__instance, AbilityManagement.RoleList(), false);
                 break;
 
                 case 1:
@@ -400,7 +419,7 @@ public static class RPCHandlerPatch
                     }
                 }
 
-                if (/*CustomRoleManagement.HandlingRoleMessages || */OnGameJoinedPatch.WaitingForChat) return;
+                if (/*CustomRoleManagement.HandlingRoleMessages || */OnGameJoinedPatch.WaitingForChat || GameStartManagerUpdatePatch.CountingDown) return;
 
                 if (text == "/h" || text == "/help")
                 {
@@ -476,7 +495,7 @@ public static class RPCHandlerPatch
                     switch (Options.Gamemode.GetValue())
                     {
                         case 0:
-                        //Utils.ModeratorChatCommand($"Enabled Custom Roles:\n\n{CustomRoleManagement.GetActiveRoles()}", "", false);
+                        AbilityManagement.SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), true);
                         break;
 
                         case 1:
@@ -493,13 +512,28 @@ public static class RPCHandlerPatch
 
                     }
                 }
-/*
+
                 if (text == "/r jester"){
                     Utils.ModeratorChatCommand(Translator.Get("jesterPublic"), "", false);}
 
                 if (text == "/r mayor"){
-                    Utils.ModeratorChatCommand(Translator.Get("mayorPublic", Options.MayorExtraVoteCount.GetInt()), "", false);}
-*/
+                    Utils.ModeratorChatCommand(Translator.Get("mayorPublic", Options.ExtraVotesCrewmate.GetInt()), "", false);}
+
+                if (text == "/r tyrant"){
+                    Utils.ModeratorChatCommand(Translator.Get("tyrantPublic", Options.ExtraVotesImpostor.GetInt()), "", false);}
+
+                if (text == "/r workhorse"){
+                    Utils.ModeratorChatCommand(Translator.Get("workhorsePublic", Options.ExtraVotesPerTask.GetFloat()), "", false);}
+
+                if (text == "/r stealer"){
+                    Utils.ModeratorChatCommand(Translator.Get("stealerPublic", Options.ExtraVotesPerKill.GetFloat()), "", false);}
+
+                if (text == "/r juggernaut"){
+                    Utils.ModeratorChatCommand(Translator.Get("juggernautPublic", Options.KillsNeededForJuggernaut.GetInt()), "", false);}
+
+                if (text == "/r speedrunner"){
+                    Utils.ModeratorChatCommand(Translator.Get("speedrunnerPublic"), "", false);}
+
                 break;
             }
         }

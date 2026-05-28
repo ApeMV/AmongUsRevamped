@@ -7,6 +7,7 @@
   "autoStart": "Auto Start",
   "enableDarkTheme": "Enable Dark Theme",
   "enableLobbyMusic": "Lobby Music",
+  "disableInfoWhenDead": "Disable Task/Kill View",
 
   "gameMasterWarning":"You will now spectate games until GM is turned off. WARNING: Custom role notifications will not work with this setting on!",
 
@@ -76,6 +77,7 @@
   "tabGroupSpeedrun": "Speedrun",
   "speedrunSettingsOverride": "Auto Update Settings",
   "gameAutoEndsAfter": "Game automatically ends after",
+  "engineerMode": "All Crewmates Are Engineer",
 
   "tabGroupSabotages": "Sabotages",
   "deadImpostorsCanSabotage": "Dead Impostors Can Sabotage",
@@ -222,17 +224,41 @@
   "socialsAll": "AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya",
   "translationReloaded": "Your file has successfully been reset.\nTo apply the changes, restart your game.",
 
-  "Mayor": "Mayor",
-  "mayorPublic": "Mayor:\n\nThe Mayor is a crewmate with {0} extra vote(s). Depending on settings, they can vent to call a meeting.",
-  "mayorPriv": "Your role is Mayor!\n\nYou are a crewmate with {0} extra vote(s). If you are an Engineer, vent to call a meeting.",
-  "mayorExtraVoteCount": "Extra Votes",
-  "mayorVentToMeeting": "Can Vent To Call Meetings",
+  "mayorPublic": "Mayor:\n\nThe Mayor is a Crewmate with {0} additional vote(s). Use them wisely.",
+  "tyrantPublic": "Tyrant:\n\nThe Tyrant is an Impostor with {0} additional vote(s). Use them wisely.",
 
-  "Jester": "Jester",
-  "jesterPublic": "Jester:\n\nThe Jester wins alone by getting voted. They must act as suspicious as possible.",
-  "jesterPriv": "Your role is Jester!\nYou are NOT a crewmate!\n\nYou win by getting voted. Act as suspicious as possible.",
-  "jesterCanVent": "Can Vent",
+  "juggernautPublic": "Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {0} kills.",
+  "speedrunnerPublic": "Speedrunner:\n\nThe Crewmates win if the Speedrunner completes tasks and is alive. The Speedrunner has more tasks.",
+
+  "stealerPublic": "Stealer:\n\nThe Stealer gains {0} additional vote(s) per killed player. Votes are rounded down.",
+  "workhorsePublic": "Workhorse:\n\nThe Workhorse gains {0} additional vote(s) per completed task. Votes are rounded down.",
+
+  "jesterPublic": "Jester:\n\nThe Jester is a Crewmate who can also win alone by getting voted.",
 
   "customRoleAnnouncement": "Custom Roles are enabled!\n\nIf you have a Custom Role, it will show in a message below this one.",
-  "roleDescriptionHelp": "Your Custom Role can be seen at the start of meetings. It is shown by an obvious private text"
+
+  "tabGroupCrewmateAbilities": "Crewmate Ability Settings",
+  "crewmateAbility": "Crewmate (Role) Ability",
+  "scientistAbility": "Scientist Ability",
+  "engineerAbility": "Engineer Ability",
+  "noisemakerAbility": "Noisemaker Ability",
+  "trackerAbility": "Tracker Ability",
+  "detectiveAbility": "Detective Ability",
+
+  "extraVotesCrewmate": "Extra Votes For Mayor",
+  "extraVotesPerTask": "Extra Votes Per Task For Workhorse",
+  "speedrunnerShortTasks": "Short Tasks For Speedrunner",
+  "speedrunnerLongTasks": "Long Tasks For Speedrunner",
+
+  "tabGroupImpostorAbilities": "Impostor Ability Settings",
+  "impostorAbility": "Impostor (Role) Ability",
+  "shapeshifterAbility": "Shapeshifter Ability",
+  "phantomAbility": "Phantom Ability",
+  "viperAbility": "Viper Ability",
+
+  "extraVotesImpostor": "Extra Votes For Tyrant",
+  "extraVotesPerKill": "Extra Votes Per Kill For Stealer",
+  "killsNeededForJuggernaut": "Kills Needed For Juggernaut",
+
+  "ability": "Ability"
 }

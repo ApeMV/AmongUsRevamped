@@ -38,12 +38,6 @@ namespace AmongUsRevamped
             taskOptionsLoad = Task.Run(Load);
         }
 
-        //[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start)), HarmonyPostfix]
-        //public static void WaitOptionsLoad()
-        //{
-            //taskOptionsLoad.Wait();
-        //}
-
         public const int PresetId = 0;
 
         private static readonly string[] presets =
@@ -60,6 +54,15 @@ namespace AmongUsRevamped
         public static readonly string[] accessLevels =
         {
             "Everyone", "<color=yellow>VIP</color> And Above", "<color=purple>Moderator</color> And Above", "<color=red>Admin</color>", "Only You"
+        };
+
+        public static readonly string[] crewmateAbilities =
+        {
+            "Mayor", "Workhorse", "Jester", "Speedrunner", "None"
+        };
+        public static readonly string[] impostorAbilities =
+        {
+            "Tyrant", "Stealer", "Juggernaut", "None"
         };
 
         //System
@@ -284,20 +287,54 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupSpeedrun;
         public static OptionItem SpeedrunSettingsOverride;
         public static OptionItem GameAutoEndsAfter;
+        public static OptionItem EngineerMode;
 
-        // Roles
-/*
+        // Abilities
         public static OptionItem TabGroupCrewmate;
-        public static OptionItem MayorPerc;
-        public static OptionItem MayorExtraVoteCount;
-        public static OptionItem MayorVentToMeeting;        
 
-        public static OptionItem TabGroupNeutral;
-        public static OptionItem JesterPerc;        
-        public static OptionItem JesterCanVent;        
+        public static OptionItem OverrideCrewmate;
+        public static OptionItem CrewmateAbility;      
+
+        public static OptionItem OverrideScientist; 
+        public static OptionItem ScientistAbility;    
+
+        public static OptionItem OverrideEngineer;
+        public static OptionItem EngineerAbility;    
+
+        public static OptionItem OverrideNoisemaker; 
+        public static OptionItem NoisemakerAbility;    
+
+        public static OptionItem OverrideTracker;   
+        public static OptionItem TrackerAbility;    
+
+        public static OptionItem OverrideDetective;  
+        public static OptionItem DetectiveAbility;    
+
+        public static OptionItem TabGroupCrewmateAbilities;
+        public static OptionItem ExtraVotesCrewmate;
+        public static OptionItem ExtraVotesPerTask;
+        public static OptionItem SpeedrunnerShortTasks;
+        public static OptionItem SpeedrunnerLongTasks;
 
         public static OptionItem TabGroupImpostor;
-*/
+  
+        public static OptionItem OverrideImpostor;  
+        public static OptionItem ImpostorAbility;  
+
+        public static OptionItem OverrideShapeshifter;
+        public static OptionItem ShapeshifterAbility;  
+
+        public static OptionItem OverridePhantom; 
+        public static OptionItem PhantomAbility;  
+
+        public static OptionItem OverrideViper;   
+        public static OptionItem ViperAbility; 
+
+        public static OptionItem TabGroupImpostorAbilities; 
+        public static OptionItem ExtraVotesImpostor;
+        public static OptionItem ExtraVotesPerKill;
+        public static OptionItem KillsNeededForJuggernaut;
+
         public static bool IsLoaded = false;
 
         public static void Load()
@@ -338,7 +375,7 @@ namespace AmongUsRevamped
 
             AutoSendGameInfo = BooleanOptionItem.Create(60150, Translator.Get("autoSendGameInfo"), true, TabGroup.SystemSettings, false);
             AutoRejoinLobby = BooleanOptionItem.Create(60210, Translator.Get("autoRejoinLobby"), false, TabGroup.SystemSettings, false);
-            AutoStartTimer = IntegerOptionItem.Create(64420, Translator.Get("autoStartTimer"), new(1, 600, 1), 5, TabGroup.SystemSettings, false)
+            AutoStartTimer = IntegerOptionItem.Create(64420, Translator.Get("autoStartTimer"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             WaitAutoStart = IntegerOptionItem.Create(64421, Translator.Get("waitAutoStart"), new(10, 600, 10), 300, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
@@ -364,37 +401,66 @@ namespace AmongUsRevamped
             SlashEndMeetingCmd = StringOptionItem.Create(60407, Translator.Get("slashEndMeetingCmd"), accessLevels, 3, TabGroup.SystemSettings, false);
             SlashStartAndEndGameCmd = StringOptionItem.Create(60408, Translator.Get("slashStartAndEndGameCmd"), accessLevels, 3, TabGroup.SystemSettings, false);
 
-
-            // Custom role settings
-/*
-            TabGroupCrewmate = TextOptionItem.Create(100000, Translator.Get("tabGroupCrewmate"), TabGroup.CustomRoleSettings)
+            // Ability settings
+            TabGroupCrewmate = TextOptionItem.Create(100000, Translator.Get("tabGroupCrewmate"), TabGroup.AbilitySettings)
                 .SetColor(CL.Hex("#8cffff"));
-            MayorPerc = IntegerOptionItem.Create(100001, Translator.Get("Mayor"), new(0, 100, 5), 0, TabGroup.CustomRoleSettings, false)
-                .SetValueFormat(OptionFormat.Percent)
-                .SetColor(CL.Hex("#204d42"));
-            MayorExtraVoteCount = IntegerOptionItem.Create(100002, Translator.Get("mayorExtraVoteCount"), new(1, 15, 1), 1, TabGroup.CustomRoleSettings, false)
-                .SetValueFormat(OptionFormat.Level)
-                .SetParent(MayorPerc);
-            MayorVentToMeeting = BooleanOptionItem.Create(100003, Translator.Get("mayorVentToMeeting"), true, TabGroup.CustomRoleSettings, false)
-                .SetParent(MayorPerc);
 
-            TabGroupNeutral = TextOptionItem.Create(101000, Translator.Get("tabGroupNeutral"), TabGroup.CustomRoleSettings)
-                .SetColor(CL.Hex("#FFFF99"));
-            JesterPerc = IntegerOptionItem.Create(101001, Translator.Get("Jester"), new(0, 100, 5), 0, TabGroup.CustomRoleSettings, false)
-                .SetValueFormat(OptionFormat.Percent)
-                .SetColor(CL.Hex("#ec62a5"));
-            JesterCanVent = BooleanOptionItem.Create(101002, Translator.Get("jesterCanVent"), false, TabGroup.CustomRoleSettings, false)
-                .SetParent(JesterPerc);
+            CrewmateAbility = StringOptionItem.Create(100002, Translator.Get("crewmateAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#8cffff"));
 
-            TabGroupImpostor = TextOptionItem.Create(102000, Translator.Get("tabGroupImpostor"), TabGroup.CustomRoleSettings)
+            ScientistAbility = StringOptionItem.Create(100101, Translator.Get("scientistAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#8cffff"));
+
+            EngineerAbility = StringOptionItem.Create(100201, Translator.Get("engineerAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#8cffff"));
+
+            NoisemakerAbility = StringOptionItem.Create(100301, Translator.Get("noisemakerAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#8cffff"));
+
+            TrackerAbility = StringOptionItem.Create(100401, Translator.Get("trackerAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#8cffff"));
+
+            DetectiveAbility = StringOptionItem.Create(100501, Translator.Get("detectiveAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#8cffff"));
+                
+            TabGroupCrewmateAbilities = TextOptionItem.Create(101000, Translator.Get("tabGroupCrewmateAbilities"), TabGroup.AbilitySettings)
+                .SetColor(CL.Hex("#8cffff"));
+            ExtraVotesCrewmate = IntegerOptionItem.Create(101001, Translator.Get("extraVotesCrewmate"), new(1, 15, 1), 1, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+            ExtraVotesPerTask = FloatOptionItem.Create(101002, Translator.Get("extraVotesPerTask"), new(0.25f, 3f, 0.25f), 0.5f, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+            SpeedrunnerShortTasks = IntegerOptionItem.Create(101003, Translator.Get("speedrunnerShortTasks"), new(0, 15, 1), 1, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+            SpeedrunnerLongTasks = IntegerOptionItem.Create(101004, Translator.Get("speedrunnerLongTasks"), new(0, 15, 1), 1, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+
+            TabGroupImpostor = TextOptionItem.Create(102000, Translator.Get("tabGroupImpostor"), TabGroup.AbilitySettings)
                 .SetColor(CL.Hex("#ff1919"));
-*/
+
+            ImpostorAbility = StringOptionItem.Create(100002, Translator.Get("impostorAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#ff1919"));
+
+            ShapeshifterAbility = StringOptionItem.Create(102101, Translator.Get("shapeshifterAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#ff1919"));
+
+            PhantomAbility = StringOptionItem.Create(102201, Translator.Get("phantomAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#ff1919"));
+
+
+            ViperAbility = StringOptionItem.Create(102301, Translator.Get("viperAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
+                .SetColor(CL.Hex("#ff1919"));
+
+            TabGroupImpostorAbilities = TextOptionItem.Create(103000, Translator.Get("tabGroupImpostorAbilities"), TabGroup.AbilitySettings)
+                .SetColor(CL.Hex("#ff1919"));
+            ExtraVotesImpostor = IntegerOptionItem.Create(103001, Translator.Get("extraVotesImpostor"), new(1, 15, 1), 1, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+            ExtraVotesPerKill = FloatOptionItem.Create(103002, Translator.Get("extraVotesPerKill"), new(0.25f, 3f, 0.25f), 0.5f, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+            KillsNeededForJuggernaut = IntegerOptionItem.Create(103003, Translator.Get("killsNeededForJuggernaut"), new(3, 15, 1), 7, TabGroup.AbilitySettings, false)
+                .SetValueFormat(OptionFormat.Level);
+
             // Gamemode Settings
-/*
-            TabGroupStandard = TextOptionItem.Create(69998, Translator.Get("tabGroupStandard"), TabGroup.GamemodeSettings)
-                .SetColor(Color.white);
-            ChatBeforeFirstMeeting = BooleanOptionItem.Create(69999, Translator.Get("chatBeforeFirstMeeting"), false, TabGroup.GamemodeSettings, false);
-*/
+
             TabGroupHNS = TextOptionItem.Create(70000, Translator.Get("tabGroupHNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
             NumSeekers = IntegerOptionItem.Create(70001, Translator.Get("numSeekers"), new(1, 15, 1), 1, TabGroup.GamemodeSettings, false)
@@ -441,6 +507,7 @@ namespace AmongUsRevamped
             SpeedrunSettingsOverride = BooleanOptionItem.Create(70076, Translator.Get("speedrunSettingsOverride"), true, TabGroup.GamemodeSettings, false);
             GameAutoEndsAfter = IntegerOptionItem.Create(70077, Translator.Get("gameAutoEndsAfter"), new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
+            EngineerMode = BooleanOptionItem.Create(70078, Translator.Get("engineerMode"), false, TabGroup.GamemodeSettings, false);
 
             // Gameplay Settings
             TabGroupSabotages = TextOptionItem.Create(60450, Translator.Get("tabGroupSabotages"), TabGroup.ModSettings)

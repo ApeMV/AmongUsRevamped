@@ -1,31 +1,31 @@
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 namespace AmongUsRevamped;
-
-// DateTime spoofing is patched as of April 2026
-
-/*
-[HarmonyPatch(typeof(AmongUsDateTime), nameof(AmongUsDateTime.UtcNow), MethodType.Getter)]
-public static class AmongUsDateTime_UtcNow
-{
-    public static bool Prefix(ref Il2CppSystem.DateTime __result)
-    {
-        if (!CreateOptionsPickerPatch.SetDleks) return true;
-
-        var managedDate = new DateTime(DateTime.UtcNow.Year, 4, 2, 7, 1, 0, DateTimeKind.Utc);
-        __result = new Il2CppSystem.DateTime(managedDate.Ticks);
-            
-        return false;
-    }
-}
 
 class CreateOptionsPickerPatch
 {
     public static bool SetDleks = false;
     public static bool SetDleks2;
     private static bool InitiatedDleks;
+    private static bool isSkeldFlipped = false;
+    public static bool FlippedSkeld
+    {
+        get => isSkeldFlipped;
+        set
+        {
+            if (AmongUsClient.Instance == null || isSkeldFlipped == value) return;
+
+            AssetReference temp = AmongUsClient.Instance.ShipPrefabs[3];
+            AmongUsClient.Instance.ShipPrefabs[3] = AmongUsClient.Instance.ShipPrefabs[0];
+            AmongUsClient.Instance.ShipPrefabs[0] = temp;
+
+            isSkeldFlipped = value;
+        }
+    }
+    
     private static MapSelectButton DleksButton;
     [HarmonyPatch]
     public static class GameOptionsMapPickerPatch
@@ -83,6 +83,8 @@ class CreateOptionsPickerPatch
                     dlekS_ehT_MapButton.Button.OnClick.RemoveAllListeners();
                     dlekS_ehT_MapButton.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
                     {
+                        FlippedSkeld = true;
+
                         __instance.SelectMap(__instance.AllMapIcons[0]);
 
                         if (__instance.selectedButton)
@@ -138,6 +140,8 @@ class CreateOptionsPickerPatch
             if (__instance == null) return true;
 
             if (__instance.MapName == null) return false;
+
+            FlippedSkeld = (__instance.selectedMapId == 3);
 
             if (DleksButton != null) SetDleks = __instance.selectedMapId == 3;
 
@@ -231,4 +235,3 @@ class CreateOptionsPickerPatch
         }
     }
 }
-*/

@@ -2,8 +2,6 @@
 
 namespace AmongUsRevamped;
 
-//Old Patch for Mayor
-/*
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
 public static class CheckForEndVotingPatch
 {
@@ -22,18 +20,33 @@ public static class CheckForEndVotingPatch
 
             byte voterId = ps.TargetPlayerId;
             byte votedFor = ps.VotedFor;
+            PlayerControl pc = GameData.Instance.GetPlayerById(voterId)?.Object;
+            if (pc == null) continue;
             if (votedFor == byte.MaxValue) continue;
+            if (!votes.ContainsKey(votedFor)) votes[votedFor] = 0;
 
             visualVotes.Add(new MeetingHud.VoterState { VoterId = voterId, VotedForId = votedFor });
 
-            if (CustomRoleManagement.PlayerRoles.TryGetValue(voterId, out string role) && role == "Mayor")
-            {
-                int extraVotes = Options.MayorExtraVoteCount.GetInt();
-                if (!votes.TryGetValue(votedFor, out int currentVotes)) currentVotes = 0;
-                votes[votedFor] = currentVotes + extraVotes;
+            if (!PlayerControlCompleteTaskPatch.playerTasksCompleted.ContainsKey(pc)) PlayerControlCompleteTaskPatch.playerTasksCompleted[pc] = 0;
+            if (!MurderPlayerPatch.killCount.ContainsKey(voterId)) MurderPlayerPatch.killCount[voterId] = 0;
 
-                for (int i = 0; i < extraVotes; i++)
-                    visualVotes.Add(new MeetingHud.VoterState { VoterId = voterId, VotedForId = votedFor });
+            int extraVotes = 0;
+            int extraVotesCrewmate = Options.ExtraVotesCrewmate.GetInt();
+            int extraVotesImpostor = Options.ExtraVotesImpostor.GetInt();
+            int extraVotesPerTask = (int)(Options.ExtraVotesPerTask.GetFloat()*PlayerControlCompleteTaskPatch.playerTasksCompleted[pc]+0.1f);
+            int extraVotesPerKill = (int)(Options.ExtraVotesPerKill.GetFloat()*MurderPlayerPatch.killCount[voterId]+0.1f);
+
+            if (!votes.TryGetValue(votedFor, out int currentVotes)) currentVotes = 0;
+
+            if (AbilityManagement.IsMayor(pc)) extraVotes += extraVotesCrewmate;               
+            if (AbilityManagement.IsTyrant(pc)) extraVotes += extraVotesImpostor;               
+            if (AbilityManagement.IsWorkhorse(pc)) extraVotes += extraVotesPerTask;               
+            if (AbilityManagement.IsStealer(pc)) extraVotes += extraVotesPerKill;               
+
+            for (int i = 0; i < extraVotes; i++)
+            {
+                visualVotes.Add(new MeetingHud.VoterState { VoterId = voterId, VotedForId = votedFor });
+                votes[votedFor]++;
             }
         }
 
@@ -46,7 +59,6 @@ public static class CheckForEndVotingPatch
         return false;
     }
 }
-*/
 
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
 class MeetingHudStartPatch
@@ -67,7 +79,7 @@ class MeetingHudStartPatch
                 }
             }
 
-            if (player == null || !PlayerControl.LocalPlayer.Data.IsDead) continue;
+            if (player == null || !PlayerControl.LocalPlayer.Data.IsDead || Main.DisableInfoWhenDead.Value) continue;
 
             var textTemplate = playerState.NameText;
             var taskText = GetProgressText(player);

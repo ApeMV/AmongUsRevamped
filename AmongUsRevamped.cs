@@ -30,11 +30,11 @@ public partial class Main : BasePlugin
     public static ConfigEntry<string> Preset5 { get; private set; }
 
     public static ConfigEntry<bool> GM { get; private set; }
-    public static ConfigEntry<bool> UnlockFps { get; private set; }
     public static ConfigEntry<bool> ShowFps { get; private set; }
     public static ConfigEntry<bool> AutoStart { get; private set; }
     public static ConfigEntry<bool> DarkTheme { get; private set; }
     public static ConfigEntry<bool> LobbyMusic { get; private set; }
+    public static ConfigEntry<bool> DisableInfoWhenDead { get; private set; }
 
     public static NormalGameOptionsV10 NormalOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentNormalGameOptions : null;
     public static HideNSeekGameOptionsV10 HideNSeekOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentHideNSeekGameOptions : null;
@@ -42,7 +42,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.7.2";
+    public const string ModVersion = "v1.7.3";
 
     public static float GameTimer;
 
@@ -85,11 +85,11 @@ public partial class Main : BasePlugin
 
         AutoStart = Config.Bind("Client Options", "Auto Start", false);
         GM = Config.Bind("Client Options", "Game Master", false);
-        UnlockFps = Config.Bind("Client Options", "Unlock FPS", false);
         ShowFps = Config.Bind("Client Options", "Show FPS", false);
         AutoStart = Config.Bind("Client Options", "Auto Start", false);
         DarkTheme = Config.Bind("Client Options", "Dark Theme", false);
         LobbyMusic = Config.Bind("Client Options", "Lobby Music", false);
+        DisableInfoWhenDead = Config.Bind("Client Options", "Disable Task/Kill View", false);
 
         Translator.Init();
         BanManager.Init();
