@@ -29,21 +29,40 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.7.2):
+# 🎮 Features (v1.7.3):
+## <b> 🌟 Custom Abilities:</b>
+- Mayor (Crewmate)
+- The Mayor has a configurable amount of extra votes
+- Jester (Crewmate)
+- The Jester wins alone by getting ejected, can win with Crewmates
+- Speedrunner (Crewmate)
+- The Crewmates win if the Speedrunner completes tasks and is alive
+- Workhorse (Crewmate)
+- The Workhorse gains additional votes per completed task
+- Tyrant (Impostor)
+- The Tyrant has a configurable amount of extra votes
+- Stealer (Impostor)
+- The Stealer gains additional votes per kill
+- Juggernaut (Impostor)
+- The Impostors win if the Juggernaut gains a set amount of kills
+- For the enabled ability list, type /r
+- To check ability descriptions, type /r {ability}
+
 ## <b>♠️ Client Side settings:</b>
 - Game Master
 - Unlock FPS
 - Show FPS
 - Dark Theme
 - Toggle Lobby Music
+- Show/Hide Info When Dead
 - Customizable strings
 ## <b>⚙️ Technical settings:</b>
 - Kick/Ban players under a certain level
 - Kick/Ban invalid FriendCodes
 - Kick/Ban players who say "start"
-- Banword system
+- Denyword system
 - Banlist system
-- DenyName system
+- Denyname system
 - Multi layer moderator system
 - To add Admins, Moderators and VIP's, type the user's Friendcode in the designated files located in AUR-DATA
 - Enable No Game End
@@ -70,6 +89,8 @@
 - Shift and Seek
 - Speedrun
 ## <b>❓ Other Improvements:</b>
+- Creatable and customizable Templates
+- Eht Dleks (Reverse Skeld) Map
 - Ability to cancel starting countdown
 - Improved main menu
 - Faster startup time
