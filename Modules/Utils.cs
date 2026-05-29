@@ -547,4 +547,26 @@ public static class Utils
         PlayerControl.LocalPlayer.CmdReportDeadBody(null);
         MeetingHud.Instance.RpcClose(); 
     }
+
+    public static MethodBase GetStateMachineMoveNext<T>(string methodName)
+    {
+        var typeName = typeof(T).FullName;
+        var stateMachine = typeof(T).GetNestedTypes().FirstOrDefault(x => x.Name.Contains(methodName));
+
+        if (stateMachine == null)
+        {
+            Logger.Error($"Failed to find {methodName} state machine for {typeName}", "GetStateMachineMoveNext");
+            return null;
+        }
+
+        var moveNext = AccessTools.Method(stateMachine, "MoveNext");
+        if (moveNext == null)
+        {
+            Logger.Error($"Failed to find MoveNext method for {typeName}.{methodName}", "GetStateMachineMoveNext");
+            return null;
+        }
+
+        Logger.Info($"Found {methodName}.MoveNext", "GetStateMachineMoveNext");
+        return moveNext;
+    }
 }
