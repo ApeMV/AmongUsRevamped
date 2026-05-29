@@ -112,4 +112,13 @@ public class GameStartManagerStartPatch
         }));
     }
 }
+
+[HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.BeginGame))]
+public class GameStartManagerBeginGamePatch
+{
+    public static void Prefix(GameStartManager __instance)
+    {
+        if (Options.NoGameEnd.GetBool()) Logger.SendInGame(Translator.Get("noGameEndWarning"));
+    }
+}
     

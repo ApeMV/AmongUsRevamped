@@ -229,6 +229,24 @@ internal static class SendChatPatch
             __instance.freeChatField.textArea.SetText(string.Empty);
             return false;
         }
+
+        if (text.StartsWith("/t "))
+        {
+            string templateName = text[3..].Trim().ToLower();
+
+            if (BanManager.Templates.TryGetValue(templateName, out string templateMessage))
+            {
+                Utils.ChatCommand(__instance, templateMessage, "", false);
+            }
+            else
+            {
+                Logger.Info($"Could not find template '{templateName}'", "TemplateManager");
+                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"Template '{templateName}' not found.");
+            }
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;
+        }
         
         bool col1 = text.StartsWith("/col ") || text.StartsWith("/cor ");
         bool col2  = text.StartsWith("/color ");
@@ -513,6 +531,8 @@ public static class RPCHandlerPatch
                     }
                 }
 
+                if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
+                
                 if (text == "/r jester"){
                     Utils.ModeratorChatCommand(Translator.Get("jesterPublic"), "", false);}
 
@@ -533,6 +553,16 @@ public static class RPCHandlerPatch
 
                 if (text == "/r speedrunner"){
                     Utils.ModeratorChatCommand(Translator.Get("speedrunnerPublic"), "", false);}
+
+                if (text.StartsWith("/t "))
+                {
+                    string templateName = text[3..].Trim().ToLower();
+
+                    if (BanManager.Templates.TryGetValue(templateName, out string templateMessage))
+                    {
+                        Utils.ModeratorChatCommand(templateMessage, "", false);
+                    }
+                }
 
                 break;
             }

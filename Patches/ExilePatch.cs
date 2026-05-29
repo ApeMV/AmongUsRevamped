@@ -25,7 +25,7 @@ class ExileControllerWrapUpPatch
                     pc = p;
                 }
 
-                if (ejectedPlayer == PlayerControl.LocalPlayer.Data)
+                if (ejectedPlayer == PlayerControl.LocalPlayer.Data && !Main.DisableInfoWhenDead.Value)
                 {
                     if (p.Data.Role.IsImpostor)
                     {

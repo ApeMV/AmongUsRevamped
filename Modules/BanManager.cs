@@ -20,12 +20,14 @@ public static class BanManager
 #endif
 
     public static string RemoveHtmlTags(this string str) => Regex.Replace(str, "<[^>]*?>", "");
-    private static readonly string DenyNameListPath = $"{DataPath}/AUR-DATA/DenyNameList.txt";
+    private static readonly string DenyNameListPath = $"{DataPath}/AUR-DATA/Deniednames.txt";
     private static string BanListPath = $"{DataPath}/AUR-DATA/Banlist.txt";
-    private static string BanWordPath = $"{DataPath}/AUR-DATA/Bannedwords.txt";
+    private static string BanWordPath = $"{DataPath}/AUR-DATA/Deniedwords.txt";
     private static string VipListPath = $"{DataPath}/AUR-DATA/VIP.txt";
     private static string ModeratorListPath = $"{DataPath}/AUR-DATA/Moderator.txt";
     private static string AdminListPath = $"{DataPath}/AUR-DATA/Admin.txt";
+    private static string TemplatePath = $"{DataPath}/AUR-DATA/Templates.txt";
+    public static Dictionary<string, string> Templates = new();
     public static List<string> TempBanWhiteList = [];
     public static void Init()
     {
@@ -37,32 +39,46 @@ public static class BanManager
             {
                 Logger.Warn("Creating a new DenyNameList.txt file", "BanManager");
                 File.Create(DenyNameListPath).Close();
+                File.WriteAllText(DenyNameListPath, Translator.Get("bannameWelcome"));
             }
             if (!File.Exists(BanListPath))
             {
                 Logger.Warn("Creating a new Banlist.txt file", "BanManager");
                 File.Create(BanListPath).Close();
+                File.WriteAllText(BanListPath, Translator.Get("banlistWelcome"));
             }
             if (!File.Exists(BanWordPath))
             {
                 Logger.Warn("Creating a new Banlist.txt file", "BanManager");
                 File.Create(BanWordPath).Close();
+                File.WriteAllText(BanWordPath, Translator.Get("banwordWelcome"));
             }
             if (!File.Exists(VipListPath))
             {
                 Logger.Warn("Creating a new VIP.txt file", "BanManager");
                 File.Create(VipListPath).Close();
+                File.WriteAllText(VipListPath, Translator.Get("vipWelcome"));
             }
             if (!File.Exists(ModeratorListPath))
             {
                 Logger.Warn("Creating a new Moderator.txt file", "BanManager");
                 File.Create(ModeratorListPath).Close();
+                File.WriteAllText(ModeratorListPath, Translator.Get("moderatorWelcome"));
             }
             if (!File.Exists(AdminListPath))
             {
                 Logger.Warn("Creating a new Admin.txt file", "BanManager");
                 File.Create(AdminListPath).Close();
+                File.WriteAllText(AdminListPath, Translator.Get("adminWelcome"));
             }
+            if (!File.Exists(TemplatePath))
+            {
+                Logger.Warn("Creating a new Templates.txt file", "BanManager");
+                File.Create(TemplatePath).Close();
+                File.WriteAllText(TemplatePath, Translator.Get("templateWelcome"));
+            }
+
+            LoadTemplates();
 
         }
         catch (Exception ex)
@@ -153,6 +169,7 @@ public static class BanManager
             string line;
             while ((line = sr.ReadLine()) != null)
             {
+                if (line.StartsWith("#")) continue;
                 if (line == "") continue;
                 if (!OnlyCheckPuid)
                 {
@@ -172,7 +189,7 @@ public static class BanManager
     {
         if (name == "" || !AmongUsClient.Instance.AmHost) return false;
 
-        var deniedNames = File.ReadAllLines(DenyNameListPath);
+        var deniedNames = File.ReadAllLines(DenyNameListPath).Where(x => !x.StartsWith("#"));
 
         if (deniedNames.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => name.Contains(code, StringComparison.OrdinalIgnoreCase)))
         {
@@ -188,7 +205,7 @@ public static class BanManager
     {
         if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0) return false;
 
-        var bannedWords = File.ReadAllLines(BanWordPath);
+        var bannedWords = File.ReadAllLines(BanWordPath).Where(x => !x.StartsWith("#"));
 
         if (bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase)))
         {
@@ -211,6 +228,28 @@ public static class BanManager
 
             if (!BanManager.CheckBanList(recentClient?.FriendCode, recentClient?.GetHashedPuid()))
                 __instance.BanButton.GetComponent<ButtonRolloverHandler>().SetEnabledColors();
+        }
+    }
+
+    public static void LoadTemplates()
+    {
+        Templates.Clear();
+
+        if (!File.Exists(TemplatePath)) return;
+
+        foreach (var line in File.ReadAllLines(TemplatePath))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            if (line.StartsWith("#")) continue;
+
+            int splitIndex = line.IndexOf(':');
+
+            if (splitIndex == -1) continue;
+
+            string key = line[..splitIndex].Trim().ToLower();
+            string value = line[(splitIndex + 1)..].Trim();
+
+            if (!Templates.ContainsKey(key)) Templates.Add(key, value);
         }
     }
 }

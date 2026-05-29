@@ -7,9 +7,9 @@
   "autoStart": "Auto Start",
   "enableDarkTheme": "Enable Dark Theme",
   "enableLobbyMusic": "Lobby Music",
-  "disableInfoWhenDead": "Disable Task/Kill View",
+  "disableInfoWhenDead": "Hide Info When Dead",
 
-  "gameMasterWarning":"You will now spectate games until GM is turned off. WARNING: Custom role notifications will not work with this setting on!",
+  "gameMasterWarning":"You will now spectate games until Game Master is turned off.",
 
   "cancelStartCountdown": "Start countdown canceled",
   
@@ -41,7 +41,7 @@
 
   "tabGroupAccess": "Access Levels",
   "slashColorCmd": "Who Can Use /color",
-  "slashRolesAndGamemodeCmd": "Who Can Use /r",
+  "slashRolesAndGamemodeCmd": "Who Can Use /r And Templates",
   "slashLastGameCmd": "Who Can Use /l",
   "slashHelpAndAurCmd": "Who Can Use /help And /aur",
   "slashKickCmd": "Who Can Use /kick And /ckick",
@@ -77,7 +77,7 @@
   "tabGroupSpeedrun": "Speedrun",
   "speedrunSettingsOverride": "Auto Update Settings",
   "gameAutoEndsAfter": "Game automatically ends after",
-  "engineerMode": "All Crewmates Are Engineer",
+  "engineerMode": "Everyone Is Engineer",
 
   "tabGroupSabotages": "Sabotages",
   "deadImpostorsCanSabotage": "Dead Impostors Can Sabotage",
@@ -260,5 +260,15 @@
   "extraVotesPerKill": "Extra Votes Per Kill For Stealer",
   "killsNeededForJuggernaut": "Kills Needed For Juggernaut",
 
-  "ability": "Ability"
+  "ability": "Ability",
+
+  "templateWelcome": "# In this file you can add Templates, which serve as easy copy-paste alternatives.\n# To create a template, write a new line with the same formatting as the test Template below.\n# Note that Templates can't be longer than 120 characters and can't contain special characters. Having so will kick you.\n\ntest: this is an example template. Type '/t test' to see it.",
+  "moderatorWelcome": "# In this file you can add Moderators by Friendcode.\n# If you add someone, they will gain a purple name in-game.\n# Go to 'System Settings' in-game to customize Moderator permissions. Below is a Friendcode example.\n\nfriendcode#0000",
+  "vipWelcome": "# In this file you can add VIP's by Friendcode.\n# If you add someone, they will gain a yellow name in-game.\n# Go to 'System Settings' in-game to customize VIP permissions. Below is a Friendcode example.\n\nfriendcode#0000\n",
+  "adminWelcome": "# In this file you can add Admins by Friendcode.\n# If you add someone, they will gain a red name in-game.\n# Go to 'System Settings' in-game to customize Admin permissions. Below is a Friendcode example.\n\nfriendcode#0000\n",
+  "banlistWelcome": "# In this file you can ban players from your lobby by Friendcode.\n# Banning someone in-game will automatically add them here as well. Below is a Friendcode example.\n\nfriendcode#0000\n",
+  "banwordWelcome": "# In this file you can set denied words, automatically kicking anyone in-game who sends words listed here.\n# Make sure to separate words by using new lines.",
+  "bannameWelcome": "# In this file you can set denied names, automatically kicking anyone in-game who uses names listed here.\n# Make sure to separate names by using new lines.",
+
+  "noGameEndWarning": "WARNING: No Game End is enabled"
 }

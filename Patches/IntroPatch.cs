@@ -15,7 +15,7 @@ internal static class CoShowIntroPatch
 
         if (!AmongUsClient.Instance.AmHost) return;
 
-        Utils.ModeratorChatCommand(Translator.Get("abilitiesGenericOne", Options.CrewmateAbility.GetString(), Options.ScientistAbility.GetString(), Options.EngineerAbility.GetString(), Options.NoisemakerAbility.GetString(), Options.TrackerAbility.GetString()), Translator.Get("abilitiesGenericTwo", Options.DetectiveAbility.GetString(), Options.ImpostorAbility.GetString(), Options.ShapeshifterAbility.GetString(), Options.PhantomAbility.GetString(), Options.ViperAbility.GetString()), true);
+        //Utils.ModeratorChatCommand(Translator.Get("abilitiesGenericOne", Options.CrewmateAbility.GetString(), Options.ScientistAbility.GetString(), Options.EngineerAbility.GetString(), Options.NoisemakerAbility.GetString(), Options.TrackerAbility.GetString()), Translator.Get("abilitiesGenericTwo", Options.DetectiveAbility.GetString(), Options.ImpostorAbility.GetString(), Options.ShapeshifterAbility.GetString(), Options.PhantomAbility.GetString(), Options.ViperAbility.GetString()), true);
         
         foreach (var p in PlayerControl.AllPlayerControls)
         {
@@ -25,7 +25,11 @@ internal static class CoShowIntroPatch
             MurderPlayerPatch.misfireCount[p.Data.PlayerId] = 0;
             PlayerControlCompleteTaskPatch.playerTasksCompleted[p] = 0;
             PlayerControlCompleteTaskPatch.tasksPerPlayer[p] = 0;
+
+            Logger.Info($" {p.Data.PlayerName} -> {p.Data.RoleType}", "RoleInfo");
         }
+
+        Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
 
         if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.isHideNSeek)
         {
