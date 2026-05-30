@@ -35,48 +35,13 @@ public static class BanManager
         {
             if (!Directory.Exists($"{DataPath}/AUR-DATA")) Directory.CreateDirectory($"{DataPath}/AUR-DATA");
 
-            if (!File.Exists(DenyNameListPath))
-            {
-                Logger.Warn("Creating a new DenyNameList.txt file", "BanManager");
-                File.Create(DenyNameListPath).Close();
-                File.WriteAllText(DenyNameListPath, Translator.Get("bannameWelcome"));
-            }
-            if (!File.Exists(BanListPath))
-            {
-                Logger.Warn("Creating a new Banlist.txt file", "BanManager");
-                File.Create(BanListPath).Close();
-                File.WriteAllText(BanListPath, Translator.Get("banlistWelcome"));
-            }
-            if (!File.Exists(BanWordPath))
-            {
-                Logger.Warn("Creating a new Banlist.txt file", "BanManager");
-                File.Create(BanWordPath).Close();
-                File.WriteAllText(BanWordPath, Translator.Get("banwordWelcome"));
-            }
-            if (!File.Exists(VipListPath))
-            {
-                Logger.Warn("Creating a new VIP.txt file", "BanManager");
-                File.Create(VipListPath).Close();
-                File.WriteAllText(VipListPath, Translator.Get("vipWelcome"));
-            }
-            if (!File.Exists(ModeratorListPath))
-            {
-                Logger.Warn("Creating a new Moderator.txt file", "BanManager");
-                File.Create(ModeratorListPath).Close();
-                File.WriteAllText(ModeratorListPath, Translator.Get("moderatorWelcome"));
-            }
-            if (!File.Exists(AdminListPath))
-            {
-                Logger.Warn("Creating a new Admin.txt file", "BanManager");
-                File.Create(AdminListPath).Close();
-                File.WriteAllText(AdminListPath, Translator.Get("adminWelcome"));
-            }
-            if (!File.Exists(TemplatePath))
-            {
-                Logger.Warn("Creating a new Templates.txt file", "BanManager");
-                File.Create(TemplatePath).Close();
-                File.WriteAllText(TemplatePath, Translator.Get("templateWelcome"));
-            }
+            CheckFile(DenyNameListPath, Translator.Get("bannameWelcome"), "DeniedNames.txt");
+            CheckFile(BanListPath, Translator.Get("banlistWelcome"), "Banlist.txt");
+            CheckFile(BanWordPath, Translator.Get("banwordWelcome"), "DeniedWords.txt");
+            CheckFile(VipListPath, Translator.Get("vipWelcome"), "VIP.txt");
+            CheckFile(ModeratorListPath, Translator.Get("moderatorWelcome"), "Moderator.txt");
+            CheckFile(AdminListPath, Translator.Get("adminWelcome"), "Admin.txt");
+            CheckFile(TemplatePath, Translator.Get("templateWelcome"), "Templates.txt");
 
             LoadTemplates();
 
@@ -250,6 +215,22 @@ public static class BanManager
             string value = line[(splitIndex + 1)..].Trim();
 
             if (!Templates.ContainsKey(key)) Templates.Add(key, value);
+        }
+    }
+
+    private static void CheckFile(string path, string defaultContent, string name)
+    {
+        try
+        {
+            if (!File.Exists(path))
+            {
+                Logger.Warn($"Creating a new {name} file", "BanManager");
+                File.WriteAllText(path, defaultContent);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Exception(ex, "BanManager");
         }
     }
 }

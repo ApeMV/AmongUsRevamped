@@ -236,7 +236,14 @@ internal static class SendChatPatch
 
             if (BanManager.Templates.TryGetValue(templateName, out string templateMessage))
             {
-                Utils.ChatCommand(__instance, templateMessage, "", false);
+                if (templateMessage.Length < 121)
+                {
+                    Utils.ChatCommand(__instance, templateMessage, "", false);
+                }
+                else
+                {
+                    HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("tooLongTemplate")); 
+                }
             }
             else
             {
@@ -560,7 +567,14 @@ public static class RPCHandlerPatch
 
                     if (BanManager.Templates.TryGetValue(templateName, out string templateMessage))
                     {
-                        Utils.ModeratorChatCommand(templateMessage, "", false);
+                        if (templateMessage.Length < 121)
+                        {  
+                            Utils.ModeratorChatCommand(templateMessage, "", false);
+                        }
+                        else
+                        {
+                            HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("tooLongTemplate"));                            
+                        }
                     }
                 }
 

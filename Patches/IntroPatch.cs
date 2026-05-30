@@ -15,7 +15,7 @@ internal static class CoShowIntroPatch
 
         if (!AmongUsClient.Instance.AmHost) return;
 
-        //Utils.ModeratorChatCommand(Translator.Get("abilitiesGenericOne", Options.CrewmateAbility.GetString(), Options.ScientistAbility.GetString(), Options.EngineerAbility.GetString(), Options.NoisemakerAbility.GetString(), Options.TrackerAbility.GetString()), Translator.Get("abilitiesGenericTwo", Options.DetectiveAbility.GetString(), Options.ImpostorAbility.GetString(), Options.ShapeshifterAbility.GetString(), Options.PhantomAbility.GetString(), Options.ViperAbility.GetString()), true);
+        AbilityManagement.SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), true);
         
         foreach (var p in PlayerControl.AllPlayerControls)
         {

@@ -17,6 +17,7 @@
   "tabGroupMain": "Moderation",
   "kickLowLevelPlayer": "Kick Players Under Level",
   "tempBanLowLevelPlayer": "Ban Instead Of Kick",
+  "dontKickLevelOnes": "Don't Kick Lv.1 Players For Glitched Lobbies",
   "kickInvalidFriendCodes": "Kick Invalid FriendCodes",
   "tempBanInvalidFriendCodes": "Ban Instead Of Kick",
   "applyBanList": "Apply BanList",
@@ -270,5 +271,7 @@
   "banwordWelcome": "# In this file you can set denied words, automatically kicking anyone in-game who sends words listed here.\n# Make sure to separate words by using new lines.",
   "bannameWelcome": "# In this file you can set denied names, automatically kicking anyone in-game who uses names listed here.\n# Make sure to separate names by using new lines.",
 
-  "noGameEndWarning": "WARNING: No Game End is enabled"
+  "noGameEndWarning": "WARNING: No Game End is enabled",
+
+  "tooLongTemplate": "Your Template is longer than 120 characters and would kick you upon sending. Please reduce the length."
 }

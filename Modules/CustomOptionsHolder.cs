@@ -71,6 +71,7 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupMain;
 
         public static OptionItem KickLowLevelPlayer;
+        public static OptionItem DontKickLevelOnes;
         public static OptionItem TempBanLowLevelPlayer;
 
         public static OptionItem KickInvalidFriendCodes;
@@ -356,6 +357,8 @@ namespace AmongUsRevamped
                 .SetValueFormat(OptionFormat.Level);
             TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, Translator.Get("tempBanLowLevelPlayer"), false, TabGroup.SystemSettings, false)
                 .SetParent(KickLowLevelPlayer);
+            DontKickLevelOnes = BooleanOptionItem.Create(60052, Translator.Get("dontKickLevelOnes"), false, TabGroup.SystemSettings, false)
+                .SetParent(KickLowLevelPlayer);
 
             KickInvalidFriendCodes = BooleanOptionItem.Create(60080, Translator.Get("kickInvalidFriendCodes"), true, TabGroup.SystemSettings, false);
             TempBanInvalidFriendCodes = BooleanOptionItem.Create(60081, Translator.Get("tempBanInvalidFriendCodes"), false, TabGroup.SystemSettings, false)
@@ -405,7 +408,7 @@ namespace AmongUsRevamped
             TabGroupCrewmate = TextOptionItem.Create(100000, Translator.Get("tabGroupCrewmate"), TabGroup.AbilitySettings)
                 .SetColor(CL.Hex("#8cffff"));
 
-            CrewmateAbility = StringOptionItem.Create(100002, Translator.Get("crewmateAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
+            CrewmateAbility = StringOptionItem.Create(100001, Translator.Get("crewmateAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
                 .SetColor(CL.Hex("#8cffff"));
 
             ScientistAbility = StringOptionItem.Create(100101, Translator.Get("scientistAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
@@ -429,9 +432,9 @@ namespace AmongUsRevamped
                 .SetValueFormat(OptionFormat.Level);
             ExtraVotesPerTask = FloatOptionItem.Create(101002, Translator.Get("extraVotesPerTask"), new(0.25f, 3f, 0.25f), 0.5f, TabGroup.AbilitySettings, false)
                 .SetValueFormat(OptionFormat.Level);
-            SpeedrunnerShortTasks = IntegerOptionItem.Create(101003, Translator.Get("speedrunnerShortTasks"), new(0, 15, 1), 1, TabGroup.AbilitySettings, false)
+            SpeedrunnerShortTasks = IntegerOptionItem.Create(101003, Translator.Get("speedrunnerShortTasks"), new(0, 15, 1), 4, TabGroup.AbilitySettings, false)
                 .SetValueFormat(OptionFormat.Level);
-            SpeedrunnerLongTasks = IntegerOptionItem.Create(101004, Translator.Get("speedrunnerLongTasks"), new(0, 15, 1), 1, TabGroup.AbilitySettings, false)
+            SpeedrunnerLongTasks = IntegerOptionItem.Create(101004, Translator.Get("speedrunnerLongTasks"), new(0, 15, 1), 3, TabGroup.AbilitySettings, false)
                 .SetValueFormat(OptionFormat.Level);
 
             TabGroupImpostor = TextOptionItem.Create(102000, Translator.Get("tabGroupImpostor"), TabGroup.AbilitySettings)

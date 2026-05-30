@@ -107,11 +107,11 @@ class MeetingHudStartPatch
                 totalTasks++;
                 if (task.Complete) tasksCompleted++;
             }
-            return $"<color=green>({tasksCompleted}/{totalTasks})</color>";
+            return $"<color=green>({tasksCompleted}/{totalTasks})</color> - {Utils.GetRoleText(player)}";
         }
         else
         {
-            return $"<color=red>({MurderPlayerPatch.killCount[player.Data.PlayerId]}†)</color>";
+            return $"<color=red>({MurderPlayerPatch.killCount[player.Data.PlayerId]}†)</color> - {Utils.GetRoleText(player)}";
         }
     }
 }

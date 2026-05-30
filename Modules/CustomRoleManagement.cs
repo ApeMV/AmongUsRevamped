@@ -128,6 +128,8 @@ public static class AbilityManagement
 
     public static void SendRoleList(ChatController c, string text, bool moderator)
     {
+        if (string.IsNullOrEmpty(AbilityManagement.RoleList())) return;
+
         if (text.Length <= 120)
         {
             if (moderator) Utils.ModeratorChatCommand(text, "", false);

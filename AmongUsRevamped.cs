@@ -42,7 +42,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.7.3";
+    public const string ModVersion = "v1.7.4";
 
     public static float GameTimer;
 
@@ -95,6 +95,8 @@ public partial class Main : BasePlugin
         BanManager.Init();
         
         Harmony.PatchAll();
+
+        ConsoleManager.DetachConsole();
     }
 
     [HarmonyPatch(typeof(ModManager), nameof(ModManager.LateUpdate))]

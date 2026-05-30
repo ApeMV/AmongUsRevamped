@@ -569,4 +569,15 @@ public static class Utils
         Logger.Info($"Found {methodName}.MoveNext", "GetStateMachineMoveNext");
         return moveNext;
     }
+
+    public static string GetRoleText(PlayerControl p)
+    {
+        if (p == null) return "";
+
+        if (p.Data.RoleType == RoleTypes.Impostor || p.Data.RoleType == RoleTypes.Shapeshifter || p.Data.RoleType == RoleTypes.Phantom || p.Data.RoleType == RoleTypes.Viper)
+        {
+            return $"<color=#ff1919>{p.Data.RoleType}</color>";
+        }
+        else return $"<color=#8cffff>{p.Data.RoleType}</color>";
+    }
 }

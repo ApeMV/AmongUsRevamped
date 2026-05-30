@@ -121,6 +121,7 @@ public static class SetLevelPatch
     {
         if (AmongUsClient.Instance.AmHost && level < Options.KickLowLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
         {
+            if (level == 0 && Options.DontKickLevelOnes.GetBool()) return;
             if (HandledLevelKicks.Contains(__instance)) return;
 
             if (!Options.TempBanLowLevelPlayer.GetBool()) 
