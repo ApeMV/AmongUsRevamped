@@ -67,7 +67,7 @@ internal static class MurderPlayerPatch
                     }
                     else
                     {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p]})</color> - {Utils.GetRoleText(p)}";
+                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})</color> - {Utils.GetRoleText(p)}";
                     }
                 }
             }
@@ -145,8 +145,8 @@ internal static class CheckShapeshiftPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
 class PlayerControlCompleteTaskPatch
 {
-    public static Dictionary<PlayerControl, int> playerTasksCompleted = new Dictionary<PlayerControl, int>();
-    public static Dictionary<PlayerControl, int> tasksPerPlayer = new Dictionary<PlayerControl, int>();
+    public static Dictionary<byte, int> playerTasksCompleted = new Dictionary<byte, int>();
+    public static Dictionary<byte, int> tasksPerPlayer = new Dictionary<byte, int>();
     public static List<string> ignoredRoles = new List<string> {"Jester"};
     public static int ignoredTasks;
     public static int ignoredCompletedTasks;
@@ -158,32 +158,31 @@ class PlayerControlCompleteTaskPatch
 
         foreach (var p in PlayerControl.AllPlayerControls)
         {
-/*
-            if (ignoredRoles.Contains(CustomRoleManagement.GetRole(p.PlayerId)) && !tasksInitiated)
+            if (AbilityManagement.IsJester(p) && !tasksInitiated)
             {
                 ignoredTasks += p.Data.Tasks.Count;
                 tasksInitiated = true;
             }
-*/
-            if (!playerTasksCompleted.ContainsKey(p))
+
+            if (!playerTasksCompleted.ContainsKey(p.PlayerId))
             {
-                playerTasksCompleted[p] = 0;                
+                playerTasksCompleted[p.PlayerId] = 0;                
             }
-            tasksPerPlayer[p] = p.Data.Tasks.Count;
+            tasksPerPlayer[p.PlayerId] = p.Data.Tasks.Count;
         }
 
-        playerTasksCompleted[__instance]++;
-/*
-        if (ignoredRoles.Contains(CustomRoleManagement.GetRole(__instance.PlayerId)))
+        playerTasksCompleted[__instance.PlayerId]++;
+
+        if (AbilityManagement.IsJester(__instance))
         {
-            ignoredCompletedTasks = playerTasksCompleted[__instance];
+            ignoredCompletedTasks = playerTasksCompleted[__instance.PlayerId];
         }
-*/
+
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");
 
         if (Options.Gamemode.GetValue() < 2)
         {
-            if (AbilityManagement.IsSpeedrunner(__instance) && !__instance.Data.IsDead && playerTasksCompleted[__instance] >= __instance.Data.Tasks.Count)
+            if (AbilityManagement.IsSpeedrunner(__instance) && !__instance.Data.IsDead && playerTasksCompleted[__instance.PlayerId] >= __instance.Data.Tasks.Count)
             {
                 Logger.Info($"Speedrunner {__instance.Data.PlayerName} won", "TaskPatch");
                 Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
@@ -195,7 +194,7 @@ class PlayerControlCompleteTaskPatch
 
         if (Options.Gamemode.GetValue() == 3)
         {
-            if (!__instance.Data.IsDead && playerTasksCompleted[__instance] >= __instance.Data.Tasks.Count)
+            if (!__instance.Data.IsDead && playerTasksCompleted[__instance.PlayerId] >= __instance.Data.Tasks.Count)
             {
                 Utils.CustomWinnerEndGame(__instance, 1);
                 NormalGameEndChecker.LastWinReason = $"{__instance.Data.PlayerName} wins! (Completed tasks)";
@@ -206,7 +205,7 @@ class PlayerControlCompleteTaskPatch
         if (PlayerControl.LocalPlayer.Data.IsDead && !Main.DisableInfoWhenDead.Value)
         {
             TMP_Text nameText = __instance.cosmetics.nameText;
-            nameText.text = $"{__instance.Data.PlayerName}<color=green><size=90%>({playerTasksCompleted[__instance]}/{tasksPerPlayer[__instance]})</color> - {Utils.GetRoleText(__instance)}";
+            nameText.text = $"{__instance.Data.PlayerName}<color=green><size=90%>({playerTasksCompleted[__instance.PlayerId]}/{tasksPerPlayer[__instance.PlayerId]})</color> - {Utils.GetRoleText(__instance)}";
         }
     }
     

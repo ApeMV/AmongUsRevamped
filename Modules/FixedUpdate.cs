@@ -92,8 +92,6 @@ class FixedUpdateInGamePatch
                 break;
 
             case 3: // Speedrun
-                if (settingsLabel == null)
-                    Main.NormalOptions.TaskBarMode = 0;
                 break;
 
             case 0: // Reset

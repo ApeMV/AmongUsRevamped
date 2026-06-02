@@ -53,43 +53,43 @@ class NormalGameEndChecker
         
         if (Winner == "Jester")
         {
-            LastWinReason = $"Jester wins! (Voted)\n\nImpostors: {impostorList}";
+            LastWinReason = Translator.Get("jesterWin") + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "Juggernaut")
         {
-            LastWinReason = $"Impostors win! (Juggernaut killed {Options.KillsNeededForJuggernaut.GetInt()} players)\n\nImpostor: {impostorList}";
+            LastWinReason = Translator.Get("juggernautWin", Options.KillsNeededForJuggernaut.GetInt()) + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "Speedrunner")
         {
-            LastWinReason = $"Crewmates win! (Speedrunner finished tasks)\n\nImpostor: {impostorList}";
+            LastWinReason = Translator.Get("speedrunnerWin") + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Utils.AliveImpostors == 0 || Winner == "Crewmate") 
         {
-            LastWinReason = $"Crewmates win!\n\nImpostors: {impostorList}";
+            LastWinReason = Translator.Get("crewmateWin") + impostorList;
             canUpdateWinnerText = false;
         }
         else if (Utils.AliveImpostors >= Utils.AliveCrewmates || Winner == "Impostor") 
         {
-            LastWinReason = $"Impostors win!\n\nImpostor: {impostorList}";
+            LastWinReason = Translator.Get("impostorWin") + impostorList;
             canUpdateWinnerText = false;
         }
         else if (GameData.Instance != null && GameData.Instance.TotalTasks > 0 && GameData.Instance.CompletedTasks >= GameData.Instance.TotalTasks || Winner == "CrewmateTasks")
         {
-            LastWinReason = $"Crewmates win! ({Options.TaskPercentNeededToWin.GetInt()}% Tasks)\n\nImpostors: {impostorList}";
+            LastWinReason = Translator.Get("crewmateWinTasks", Options.TaskPercentNeededToWin.GetInt()) + impostorList;
             canUpdateWinnerText = false;
         }
         else if (Options.Gamemode.GetValue() < 2 || Winner == "ImpostorSabotage")
         {
-            LastWinReason = $"Impostors win! (Sabotage)\n\nImpostors: {impostorList}" + (string.IsNullOrEmpty(customRoles) ? "" : "\n\n" + customRoles);
+            LastWinReason = Translator.Get("impostorWinMisc") + impostorList;
         }
     }
 }

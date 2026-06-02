@@ -8,6 +8,7 @@
   "enableDarkTheme": "Enable Dark Theme",
   "enableLobbyMusic": "Lobby Music",
   "disableInfoWhenDead": "Hide Info When Dead",
+  "disableCommandHelper": "Disable Command Helper",
 
   "gameMasterWarning":"You will now spectate games until Game Master is turned off.",
 
@@ -34,6 +35,8 @@
   "autoStartTimer": "Countdown For Auto Start",
   "waitAutoStart": "Auto Start After",
   "playerAutoStart": "Players Needed To Auto Start",
+  "enableJoinMessages": "Enable Welcome Messages",
+  "messagePerPlayerNum": "Message Per Amount Of Joins",
   "tabGroupMisc": "Miscelleneous",
   "startCountdown": "Default Starting Countdown",
   "colorCommandLevel": "Who Can use Color Commands",
@@ -219,9 +222,9 @@
   "SnSModeOne": "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off",
   "SnSModeTwo": "Crew wins by tasks/surviving {0}s\nImp wins by killing\nOne wrong kill = Can't kill for {1}s\n{2} wrong kill(s) = suicide",
   "speedrunMode": "Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {0}s",
-  "allCommandsFull": "Commands:\n/r - Current mode description\n/0kc, /sns, /sp - Specific mode description\n/l - Shows last winner info\n/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color",
-  "allCommandsOne": "Commands:\n/r - Current mode description\n/0kc, /sns, /sp - Specific mode description\n/l - Shows last winner info",
-  "allCommandsTwo": "/kick, /ban - Bans or kicks a player by name\n/ckick, /cban - Bans or kicks a player by color",
+
+  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description or ability list.\n<b>/r {ability}</b>\nSend specific ability info.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
+
   "socialsAll": "AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya",
   "translationReloaded": "Your file has successfully been reset.\nTo apply the changes, restart your game.",
 
@@ -229,7 +232,7 @@
   "tyrantPublic": "Tyrant:\n\nThe Tyrant is an Impostor with {0} additional vote(s). Use them wisely.",
 
   "juggernautPublic": "Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {0} kills.",
-  "speedrunnerPublic": "Speedrunner:\n\nThe Crewmates win if the Speedrunner completes tasks and is alive. The Speedrunner has more tasks.",
+  "speedrunnerPublic": "Tasker:\n\nThe Crewmates win if the Tasker completes tasks and is alive. The Tasker has more tasks.",
 
   "stealerPublic": "Stealer:\n\nThe Stealer gains {0} additional vote(s) per killed player. Votes are rounded down.",
   "workhorsePublic": "Workhorse:\n\nThe Workhorse gains {0} additional vote(s) per completed task. Votes are rounded down.",
@@ -248,8 +251,8 @@
 
   "extraVotesCrewmate": "Extra Votes For Mayor",
   "extraVotesPerTask": "Extra Votes Per Task For Workhorse",
-  "speedrunnerShortTasks": "Short Tasks For Speedrunner",
-  "speedrunnerLongTasks": "Long Tasks For Speedrunner",
+  "speedrunnerShortTasks": "Short Tasks For Tasker",
+  "speedrunnerLongTasks": "Long Tasks For Tasker",
 
   "tabGroupImpostorAbilities": "Impostor Ability Settings",
   "impostorAbility": "Impostor (Role) Ability",
@@ -261,9 +264,25 @@
   "extraVotesPerKill": "Extra Votes Per Kill For Stealer",
   "killsNeededForJuggernaut": "Kills Needed For Juggernaut",
 
+  "youAreMayor": "Your Ability: Mayor\n\nYou are a Crewmate with {0} additional vote(s). Use them wisely.",
+  "youAreJester": "Your Ability: Jester\n\nYou can optionally win alone by getting voted, you are still a Crewmate.",
+  "youAreSpeedrunner": "Your Ability: Tasker\n\nThe Crewmates win if you complete tasks while being alive. You have more tasks.",
+  "youAreTyrant": "Your Ability: Tyrant\n\nYou are an Impostor with {0} additional vote(s). Use them wisely.",
+  "youAreStealer": "Your Ability: Stealer\n\nYou gain {0} additional vote(s) per killed player. Votes are rounded down.",
+  "youAreWorkhorse": "Your Ability: Workhorse\n\nYou gain {0} additional vote(s) per completed task. Votes are rounded down.",
+  "youAreJuggernaut": "Your Ability: Juggernaut\n\nThe Impostor team instantly wins if you gain {0} kills.",
+
+  "jesterWin": "Jester wins! (voted)\n\nImpostors: ",
+  "speedrunnerWin": "Crewmates win! (Tasker finished tasks)\n\nImpostors: ",
+  "juggernautWin": "Impostors win! (Juggernaut killed {0} players)\n\nImpostors: ",
+  "crewmateWin": "Crewmates Win!\n\nImpostors: ",
+  "impostorWin": "Impostors Win!\n\nImpostors: ",
+  "crewmateWinTasks": "Crewmates Win! ({0}% tasks completed)\n\nImpostors: ",
+  "impostorWinMisc": "Impostors Win! (Sabotage)\n\n Impostors: ",
+
   "ability": "Ability",
 
-  "templateWelcome": "# In this file you can add Templates, which serve as easy copy-paste alternatives.\n# To create a template, write a new line with the same formatting as the test Template below.\n# Note that Templates can't be longer than 120 characters and can't contain special characters. Having so will kick you.\n\ntest: this is an example template. Type '/t test' to see it.",
+  "templateWelcome": "# In this file you can add Templates, which serve as easy copy-paste alternatives.\n# To create a template, write a new line with the same formatting as the test Template below.\n# Note that Templates can't be longer than 120 characters and can't contain special characters. Having so will kick you.\n\ntest: this is an example template. Type '/t test' to see it.\n\nwelcome: Welcome! This lobby uses Among Us Revamped {ModVersion} by MV. Enjoy!",
   "moderatorWelcome": "# In this file you can add Moderators by Friendcode.\n# If you add someone, they will gain a purple name in-game.\n# Go to 'System Settings' in-game to customize Moderator permissions. Below is a Friendcode example.\n\nfriendcode#0000",
   "vipWelcome": "# In this file you can add VIP's by Friendcode.\n# If you add someone, they will gain a yellow name in-game.\n# Go to 'System Settings' in-game to customize VIP permissions. Below is a Friendcode example.\n\nfriendcode#0000\n",
   "adminWelcome": "# In this file you can add Admins by Friendcode.\n# If you add someone, they will gain a red name in-game.\n# Go to 'System Settings' in-game to customize Admin permissions. Below is a Friendcode example.\n\nfriendcode#0000\n",
@@ -273,5 +292,39 @@
 
   "noGameEndWarning": "WARNING: No Game End is enabled",
 
-  "tooLongTemplate": "Your Template is longer than 120 characters and would kick you upon sending. Please reduce the length."
+  "tooLongTemplate": "Your Template is longer than 120 characters and would kick you upon sending. Please reduce the length.",
+
+  "vipAdd": "Successfully added {0} as VIP.",
+  "moderatorAdd": "Successfully added {0} as Moderator.",
+  "adminAdd": "Successfully added {0} as Admin.",
+  "vipRemove": "Successfully removed VIP from {0}.",
+  "moderatorRemove": "Successfully removed Moderator from {0}.",
+  "adminRemove": "Successfully removed Admin from {0}.",
+  "permFail": "Could not find user '{0}'. Did you write it correctly?",
+
+  "helpDesc": "Show all commands and what they do.",
+  "snsDesc": "Send Shift and Seek gamemode Description.",
+  "0kcDesc": "Send 0 Kill Cooldown gamemode Description.",
+  "SrDesc": "Send Speedrun gamemode Description.",
+  "egDesc": "End the current game.",
+  "emDesc": "End the current meeting.",
+  "aurDesc": "Send Among Us Revamped social links.",
+  "sDesc": "Start the game countdown.",
+  "rDesc": "/r send active abilities or current gamemode. /r {ability} send specific ability info",
+  "rolesDesc": "Send all abilities/gamemode overview.",
+  "kickDesc": "Kick a player by name.",
+  "ckickDesc": "Kick a player by color.",
+  "banDesc": "Ban a player by name.",
+  "cbanDesc": "Ban a player by color.",
+  "dumpDesc": "Copy LogOutput into a seperate file.",
+  "colDesc": "Set your color.",
+  "reloadDesc": "Reload language file.",
+  "vipDesc": "Add user as VIP.",
+  "moderatorDesc": "Add user as Moderator.",
+  "adminDesc": "Add user as admin.",
+  "cremoveVipDesc": "Remove VIP from user.",
+  "removeModeratorDesc": "Remove Moderator from user.",
+  "removeAdminDesc": "Remove Admin from user.",
+  "lastgameDesc": "Send last game info.",
+  "templateDesc": "Send a specified template from AUR-DATA/templates.txt."
 }

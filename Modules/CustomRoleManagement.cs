@@ -104,31 +104,31 @@ public static class AbilityManagement
 
     public static string RoleList()
     {
-        var firstLines = new List<string>();
+        if (!AmongUsClient.Instance.AmHost) return "";
 
-        if (Options.CrewmateAbility.GetValue() != 4) firstLines.Add($"Crewmate: {Options.CrewmateAbility.GetString()}");
-        if (Options.ScientistAbility.GetValue() != 4) firstLines.Add($"Scientist: {Options.ScientistAbility.GetString()}");
-        if (Options.EngineerAbility.GetValue() != 4) firstLines.Add($"Engineer: {Options.EngineerAbility.GetString()}");
-        if (Options.NoisemakerAbility.GetValue() != 4) firstLines.Add($"Noisemaker: {Options.NoisemakerAbility.GetString()}");
-        if (Options.TrackerAbility.GetValue() != 4) firstLines.Add($"Tracker: {Options.TrackerAbility.GetString()}");
+        var lines = new List<string>();
 
-        var secondLines = new List<string>();
+        if (Options.CrewmateAbility.GetValue() != 4) lines.Add($"Crewmate: {Options.CrewmateAbility.GetString()}");
+        if (Options.ScientistAbility.GetValue() != 4) lines.Add($"Scientist: {Options.ScientistAbility.GetString()}");
+        if (Options.EngineerAbility.GetValue() != 4) lines.Add($"Engineer: {Options.EngineerAbility.GetString()}");
+        if (Options.NoisemakerAbility.GetValue() != 4) lines.Add($"Noisemaker: {Options.NoisemakerAbility.GetString()}");
+        if (Options.TrackerAbility.GetValue() != 4) lines.Add($"Tracker: {Options.TrackerAbility.GetString()}");
+        if (Options.DetectiveAbility.GetValue() != 4) lines.Add($"Detective: {Options.DetectiveAbility.GetString()}");
 
-        if (Options.DetectiveAbility.GetValue() != 4) secondLines.Add($"Detective: {Options.DetectiveAbility.GetString()}");
-        if (Options.ImpostorAbility.GetValue() != 3) secondLines.Add($"Impostor: {Options.ImpostorAbility.GetString()}");
-        if (Options.ShapeshifterAbility.GetValue() != 3) secondLines.Add($"Shapeshifter: {Options.ShapeshifterAbility.GetString()}");
-        if (Options.PhantomAbility.GetValue() != 3) secondLines.Add($"Phantom: {Options.PhantomAbility.GetString()}");
-        if (Options.ViperAbility.GetValue() != 3) secondLines.Add($"Viper: {Options.ViperAbility.GetString()}");
+        if (Options.ImpostorAbility.GetValue() != 3) lines.Add($"Impostor: {Options.ImpostorAbility.GetString()}");
+        if (Options.ShapeshifterAbility.GetValue() != 3) lines.Add($"Shapeshifter: {Options.ShapeshifterAbility.GetString()}");
+        if (Options.PhantomAbility.GetValue() != 3) lines.Add($"Phantom: {Options.PhantomAbility.GetString()}");
+        if (Options.ViperAbility.GetValue() != 3) lines.Add($"Viper: {Options.ViperAbility.GetString()}");
 
-        string firstText = firstLines.Count > 0 ? "ABILITIES:\n\n" + string.Join("\n", firstLines) : "";
-        string secondText = secondLines.Count > 0 ? "\n" + string.Join("\n", secondLines) : "";
+        if (lines.Count == 0) return "";
 
-        return firstText + secondText;
+        return "ABILITIES:\n\n" + string.Join("\n", lines);
     }
 
     public static void SendRoleList(ChatController c, string text, bool moderator)
     {
-        if (string.IsNullOrEmpty(AbilityManagement.RoleList())) return;
+        if (!AmongUsClient.Instance.AmHost) return;
+        if (string.IsNullOrEmpty(RoleList()) || Utils.isHideNSeek) return;
 
         if (text.Length <= 120)
         {
@@ -146,6 +146,75 @@ public static class AbilityManagement
 
         if (moderator) Utils.ModeratorChatCommand(first, second, true);
         else Utils.ChatCommand(c, first, second, true);
+    }
+
+    public static string RoleInfoString(PlayerControl player)
+    {
+        if (!AmongUsClient.Instance.AmHost) return "";
+        if (IsMayor(player)) return Translator.Get("youAreMayor", Options.ExtraVotesCrewmate.GetInt());
+        if (IsWorkhorse(player)) return Translator.Get("youAreWorkhorse", Options.ExtraVotesPerTask.GetFloat());
+        if (IsJester(player)) return Translator.Get("youAreJester");
+        if (IsSpeedrunner(player)) return Translator.Get("youAreSpeedrunner");
+        if (IsTyrant(player)) return Translator.Get("youAreTyrant", Options.ExtraVotesImpostor.GetInt());
+        if (IsStealer(player)) return Translator.Get("youAreStealer", Options.ExtraVotesPerKill.GetFloat());
+        if (IsJuggernaut(player)) return Translator.Get("youAreJuggernaut", Options.KillsNeededForJuggernaut.GetInt());
+        else return "";
+    }
+
+    public static bool HandlingRoleMessages = false;
+    private static int PendingRoleMessages = 0;
+    public static void SendRoleMessages()
+    {
+        if (!AmongUsClient.Instance.AmHost) return;
+
+        if (string.IsNullOrEmpty(RoleList()) || PlayerControl.LocalPlayer.Data.IsDead)
+        {
+            HandlingRoleMessages = false;
+            PendingRoleMessages = 0;
+            return;
+        }
+
+        var players = PlayerControl.AllPlayerControls.ToArray().ToList();
+        float delay = 4.4f;
+
+        PendingRoleMessages = 0;
+        HandlingRoleMessages = true;
+
+        SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), false);
+
+        foreach (var player in players)
+        {
+            if (string.IsNullOrEmpty(RoleInfoString(player))) continue;
+
+            PendingRoleMessages++;
+
+            new LateTask(() => 
+            {
+                if (Utils.InGame)
+                {
+                    Utils.SendPrivateMessage(player, RoleInfoString(player));
+                }
+                else
+                {
+                    Logger.Info("Role sending was forcefully canceled. This should not happen.", "SendRoleMessages");
+                }
+
+                PendingRoleMessages--;
+
+                if (PendingRoleMessages <= 0)
+                {
+                    PendingRoleMessages = 0;
+                    HandlingRoleMessages = false;
+                }
+            }, delay, "SendRoleMessage");
+
+            delay += 2.2f;
+        }
+
+        if (PendingRoleMessages == 0)
+        {
+            HandlingRoleMessages = false;
+        }
     }
 }
 /*

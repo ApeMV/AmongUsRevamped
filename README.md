@@ -29,14 +29,14 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.7.4):
+# 🎮 Features (v1.7.5):
 ## <b> 🌟 Custom Abilities:</b>
 - Mayor (Crewmate)
 - The Mayor has a configurable amount of extra votes
 - Jester (Crewmate)
 - The Jester wins alone by getting ejected, can win with Crewmates
-- Speedrunner (Crewmate)
-- The Crewmates win if the Speedrunner completes tasks and is alive
+- Tasker (Crewmate)
+- The Crewmates win if the Tasker completes tasks and is alive
 - Workhorse (Crewmate)
 - The Workhorse gains additional votes per completed task
 - Tyrant (Impostor)
@@ -49,8 +49,7 @@
 - To check ability descriptions, type /r {ability}
 
 ## <b>♠️ Client Side settings:</b>
-- Game Master
-- Unlock FPS
+- Game Master (Spectator)
 - Show FPS
 - Dark Theme
 - Toggle Lobby Music
@@ -71,24 +70,26 @@
 - Automatically start game
 - Automatically rejoin lobby
 - Automatically send winner info
+- Enable (configurable) Welcome Messages
+- The Welcome Template is in Templates.txt
 ## <b>🔧 Gameplay Settings:</b>
 - Dead impostors can sabotage
 - Disable critical sabotages (invividual)
 - Disable door sabotages
 - Disable meeting calls first 30s
-- Disable body reports
 - Disable devices (per map, individual)
 - Override decontamination time (per map)
 - Disable spore triggers on The Fungle
 - % Tasks completed for Crewmates to win
 - Enable/Disable any task
 - All players have same tasks
-- Hide and Seek: Custom Impostor count
+- Hide and Seek: Custom Seeker count
 ## <b>🏆 Custom Gamemodes:</b>
 - 0 Kill Cooldown
 - Shift and Seek
 - Speedrun
 ## <b>❓ Other Improvements:</b>
+- Command Helper
 - Creatable and customizable Templates
 - Eht Dleks (Reverse Skeld) Map
 - Ability to cancel starting countdown
@@ -96,7 +97,7 @@
 - Faster startup time
 - Custom anticheat system
 - Zoom out in lobby or when dead
-- See player kill/task count when dead
+- See player kill/task count and Role when dead
 - Higher and more accurate Option ranges
 - <b>🎉 And this all works in public lobbies!</b>
 
@@ -114,21 +115,24 @@
 ### Chat Commands
 | Command                                     | Function                                          |
 | ------------------------------------------- | ------------------------------------------------- |
-| /h<br>/help                                 | Show command help                                 |
-| /l<br>/win                                  | Show winner                                       |
-| /r                                          | Show current gamemode/roles description           |
-| /0kc<br>/sns</br>/sp                        | Show respective gamemode description              |
+| /help                                       | Show command help                                 |
+| /l<br>/lastgame                             | Send last game info                               |
+| /r                                          | Send current gamemode/roles description           |
+| /r <ability>                                | Send specific Ability info                        |
+| /0kc<br>/sns</br>/sp                        | Send respective gamemode description              |
 | /ban <name>                                 | Ban a player by name                              |
 | /kick <name>                                | Kick a player by name                             |
 | /cban <color>                               | Ban a player by color                             |
 | /ckick <color>                              | Kick a player by color                            |
 | /dump                                       | Copy your LogOutput file                          |
-| /endgame                                    | Instantly end the game                            |
-| /endmeeting                                 | Instantly end an ongoing meeting                  |
-| /aur                                        | Sends AUR socials (GitHub, Discord)               |
-| /color                                      | Sets color. Can be used to bypass color limit     | 
-| /reload                                     | Resets the *Language*.JSON file to default        |
-| /start                                      | Starts game countdown                             |
+| /eg<br>/endgame                             | Instantly end an ongoing game                     |
+| /em<br>/endmeeting                          | Instantly end an ongoing meeting                  |
+| /aur<br>/socials                            | Send AUR socials (GitHub, Discord)                |
+| /col<br>/color                              | Set color. Can be used to bypass color limit      | 
+| /reload                                     | Reset the *Language*.JSON file to default         |
+| /s<br/start                                 | Start game countdown                              |
+| /vip<br>/moderator<br>/admin                | Add a user to respective list by name             |
+| /t <template>                               | Send a Template from Templates.txt                |
 ‎
 
 **Credit to these mods and their developers for their code:**

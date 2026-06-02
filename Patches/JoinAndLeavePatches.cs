@@ -51,6 +51,7 @@ internal static class OnGameJoinedPatch
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
 class OnPlayerJoinedPatch
 {
+    public static int JoinNum;
     public static bool HasInvalidFriendCode(string friendcode)
     {
         if (string.IsNullOrEmpty(friendcode))
@@ -97,6 +98,18 @@ class OnPlayerJoinedPatch
                     Logger.SendInGame($" {Client.PlayerName} Was banned for having an invalid FriendCode");
                 }
             }
+
+            if (Options.EnableJoinMessages.GetBool())
+            {
+                JoinNum++;
+                BanManager.Templates.TryGetValue("welcome", out string msg);
+
+                if (JoinNum >= Options.MessagePerPlayerNum.GetInt())
+                {
+                    JoinNum = 0;
+                    Utils.ModeratorChatCommand($"{msg}", "", false);
+                }
+            }
         }
     }
 }
@@ -106,10 +119,11 @@ class OnPlayerLeftPatch
 {
     static void Postfix([HarmonyArgument(0)] ClientData client)
     {
-        if (!AmongUsClient.Instance.AmHost || !Utils.InGame) return;
-        {
-            PlayerControlCompleteTaskPatch.CalculateTaskWin();
-        }
+        if (!AmongUsClient.Instance.AmHost) return;
+        Logger.Info($" {client.PlayerName} left the game", "OnPlayerLeft");
+
+        if (!Utils.InGame) return;
+        PlayerControlCompleteTaskPatch.CalculateTaskWin();
     }
 }
 
@@ -127,14 +141,14 @@ public static class SetLevelPatch
             if (!Options.TempBanLowLevelPlayer.GetBool()) 
             {
                 AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
-                Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
-                Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
+                Logger.Info($" {__instance.Data.PlayerName} (level {level}) was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} (level {level}) was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
             }
             else
             {
                 AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
-                Logger.Info($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");
-                Logger.SendInGame($" {__instance.Data.PlayerName} was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
+                Logger.Info($" {__instance.Data.PlayerName} (level {level}) was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} (level {level}) was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
             }
             HandledLevelKicks.Add(__instance);
         }  

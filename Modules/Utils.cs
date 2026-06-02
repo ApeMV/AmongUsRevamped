@@ -216,7 +216,7 @@ public static class Utils
         NormalGameEndChecker.ImpCheckComplete = false;
         CreateOptionsPickerPatch.SetDleks2 = false;
         CanCallMeetings = true;
-        //CustomRoleManagement.HandlingRoleMessages = false;
+        AbilityManagement.HandlingRoleMessages = false;
         PlayerControlSetRolePatch.FirstAssign = true;
         PlayerControlSetRolePatch.Jesters.Clear();
 
@@ -225,6 +225,8 @@ public static class Utils
         PlayerControlCompleteTaskPatch.tasksInitiated = false;
         PlayerControlCompleteTaskPatch.ignoredCompletedTasks = 0;
         PlayerControlCompleteTaskPatch.ignoredTasks = 0;
+
+        OnPlayerJoinedPatch.JoinNum = 0;
 
     }
 
@@ -376,6 +378,8 @@ public static class Utils
 
     public static void ChatCommand(ChatController __instance, string msg, string msg2, bool multi)
     {
+        if (OnGameJoinedPatch.WaitingForChat) return;
+
         OnGameJoinedPatch.WaitingForChat = true;
 
         __instance.freeChatField.textArea.Clear();
@@ -406,6 +410,8 @@ public static class Utils
 
     public static void ModeratorChatCommand(string msg, string msg2, bool multi)
     {
+        if (OnGameJoinedPatch.WaitingForChat) return;
+
         OnGameJoinedPatch.WaitingForChat = true;
 
         new LateTask(() =>
@@ -574,7 +580,7 @@ public static class Utils
     {
         if (p == null) return "";
 
-        if (p.Data.RoleType == RoleTypes.Impostor || p.Data.RoleType == RoleTypes.Shapeshifter || p.Data.RoleType == RoleTypes.Phantom || p.Data.RoleType == RoleTypes.Viper)
+        if (p.Data.RoleType == RoleTypes.Impostor || p.Data.RoleType == RoleTypes.Shapeshifter || p.Data.RoleType == RoleTypes.Phantom || p.Data.RoleType == RoleTypes.Viper || p.Data.RoleType == RoleTypes.ImpostorGhost)
         {
             return $"<color=#ff1919>{p.Data.RoleType}</color>";
         }

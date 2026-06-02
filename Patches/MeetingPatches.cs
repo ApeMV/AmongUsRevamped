@@ -27,13 +27,13 @@ public static class CheckForEndVotingPatch
 
             visualVotes.Add(new MeetingHud.VoterState { VoterId = voterId, VotedForId = votedFor });
 
-            if (!PlayerControlCompleteTaskPatch.playerTasksCompleted.ContainsKey(pc)) PlayerControlCompleteTaskPatch.playerTasksCompleted[pc] = 0;
+            if (!PlayerControlCompleteTaskPatch.playerTasksCompleted.ContainsKey(voterId)) PlayerControlCompleteTaskPatch.playerTasksCompleted[voterId] = 0;
             if (!MurderPlayerPatch.killCount.ContainsKey(voterId)) MurderPlayerPatch.killCount[voterId] = 0;
 
             int extraVotes = 0;
             int extraVotesCrewmate = Options.ExtraVotesCrewmate.GetInt();
             int extraVotesImpostor = Options.ExtraVotesImpostor.GetInt();
-            int extraVotesPerTask = (int)(Options.ExtraVotesPerTask.GetFloat()*PlayerControlCompleteTaskPatch.playerTasksCompleted[pc]+0.1f);
+            int extraVotesPerTask = (int)(Options.ExtraVotesPerTask.GetFloat()*PlayerControlCompleteTaskPatch.playerTasksCompleted[voterId]+0.1f);
             int extraVotesPerKill = (int)(Options.ExtraVotesPerKill.GetFloat()*MurderPlayerPatch.killCount[voterId]+0.1f);
 
             if (!votes.TryGetValue(votedFor, out int currentVotes)) currentVotes = 0;

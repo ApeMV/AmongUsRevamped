@@ -58,7 +58,7 @@ namespace AmongUsRevamped
 
         public static readonly string[] crewmateAbilities =
         {
-            "Mayor", "Workhorse", "Jester", "Speedrunner", "None"
+            "Mayor", "Workhorse", "Jester", "Tasker", "None"
         };
         public static readonly string[] impostorAbilities =
         {
@@ -89,6 +89,8 @@ namespace AmongUsRevamped
         public static OptionItem AutoStartTimer;
         public static OptionItem WaitAutoStart;
         public static OptionItem PlayerAutoStart;
+        public static OptionItem EnableJoinMessages;
+        public static OptionItem MessagePerPlayerNum;
 
         public static OptionItem TabGroupMisc;
 
@@ -259,11 +261,6 @@ namespace AmongUsRevamped
         public static OptionItem DisableSubmitScan;
         public static OptionItem DisableUploadData;
 
-        // Gamemode
-/*
-        public static OptionItem TabGroupStandard;
-        public static OptionItem ChatBeforeFirstMeeting;
-*/
         public static OptionItem TabGroupHNS;
         public static OptionItem NumSeekers;
 
@@ -383,6 +380,9 @@ namespace AmongUsRevamped
             WaitAutoStart = IntegerOptionItem.Create(64421, Translator.Get("waitAutoStart"), new(10, 600, 10), 300, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             PlayerAutoStart = IntegerOptionItem.Create(64422, Translator.Get("playerAutoStart"), new(1, 15, 1), 1, TabGroup.SystemSettings, false);
+            EnableJoinMessages = BooleanOptionItem.Create(64423, Translator.Get("enableJoinMessages"), true, TabGroup.SystemSettings, false);
+            MessagePerPlayerNum = IntegerOptionItem.Create(64424, Translator.Get("messagePerPlayerNum"), new(1, 15, 1), 5, TabGroup.SystemSettings, false)
+                .SetParent(EnableJoinMessages);
 
             TabGroupMisc = TextOptionItem.Create(60379, Translator.Get("tabGroupMisc"), TabGroup.SystemSettings)
                 .SetColor(Color.green);

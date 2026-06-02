@@ -15,16 +15,16 @@ internal static class CoShowIntroPatch
 
         if (!AmongUsClient.Instance.AmHost) return;
 
-        AbilityManagement.SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), true);
+        AbilityManagement.SendRoleMessages();
         
         foreach (var p in PlayerControl.AllPlayerControls)
         {
             p.cosmetics.nameText.text = p.Data.PlayerName;
 
-            MurderPlayerPatch.killCount[p.Data.PlayerId] = 0;
-            MurderPlayerPatch.misfireCount[p.Data.PlayerId] = 0;
-            PlayerControlCompleteTaskPatch.playerTasksCompleted[p] = 0;
-            PlayerControlCompleteTaskPatch.tasksPerPlayer[p] = 0;
+            MurderPlayerPatch.killCount[p.PlayerId] = 0;
+            MurderPlayerPatch.misfireCount[p.PlayerId] = 0;
+            PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId] = 0;
+            PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId] = 0;
 
             Logger.Info($" {p.Data.PlayerName} -> {p.Data.RoleType}", "RoleInfo");
         }

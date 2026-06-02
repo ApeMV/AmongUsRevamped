@@ -23,9 +23,9 @@ public static class BanManager
     private static readonly string DenyNameListPath = $"{DataPath}/AUR-DATA/Deniednames.txt";
     private static string BanListPath = $"{DataPath}/AUR-DATA/Banlist.txt";
     private static string BanWordPath = $"{DataPath}/AUR-DATA/Deniedwords.txt";
-    private static string VipListPath = $"{DataPath}/AUR-DATA/VIP.txt";
-    private static string ModeratorListPath = $"{DataPath}/AUR-DATA/Moderator.txt";
-    private static string AdminListPath = $"{DataPath}/AUR-DATA/Admin.txt";
+    public static string VipListPath = $"{DataPath}/AUR-DATA/VIP.txt";
+    public static string ModeratorListPath = $"{DataPath}/AUR-DATA/Moderator.txt";
+    public static string AdminListPath = $"{DataPath}/AUR-DATA/Admin.txt";
     private static string TemplatePath = $"{DataPath}/AUR-DATA/Templates.txt";
     public static Dictionary<string, string> Templates = new();
     public static List<string> TempBanWhiteList = [];
@@ -232,5 +232,20 @@ public static class BanManager
         {
             Logger.Exception(ex, "BanManager");
         }
+    }
+
+    public static string CheckTemplate(string text)
+    {
+        Dictionary<string, string> variables = new()
+        {
+            { "ModVersion", Main.ModVersion }
+        };
+
+        foreach (var kvp in variables)
+        {
+            text = text.Replace($"{{{kvp.Key}}}", kvp.Value);
+        }
+
+        return text;
     }
 }

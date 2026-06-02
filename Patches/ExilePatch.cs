@@ -38,11 +38,11 @@ class ExileControllerWrapUpPatch
                 }
                 else
                 {
-                    if (!PlayerControlCompleteTaskPatch.playerTasksCompleted.ContainsKey(p))
+                    if (!PlayerControlCompleteTaskPatch.playerTasksCompleted.ContainsKey(p.PlayerId))
                     {
-                        PlayerControlCompleteTaskPatch.playerTasksCompleted[p] = 0;                
+                        PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId] = 0;                
                     }
-                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p]})";
+                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})";
                 }
             }
         }
