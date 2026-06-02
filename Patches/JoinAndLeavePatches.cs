@@ -107,7 +107,7 @@ class OnPlayerJoinedPatch
                 if (JoinNum >= Options.MessagePerPlayerNum.GetInt())
                 {
                     JoinNum = 0;
-                    Utils.ModeratorChatCommand($"{msg}", "", false);
+                    Utils.ModeratorChatCommand(BanManager.CheckTemplate(msg), "", false);
                 }
             }
         }
