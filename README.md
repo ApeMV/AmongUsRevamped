@@ -114,24 +114,24 @@
 ### Chat Commands
 | Command                                     | Function                                          |
 | ------------------------------------------- | ------------------------------------------------- |
-| `/help`                                     | Show command help                                 |
-| `/l<br>/lastgame`                           | Send last game info                               |
-| `/r`                                        | Send current gamemode/roles description           |
-| `/r {ability}`                              | Send specific Ability info                        |
-| `/0kc<br>/sns</br>/sp`                      | Send respective gamemode description              |
-| `/ban {name}`                               | Ban a player by name                              |
-| `/kick {name}`                              | Kick a player by name                             |
-| `/cban {color}`                             | Ban a player by color                             |
-| `/ckick {color}`                            | Kick a player by color                            |
-| `/dump`                                     | Copy your LogOutput file                          |
-| `/eg<br>/endgame`                           | Instantly end an ongoing game                     |
-| `/em<br>/endmeeting`                        | Instantly end an ongoing meeting                  |
-| `/aur<br>/socials`                          | Send AUR socials (GitHub, Discord)                |
-| `/col<br>/color`                            | Set color. Can be used to bypass color limit      | 
-| `/reload`                                   | Reset the *Language*.JSON file to default         |
-| `/s<br>/start`                              | Start game countdown                              |
-| `/vip<br>/moderator<br>/admin`              | Add a user to respective list by name             |
-| `/t {template}`                             | Send a Template from Templates.txt                |
+| /help                                       | Show command help                                 |
+| /l<br>/lastgame                             | Send last game info                               |
+| /r                                          | Send current gamemode/roles description           |
+| /r {ability}                                | Send specific Ability info                        |
+| /0kc<br>/sns</br>/sp                        | Send respective gamemode description              |
+| /ban {name}                                 | Ban a player by name                              |
+| /kick {name}                                | Kick a player by name                             |
+| /cban {color}                               | Ban a player by color                             |
+| /ckick {color}                              | Kick a player by color                            |
+| /dump                                       | Copy your LogOutput file                          |
+| /eg<br>/endgame                             | Instantly end an ongoing game                     |
+| /em<br>/endmeeting                          | Instantly end an ongoing meeting                  |
+| /aur<br>/socials                            | Send AUR socials (GitHub, Discord)                |
+| /col<br>/color                              | Set color. Can be used to bypass color limit      | 
+| /reload                                     | Reset the *Language*.JSON file to default         |
+| /s<br>/start                                | Start game countdown                              |
+| /vip<br>/moderator<br>/admin                | Add a user to respective list by name             |
+| /t {template}                               | Send a Template from Templates.txt                |
 ‎
 
 **Credit to these mods and their developers for their code:**
