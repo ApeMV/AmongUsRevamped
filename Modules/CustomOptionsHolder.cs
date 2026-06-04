@@ -77,6 +77,8 @@ namespace AmongUsRevamped
         public static OptionItem KickInvalidFriendCodes;
         public static OptionItem TempBanInvalidFriendCodes;
 
+        public static OptionItem DeniedWordsToKick;
+
         public static OptionItem AutoKickStart;
         public static OptionItem AutoKickStartAsBan;
         public static OptionItem AutoKickStartTimes;
@@ -103,7 +105,6 @@ namespace AmongUsRevamped
         public static OptionItem SlashColorCmd;
         public static OptionItem SlashRolesAndGamemodeCmd;
         public static OptionItem SlashLastGameCmd;
-        public static OptionItem SlashHelpAndAurCmd;
         public static OptionItem SlashKickCmd;
         public static OptionItem SlashBanCmd;
         public static OptionItem SlashEndMeetingCmd;
@@ -350,6 +351,9 @@ namespace AmongUsRevamped
             TabGroupMain = TextOptionItem.Create(60000, Translator.Get("tabGroupMain"), TabGroup.SystemSettings)
                 .SetColor(Color.blue);
 
+            DeniedWordsToKick = IntegerOptionItem.Create(60049, Translator.Get("deniedWordsToKick"), new(1, 5, 1), 1, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Level);
+
             KickLowLevelPlayer = IntegerOptionItem.Create(60050, Translator.Get("kickLowLevelPlayer"), new(0, 100, 1), 0, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Level);
             TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, Translator.Get("tempBanLowLevelPlayer"), false, TabGroup.SystemSettings, false)
@@ -398,7 +402,6 @@ namespace AmongUsRevamped
             SlashColorCmd = StringOptionItem.Create(60401, Translator.Get("slashColorCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
             SlashRolesAndGamemodeCmd = StringOptionItem.Create(60402, Translator.Get("slashRolesAndGamemodeCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
             SlashLastGameCmd = StringOptionItem.Create(60403, Translator.Get("slashLastGameCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
-            SlashHelpAndAurCmd = StringOptionItem.Create(60404, Translator.Get("slashHelpAndAurCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
             SlashKickCmd = StringOptionItem.Create(60405, Translator.Get("slashKickCmd"), accessLevels, 2, TabGroup.SystemSettings, false);
             SlashBanCmd = StringOptionItem.Create(60406, Translator.Get("slashBanCmd"), accessLevels, 2, TabGroup.SystemSettings, false);
             SlashEndMeetingCmd = StringOptionItem.Create(60407, Translator.Get("slashEndMeetingCmd"), accessLevels, 3, TabGroup.SystemSettings, false);

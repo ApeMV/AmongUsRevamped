@@ -10,7 +10,7 @@
   "disableInfoWhenDead": "Hide Info When Dead",
   "disableCommandHelper": "Disable Command Helper",
 
-  "gameMasterWarning":"You will now spectate games until Game Master is turned off.",
+  "gameMasterWarning":"You will now spectate games until Game Master is turned off. WARNING: Ability messages will not be sent if this setting is enabled.",
 
   "cancelStartCountdown": "Start countdown canceled",
   
@@ -21,6 +21,7 @@
   "dontKickLevelOnes": "Don't Kick Lv.1 Players For Glitched Lobbies",
   "kickInvalidFriendCodes": "Kick Invalid FriendCodes",
   "tempBanInvalidFriendCodes": "Ban Instead Of Kick",
+  "deniedWordsToKick": "Sent Denied Words To Kick Player",
   "applyBanList": "Apply BanList",
   "applyDenyNameList": "Apply DenyName List",
   "applyModeratorList": "Apply Moderator List",
@@ -45,13 +46,12 @@
 
   "tabGroupAccess": "Access Levels",
   "slashColorCmd": "Who Can Use /color",
-  "slashRolesAndGamemodeCmd": "Who Can Use /r And Templates",
-  "slashLastGameCmd": "Who Can Use /l",
-  "slashHelpAndAurCmd": "Who Can Use /help And /aur",
-  "slashKickCmd": "Who Can Use /kick And /ckick",
-  "slashBanCmd": "Who Can Use /ban And /cban",
+  "slashRolesAndGamemodeCmd": "Who Can Use /r & Templates",
+  "slashLastGameCmd": "Who Can Use /l & /aur",
+  "slashKickCmd": "Who Can Use /kick & /ckick",
+  "slashBanCmd": "Who Can Use /ban & /cban",
   "slashEndMeetingCmd": "Who Can Use /endmeeting",
-  "slashStartAndEndGameCmd": "Who Can Use /startgame And /endgame",
+  "slashStartAndEndGameCmd": "Who Can Use /startgame & /endgame",
 
   "tabGroupCrewmate": "Crewmate Roles",
   "tabGroupNeutral": "Neutral Roles",
@@ -220,7 +220,8 @@
 
   "noKcdMode": "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!",
   "SnSModeOne": "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off",
-  "SnSModeTwo": "Crew wins by tasks/surviving {0}s\nImp wins by killing\nOne wrong kill = Can't kill for {1}s\n{2} wrong kill(s) = suicide",
+  "SnSModeTwo": "Crew wins by tasks/surviving {0}s\nImp wins by killing\nOne wrong kill = Can't kill for {1}s\n{2} wrong kills = suicide",
+  "SnSModeThree": "Crewmates win by doing tasks or surviving {0}s\nImpostors win by killing everyone\n{1} wrong kill(s) = suicide",
   "speedrunMode": "Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {0}s",
 
   "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description or ability list.\n<b>/r {ability}</b>\nSend specific ability info.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
@@ -279,6 +280,8 @@
   "impostorWin": "Impostors Win!\n\nImpostors: ",
   "crewmateWinTasks": "Crewmates Win! ({0}% tasks completed)\n\nImpostors: ",
   "impostorWinMisc": "Impostors Win! (Sabotage)\n\n Impostors: ",
+  "crewmateWinTimer": "Crewmates Win! (Survived {0}s)\n\n Impostors: ",
+  "noOneWin": "No one wins. ({0}s Timer)",
 
   "ability": "Ability",
 
@@ -310,7 +313,7 @@
   "emDesc": "End the current meeting.",
   "aurDesc": "Send Among Us Revamped social links.",
   "sDesc": "Start the game countdown.",
-  "rDesc": "/r send active abilities or current gamemode. /r {ability} send specific ability info",
+  "rDesc": "/r sends active abilities or current gamemode. /r {ability} sends specific ability info",
   "rolesDesc": "Send all abilities/gamemode overview.",
   "kickDesc": "Kick a player by name.",
   "ckickDesc": "Kick a player by color.",
@@ -326,5 +329,7 @@
   "removeModeratorDesc": "Remove Moderator from user.",
   "removeAdminDesc": "Remove Admin from user.",
   "lastgameDesc": "Send last game info.",
-  "templateDesc": "Send a specified template from AUR-DATA/templates.txt."
+  "templateDesc": "Send a specified template from AUR-DATA/templates.txt.",
+
+  "banWordKick": "{0} was kicked because they sent a banned word {1} time(s)"
 }

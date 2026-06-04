@@ -228,6 +228,12 @@ public static class Utils
 
         OnPlayerJoinedPatch.JoinNum = 0;
 
+        PlayerControlSetRolePatch.Seekers.Clear();
+        PlayerControlSetRolePatch.Jesters.Clear();
+        PlayerControlSetRolePatch.FirstAssign = true;
+        CoShowIntroPatch.ScheduleExile = false;
+
+        CoShowIntroPatch.IntroInitiated = false;
     }
 
     public static PlayerControl[] AllAlivePlayerControls

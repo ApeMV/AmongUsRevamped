@@ -170,17 +170,28 @@ public static class BanManager
     {
         if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0) return false;
 
+        int clientId = player.Data.ClientId;
         var bannedWords = File.ReadAllLines(BanWordPath).Where(x => !x.StartsWith("#"));
 
         if (bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase)))
         {
-            AmongUsClient.Instance.KickPlayer(player.Data.ClientId, false);    
-            Logger.Info($" {player.Data.PlayerName} was kicked because they sent a banned word", "Kick");      
-            Logger.SendInGame($"{player.Data.PlayerName} was kicked because they sent a banned word");    
+
+            if (!Main.SayDeniedWordTimes.ContainsKey(clientId))
+            {
+                Main.SayDeniedWordTimes.Add(clientId, 0);
+            }
+
+            Main.SayDeniedWordTimes[clientId]++;
+
+            if (Main.SayDeniedWordTimes[clientId] >= Options.DeniedWordsToKick.GetInt())
+            {
+                AmongUsClient.Instance.KickPlayer(clientId, false);
+                Logger.Info(Translator.Get("banWordKick", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt()), "DeniedWordKick");
+                Logger.SendInGame(Translator.Get("banWordKick", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt()));    
+            }
             return true;
         }
         else return false;
-
     }
 
     [HarmonyPatch(typeof(BanMenu), nameof(BanMenu.Select))]

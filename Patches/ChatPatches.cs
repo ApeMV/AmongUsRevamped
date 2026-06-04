@@ -373,7 +373,14 @@ internal static class SendChatPatch
 
         if (text == "/sns" || text == "/shiftandseek")
         {
-            Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+            if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
+            {
+                Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+            }
+            else
+            {
+                Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+            }
             return false;
         }
 
@@ -396,7 +403,14 @@ internal static class SendChatPatch
                 break;
 
                 case 2:
-                Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);           
+                if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
+                {
+                    Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                }
+                else
+                {
+                    Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                }          
                 break;
 
                 case 3:
@@ -656,6 +670,12 @@ public static class RPCHandlerPatch
                     Utils.ModeratorChatCommand($"{NormalGameEndChecker.LastWinReason}", "", false);
                 }
 
+                if (text == "/aur" || text == "/socials")
+                {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashLastGameCmd.GetValue()) return;
+                    Utils.ModeratorChatCommand(Translator.Get("socialsAll"), "", false);
+                }
+
                 if (text == "/0kc" || text == "/0killcooldown")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
@@ -664,7 +684,15 @@ public static class RPCHandlerPatch
                 if (text == "/sns" || text == "/shiftandseek")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+
+                    if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
+                    {
+                        Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                    }
+                    else
+                    {
+                        Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                    }
                 }
 
                 if (text == "/sr" || text == "/speedrun")
@@ -687,7 +715,14 @@ public static class RPCHandlerPatch
                         break;
 
                         case 2:
-                        Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);             
+                        if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
+                        {
+                            Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                        }
+                        else
+                        {
+                            Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                        }         
                         break;
 
                         case 3:

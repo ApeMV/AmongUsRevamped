@@ -72,6 +72,20 @@ class NormalGameEndChecker
             return;
         }
 
+        if (Winner == "SnSTimer")
+        {
+            LastWinReason = Translator.Get("crewmateWinTimer", Options.CrewAutoWinsGameAfter.GetInt()) + impostorList;
+            canUpdateWinnerText = false;
+            return;
+        }
+
+        if (Winner == "NoOneWinsSpeedrun")
+        {
+            LastWinReason = Translator.Get("noOneWin", Options.GameAutoEndsAfter.GetInt());
+            canUpdateWinnerText = false;
+            return;
+        }
+
         if (Utils.AliveImpostors == 0 || Winner == "Crewmate") 
         {
             LastWinReason = Translator.Get("crewmateWin") + impostorList;

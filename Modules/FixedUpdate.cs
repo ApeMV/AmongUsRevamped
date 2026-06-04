@@ -111,7 +111,7 @@ class FixedUpdateInGamePatch
 
                     Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
                     Logger.Info($" Crewmates won because the game took longer than {Options.CrewAutoWinsGameAfter.GetInt()}s", "SNSManager");
-                    NormalGameEndChecker.LastWinReason = $"Crewmates win! (Timer)\n\nImpostors:\n" + string.Join("\n", NormalGameEndChecker.imps.Select(p => p.Data.PlayerName));
+                    NormalGameEndChecker.CheckWinnerText("SnSTimer");
                 }
             }
             // 3 = Speedrun
@@ -123,7 +123,7 @@ class FixedUpdateInGamePatch
 
                     Utils.CustomWinnerEndGame(PlayerControl.LocalPlayer, 0);
                     Logger.Info($" No one won because the game took longer than {Options.GameAutoEndsAfter.GetInt()}s", "SpeedrunManager");
-                    NormalGameEndChecker.LastWinReason = $"No one wins! (Timer)";
+                    NormalGameEndChecker.CheckWinnerText("NoOneWin");
                 }
             }
         }

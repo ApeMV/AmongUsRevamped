@@ -25,9 +25,9 @@ internal class CoStartGamePatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
 class PlayerControlSetRolePatch
 {
-    private static int i;
     public static bool FirstAssign;
-    private static HashSet<byte> Seekers = new();
+    private static readonly HashSet<byte> ProcessedPlayers = new();
+    public static HashSet<byte> Seekers = new();
     public static HashSet<PlayerControl> Jesters = new();
     private static readonly System.Random rand = new System.Random();
 
@@ -35,17 +35,17 @@ class PlayerControlSetRolePatch
     {
         if (!FirstAssign || !AmongUsClient.Instance.AmHost) return true;
 
-        var oldRole = roleType;
+        if (!ProcessedPlayers.Add(__instance.PlayerId)) return true;
 
         canOverrideRole = false;
 
         if (Main.GM.Value && __instance == PlayerControl.LocalPlayer)
         {
-            roleType = RoleTypes.CrewmateGhost;
-            return true;
+            roleType = RoleTypes.Crewmate;
+            CoShowIntroPatch.ScheduleExile = true;
         }
 
-        if (Utils.isHideNSeek && i == 0)
+        if (Utils.isHideNSeek && Seekers.Count() == 0)
         {
             int seekersCount = Options.NumSeekers.GetInt();
 
@@ -77,22 +77,21 @@ class PlayerControlSetRolePatch
 
         if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)
         {
-            if (__instance == PlayerControl.LocalPlayer && Main.GM.Value)
-            {
-                PlayerControl.LocalPlayer.myTasks.Clear();
-                return true;
-            }
-
             if (Options.EngineerMode.GetBool()) roleType = RoleTypes.Engineer;
             else roleType = RoleTypes.Crewmate;
         }
 
-        i++;
-        if (i >= PlayerControl.AllPlayerControls.Count)
+        if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek)
+        {
+            if (roleType == RoleTypes.Impostor || roleType == RoleTypes.Phantom || roleType == RoleTypes.Viper) roleType = RoleTypes.Shapeshifter;
+        }
+
+        if (ProcessedPlayers.Count >= PlayerControl.AllPlayerControls.Count)
         {
             Seekers.Clear();
+            ProcessedPlayers.Clear();
             FirstAssign = false;
-            i = 0;
+
             Logger.Info("PCSRP successful", "RoleManaging");
         }
         
@@ -105,7 +104,7 @@ class PlayerControlSetRolePatch
         {
             Jesters.Add(__instance);
         }
-
+    
         return true;
     }
 }

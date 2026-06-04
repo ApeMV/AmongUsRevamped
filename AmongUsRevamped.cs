@@ -48,6 +48,7 @@ public partial class Main : BasePlugin
     public static float GameTimer;
 
     public static readonly Dictionary<int, int> SayStartTimes = [];
+    public static readonly Dictionary<int, int> SayDeniedWordTimes = [];
 
     public static PlayerControl[] AllPlayerControls
     {

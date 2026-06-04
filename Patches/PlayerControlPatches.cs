@@ -16,7 +16,7 @@ class ReportDeadBodyPatch
     {
         if (!AmongUsClient.Instance.AmHost || __instance == null) return true;
 
-        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings /*&& !Options.ChatBeforeFirstMeeting.GetBool()*/ && target == null)
+        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && target == null && Options.Gamemode.GetValue() < 2)
         {
             Logger.Info($" {__instance.Data.PlayerName} is calling a meeting too fast, attempt blocked", "ReportDeadBodyPatch");
             return false;
@@ -26,10 +26,17 @@ class ReportDeadBodyPatch
 
         if (Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
         {
-            if (target != null) Logger.Info($" Stopped {__instance.Data.PlayerName} reporting the body of {target.PlayerName}", "ReportDeadBodyPatch");
-            else Logger.Info($" Stopped {__instance.Data.PlayerName} trying to call a meeting", "ReportDeadBodyPatch");
-
-            return false;
+            if (target != null)
+            {
+                Logger.Info($" Stopped {__instance.Data.PlayerName} reporting the body of {target.PlayerName}", "ReportDeadBodyPatch");
+                return false;
+            }
+            if (__instance != PlayerControl.LocalPlayer)
+            {
+                Logger.Info($" Stopped {__instance.Data.PlayerName} trying to call a meeting", "ReportDeadBodyPatch");
+                return false;
+            }
+            return true;
         }
         else return true;
     }
@@ -211,9 +218,9 @@ class PlayerControlCompleteTaskPatch
     
     public static void CalculateTaskWin()
     {
-        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek || Options.NoGameEnd.GetBool()) return;
+        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek || Options.NoGameEnd.GetBool() || !CoShowIntroPatch.IntroInitiated) return;
 
-        //Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
+        Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
 
         if ((GameData.Instance.CompletedTasks - ignoredCompletedTasks) >= (GameData.Instance.TotalTasks - ignoredTasks)*0.01*Options.TaskPercentNeededToWin.GetInt())
         {

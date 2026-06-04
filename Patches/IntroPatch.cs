@@ -9,11 +9,15 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.CoShowIntro))]
 internal static class CoShowIntroPatch
 {
+    public static bool IntroInitiated;
+    public static bool ScheduleExile;
     public static void Postfix(IntroCutscene __instance)
     {
         Logger.Info(" Intro initiated", "CoShowIntro");
 
         if (!AmongUsClient.Instance.AmHost) return;
+
+        IntroInitiated = true;
 
         AbilityManagement.SendRoleMessages();
         
@@ -28,6 +32,12 @@ internal static class CoShowIntroPatch
 
             Logger.Info($" {p.Data.PlayerName} -> {p.Data.RoleType}", "RoleInfo");
         }
+        
+        if (ScheduleExile)
+        {
+            PlayerControl.LocalPlayer.Exiled();
+            ScheduleExile = false;
+        }
 
         Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
 
@@ -40,7 +50,7 @@ internal static class CoShowIntroPatch
             }, 33f, "MeetingEnabled");     
         }
 
-        if (Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool() /*|| Options.Gamemode.GetValue() == 0 && Options.ChatBeforeFirstMeeting.GetBool()*/)
+        if (Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool())
         {
             _ = new LateTask(() =>
             {  

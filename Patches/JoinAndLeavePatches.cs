@@ -154,3 +154,14 @@ public static class SetLevelPatch
         }  
     }
 }
+
+[HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
+public static class ShowLobbyTimer_GameStartManager_Start_Postfix
+{
+    public static void Postfix(GameStartManager __instance)
+    {
+        if (__instance == null || !GameData.Instance || !AmongUsClient.Instance || AmongUsClient.Instance.NetworkMode == NetworkModes.LocalGame || !AmongUsClient.Instance.AmHost) return;
+
+        HudManager.Instance.ShowLobbyTimer(600);
+    }
+}
