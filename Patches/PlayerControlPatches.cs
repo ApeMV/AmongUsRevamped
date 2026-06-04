@@ -15,6 +15,7 @@ class ReportDeadBodyPatch
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo target)
     {
         if (!AmongUsClient.Instance.AmHost || __instance == null) return true;
+        if (Utils.isHideNSeek) return false;
 
         if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && target == null && Options.Gamemode.GetValue() < 2)
         {
