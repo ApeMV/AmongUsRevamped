@@ -58,7 +58,7 @@ internal static class DisableDevice
 
         foreach (PlayerControl pc in Main.AllPlayerControls)
         {
-            if (pc.Data.IsDead || Main.GM.Value && pc == PlayerControl.LocalPlayer) return;
+            if (pc.Data.IsDead || (Main.GM.Value && pc == PlayerControl.LocalPlayer)) continue;
             
             try
             {

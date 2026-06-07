@@ -78,11 +78,11 @@ internal static class CommandHelper
     [HarmonyPostfix]
     public static void Postfix(TextBoxTMP __instance)
     {
-        if (!HudManager.InstanceExists || HudManager.Instance.Chat == null || HudManager.Instance.Chat.freeChatField == null || __instance != HudManager.Instance.Chat.freeChatField.textArea) return;
+        if (!HudManager.InstanceExists || HudManager.Instance.Chat == null || HudManager.Instance.Chat.freeChatField == null || HudManager.Instance.Chat.freeChatField.textArea == null || __instance != HudManager.Instance.Chat.freeChatField.textArea) return;
 
         if (Main.DisableCommandHelper.Value || !AmongUsClient.Instance.AmHost)
         {
-            HelperText.enabled = false;
+            if (HelperText != null) HelperText.enabled = false;
             return;
         }
 
