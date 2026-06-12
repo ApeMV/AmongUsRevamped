@@ -13,8 +13,9 @@ internal class CoStartGamePatch
         if (!AmongUsClient.Instance.AmHost) return;
 
         Logger.Info(" -------- GAME STARTED --------", "StartGame");
-        Logger.Info($" Gamemode: {Options.Gamemode.GetValue()}", "StartGame");
+        Logger.Info($" Gamemode: {Options.Gamemode.GetString()}", "StartGame");
         Logger.Info($" Players: {PlayerControl.AllPlayerControls.Count}", "StartGame");
+        Logger.Info($" Map: {(MapNames)GameOptionsManager.Instance.CurrentGameOptions.MapId}", "StartGame");
 
         NormalGameEndChecker.imps.Clear();
         NormalGameEndChecker.LastWinReason = "";
@@ -42,7 +43,7 @@ class PlayerControlSetRolePatch
         if (Main.GM.Value && __instance == PlayerControl.LocalPlayer)
         {
             roleType = RoleTypes.Crewmate;
-            CoShowIntroPatch.ScheduleExile = true;
+            OnGameStartPatch.ScheduleExile = true;
         }
 
         if (Utils.isHideNSeek && Seekers.Count() == 0)
@@ -106,5 +107,19 @@ class PlayerControlSetRolePatch
         }
     
         return true;
+    }
+}
+
+[HarmonyPatch(typeof(HudManager), nameof(HudManager.OnGameStart))]
+internal static class OnGameStartPatch
+{
+    public static bool ScheduleExile;
+    public static void Postfix()
+    {
+        if (ScheduleExile)
+        {
+            PlayerControl.LocalPlayer.Exiled();
+            ScheduleExile = false;
+        }
     }
 }

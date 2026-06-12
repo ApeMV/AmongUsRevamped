@@ -43,7 +43,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.8.0";
+    public const string ModVersion = "v1.8.1";
 
     public static float GameTimer;
 
@@ -97,7 +97,7 @@ public partial class Main : BasePlugin
         Translator.Init();
         Translator.Reload();
         BanManager.Init();
-        
+
         Harmony.PatchAll();
 
         ConsoleManager.DetachConsole();

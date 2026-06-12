@@ -10,7 +10,6 @@ namespace AmongUsRevamped;
 internal static class CoShowIntroPatch
 {
     public static bool IntroInitiated;
-    public static bool ScheduleExile;
     public static void Postfix(IntroCutscene __instance)
     {
         Logger.Info(" Intro initiated", "CoShowIntro");
@@ -32,12 +31,6 @@ internal static class CoShowIntroPatch
 
             Logger.Info($" {p.Data.PlayerName} -> {p.Data.RoleType}", "RoleInfo");
         }
-        
-        if (ScheduleExile)
-        {
-            PlayerControl.LocalPlayer.Exiled();
-            ScheduleExile = false;
-        }
 
         Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
 
@@ -57,7 +50,7 @@ internal static class CoShowIntroPatch
                 PlayerControl.LocalPlayer.CmdReportDeadBody(null);
                 if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose(); 
 
-            }, 9f, "SetChatVisible");  
+            }, 9.5f, "SetChatVisible");  
         }
     }
 }

@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.8.0):
+# 🎮 Features (v1.8.1):
 ## <b> 🌟 Custom Abilities:</b>
 - Mayor (Crewmate)
 - The Mayor has a configurable amount of extra votes
@@ -99,6 +99,7 @@
 - See player kill/task count and Role when dead
 - Higher and more accurate Option ranges
 - Always visible lobby timer
+- Access experimental animation test scene
 - <b>🎉 And this all works in public lobbies!</b>
 
 ### Hotkeys

@@ -165,7 +165,7 @@ public static class AbilityManagement
     private static int PendingRoleMessages = 0;
     public static void SendRoleMessages()
     {
-        if (!AmongUsClient.Instance.AmHost) return;
+        if (!AmongUsClient.Instance.AmHost || Options.Gamemode.GetValue() > 1) return;
 
         if (string.IsNullOrEmpty(RoleList()) || PlayerControl.LocalPlayer.Data.IsDead)
         {
@@ -175,12 +175,12 @@ public static class AbilityManagement
         }
 
         var players = PlayerControl.AllPlayerControls.ToArray().ToList();
-        float delay = 4.4f;
+        float delay = 6.6f;
 
         PendingRoleMessages = 0;
         HandlingRoleMessages = true;
 
-        SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), false);
+        SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), true);
 
         foreach (var player in players)
         {

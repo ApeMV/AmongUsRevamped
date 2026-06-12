@@ -19,6 +19,7 @@ public static class Translator
 
     public static void Init()
     {
+        Logger.Info($" Among Us Revamped {Main.ModVersion}", "Init");
         CheckLanguageFile(_currentLang);
         LoadLanguage(_currentLang);
     }

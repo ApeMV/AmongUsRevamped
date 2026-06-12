@@ -231,8 +231,8 @@ public static class Utils
         PlayerControlSetRolePatch.Seekers.Clear();
         PlayerControlSetRolePatch.Jesters.Clear();
         PlayerControlSetRolePatch.FirstAssign = true;
-        CoShowIntroPatch.ScheduleExile = false;
 
+        OnGameStartPatch.ScheduleExile = false;
         CoShowIntroPatch.IntroInitiated = false;
     }
 
@@ -578,7 +578,7 @@ public static class Utils
             return null;
         }
 
-        Logger.Info($"Found {methodName}.MoveNext", "GetStateMachineMoveNext");
+        // Logger.Info($"Found {methodName}.MoveNext", "GetStateMachineMoveNext");
         return moveNext;
     }
 

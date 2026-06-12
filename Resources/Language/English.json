@@ -10,7 +10,7 @@
   "disableInfoWhenDead": "Hide Info When Dead",
   "disableCommandHelper": "Disable Command Helper",
 
-  "gameMasterWarning":"You will now spectate games until Game Master is turned off. WARNING: Ability messages will not be sent if this setting is enabled.",
+  "gameMasterWarning":"You will now spectate games until Game Master is turned off. WARNING: Ability messages will not be sent and role assigning might be inaccurate if this setting is enabled.",
 
   "cancelStartCountdown": "Start countdown canceled",
   
@@ -19,7 +19,7 @@
   "kickLowLevelPlayer": "Kick Players Under Level",
   "tempBanLowLevelPlayer": "Ban Instead Of Kick",
   "dontKickLevelOnes": "Don't Kick Lv.1 Players For Glitched Lobbies",
-  "kickInvalidFriendCodes": "Kick Invalid FriendCodes",
+  "kickInvalidFriendCodes": "Kick Invalid (Empty) Friendcodes",
   "tempBanInvalidFriendCodes": "Ban Instead Of Kick",
   "deniedWordsToKick": "Sent Denied Words To Kick Player",
   "applyBanList": "Apply BanList",

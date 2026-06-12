@@ -180,6 +180,7 @@ namespace AmongUsRevamped
         private static PassiveButton template;
         private static PassiveButton discordButton;
         private static PassiveButton gitHubButton;
+        private static PassiveButton animationSceneButton;
         private static Transform buttonParent;
         public static void Postfix(MainMenuManager __instance)
         {
@@ -212,6 +213,18 @@ namespace AmongUsRevamped
                     "GitHub");
             }
 
+            if (animationSceneButton == null)
+            {
+                animationSceneButton = CreateButton(
+                    __instance,
+                    "AnimationTestSceneButton",
+                    new(0f, 2.65f, 1f),
+                    new(139, 0, 0, byte.MaxValue),
+                    new(255, 127, 127, byte.MaxValue),
+                    () => SceneChanger.ChangeScene("AnimationTestScene"),
+                    "Animation Tester");
+            }
+
             var bg = GameObject.Find("BackgroundTexture");
             if (bg != null)
             {
@@ -228,6 +241,12 @@ namespace AmongUsRevamped
             if (div != null)
             {
                 div.SetActive(false);
+            }
+
+            var logo = GameObject.Find("MainUI/AspectScaler/LeftPanel/Sizer/LOGO-AU");
+            if (logo != null)
+            {
+                logo.SetActive(false);
             }
 
 
@@ -290,7 +309,14 @@ namespace AmongUsRevamped
             button.name = name;
 
             button.transform.localPosition = localPosition;
-            button.transform.localScale = new Vector3(0.8f, 1f, 1f);
+            if (name == "GitHubButton" || name == "DiscordButton")
+            {
+                button.transform.localScale = new Vector3(0.8f, 1f, 1f);
+            }
+            else
+            {
+                button.transform.localScale = new Vector3(1.8f, 1.6f, 1f);
+            }
 
             var aspect = button.GetComponent<AspectPosition>();
             if (aspect != null)
