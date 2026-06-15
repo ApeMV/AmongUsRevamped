@@ -2,7 +2,6 @@
   "LanguageID": "0",
 
   "gameMaster": "Game Master",
-  "unlockFPS": "Unlock FPS",
   "showFPS": "Show FPS",
   "autoStart": "Auto Start",
   "enableDarkTheme": "Enable Dark Theme",
@@ -14,6 +13,9 @@
 
   "cancelStartCountdown": "Start countdown canceled",
   
+  "invalidFriendCodeKick": "{0} was kicked for having an invalid Friendcode",
+  "invalidFriendCodeBan": "{0} was banned for having an invalid Friendcode",
+  "language": "Language (Requires Restart)",
   "gamemode": "Gamemode",
   "tabGroupMain": "Moderation",
   "kickLowLevelPlayer": "Kick Players Under Level",
@@ -22,9 +24,6 @@
   "kickInvalidFriendCodes": "Kick Invalid (Empty) Friendcodes",
   "tempBanInvalidFriendCodes": "Ban Instead Of Kick",
   "deniedWordsToKick": "Sent Denied Words To Kick Player",
-  "applyBanList": "Apply BanList",
-  "applyDenyNameList": "Apply DenyName List",
-  "applyModeratorList": "Apply Moderator List",
   "moderatorCanUseCommand": "Moderators can use commands",
   "autoKickStart": "Kick Players Who Say Start",
   "autoKickStartAsBan": "Ban Instead Of Kick",
@@ -58,7 +57,6 @@
   "tabGroupImpostor": "Impostor Roles",
 
   "tabGroupStandard": "Standard",
-  "chatBeforeFirstMeeting": "Force chat 1st round to see roles (experimental)",
 
   "tabGroupHNS": "Hide and Seek",
   "numSeekers": "# Seekers",
@@ -121,7 +119,6 @@
   "disableAirshipCamera": "Disable Airship Camera",
   "disableAirshipVital": "Disable Airship Vitals",
   "disableFungleDevices": "Disable Fungle Devices",
-  "disableFungleCamera": "Disable Fungle Camera",
   "disableFungleVital": "Disable Fungle Vitals",
 
   "tabGroupTasks": "Tasks",
@@ -218,29 +215,9 @@
   "disableSubmitScan": "Disable Submit Scan",
   "disableUploadData": "Disable Upload Data",
 
-  "noKcdMode": "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!",
-  "SnSModeOne": "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off",
-  "SnSModeTwo": "Crew wins by tasks/surviving {0}s\nImp wins by killing\nOne wrong kill = Can't kill for {1}s\n{2} wrong kills = suicide",
-  "SnSModeThree": "Crewmates win by doing tasks or surviving {0}s\nImpostors win by killing everyone\n{1} wrong kill(s) = suicide",
-  "speedrunMode": "Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {0}s",
-
   "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description or ability list.\n<b>/r {ability}</b>\nSend specific ability info.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
 
-  "socialsAll": "AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya",
-  "translationReloaded": "Your file has successfully been reset.\nTo apply the changes, restart your game.",
-
-  "mayorPublic": "Mayor:\n\nThe Mayor is a Crewmate with {0} additional vote(s). Use them wisely.",
-  "tyrantPublic": "Tyrant:\n\nThe Tyrant is an Impostor with {0} additional vote(s). Use them wisely.",
-
-  "juggernautPublic": "Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {0} kills.",
-  "speedrunnerPublic": "Tasker:\n\nThe Crewmates win if the Tasker completes tasks and is alive. The Tasker has more tasks.",
-
-  "stealerPublic": "Stealer:\n\nThe Stealer gains {0} additional vote(s) per killed player. Votes are rounded down.",
-  "workhorsePublic": "Workhorse:\n\nThe Workhorse gains {0} additional vote(s) per completed task. Votes are rounded down.",
-
-  "jesterPublic": "Jester:\n\nThe Jester is a Crewmate who can also win alone by getting voted.",
-
-  "customRoleAnnouncement": "Custom Roles are enabled!\n\nIf you have a Custom Role, it will show in a message below this one.",
+  "translationReloaded": "Your file has successfully been reset.\nTo apply all changes, restart your game.",
 
   "tabGroupCrewmateAbilities": "Crewmate Ability Settings",
   "crewmateAbility": "Crewmate (Role) Ability",
@@ -264,24 +241,6 @@
   "extraVotesImpostor": "Extra Votes For Tyrant",
   "extraVotesPerKill": "Extra Votes Per Kill For Stealer",
   "killsNeededForJuggernaut": "Kills Needed For Juggernaut",
-
-  "youAreMayor": "Your Ability: Mayor\n\nYou are a Crewmate with {0} additional vote(s). Use them wisely.",
-  "youAreJester": "Your Ability: Jester\n\nYou can optionally win alone by getting voted, you are still a Crewmate.",
-  "youAreSpeedrunner": "Your Ability: Tasker\n\nThe Crewmates win if you complete tasks while being alive. You have more tasks.",
-  "youAreTyrant": "Your Ability: Tyrant\n\nYou are an Impostor with {0} additional vote(s). Use them wisely.",
-  "youAreStealer": "Your Ability: Stealer\n\nYou gain {0} additional vote(s) per killed player. Votes are rounded down.",
-  "youAreWorkhorse": "Your Ability: Workhorse\n\nYou gain {0} additional vote(s) per completed task. Votes are rounded down.",
-  "youAreJuggernaut": "Your Ability: Juggernaut\n\nThe Impostor team instantly wins if you gain {0} kills.",
-
-  "jesterWin": "Jester wins! (voted)\n\nImpostors: ",
-  "speedrunnerWin": "Crewmates win! (Tasker finished tasks)\n\nImpostors: ",
-  "juggernautWin": "Impostors win! (Juggernaut killed {0} players)\n\nImpostors: ",
-  "crewmateWin": "Crewmates Win!\n\nImpostors: ",
-  "impostorWin": "Impostors Win!\n\nImpostors: ",
-  "crewmateWinTasks": "Crewmates Win! ({0}% tasks completed)\n\nImpostors: ",
-  "impostorWinMisc": "Impostors Win! (Sabotage)\n\n Impostors: ",
-  "crewmateWinTimer": "Crewmates Win! (Survived {0}s)\n\n Impostors: ",
-  "noOneWin": "No one wins. ({0}s Timer)",
 
   "ability": "Ability",
 
@@ -331,5 +290,7 @@
   "lastgameDesc": "Send last game info.",
   "templateDesc": "Send a specified template from AUR-DATA/templates.txt.",
 
-  "banWordKick": "{0} was kicked because they sent a banned word {1} time(s)"
+  "banWordKick": "{0} was kicked because they sent a banned word {1} time(s)",
+
+  "pluginWarning": "<color=red><size=5><b>WARNING:</color></b></size>\n<size=3><b>You have 2 or more detected Plugins.</size></b>\nAmong Us Revamped is not compatible with most mods.\nIf you find bugs, they are most likely due to incompatibility."
 }

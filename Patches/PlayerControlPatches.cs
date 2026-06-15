@@ -71,11 +71,11 @@ internal static class MurderPlayerPatch
                 {
                     if (p.Data.Role.IsImpostor)
                     {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[p.Data.PlayerId]}†)</color> - {Utils.GetRoleText(p)}";
+                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[p.Data.PlayerId]}†)</color> - {Utils.StoredRoleText[p.PlayerId]}";
                     }
                     else
                     {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})</color> - {Utils.GetRoleText(p)}";
+                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})</color> - {Utils.StoredRoleText[p.PlayerId]}";
                     }
                 }
             }
@@ -213,7 +213,7 @@ class PlayerControlCompleteTaskPatch
         if (PlayerControl.LocalPlayer.Data.IsDead && !Main.DisableInfoWhenDead.Value)
         {
             TMP_Text nameText = __instance.cosmetics.nameText;
-            nameText.text = $"{__instance.Data.PlayerName}<color=green><size=90%>({playerTasksCompleted[__instance.PlayerId]}/{tasksPerPlayer[__instance.PlayerId]})</color> - {Utils.GetRoleText(__instance)}";
+            nameText.text = $"{__instance.Data.PlayerName}<color=green><size=90%>({playerTasksCompleted[__instance.PlayerId]}/{tasksPerPlayer[__instance.PlayerId]})</color> - {Utils.StoredRoleText[__instance.PlayerId]}";
         }
     }
     

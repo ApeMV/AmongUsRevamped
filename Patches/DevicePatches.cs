@@ -27,7 +27,6 @@ internal static class DisableDevice
         ["AirshipRecordsAdmin"] = new(19.89f, 12.60f),
         ["AirshipCamera"] = new(8.10f, -9.63f),
         ["AirshipVital"] = new(25.24f, -7.94f),
-        ["FungleCamera"] = new(6.20f, 0.10f),
         ["FungleVital"] = new(-2.50f, -9.80f),
         ["SubmergedVital"] = new(5f, 32.54f),
         ["SubmergedLeftAdmin"] = new(-9.45f, 10.16f),
@@ -98,7 +97,6 @@ internal static class DisableDevice
                             if (Options.DisableAirshipVital.GetBool()) doComms |= Vector2.Distance(PlayerPos, DevicePos["AirshipVital"]) <= UsableDistance;
                             break;
                         case 5:
-                            if (Options.DisableFungleCamera.GetBool()) doComms |= Vector2.Distance(PlayerPos, DevicePos["FungleCamera"]) <= UsableDistance;
                             if (Options.DisableFungleVital.GetBool()) doComms |= Vector2.Distance(PlayerPos, DevicePos["FungleVital"]) <= UsableDistance;
                             break;
                     }
@@ -190,7 +188,6 @@ public class RemoveDisableDevicesPatch
                 if (Options.DisableAirshipVital.GetBool()) consoles.DoIf(x => x.name == "panel_vitals", x => x.gameObject.GetComponent<CircleCollider2D>().enabled = false);
                 break;
             case 5:
-                if (Options.DisableFungleCamera.GetBool()) consoles.DoIf(x => x.name == "BinocularsSecurityConsole", x => x.gameObject.GetComponent<PolygonCollider2D>().enabled = false);
                 if (Options.DisableFungleVital.GetBool()) consoles.DoIf(x => x.name == "VitalsConsole", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = false);
                 break;
         }

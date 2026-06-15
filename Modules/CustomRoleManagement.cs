@@ -151,13 +151,13 @@ public static class AbilityManagement
     public static string RoleInfoString(PlayerControl player)
     {
         if (!AmongUsClient.Instance.AmHost) return "";
-        if (IsMayor(player)) return Translator.Get("youAreMayor", Options.ExtraVotesCrewmate.GetInt());
-        if (IsWorkhorse(player)) return Translator.Get("youAreWorkhorse", Options.ExtraVotesPerTask.GetFloat());
-        if (IsJester(player)) return Translator.Get("youAreJester");
-        if (IsSpeedrunner(player)) return Translator.Get("youAreSpeedrunner");
-        if (IsTyrant(player)) return Translator.Get("youAreTyrant", Options.ExtraVotesImpostor.GetInt());
-        if (IsStealer(player)) return Translator.Get("youAreStealer", Options.ExtraVotesPerKill.GetFloat());
-        if (IsJuggernaut(player)) return Translator.Get("youAreJuggernaut", Options.KillsNeededForJuggernaut.GetInt());
+        if (IsMayor(player)) return $"Your Ability: Mayor\n\nYou are a Crewmate with {Options.ExtraVotesCrewmate.GetInt()} additional vote(s). Use them wisely.";
+        if (IsWorkhorse(player)) return $"Your Ability: Workhorse\n\nYou gain {Options.ExtraVotesPerTask.GetFloat()} additional vote(s) per completed task. Votes are rounded down.";
+        if (IsJester(player)) return "Your Ability: Jester\n\nYou can optionally win alone by getting voted, you are still a Crewmate.";
+        if (IsSpeedrunner(player)) return "Your Ability: Tasker\n\nThe Crewmates win if you complete tasks while being alive. You have more tasks.";
+        if (IsTyrant(player)) return $"Your Ability: Tyrant\n\nYou are an Impostor with {Options.ExtraVotesImpostor.GetInt()} additional vote(s). Use them wisely.";
+        if (IsStealer(player)) return $"Your Ability: Stealer\n\nYou gain {Options.ExtraVotesPerKill.GetFloat()} additional vote(s) per killed player. Votes are rounded down.";
+        if (IsJuggernaut(player)) return $"Your Ability: Juggernaut\n\nThe Impostor team instantly wins if you gain {Options.KillsNeededForJuggernaut.GetInt()} kills.";
         else return "";
     }
 

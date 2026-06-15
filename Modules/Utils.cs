@@ -582,6 +582,7 @@ public static class Utils
         return moveNext;
     }
 
+    public static readonly Dictionary<byte, string> StoredRoleText = new();
     public static string GetRoleText(PlayerControl p)
     {
         if (p == null) return "";

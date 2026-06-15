@@ -332,42 +332,42 @@ internal static class SendChatPatch
             return false;
         }        
         if (text == "/r jester"){
-            Utils.ChatCommand(__instance, Translator.Get("jesterPublic"), "", false);
+            Utils.ChatCommand(__instance, "Jester:\n\nThe Jester is a Crewmate who can also win alone by getting voted.", "", false);
             return false;}
 
         if (text == "/r mayor"){
-            Utils.ChatCommand(__instance, Translator.Get("mayorPublic", Options.ExtraVotesCrewmate.GetInt()), "", false);
+            Utils.ChatCommand(__instance, $"Mayor:\n\nThe Mayor is a Crewmate with {Options.ExtraVotesCrewmate.GetInt()} additional vote(s). Use them wisely.", "", false);
             return false;}
 
         if (text == "/r tyrant"){
-            Utils.ChatCommand(__instance, Translator.Get("tyrantPublic", Options.ExtraVotesImpostor.GetInt()), "", false);
+            Utils.ChatCommand(__instance, $"Tyrant:\n\nThe Tyrant is an Impostor with {Options.ExtraVotesImpostor.GetInt()} additional vote(s). Use them wisely.", "", false);
             return false;}
 
         if (text == "/r workhorse"){
-            Utils.ChatCommand(__instance, Translator.Get("workhorsePublic", Options.ExtraVotesPerTask.GetFloat()), "", false);
+            Utils.ChatCommand(__instance, $"Workhorse:\n\nThe Workhorse gains {Options.ExtraVotesPerTask.GetInt()} additional vote(s) per completed task. Votes are rounded down.", "", false);
             return false;}
 
         if (text == "/r stealer"){
-            Utils.ChatCommand(__instance, Translator.Get("stealerPublic", Options.ExtraVotesPerKill.GetFloat()), "", false);
+            Utils.ChatCommand(__instance, $"Stealer:\n\nThe Stealer gains {Options.ExtraVotesPerKill.GetInt()} additional vote(s) per killed player. Votes are rounded down.", "", false);
             return false;}
 
         if (text == "/r juggernaut"){
-            Utils.ChatCommand(__instance, Translator.Get("juggernautPublic", Options.KillsNeededForJuggernaut.GetInt()), "", false);
+            Utils.ChatCommand(__instance, $"Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {Options.KillsNeededForJuggernaut.GetInt()} kills.", "", false);
             return false;}
 
         if (text == "/r tasker"){
-            Utils.ChatCommand(__instance, Translator.Get("speedrunnerPublic"), "", false);
+            Utils.ChatCommand(__instance, "Tasker:\n\nThe Crewmates win if the Tasker completes tasks and is alive. The Tasker has more tasks.", "", false);
             return false;}
 
         if (text == "/aur" || text == "/socials")
         {
-            Utils.ChatCommand(__instance, Translator.Get("socialsAll"), "", false);
+            Utils.ChatCommand(__instance, "AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya", "", false);
             return false;
         }
 
         if (text == "/0kc" || text == "/0killcooldown")
         {
-            Utils.ChatCommand(__instance, Translator.Get("noKcdMode"), "", false);
+            Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
             return false;
         }
 
@@ -375,18 +375,18 @@ internal static class SendChatPatch
         {
             if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
             {
-                Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
             }
             else
             {
-                Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
             }
             return false;
         }
 
         if (text == "/sr" || text == "/speedrun")
         {
-            Utils.ChatCommand(__instance, Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
+            Utils.ChatCommand(__instance, $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
             return false;
         }
 
@@ -399,22 +399,22 @@ internal static class SendChatPatch
                 break;
 
                 case 1:
-                Utils.ChatCommand(__instance, Translator.Get("noKcdMode"), "", false);
+                Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
                 break;
 
                 case 2:
                 if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
                 {
-                    Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                    Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
                 }
                 else
                 {
-                    Utils.ChatCommand(__instance, Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                    Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
                 }          
                 break;
 
                 case 3:
-                Utils.ChatCommand(__instance, Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
+                Utils.ChatCommand(__instance, $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                 break;
 
             }
@@ -673,13 +673,13 @@ public static class RPCHandlerPatch
                 if (text == "/aur" || text == "/socials")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashLastGameCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand(Translator.Get("socialsAll"), "", false);
+                    Utils.ModeratorChatCommand("AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya", "", false);
                 }
 
                 if (text == "/0kc" || text == "/0killcooldown")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand(Translator.Get("noKcdMode"), "", false);
+                    Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
                 }
                 if (text == "/sns" || text == "/shiftandseek")
                 {
@@ -687,18 +687,18 @@ public static class RPCHandlerPatch
 
                     if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
                     {
-                        Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
                     }
                     else
                     {
-                        Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
                     }
                 }
 
                 if (text == "/sr" || text == "/speedrun")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand(Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
+                    Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                 }
 
                 if (text == "/r" || text == "/roles")
@@ -711,22 +711,22 @@ public static class RPCHandlerPatch
                         break;
 
                         case 1:
-                        Utils.ModeratorChatCommand(Translator.Get("noKcdMode"), "", false);
+                        Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
                         break;
 
                         case 2:
                         if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
                         {
-                            Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeThree", Options.CrewAutoWinsGameAfter.GetInt(), Options.MisfiresToSuicide.GetInt()), true);                
+                            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
                         }
                         else
                         {
-                            Utils.ModeratorChatCommand(Translator.Get("SnSModeOne"), Translator.Get("SnSModeTwo", Options.CrewAutoWinsGameAfter.GetInt(), Options.CantKillTime.GetInt(), Options.MisfiresToSuicide.GetInt()), true);
+                            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
                         }         
                         break;
 
                         case 3:
-                        Utils.ModeratorChatCommand(Translator.Get("speedrunMode", Options.GameAutoEndsAfter.GetInt()), "", false);
+                        Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                         break;
 
                     }
@@ -735,25 +735,25 @@ public static class RPCHandlerPatch
                 if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
                 
                 if (text == "/r jester"){
-                    Utils.ModeratorChatCommand(Translator.Get("jesterPublic"), "", false);}
+                    Utils.ModeratorChatCommand("Jester:\n\nThe Jester is a Crewmate who can also win alone by getting voted.", "", false);}
 
                 if (text == "/r mayor"){
-                    Utils.ModeratorChatCommand(Translator.Get("mayorPublic", Options.ExtraVotesCrewmate.GetInt()), "", false);}
+                    Utils.ModeratorChatCommand($"Mayor:\n\nThe Mayor is a Crewmate with {Options.ExtraVotesCrewmate.GetInt()} additional vote(s). Use them wisely.", "", false);}
 
                 if (text == "/r tyrant"){
-                    Utils.ModeratorChatCommand(Translator.Get("tyrantPublic", Options.ExtraVotesImpostor.GetInt()), "", false);}
+                    Utils.ModeratorChatCommand($"Tyrant:\n\nThe Tyrant is an Impostor with {Options.ExtraVotesImpostor.GetInt()} additional vote(s). Use them wisely.", "", false);}
 
                 if (text == "/r workhorse"){
-                    Utils.ModeratorChatCommand(Translator.Get("workhorsePublic", Options.ExtraVotesPerTask.GetFloat()), "", false);}
+                    Utils.ModeratorChatCommand($"Workhorse:\n\nThe Workhorse gains {Options.ExtraVotesPerTask.GetInt()} additional vote(s) per completed task. Votes are rounded down.", "", false);}
 
                 if (text == "/r stealer"){
-                    Utils.ModeratorChatCommand(Translator.Get("stealerPublic", Options.ExtraVotesPerKill.GetFloat()), "", false);}
+                    Utils.ModeratorChatCommand($"Stealer:\n\nThe Stealer gains {Options.ExtraVotesPerKill.GetInt()} additional vote(s) per killed player. Votes are rounded down.", "", false);}
 
                 if (text == "/r juggernaut"){
-                    Utils.ModeratorChatCommand(Translator.Get("juggernautPublic", Options.KillsNeededForJuggernaut.GetInt()), "", false);}
+                    Utils.ModeratorChatCommand($"Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {Options.KillsNeededForJuggernaut.GetInt()} kills.", "", false);}
 
                 if (text == "/r tasker"){
-                    Utils.ModeratorChatCommand(Translator.Get("speedrunnerPublic"), "", false);}
+                    Utils.ModeratorChatCommand("Tasker:\n\nThe Crewmates win if the Tasker completes tasks and is alive. The Tasker has more tasks.", "", false);}
 
                 if (text.StartsWith("/t "))
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BepInEx.Unity.IL2CPP;
+using System;
 using System.Text;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using TMPro;
@@ -249,6 +250,18 @@ namespace AmongUsRevamped
                 logo.SetActive(false);
             }
 
+            var h1 = GameObject.Find("AccountManager/AccountTab/GameHeader/BarSprite/FriendsButton/Highlight/NewRequestActive/Text_TMP");
+            if (h1 != null)
+            {
+                Object.Destroy(h1);
+            }
+
+            var h2 = GameObject.Find("AccountManager/AccountTab/GameHeader/BarSprite/FriendsButton/Highlight/NewRequestActive/Background");
+            if (h2 != null)
+            {
+                Object.Destroy(h2);
+            }
+
 
             Transform tintTrans = __instance.transform.Find("MainUI/Tint");
             var tint = tintTrans.gameObject;
@@ -341,6 +354,23 @@ namespace AmongUsRevamped
 
             button.gameObject.SetActive(true);
             return button;
+        }
+    }
+
+    [HarmonyPatch(typeof(SignInStatusComponent), nameof(SignInStatusComponent.SetOnline))]
+    public static class SignInStatusComponentSetOnlinePatch
+    {
+        private static void Postfix()
+        {
+            int pluginCount = IL2CPPChainloader.Instance.Plugins.Count;
+            Logger.Info($" {pluginCount} Plugins detected", "PluginCheck");
+
+            if (pluginCount > 1)
+            {
+                DisconnectPopup.Instance.gameObject.SetActive(true);
+                DisconnectPopup.Instance._textArea.enableWordWrapping = false;
+                DisconnectPopup.Instance._textArea.text = Translator.Get("pluginWarning");                
+            }
         }
     }
 }

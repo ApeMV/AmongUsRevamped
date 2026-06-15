@@ -53,57 +53,57 @@ class NormalGameEndChecker
         
         if (Winner == "Jester")
         {
-            LastWinReason = Translator.Get("jesterWin") + impostorList;
+            LastWinReason = "Jester wins! (voted)\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "Juggernaut")
         {
-            LastWinReason = Translator.Get("juggernautWin", Options.KillsNeededForJuggernaut.GetInt()) + impostorList;
+            LastWinReason = $"Impostors win! (Juggernaut killed {Options.KillsNeededForJuggernaut.GetInt()} players)\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "Speedrunner")
         {
-            LastWinReason = Translator.Get("speedrunnerWin") + impostorList;
+            LastWinReason = "Crewmates win! (Tasker finished tasks)\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "SnSTimer")
         {
-            LastWinReason = Translator.Get("crewmateWinTimer", Options.CrewAutoWinsGameAfter.GetInt()) + impostorList;
+            LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)\n\n Impostors: " + impostorList;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "NoOneWinsSpeedrun")
         {
-            LastWinReason = Translator.Get("noOneWin", Options.GameAutoEndsAfter.GetInt());
+            LastWinReason = $"No one wins. ({Options.GameAutoEndsAfter.GetInt()}s Timer)";
             canUpdateWinnerText = false;
             return;
         }
 
         if (Utils.AliveImpostors == 0 || Winner == "Crewmate") 
         {
-            LastWinReason = Translator.Get("crewmateWin") + impostorList;
+            LastWinReason = "Crewmates Win!\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
         }
         else if (Utils.AliveImpostors >= Utils.AliveCrewmates || Winner == "Impostor") 
         {
-            LastWinReason = Translator.Get("impostorWin") + impostorList;
+            LastWinReason = "Impostors Win!\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
         }
         else if (GameData.Instance != null && GameData.Instance.TotalTasks > 0 && GameData.Instance.CompletedTasks >= GameData.Instance.TotalTasks || Winner == "CrewmateTasks")
         {
-            LastWinReason = Translator.Get("crewmateWinTasks", Options.TaskPercentNeededToWin.GetInt()) + impostorList;
+            LastWinReason = $"Crewmates Win! ({Options.TaskPercentNeededToWin.GetInt()}% tasks completed)\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
         }
         else if (Options.Gamemode.GetValue() < 2 || Winner == "ImpostorSabotage")
         {
-            LastWinReason = Translator.Get("impostorWinMisc") + impostorList;
+            LastWinReason = "Impostors Win! (Sabotage)\n\n Impostors: " + impostorList;
         }
     }
 }

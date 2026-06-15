@@ -10,11 +10,12 @@ public static class Translator
 {
     public enum SupportedLangs
     {
-        English
+        English,
+        French
     }
 
     private static readonly Dictionary<SupportedLangs, Dictionary<string, string>> _languages = new();
-    private static SupportedLangs _currentLang = SupportedLangs.English;
+    public static SupportedLangs _currentLang;
     private static string LanguageFolder => $"{BanManager.DataPath}/Language";
 
     public static void Init()

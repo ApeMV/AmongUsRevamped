@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.8.1):
+# 🎮 Features (v1.8.2):
 ## <b> 🌟 Custom Abilities:</b>
 - Mayor (Crewmate)
 - The Mayor has a configurable amount of extra votes
@@ -88,6 +88,7 @@
 - Shift and Seek
 - Speedrun
 ## <b>❓ Other Improvements:</b>
+- Preset system for mod settings
 - Command Helper
 - Creatable and customizable Templates
 - Eht Dleks (Reverse Skeld) Map

@@ -88,14 +88,15 @@ class OnPlayerJoinedPatch
                 if (!Options.TempBanInvalidFriendCodes.GetBool())
                 {
                     AmongUsClient.Instance.KickPlayer(Client.Id, false);
-                    Logger.Info($" {Client.PlayerName} Was kicked for having an invalid FriendCode", "KickInvalidFriendCode");
-                    Logger.SendInGame($" {Client.PlayerName} Was kicked for having an invalid FriendCode");
+                    Logger.Info(Translator.Get("invalidFriendCodeKick", Client.PlayerName), "KickInvalidFriendCode");
+                    Logger.SendInGame(Translator.Get("invalidFriendCodeKick", Client.PlayerName));
                 }
                 else
                 {
+                    if (!BanManager.TempBanWhiteList.Contains(Client.GetHashedPuid())) BanManager.TempBanWhiteList.Add(Client.GetHashedPuid());
                     AmongUsClient.Instance.KickPlayer(Client.Id, true);
-                    Logger.Info($" {Client.PlayerName} Was banned for having an invalid FriendCode", "BanInvalidFriendCode");
-                    Logger.SendInGame($" {Client.PlayerName} Was banned for having an invalid FriendCode");
+                    Logger.Info(Translator.Get("invalidFriendCodeBan", Client.PlayerName), "BanInvalidFriendCode");
+                    Logger.SendInGame(Translator.Get("invalidFriendCodeBan", Client.PlayerName));
                 }
             }
 

@@ -65,7 +65,14 @@ namespace AmongUsRevamped
             "Tyrant", "Stealer", "Juggernaut", "None"
         };
 
+        public static readonly string[] languages =
+        {
+            "English", "French"
+        };
+
         //System
+        public static OptionItem Language;
+
         public static OptionItem Gamemode;
 
         public static OptionItem TabGroupMain;
@@ -624,10 +631,6 @@ namespace AmongUsRevamped
 
             DisableFungleDevices = BooleanOptionItem.Create(22925, Translator.Get("disableFungleDevices"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-
-            DisableFungleCamera = BooleanOptionItem.Create(22926, Translator.Get("disableFungleCamera"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableFungleDevices)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
 
             DisableFungleVital = BooleanOptionItem.Create(22927, Translator.Get("disableFungleVital"), false, TabGroup.ModSettings, false)

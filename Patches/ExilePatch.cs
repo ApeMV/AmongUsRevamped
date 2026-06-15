@@ -34,7 +34,7 @@ class ExileControllerWrapUpPatch
             {
                 if (p.Data.Role.IsImpostor)
                 {
-                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({MurderPlayerPatch.killCount[p.Data.PlayerId]}†)";
+                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({MurderPlayerPatch.killCount[p.Data.PlayerId]}† - {Utils.StoredRoleText[p.PlayerId]})";
                 }
                 else
                 {
@@ -42,7 +42,7 @@ class ExileControllerWrapUpPatch
                     {
                         PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId] = 0;                
                     }
-                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})";
+                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]} - {Utils.StoredRoleText[p.PlayerId]})";
                 }
             }
         }

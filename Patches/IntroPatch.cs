@@ -42,16 +42,6 @@ internal static class CoShowIntroPatch
                 Utils.CanCallMeetings = true;
             }, 33f, "MeetingEnabled");     
         }
-
-        if (Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool())
-        {
-            _ = new LateTask(() =>
-            {  
-                PlayerControl.LocalPlayer.CmdReportDeadBody(null);
-                if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose(); 
-
-            }, 9.5f, "SetChatVisible");  
-        }
     }
 }
 
