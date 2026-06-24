@@ -116,7 +116,7 @@ internal static class OnGameStartPatch
     public static bool ScheduleExile;
     public static void Postfix()
     {
-        if (Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool())
+        if (AmongUsClient.Instance.AmHost && Options.Gamemode.GetValue() == 2 && Options.SNSChatInGame.GetBool())
         {
             PlayerControl.LocalPlayer.CmdReportDeadBody(null);
             if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose();

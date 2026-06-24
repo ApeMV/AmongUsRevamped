@@ -8,6 +8,7 @@
   "enableLobbyMusic": "Lobby Music",
   "disableInfoWhenDead": "Hide Info When Dead",
   "disableCommandHelper": "Disable Command Helper",
+  "disableCompatibilityWarning": "Disable Compatibility Warning",
 
   "gameMasterWarning":"You will now spectate games until Game Master is turned off. WARNING: Ability messages will not be sent and role assigning might be inaccurate if this setting is enabled.",
 
@@ -251,6 +252,7 @@
   "banlistWelcome": "# In this file you can ban players from your lobby by Friendcode.\n# Banning someone in-game will automatically add them here as well. Below is a Friendcode example.\n\nfriendcode#0000\n",
   "banwordWelcome": "# In this file you can set denied words, automatically kicking anyone in-game who sends words listed here.\n# Make sure to separate words by using new lines.",
   "bannameWelcome": "# In this file you can set denied names, automatically kicking anyone in-game who uses names listed here.\n# Make sure to separate names by using new lines.",
+  "languageWelcome": "# In this file you can set your Among Us Revamped language.\n# To set the language, type one of the supported languages in a new line. The default is English.\n# Supported languages: English, Spanish, SimplifiedChinese, Italian\n\nEnglish",
 
   "noGameEndWarning": "WARNING: No Game End is enabled",
 
@@ -292,5 +294,21 @@
 
   "banWordKick": "{0} was kicked because they sent a banned word {1} time(s)",
 
-  "pluginWarning": "<color=red><size=5><b>WARNING:</color></b></size>\n<size=3><b>You have 2 or more detected Plugins.</size></b>\nAmong Us Revamped is not compatible with most mods.\nIf you find bugs, they are most likely due to incompatibility."
+  "pluginWarning": "<color=red><size=5><b>WARNING:</color></b></size>\n<size=3><b>You have 2 or more detected Plugins.</size></b>\nAmong Us Revamped is not compatible with most mods.\nIf you find bugs, they are most likely due to incompatibility.",
+
+  "systemSettings": "System Settings",
+  "abilitySettings": "Ability Settings",
+  "gameplaySettings": "Gameplay Settings",
+  "gamemodeSettings": "Gamemode Settings",
+
+  "systemSettingsDesc": "Quality settings to improve comfort and testing.",
+  "abilitySettingsDesc": "Ability settings to enhance vanilla roles.",
+  "gameplaySettingsDesc": "Gameplay settings to improve the in-game experience.",
+  "gamemodeSettingsDesc": "Situational settings to apply for specific gamemodes.",
+
+  "everyone": "Everyone",
+  "vipAndAbove": "<color=yellow>VIP</color> And Above",
+  "moderatorAndAbove": "<color=purple>Moderator</color> And Above",
+  "admin": "<color=red>Admin</color>",
+  "onlyYou": "Only You"
 }

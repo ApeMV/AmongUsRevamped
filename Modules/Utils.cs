@@ -72,17 +72,13 @@ public static class Utils
         switch (tab)
         {
             case TabGroup.SystemSettings:
-                return "System Settings";
-/*
-            case TabGroup.CustomRoleSettings:
-                return "Custom Roles";
-*/
+                return Translator.Get("systemSettings");
             case TabGroup.AbilitySettings:
-                return "Ability Settings";
+                return Translator.Get("abilitySettings");
             case TabGroup.ModSettings:
-                return "Gameplay Settings";
+                return Translator.Get("gameplaySettings");
             case TabGroup.GamemodeSettings:
-                return "Gamemode Settings";
+                return Translator.Get("gamemodeSettings");
             default:
                 return "";
         }
@@ -367,19 +363,6 @@ public static class Utils
         }
 
         return false;
-    }
-
-    public static void SendPrivateMessage(PlayerControl target, string message)
-    {
-        if (!AmongUsClient.Instance.AmHost || PlayerControl.LocalPlayer == null || target == null || target.Data.ClientId == 255) return;
-
-        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 13, SendOption.Reliable, target.Data.ClientId);
-
-        writer.Write(message);
-        writer.Write(PlayerControl.LocalPlayer.PlayerId);
-
-        AmongUsClient.Instance.FinishRpcImmediately(writer);
-
     }
 
     public static void ChatCommand(ChatController __instance, string msg, string msg2, bool multi)

@@ -53,7 +53,7 @@ namespace AmongUsRevamped
 
         public static readonly string[] accessLevels =
         {
-            "Everyone", "<color=yellow>VIP</color> And Above", "<color=purple>Moderator</color> And Above", "<color=red>Admin</color>", "Only You"
+            Translator.Get("everyone"), Translator.Get("vipAndAbove"), Translator.Get("moderatorAndAbove"), Translator.Get("admin"), Translator.Get("onlyYou")
         };
 
         public static readonly string[] crewmateAbilities =
@@ -63,11 +63,6 @@ namespace AmongUsRevamped
         public static readonly string[] impostorAbilities =
         {
             "Tyrant", "Stealer", "Juggernaut", "None"
-        };
-
-        public static readonly string[] languages =
-        {
-            "English", "French"
         };
 
         //System

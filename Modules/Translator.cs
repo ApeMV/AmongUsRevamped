@@ -11,7 +11,9 @@ public static class Translator
     public enum SupportedLangs
     {
         English,
-        French
+        Italian,
+        SimplifiedChinese,
+        Spanish
     }
 
     private static readonly Dictionary<SupportedLangs, Dictionary<string, string>> _languages = new();
@@ -21,6 +23,20 @@ public static class Translator
     public static void Init()
     {
         Logger.Info($" Among Us Revamped {Main.ModVersion}", "Init");
+
+        string path = $"{BanManager.DataPath}/Language/YourLanguage.txt";
+
+        if (!File.Exists(path))
+        {
+            Logger.Warn($" Creating a new language file", "Translator");
+            File.WriteAllText(path, "# In this file you can set your Among Us Revamped language.\n# To set the language, replace the 'English' text below with the language you want to select.\n# Supported languages: English, Spanish, SimplifiedChinese, Italian\n\nEnglish");
+        }
+
+        string l = File.ReadAllLines(path).FirstOrDefault(x => !string.IsNullOrWhiteSpace(x) && !x.StartsWith("#"))?.Trim() ?? "English";
+
+        if (Enum.TryParse(l, true, out SupportedLangs lang)) _currentLang = lang;
+        else _currentLang = SupportedLangs.English;
+
         CheckLanguageFile(_currentLang);
         LoadLanguage(_currentLang);
     }

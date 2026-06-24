@@ -16,6 +16,7 @@ namespace AmongUsRevamped
         private static ClientOptionItem LobbyMusic;
         private static ClientOptionItem DisableInfoWhenDead;
         private static ClientOptionItem DisableCommandHelper;
+        private static ClientOptionItem DisableCompatibilityWarning;
 
         public static void Postfix(OptionsMenuBehaviour __instance)
         {
@@ -61,6 +62,9 @@ namespace AmongUsRevamped
 
             if (DisableCommandHelper == null || DisableCommandHelper.ToggleButton == null)
                 DisableCommandHelper = ClientOptionItem.Create(Translator.Get("disableCommandHelper"), Main.DisableCommandHelper, __instance);
+
+            if (DisableCompatibilityWarning == null || DisableCompatibilityWarning.ToggleButton == null)
+                DisableCompatibilityWarning = ClientOptionItem.Create(Translator.Get("disableCompatibilityWarning"), Main.DisableCompatibilityWarning, __instance);
         }
     }
 

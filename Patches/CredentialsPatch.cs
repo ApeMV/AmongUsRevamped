@@ -365,7 +365,7 @@ namespace AmongUsRevamped
             int pluginCount = IL2CPPChainloader.Instance.Plugins.Count;
             Logger.Info($" {pluginCount} Plugins detected", "PluginCheck");
 
-            if (pluginCount > 1)
+            if (pluginCount > 1 && !Main.DisableCompatibilityWarning.Value)
             {
                 DisconnectPopup.Instance.gameObject.SetActive(true);
                 DisconnectPopup.Instance._textArea.enableWordWrapping = false;

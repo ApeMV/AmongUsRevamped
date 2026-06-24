@@ -148,73 +148,35 @@ public static class AbilityManagement
         else Utils.ChatCommand(c, first, second, true);
     }
 
-    public static string RoleInfoString(PlayerControl player)
-    {
-        if (!AmongUsClient.Instance.AmHost) return "";
-        if (IsMayor(player)) return $"Your Ability: Mayor\n\nYou are a Crewmate with {Options.ExtraVotesCrewmate.GetInt()} additional vote(s). Use them wisely.";
-        if (IsWorkhorse(player)) return $"Your Ability: Workhorse\n\nYou gain {Options.ExtraVotesPerTask.GetFloat()} additional vote(s) per completed task. Votes are rounded down.";
-        if (IsJester(player)) return "Your Ability: Jester\n\nYou can optionally win alone by getting voted, you are still a Crewmate.";
-        if (IsSpeedrunner(player)) return "Your Ability: Tasker\n\nThe Crewmates win if you complete tasks while being alive. You have more tasks.";
-        if (IsTyrant(player)) return $"Your Ability: Tyrant\n\nYou are an Impostor with {Options.ExtraVotesImpostor.GetInt()} additional vote(s). Use them wisely.";
-        if (IsStealer(player)) return $"Your Ability: Stealer\n\nYou gain {Options.ExtraVotesPerKill.GetFloat()} additional vote(s) per killed player. Votes are rounded down.";
-        if (IsJuggernaut(player)) return $"Your Ability: Juggernaut\n\nThe Impostor team instantly wins if you gain {Options.KillsNeededForJuggernaut.GetInt()} kills.";
-        else return "";
-    }
-
     public static bool HandlingRoleMessages = false;
-    private static int PendingRoleMessages = 0;
     public static void SendRoleMessages()
     {
-        if (!AmongUsClient.Instance.AmHost || Options.Gamemode.GetValue() > 1) return;
+        if (!AmongUsClient.Instance.AmHost || Options.Gamemode.GetValue() > 1 || Utils.isHideNSeek) return;
 
         if (string.IsNullOrEmpty(RoleList()) || PlayerControl.LocalPlayer.Data.IsDead)
         {
             HandlingRoleMessages = false;
-            PendingRoleMessages = 0;
             return;
         }
 
-        var players = PlayerControl.AllPlayerControls.ToArray().ToList();
-        float delay = 6.6f;
-
-        PendingRoleMessages = 0;
         HandlingRoleMessages = true;
 
         SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), true);
 
-        foreach (var player in players)
+        new LateTask(() => 
         {
-            if (string.IsNullOrEmpty(RoleInfoString(player))) continue;
-
-            PendingRoleMessages++;
-
-            new LateTask(() => 
+            if (Utils.InGame)
             {
-                if (Utils.InGame)
-                {
-                    Utils.SendPrivateMessage(player, RoleInfoString(player));
-                }
-                else
-                {
-                    Logger.Info("Role sending was forcefully canceled. This should not happen.", "SendRoleMessages");
-                }
+                Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "Custom Abilities are on!\n\nIf you have one of the roles above, you also have the Ability next to it.", "", false);
+            }
+            else
+            {
+                Logger.Info("Role sending was forcefully canceled. This should not happen.", "SendRoleMessages");
+            }
 
-                PendingRoleMessages--;
-
-                if (PendingRoleMessages <= 0)
-                {
-                    PendingRoleMessages = 0;
-                    HandlingRoleMessages = false;
-                }
-            }, delay, "SendRoleMessage");
-
-            delay += 2.2f;
-        }
-
-        if (PendingRoleMessages == 0)
-        {
             HandlingRoleMessages = false;
-        }
+
+        }, 6.6f, "SendRoleMessage");
     }
 }
 /*

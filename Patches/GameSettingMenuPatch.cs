@@ -113,21 +113,16 @@ namespace AmongUsRevamped
                     switch ((TabGroup)(tabNum - 3))
                     {
                         case TabGroup.SystemSettings:
-                            __instance.MenuDescriptionText.text = "Quality settings to improve comfort and testing.";
+                            __instance.MenuDescriptionText.text = Translator.Get("systemSettingsDesc");
                             break;
-/*
-                        case TabGroup.CustomRoleSettings:
-                            __instance.MenuDescriptionText.text = "Custom Role enabling and settings.";
-                            break;
-*/
                         case TabGroup.AbilitySettings:
-                            __instance.MenuDescriptionText.text = "Ability settings to enhance vanilla roles.";
+                            __instance.MenuDescriptionText.text = Translator.Get("abilitySettingsDesc");
                             break;
                         case TabGroup.ModSettings:
-                            __instance.MenuDescriptionText.text = "Gameplay settings to improve the in-game experience.";
+                            __instance.MenuDescriptionText.text = Translator.Get("gameplaySettingsDesc");
                             break;
                         case TabGroup.GamemodeSettings:
-                            __instance.MenuDescriptionText.text = "Situational settings to apply for specific gamemodes.";
+                            __instance.MenuDescriptionText.text = Translator.Get("gamemodeSettingsDesc");
                             break;
                     }
                 }
