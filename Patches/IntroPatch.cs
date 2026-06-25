@@ -32,7 +32,7 @@ internal static class CoShowIntroPatch
             Logger.Info($" {p.Data.PlayerName} -> {p.Data.RoleType}", "RoleInfo");
         }
 
-        Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
+        if (!Utils.isHideNSeek && Options.Gamemode.GetValue() < 2) Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
 
         if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.isHideNSeek)
         {

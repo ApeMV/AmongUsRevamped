@@ -7,6 +7,7 @@
   "enableLobbyMusic": "Música de la sala",
   "disableInfoWhenDead": "Ocultar información al morir",
   "disableCommandHelper": "Desactivar ayuda para comandos",
+  "disableCompatibilityWarning": "Desactivar advertencia de compatibilidad",
   "gameMasterWarning": "Ahora observarás las partidas hasta que se desactive el Maestro del Juego. ADVERTENCIA: No se enviarán mensajes de habilidades y la asignación de roles podría ser inexacta si esta opción está activada.",
   "cancelStartCountdown": "La cuenta regresiva de inicio fue cancelada",
   "invalidFriendCodeKick": "{0} fue expulsado por tener un código de amigo no válido",
@@ -258,5 +259,21 @@
   "lastgameDesc": "Enviar información de la última partida.",
   "templateDesc": "Enviar una plantilla especificada de AUR-DATA/templates.txt.",
   "banWordKick": "{0} fue expulsado porque envió una palabra prohibida {1} veces",
-  "pluginWarning": "<color=red><size=5><b>ADVERTENCIA:</color></b></size>\n<size=3><b>Se han detectado 2 o más plugins.</size></b>\nAmong Us Revamped no es compatible con la mayoría de mods.\nSi encuentras errores, probablemente se deban a incompatibilidad."
+  "pluginWarning": "<color=red><size=5><b>ADVERTENCIA:</color></b></size>\n<size=3><b>Se han detectado 2 o más plugins.</size></b>\nAmong Us Revamped no es compatible con la mayoría de mods.\nSi encuentras errores, probablemente se deban a incompatibilidad.",
+
+  "systemSettings": "Configuración del sistema",
+  "abilitySettings": "Configuración de habilidades",
+  "gameplaySettings": "Configuración de la partida",
+  "gamemodeSettings": "Configuración del modo de juego",
+
+  "systemSettingsDesc": "Ajustes de calidad para mejorar la comodidad y facilitar las pruebas.",
+  "abilitySettingsDesc": "Ajustes de habilidades para mejorar los roles originales.",
+  "gameplaySettingsDesc": "Ajustes de la partida para mejorar la experiencia de juego.",
+  "gamemodeSettingsDesc": "Ajustes específicos para determinados modos de juego.",
+
+  "everyone": "Todos",
+  "vipAndAbove": "<color=yellow>VIP</color> o superior",
+  "moderatorAndAbove": "<color=purple>Moderador</color> o superior",
+  "admin": "<color=red>Administrador</color>",
+  "onlyYou": "Solo tú"
 }

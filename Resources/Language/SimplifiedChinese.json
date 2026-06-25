@@ -8,6 +8,7 @@
   "enableLobbyMusic": "大厅音乐",
   "disableInfoWhenDead": "死亡后隐藏信息",
   "disableCommandHelper": "禁用命令助手",
+  "disableCompatibilityWarning": "关闭兼容性警告",
 
   "gameMasterWarning": "您现在将进入观战模式，直到关闭游戏主管。警告：启用此设置后，可能无法发送技能消息，且身份分配可能不准确。",
 
@@ -292,5 +293,21 @@
 
   "banWordKick": "{0} 因发送违禁词被踢出，累计次数：{1} 次",
 
-  "pluginWarning": "<color=red><size=5><b>警告：</color></b></size>\n<size=3><b>检测到您启用了 2 个或更多插件。</size></b>\nAmong Us Revamped 与大多数模组不兼容。\n如果遇到 Bug，极有可能是因为冲突所致。"
+  "pluginWarning": "<color=red><size=5><b>警告：</color></b></size>\n<size=3><b>检测到您启用了 2 个或更多插件。</size></b>\nAmong Us Revamped 与大多数模组不兼容。\n如果遇到 Bug，极有可能是因为冲突所致。",
+
+  "systemSettings": "系统设置",
+  "abilitySettings": "能力设置",
+  "gameplaySettings": "游戏设置",
+  "gamemodeSettings": "模式设置",
+
+  "systemSettingsDesc": "用于提升舒适度与测试的画质/系统设置。",
+  "abilitySettingsDesc": "用于增强原版角色能力的设置。",
+  "gameplaySettingsDesc": "用于改善游戏内体验的设置。",
+  "gamemodeSettingsDesc": "适用于特定游戏模式的情境设置。",
+
+  "everyone": "所有人",
+  "vipAndAbove": "<color=yellow>VIP</color> 及以上",
+  "moderatorAndAbove": "<color=purple>管理员</color> 及以上",
+  "admin": "<color=red>管理员</color>",
+  "onlyYou": "仅自己"
 }

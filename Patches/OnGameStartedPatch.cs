@@ -46,7 +46,7 @@ class PlayerControlSetRolePatch
             OnGameStartPatch.ScheduleExile = true;
         }
 
-        if (Utils.isHideNSeek && Seekers.Count() == 0)
+        if (Utils.isHideNSeek && Seekers.Count() == 0 && Options.NumSeekers.GetInt() != 1)
         {
             int seekersCount = Options.NumSeekers.GetInt();
 
@@ -70,7 +70,7 @@ class PlayerControlSetRolePatch
             }
         }
 
-        if (Utils.isHideNSeek)
+        if (Utils.isHideNSeek && Options.NumSeekers.GetInt() != 1)
         {
             if (Seekers.Contains(__instance.PlayerId)) roleType = RoleTypes.Impostor;
             else roleType = RoleTypes.Engineer;

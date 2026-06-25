@@ -8,6 +8,7 @@
   "enableLobbyMusic": "Musica Lobby",
   "disableInfoWhenDead": "Nascondi Info da Morto",
   "disableCommandHelper": "Disabilita Command Helper",
+  "disableCompatibilityWarning": "Disattiva avviso di compatibilità",
 
   "gameMasterWarning":"Assisterai alle partite come spettatore finché la modalità Spettatore non viene disattivata.AVVISO:I messaggi delle abilità non verranno inviati e l'assegnazione dei ruoli potrebbe non essere accurata se questa impostazione è attiva.",
 
@@ -292,5 +293,21 @@
 
   "banWordKick": "{0} è stato espulso perché ha inviato una parola proibita {1} volta/e",
 
-  "pluginWarning": "<color=red><size=5><b>AVVISO:</color></b></size>\n<size=3><b>Hai 2 o più Plugin rilevati.</size></b>\nAmong Us Revamped non è compatibile con la maggior parte delle mod.\nSe riscontri dei bug, molto probabilmente sono dovuti all'incompatibilità."
+  "pluginWarning": "<color=red><size=5><b>AVVISO:</color></b></size>\n<size=3><b>Hai 2 o più Plugin rilevati.</size></b>\nAmong Us Revamped non è compatibile con la maggior parte delle mod.\nSe riscontri dei bug, molto probabilmente sono dovuti all'incompatibilità.",
+
+  "systemSettings": "Impostazioni di sistema",
+  "abilitySettings": "Impostazioni abilità",
+  "gameplaySettings": "Impostazioni di gioco",
+  "gamemodeSettings": "Impostazioni modalità di gioco",
+
+  "systemSettingsDesc": "Impostazioni di qualità per migliorare il comfort e i test.",
+  "abilitySettingsDesc": "Impostazioni delle abilità per potenziare i ruoli base.",
+  "gameplaySettingsDesc": "Impostazioni di gioco per migliorare l'esperienza in partita.",
+  "gamemodeSettingsDesc": "Impostazioni situazionali da applicare per specifiche modalità di gioco.",
+
+  "everyone": "Tutti",
+  "vipAndAbove": "<color=yellow>VIP</color> e superiori",
+  "moderatorAndAbove": "<color=purple>Moderatori</color> e superiori",
+  "admin": "<color=red>Admin</color>",
+  "onlyYou": "Solo tu"
 }
