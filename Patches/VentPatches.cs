@@ -1,5 +1,20 @@
 ﻿namespace AmongUsRevamped;
 
+[HarmonyPatch(typeof(Vent), nameof(Vent.CanUse))]
+class HotPotatoVentPatch
+{
+    public static bool Prefix(ref bool canUse, ref bool couldUse, ref float __result)
+    {
+        if (!HotPotato.IsActive) return true;
+
+        canUse = false;
+        couldUse = false;
+        __result = float.MaxValue;
+
+        return false;
+    }
+}
+
 //Old Patch for Mayor
 
 /*

@@ -201,6 +201,7 @@ public static class Utils
     public static void ClearLeftoverData()
     {
         RpcSetTasksPatch.GlobalTaskIds = null;
+        HotPotato.Reset();
         HandlingGameEnd = false;
         OnGameJoinedPatch.AutoStartCheck = false;
         Main.GameTimer = 0f;

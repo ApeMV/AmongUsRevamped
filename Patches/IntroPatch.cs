@@ -34,6 +34,11 @@ internal static class CoShowIntroPatch
 
         if (!Utils.isHideNSeek && Options.Gamemode.GetValue() < 2) Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
 
+        // Run while the intro cutscene is still covering the screen, so players are already
+        // scattered and recoloured by the time they can see the map. Waiting for OnGameStart
+        // meant doing all of it in the open, several seconds after the round had begun.
+        if (HotPotato.IsActive) new LateTask(HotPotato.Begin, 1f, "HotPotatoBegin");
+
         if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.isHideNSeek)
         {
             Utils.CanCallMeetings = false;

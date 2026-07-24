@@ -309,5 +309,12 @@
   "vipAndAbove": "<color=yellow>VIP</color> e superiori",
   "moderatorAndAbove": "<color=purple>Moderatori</color> e superiori",
   "admin": "<color=red>Admin</color>",
-  "onlyYou": "Solo tu"
+  "onlyYou": "Solo tu",
+  "inviteAllFriends": "INVITA TUTTI",
+  "inviteAllFriendsButton": "Pulsante Invita Tutti",
+  "inviteAllSending": "Invio inviti a {0} amici",
+  "inviteAllNoFriends": "Nessun amico da invitare",
+  "inviteAllNoLobby": "Devi essere in una lobby online per invitare gli amici",
+  "inviteAllCooldown": "Invita tutti è in ricarica ({0}s)",
+  "inviteAllResult": "Invitati {0}/{1} amici"
 }

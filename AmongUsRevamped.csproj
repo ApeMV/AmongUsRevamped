@@ -5,7 +5,7 @@
         <LangVersion>latest</LangVersion>
         <DebugType>embedded</DebugType>
         <Description>The ultimate Host-Only mod without Modded Protocol</Description>
-        <Authors>apemv</Authors>
+        <Authors>apemv, abusalehtusar</Authors>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Configurations>Release;Android</Configurations>
         <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>

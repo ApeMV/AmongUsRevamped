@@ -87,6 +87,7 @@
 - 0 Kill Cooldown
 - Shift and Seek
 - Speedrun
+- Hot Potato
 ## <b>❓ Other Improvements:</b>
 - Among Us Revamped supports other languages
 - Select a language in Language/YourLanguage.txt
@@ -103,6 +104,7 @@
 - Higher and more accurate Option ranges
 - Always visible lobby timer
 - Access experimental animation test scene
+- Invite all Steam friends to the lobby at once
 - <b>🎉 And this all works in public lobbies!</b>
 
 ### Hotkeys
@@ -115,6 +117,7 @@
 | `Shift`             | 5x Option increment                         | In Options Menu                    |
 | `Ctrl`              | Noclip in lobby                             | In Lobby                           |
 | `Ctrl`              | 10x Option increment                        | In Options Menu                    |
+| `Shift`+`I`         | Invite all Steam friends to the lobby       | In Lobby                           |
 
 ### Chat Commands
 | Command                                     | Function                                          |
@@ -123,7 +126,7 @@
 | /l<br>/lastgame                             | Send last game info                               |
 | /r                                          | Send current gamemode/roles description           |
 | /r {ability}                                | Send specific Ability info                        |
-| /0kc<br>/sns</br>/sp                        | Send respective gamemode description              |
+| /0kc<br>/sns</br>/sp<br>/hp                 | Send respective gamemode description              |
 | /ban {name}                                 | Ban a player by name                              |
 | /kick {name}                                | Kick a player by name                             |
 | /cban {color}                               | Ban a player by color                             |
@@ -155,6 +158,9 @@
 ### :star: [MoreGamemodes](https://github.com/Rabek009/MoreGamemodes)
 > - Some Chat Patches
 > - OptionItem System
+
+**Contributors:**
+- **abusalehtusar** — Hot Potato gamemode, Invite All Friends feature
 ---
 This project is licensed under the GNU General Public License version 3.0. For more details, please refer to the [LICENSE](https://github.com/apemv/AmongUsRevamped/blob/main/LICENSE) file.
 ---

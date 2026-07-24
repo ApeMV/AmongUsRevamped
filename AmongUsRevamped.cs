@@ -34,6 +34,7 @@ public partial class Main : BasePlugin
     public static ConfigEntry<bool> AutoStart { get; private set; }
     public static ConfigEntry<bool> DarkTheme { get; private set; }
     public static ConfigEntry<bool> LobbyMusic { get; private set; }
+    public static ConfigEntry<bool> InviteAllButton { get; private set; }
     public static ConfigEntry<bool> DisableInfoWhenDead { get; private set; }
     public static ConfigEntry<bool> DisableCommandHelper { get; private set; }
     public static ConfigEntry<bool> DisableCompatibilityWarning { get; private set; }
@@ -44,7 +45,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.8.4";
+    public const string ModVersion = "v1.8.5";
 
     public static float GameTimer;
 
@@ -92,6 +93,7 @@ public partial class Main : BasePlugin
         AutoStart = Config.Bind("Client Options", "Auto Start", false);
         DarkTheme = Config.Bind("Client Options", "Dark Theme", false);
         LobbyMusic = Config.Bind("Client Options", "Lobby Music", false);
+        InviteAllButton = Config.Bind("Client Options", "Invite All Friends Button", true);
         DisableInfoWhenDead = Config.Bind("Client Options", "Disable Task/Kill View", false);
         DisableCommandHelper = Config.Bind("Client Options", "Disable Command Helper", false);
         DisableCompatibilityWarning = Config.Bind("Client Options", "Disable Compatibility Warning", false);

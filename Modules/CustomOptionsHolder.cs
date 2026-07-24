@@ -48,7 +48,19 @@ namespace AmongUsRevamped
 
         public static readonly string[] gameModes =
         {
-            "Standard", "0 Kill Cooldown", "Shift And Seek", "Speedrun"
+            "Standard", "0 Kill Cooldown", "Shift And Seek", "Speedrun", "Hot Potato"
+        };
+
+        // Index matches the in-game color id
+        public static readonly string[] playerColors =
+        {
+            "Red", "Blue", "Green", "Pink", "Orange", "Yellow", "Black", "White",
+            "Purple", "Brown", "Cyan", "Lime", "Maroon", "Rose", "Banana", "Gray", "Tan", "Coral"
+        };
+
+        public static readonly string[] potatoBurnTargets =
+        {
+            "Nearest", "Random"
         };
 
         public static readonly string[] accessLevels =
@@ -290,6 +302,15 @@ namespace AmongUsRevamped
         public static OptionItem GameAutoEndsAfter;
         public static OptionItem EngineerMode;
 
+        public static OptionItem TabGroupHotPotato;
+        public static OptionItem PotatoTimer;
+        public static OptionItem PotatoPassRadius;
+        public static OptionItem PotatoPassCooldown;
+        public static OptionItem PotatoSpawnClearRadius;
+        public static OptionItem PotatoHolderColor;
+        public static OptionItem SafePlayerColor;
+        public static OptionItem PotatoBurnPassTarget;
+
         // Abilities
         public static OptionItem TabGroupCrewmate;
 
@@ -516,6 +537,18 @@ namespace AmongUsRevamped
             GameAutoEndsAfter = IntegerOptionItem.Create(70077, Translator.Get("gameAutoEndsAfter"), new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             EngineerMode = BooleanOptionItem.Create(70078, Translator.Get("engineerMode"), false, TabGroup.GamemodeSettings, false);
+
+            TabGroupHotPotato = TextOptionItem.Create(70100, Translator.Get("tabGroupHotPotato"), TabGroup.GamemodeSettings)
+                .SetColor(CL.Hex("#ff8c00"));
+            PotatoTimer = FloatOptionItem.Create(70101, Translator.Get("potatoTimer"), new(5f, 60f, 1f), 20f, TabGroup.GamemodeSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            PotatoPassRadius = FloatOptionItem.Create(70102, Translator.Get("potatoPassRadius"), new(0.5f, 5f, 0.1f), 1.2f, TabGroup.GamemodeSettings, false);
+            PotatoPassCooldown = FloatOptionItem.Create(70103, Translator.Get("potatoPassCooldown"), new(0f, 10f, 0.5f), 2f, TabGroup.GamemodeSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            PotatoSpawnClearRadius = FloatOptionItem.Create(70104, Translator.Get("potatoSpawnClearRadius"), new(0f, 30f, 1f), 8f, TabGroup.GamemodeSettings, false);
+            PotatoHolderColor = StringOptionItem.Create(70105, Translator.Get("potatoHolderColor"), playerColors, 6, TabGroup.GamemodeSettings, false);
+            SafePlayerColor = StringOptionItem.Create(70106, Translator.Get("safePlayerColor"), playerColors, 1, TabGroup.GamemodeSettings, false);
+            PotatoBurnPassTarget = StringOptionItem.Create(70107, Translator.Get("potatoBurnPassTarget"), potatoBurnTargets, 0, TabGroup.GamemodeSettings, false);
 
             // Gameplay Settings
             TabGroupSabotages = TextOptionItem.Create(60450, Translator.Get("tabGroupSabotages"), TabGroup.ModSettings)

@@ -14,6 +14,7 @@ namespace AmongUsRevamped
         private static ClientOptionItem AutoStart;
         private static ClientOptionItem DarkTheme;
         private static ClientOptionItem LobbyMusic;
+        private static ClientOptionItem InviteAllButton;
         private static ClientOptionItem DisableInfoWhenDead;
         private static ClientOptionItem DisableCommandHelper;
         private static ClientOptionItem DisableCompatibilityWarning;
@@ -35,6 +36,9 @@ namespace AmongUsRevamped
 
             if (ShowFPS == null || ShowFPS.ToggleButton == null)
                 ShowFPS = ClientOptionItem.Create(Translator.Get("showFPS"), Main.ShowFps, __instance);
+
+            if (InviteAllButton == null || InviteAllButton.ToggleButton == null)
+                InviteAllButton = ClientOptionItem.Create(Translator.Get("inviteAllFriendsButton"), Main.InviteAllButton, __instance);
 
             if (DisableInfoWhenDead == null || DisableInfoWhenDead.ToggleButton == null)
                 DisableInfoWhenDead = ClientOptionItem.Create(Translator.Get("disableInfoWhenDead"), Main.DisableInfoWhenDead, __instance);

@@ -125,6 +125,9 @@ internal static class RpcSetTasksPatch
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
+        // Hot Potato drives the task bar as a countdown, so its task lists must pass through as-is
+        if (HotPotato.AssigningTimerTasks) return;
+
         PlayerControl pc = __instance.Object;
         if (pc == null) return;
 

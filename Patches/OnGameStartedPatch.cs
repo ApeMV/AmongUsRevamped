@@ -27,7 +27,9 @@ internal class CoStartGamePatch
 class PlayerControlSetRolePatch
 {
     public static bool FirstAssign;
+
     private static readonly HashSet<byte> ProcessedPlayers = new();
+
     public static HashSet<byte> Seekers = new();
     public static HashSet<PlayerControl> Jesters = new();
     private static readonly System.Random rand = new System.Random();
@@ -81,6 +83,8 @@ class PlayerControlSetRolePatch
             if (Options.EngineerMode.GetBool()) roleType = RoleTypes.Engineer;
             else roleType = RoleTypes.Crewmate;
         }
+
+        if (HotPotato.IsActive) roleType = RoleTypes.Crewmate;
 
         if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek)
         {

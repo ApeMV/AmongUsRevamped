@@ -275,5 +275,12 @@
   "vipAndAbove": "<color=yellow>VIP</color> o superior",
   "moderatorAndAbove": "<color=purple>Moderador</color> o superior",
   "admin": "<color=red>Administrador</color>",
-  "onlyYou": "Solo tú"
+  "onlyYou": "Solo tú",
+  "inviteAllFriends": "INVITAR A TODOS",
+  "inviteAllFriendsButton": "Botón Invitar A Todos",
+  "inviteAllSending": "Enviando invitaciones a {0} amigos",
+  "inviteAllNoFriends": "No hay amigos a los que invitar",
+  "inviteAllNoLobby": "Debes estar en una sala en línea para invitar amigos",
+  "inviteAllCooldown": "Invitar a todos está en espera ({0}s)",
+  "inviteAllResult": "Invitados {0}/{1} amigos"
 }

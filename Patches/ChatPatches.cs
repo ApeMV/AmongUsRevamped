@@ -390,6 +390,16 @@ internal static class SendChatPatch
             return false;
         }
 
+        if (text == "/hp" || text == "/hotpotato")
+        {
+            // SendRules does not touch the input field the way Utils.ChatCommand does
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+
+            HotPotato.SendRules();
+            return false;
+        }
+
         if (text == "/r" || text == "/roles")
         {
             switch (Options.Gamemode.GetValue())
@@ -415,6 +425,10 @@ internal static class SendChatPatch
 
                 case 3:
                 Utils.ChatCommand(__instance, $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
+                break;
+
+                case 4:
+                HotPotato.SendRules();
                 break;
 
             }
@@ -701,6 +715,12 @@ public static class RPCHandlerPatch
                     Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                 }
 
+                if (text == "/hp" || text == "/hotpotato")
+                {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
+                    HotPotato.SendRules();
+                }
+
                 if (text == "/r" || text == "/roles")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
@@ -727,6 +747,10 @@ public static class RPCHandlerPatch
 
                         case 3:
                         Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
+                        break;
+
+                        case 4:
+                        HotPotato.SendRules();
                         break;
 
                     }

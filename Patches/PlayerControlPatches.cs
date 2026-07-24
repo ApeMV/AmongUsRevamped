@@ -25,6 +25,14 @@ class ReportDeadBodyPatch
 
         // target == null means meeting
 
+        // Hot Potato has nothing to discuss and a meeting would freeze the countdown, so both
+        // body reports and emergency meetings are refused outright
+        if (HotPotato.IsActive)
+        {
+            Logger.Info($" Blocked {__instance.Data.PlayerName} calling a meeting", "ReportDeadBodyPatch");
+            return false;
+        }
+
         if (Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
         {
             if (target != null)
@@ -69,13 +77,20 @@ internal static class MurderPlayerPatch
             {
                 foreach (var p in PlayerControl.AllPlayerControls)
                 {
+                    if (p == null || p.Data == null) continue;
+
+                    string roleText = Utils.StoredRoleText.GetValueOrDefault(p.PlayerId, "");
+
                     if (p.Data.Role.IsImpostor)
                     {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[p.Data.PlayerId]}†)</color> - {Utils.StoredRoleText[p.PlayerId]}";
+                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount.GetValueOrDefault(p.Data.PlayerId, 0)}†)</color> - {roleText}";
                     }
                     else
                     {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})</color> - {Utils.StoredRoleText[p.PlayerId]}";
+                        int done = PlayerControlCompleteTaskPatch.playerTasksCompleted.GetValueOrDefault(p.PlayerId, 0);
+                        int total = PlayerControlCompleteTaskPatch.tasksPerPlayer.GetValueOrDefault(p.PlayerId, 0);
+
+                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({done}/{total})</color> - {roleText}";
                     }
                 }
             }
@@ -220,6 +235,9 @@ class PlayerControlCompleteTaskPatch
     public static void CalculateTaskWin()
     {
         if (!Utils.GamePastRoleSelection || Utils.isHideNSeek || Options.NoGameEnd.GetBool() || !CoShowIntroPatch.IntroInitiated) return;
+
+        // Hot Potato repurposes the task bar as its countdown, so a full bar is not a crew win
+        if (HotPotato.IsActive) return;
 
         //Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
 

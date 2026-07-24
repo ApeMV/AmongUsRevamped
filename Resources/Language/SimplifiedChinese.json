@@ -309,5 +309,12 @@
   "vipAndAbove": "<color=yellow>VIP</color> 及以上",
   "moderatorAndAbove": "<color=purple>管理员</color> 及以上",
   "admin": "<color=red>管理员</color>",
-  "onlyYou": "仅自己"
+  "onlyYou": "仅自己",
+  "inviteAllFriends": "邀请全部",
+  "inviteAllFriendsButton": "邀请所有好友按钮",
+  "inviteAllSending": "正在向 {0} 位好友发送房间邀请",
+  "inviteAllNoFriends": "没有可邀请的好友",
+  "inviteAllNoLobby": "必须在在线大厅中才能邀请好友",
+  "inviteAllCooldown": "邀请所有好友冷却中（{0} 秒）",
+  "inviteAllResult": "已邀请 {0}/{1} 位好友"
 }

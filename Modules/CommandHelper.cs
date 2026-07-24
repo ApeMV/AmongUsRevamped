@@ -33,6 +33,9 @@ internal static class CommandHelper
         new Cmd { Name = new[] { "/sr" }, Prompt = "/sr", Description = Translator.Get("SrDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/speedrun" }, Prompt = "/speedrun", Description = Translator.Get("SrDesc"), HasVariable = false },
 
+        new Cmd { Name = new[] { "/hp" }, Prompt = "/hp", Description = Translator.Get("hpDesc"), HasVariable = false },
+        new Cmd { Name = new[] { "/hotpotato" }, Prompt = "/hotpotato", Description = Translator.Get("hpDesc"), HasVariable = false },
+
         new Cmd { Name = new[] { "/eg" }, Prompt = "/eg", Description = Translator.Get("egDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/endgame" }, Prompt = "/endgame", Description = Translator.Get("egDesc"), HasVariable = false },
 

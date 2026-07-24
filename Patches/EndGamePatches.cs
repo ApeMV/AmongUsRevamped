@@ -29,7 +29,11 @@ class NormalGameEndChecker
     public static bool Prefix()
     {
 
-        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3 || Utils.HandlingGameEnd) return false;
+        // Hot Potato ends the game itself and must suppress the vanilla checks for the whole
+        // mode, not just while a round runs: everyone is a Crewmate, so between the match
+        // starting and the round beginning vanilla sees zero impostors and instantly awards the
+        // crew a win. HotPotato.Begin always starts a round, so nothing is left unendable.
+        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3 || HotPotato.IsActive || Utils.HandlingGameEnd) return false;
 
         var allPlayers = PlayerControl.AllPlayerControls.ToArray();
 

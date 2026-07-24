@@ -16,6 +16,8 @@ public static class FixedUpdate
             Main.GameTimer += Time.fixedDeltaTime;
         }
 
+        HotPotato.Update(Time.fixedDeltaTime);
+
         GameObject n = GameObject.Find("NewRequestInactive");
         if (n != null)
         {

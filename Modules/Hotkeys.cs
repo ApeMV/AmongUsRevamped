@@ -23,6 +23,12 @@ internal class Hotkeys
             PlayerControl.LocalPlayer.Collider.enabled = !Ctrl;
         }
         
+        if (Input.GetKeyDown(KeyCode.I) && Shift && !HudManager.Instance.Chat.IsOpenOrOpening)
+        {
+            if (InviteAllFriends.Ready) InviteAllFriends.SendAll();
+            else if (InviteAllFriends.Available) Logger.SendInGame(Translator.Get("inviteAllCooldown", Mathf.CeilToInt(InviteAllFriends.RemainingCooldown)));
+        }
+
         if (!AmongUsClient.Instance.AmHost) return;
 
         if (Input.GetKey(KeyCode.L) && Shift && Enter)

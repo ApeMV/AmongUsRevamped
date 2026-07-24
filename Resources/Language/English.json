@@ -216,7 +216,7 @@
   "disableSubmitScan": "Disable Submit Scan",
   "disableUploadData": "Disable Upload Data",
 
-  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description or ability list.\n<b>/r {ability}</b>\nSend specific ability info.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
+  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description or ability list.\n<b>/r {ability}</b>\nSend specific ability info.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n<b>/hp, /hotpotato</b>\nSend Hot Potato mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
 
   "translationReloaded": "Your file has successfully been reset.\nTo apply all changes, restart your game.",
 
@@ -270,6 +270,7 @@
   "snsDesc": "Send Shift and Seek gamemode Description.",
   "0kcDesc": "Send 0 Kill Cooldown gamemode Description.",
   "SrDesc": "Send Speedrun gamemode Description.",
+  "hpDesc": "Send Hot Potato gamemode Description.",
   "egDesc": "End the current game.",
   "emDesc": "End the current meeting.",
   "aurDesc": "Send Among Us Revamped social links.",
@@ -310,5 +311,22 @@
   "vipAndAbove": "<color=yellow>VIP</color> And Above",
   "moderatorAndAbove": "<color=purple>Moderator</color> And Above",
   "admin": "<color=red>Admin</color>",
-  "onlyYou": "Only You"
+  "onlyYou": "Only You",
+
+  "tabGroupHotPotato": "Hot Potato",
+  "potatoTimer": "Cook Time",
+  "potatoPassRadius": "Toss Range",
+  "potatoPassCooldown": "Cooldown After Tossing",
+  "potatoSpawnClearRadius": "Keep Vents Clear Of Spawn (range)",
+  "potatoHolderColor": "Potato Holder Color",
+  "safePlayerColor": "Safe Player Color",
+  "potatoBurnPassTarget": "Who Gets Potato After Burn",
+
+  "inviteAllFriends": "INVITE ALL",
+  "inviteAllFriendsButton": "Invite All Friends Button",
+  "inviteAllSending": "Sending lobby invites to {0} friends",
+  "inviteAllNoFriends": "No friends to invite",
+  "inviteAllNoLobby": "You must be in an online lobby to invite friends",
+  "inviteAllCooldown": "Invite all is on cooldown ({0}s)",
+  "inviteAllResult": "Invited {0}/{1} friends"
 }
