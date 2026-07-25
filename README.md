@@ -9,6 +9,24 @@
 <a href="https://github.com/apemv/AmongUsRevamped/releases/latest" target="_blank"><img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/></a>
 </center>
 
+# ⚠️ WARNING
+
+**This project does not comply with Innersloth's published modding policy.**
+
+Innersloth has explicitly stated that **host-only mods must register using the +25 protocol version**. Mods that continue to operate using the unregistered +0 protocol are **not compliant** with their policy.
+
+Despite this clarification, this project continues to distribute and encourage the use of an unregistered implementation.
+
+If you choose to use this mod, understand that:
+
+- You are using software that does **not** follow Innersloth's official modding requirements.
+- Innersloth has stated that functionality relied upon by unregistered mods may be removed **at any time without warning**.
+- Any issues resulting from the use of this mod should not be treated as Innersloth's responsibility.
+
+If compliance with the official Among Us modding policy matters to you, **do not use this mod until it implements the required registration system.**
+
+The official response from Innersloth is available below.
+<img width="1513" height="390" alt="Innersloth Email" src="https://github.com/user-attachments/assets/f9c3481c-11ee-490f-87a0-17577c85f752" />
 
 
 </p>
