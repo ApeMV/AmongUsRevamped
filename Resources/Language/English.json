@@ -10,7 +10,7 @@
   "disableCommandHelper": "Disable Command Helper",
   "disableCompatibilityWarning": "Disable Compatibility Warning",
 
-  "gameMasterWarning":"You will now spectate games until Game Master is turned off. WARNING: Ability messages will not be sent and role assigning might be inaccurate if this setting is enabled.",
+  "gameMasterWarning":"You will now spectate games until Game Master is turned off. WARNING: Role assigning might be inaccurate if this setting is enabled.",
 
   "cancelStartCountdown": "Start countdown canceled",
   
@@ -50,7 +50,7 @@
   "slashLastGameCmd": "Who Can Use /l & /aur",
   "slashKickCmd": "Who Can Use /kick & /ckick",
   "slashBanCmd": "Who Can Use /ban & /cban",
-  "slashEndMeetingCmd": "Who Can Use /endmeeting",
+  "slashEndMeetingCmd": "Who Can Use /endmeeting & /seeker",
   "slashStartAndEndGameCmd": "Who Can Use /startgame & /endgame",
 
   "tabGroupCrewmate": "Crewmate Roles",
@@ -216,34 +216,9 @@
   "disableSubmitScan": "Disable Submit Scan",
   "disableUploadData": "Disable Upload Data",
 
-  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description or ability list.\n<b>/r {ability}</b>\nSend specific ability info.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
+  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
 
   "translationReloaded": "Your file has successfully been reset.\nTo apply all changes, restart your game.",
-
-  "tabGroupCrewmateAbilities": "Crewmate Ability Settings",
-  "crewmateAbility": "Crewmate (Role) Ability",
-  "scientistAbility": "Scientist Ability",
-  "engineerAbility": "Engineer Ability",
-  "noisemakerAbility": "Noisemaker Ability",
-  "trackerAbility": "Tracker Ability",
-  "detectiveAbility": "Detective Ability",
-
-  "extraVotesCrewmate": "Extra Votes For Mayor",
-  "extraVotesPerTask": "Extra Votes Per Task For Workhorse",
-  "speedrunnerShortTasks": "Short Tasks For Tasker",
-  "speedrunnerLongTasks": "Long Tasks For Tasker",
-
-  "tabGroupImpostorAbilities": "Impostor Ability Settings",
-  "impostorAbility": "Impostor (Role) Ability",
-  "shapeshifterAbility": "Shapeshifter Ability",
-  "phantomAbility": "Phantom Ability",
-  "viperAbility": "Viper Ability",
-
-  "extraVotesImpostor": "Extra Votes For Tyrant",
-  "extraVotesPerKill": "Extra Votes Per Kill For Stealer",
-  "killsNeededForJuggernaut": "Kills Needed For Juggernaut",
-
-  "ability": "Ability",
 
   "templateWelcome": "# In this file you can add Templates, which serve as easy copy-paste alternatives.\n# To create a template, write a new line with the same formatting as the test Template below.\n# Note that Templates can't be longer than 120 characters and can't contain special characters. Having so will kick you.\n\ntest: this is an example template. Type '/t test' to see it.\n\nwelcome: Welcome! This lobby uses Among Us Revamped {ModVersion} by MV. Enjoy!",
   "moderatorWelcome": "# In this file you can add Moderators by Friendcode.\n# If you add someone, they will gain a purple name in-game.\n# Go to 'System Settings' in-game to customize Moderator permissions. Below is a Friendcode example.\n\nfriendcode#0000",
@@ -252,9 +227,10 @@
   "banlistWelcome": "# In this file you can ban players from your lobby by Friendcode.\n# Banning someone in-game will automatically add them here as well. Below is a Friendcode example.\n\nfriendcode#0000\n",
   "banwordWelcome": "# In this file you can set denied words, automatically kicking anyone in-game who sends words listed here.\n# Make sure to separate words by using new lines.",
   "bannameWelcome": "# In this file you can set denied names, automatically kicking anyone in-game who uses names listed here.\n# Make sure to separate names by using new lines.",
-  "languageWelcome": "# In this file you can set your Among Us Revamped language.\n# To set the language, type one of the supported languages in a new line. The default is English.\n# Supported languages: English, Spanish, SimplifiedChinese, Italian\n\nEnglish",
+  "startWordsWelcome": "# In this file you can set the detected words for 'Kick Players Who Say Start'.\n# 'Strict Detection Mode' OFF = Messages have to exactly match words. 'Strict Detection Mode' ON = Messages only have to contain words.\n# You can put unrelated words in as well in order to detect them only in lobby.\n\nstart\nbegin\ncommence",
 
   "noGameEndWarning": "WARNING: No Game End is enabled",
+  "gameMasterWarningTwo": "WARNING: Game Master is enabled",
 
   "tooLongTemplate": "Your Template is longer than 120 characters and would kick you upon sending. Please reduce the length.",
 
@@ -274,7 +250,7 @@
   "emDesc": "End the current meeting.",
   "aurDesc": "Send Among Us Revamped social links.",
   "sDesc": "Start the game countdown.",
-  "rDesc": "/r sends active abilities or current gamemode. /r {ability} sends specific ability info",
+  "rDesc": "Sends current gamemode description.",
   "rolesDesc": "Send all abilities/gamemode overview.",
   "kickDesc": "Kick a player by name.",
   "ckickDesc": "Kick a player by color.",
@@ -291,18 +267,20 @@
   "removeAdminDesc": "Remove Admin from user.",
   "lastgameDesc": "Send last game info.",
   "templateDesc": "Send a specified template from AUR-DATA/templates.txt.",
+  "seekerDesc": "Adds player as Seeker in HnS.",
+  "seekersDesc": "Shows all manually selected Seekers.",
+  "clearSeekerDesc": "Clears the manual Seeker list.",
 
-  "banWordKick": "{0} was kicked because they sent a banned word {1} time(s)",
+  "banWordKick": "{0} was kicked because they sent a word in DeniedWords.txt {1} time(s)",
+  "startWordKick": "{0} was kicked because they sent a word in StartWords.txt {1} time(s)",
 
   "pluginWarning": "<color=red><size=5><b>WARNING:</color></b></size>\n<size=3><b>You have 2 or more detected Plugins.</size></b>\nAmong Us Revamped is not compatible with most mods.\nIf you find bugs, they are most likely due to incompatibility.",
 
   "systemSettings": "System Settings",
-  "abilitySettings": "Ability Settings",
   "gameplaySettings": "Gameplay Settings",
   "gamemodeSettings": "Gamemode Settings",
 
   "systemSettingsDesc": "Quality settings to improve comfort and testing.",
-  "abilitySettingsDesc": "Ability settings to enhance vanilla roles.",
   "gameplaySettingsDesc": "Gameplay settings to improve the in-game experience.",
   "gamemodeSettingsDesc": "Situational settings to apply for specific gamemodes.",
 
@@ -310,5 +288,8 @@
   "vipAndAbove": "<color=yellow>VIP</color> And Above",
   "moderatorAndAbove": "<color=purple>Moderator</color> And Above",
   "admin": "<color=red>Admin</color>",
-  "onlyYou": "Only You"
+  "onlyYou": "Only You",
+
+  "seekers": "Seekers: ",
+  "clearedSeekers": "Successfully cleared the manual Seeker list."
 }

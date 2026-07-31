@@ -139,13 +139,13 @@ public static class SetLevelPatch
             if (level == 0 && Options.DontKickLevelOnes.GetBool()) return;
             if (HandledLevelKicks.Contains(__instance)) return;
 
-            if (!Options.TempBanLowLevelPlayer.GetBool()) 
+            if (!Options.TempBanLowLevelPlayer.GetBool() && Utils.CheckAccessLevel(__instance.Data.FriendCode) < 1) 
             {
                 AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
                 Logger.Info($" {__instance.Data.PlayerName} (level {level + 1}) was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
                 Logger.SendInGame($" {__instance.Data.PlayerName} (level {level + 1}) was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");
             }
-            else
+            else if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < 1)
             {
                 AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
                 Logger.Info($" {__instance.Data.PlayerName} (level {level + 1}) was banned for being under level {Options.KickLowLevelPlayer.GetInt()} ", "BanLowLevelPlayer");

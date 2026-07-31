@@ -216,34 +216,9 @@
   "disableSubmitScan": "Disabilita Invia la scansione",
   "disableUploadData": "Disabilita Carica i dati",
 
-  "allCommandsFull": "<b>TUTTI I COMANDI:</b>\n\n<b>/help</b>\nMostra questo messaggio.\n<b>/aur, /socials</b>\nInvia i link social di Among Us Revamped.\n\n<b>/r, /gm</b>\nInvia la descrizione della modalità corrente o l'elenco delle abilità.\n<b>/r {ability}</b>\nInvia le informazioni di un'abilità specifica.\n<b>/l, /lastgame</b>\nInvia le informazioni sull'ultimo vincitore.\n\n<b>/0kc, /0killcooldown</b>\nInvia la descrizione della modalità Ricarica uccisione a 0.\n<b>/sns, /shiftandseek</b>\nInvia la descrizione della modalità Mutaforma e cerca.\n<b>/sp, /speedrun</b>\nInvia la descrizione della modalità Speedrun.\n\n/<b>kick, /ban</b>\nEspelli o banna un giocatore per nome.\n<b>/ckick, /cban</b>\nEspelli o banna un giocatore per colore.\n\n<b>/vip /moderator /admin</b>\nAggiungi un giocatore come VIP, Moderatore o Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRimuovi VIP, Moderatore o Admin da un giocatore.\n\n<b>/eg, /endgame</b>\nTermina la partita corrente.\n<b>/em, /endmeeting</b>\nTermina la riunione corrente.\n<b>/s, /start</b>\nAvvia il conto alla rovescia di inizio partita.\n\n<b>/t {template}</b>\nInvia un template da AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nImposta il tuo colore, può essere usato per aggirare i limiti.",
+  "allCommandsFull": "<b>TUTTI I COMANDI:</b>\n\n<b>/help</b>\nMostra questo messaggio.\n<b>/aur, /socials</b>\nInvia i link social di Among Us Revamped.\n\n<b>/r, /gm</b>\nInvia la descrizione della modalità corrente o l'elenco delle abilità.\n<b>/l, /lastgame</b>\nInvia le informazioni sull'ultimo vincitore.\n\n<b>/0kc, /0killcooldown</b>\nInvia la descrizione della modalità Ricarica uccisione a 0.\n<b>/sns, /shiftandseek</b>\nInvia la descrizione della modalità Mutaforma e cerca.\n<b>/sp, /speedrun</b>\nInvia la descrizione della modalità Speedrun.\n\n/<b>kick, /ban</b>\nEspelli o banna un giocatore per nome.\n<b>/ckick, /cban</b>\nEspelli o banna un giocatore per colore.\n\n<b>/vip /moderator /admin</b>\nAggiungi un giocatore come VIP, Moderatore o Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRimuovi VIP, Moderatore o Admin da un giocatore.\n\n<b>/eg, /endgame</b>\nTermina la partita corrente.\n<b>/em, /endmeeting</b>\nTermina la riunione corrente.\n<b>/s, /start</b>\nAvvia il conto alla rovescia di inizio partita.\n\n<b>/t {template}</b>\nInvia un template da AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nImposta il tuo colore, può essere usato per aggirare i limiti.",
 
   "translationReloaded": "Il tuo file è stato ripristinato con successo.\nPer applicare tutte le modifiche, riavvia il gioco.",
-
-  "tabGroupCrewmateAbilities": "Impostazioni abilità astronauta",
-  "crewmateAbility": "Abilità dell'astronauta (Ruolo)",
-  "scientistAbility": "Abilità dello scienziato",
-  "engineerAbility": "Abilità dell'ingegnere",
-  "noisemakerAbility": "Abilità del noisemaker",
-  "trackerAbility": "Abilità del tracker",
-  "detectiveAbility": "Abilità del detective",
-
-  "extraVotesCrewmate": "Voti extra per il sindaco",
-  "extraVotesPerTask": "Voti extra per incarico per lo sgobbone",
-  "speedrunnerShortTasks": "Incarichi brevi per il tasker",
-  "speedrunnerLongTasks": "Incarichi lunghi per il tasker",
-
-  "tabGroupImpostorAbilities": "Impostazioni abilità impostore",
-  "impostorAbility": "Abilità dell'impostore (Ruolo)",
-  "shapeshifterAbility": "Abilità del mutaforma",
-  "phantomAbility": "Abilità del fantasma",
-  "viperAbility": "Abilità della vipera",
-
-  "extraVotesImpostor": "Voti extra per il tiranno",
-  "extraVotesPerKill": "Voti extra per uccisione per il ladro",
-  "killsNeededForJuggernaut": "Uccisioni necessarie per il juggernaut",
-
-  "ability": "Abilità",
 
   "templateWelcome": "# In questo file puoi aggiungere i Template, che fungono da comode alternative per il copia-incolla.\n# Per creare un template, scrivi una nuova riga con la stessa formattazione del Template di prova qui sotto.\n# Nota che i Template non possono superare i 120 caratteri e non possono contenere caratteri speciali. In caso contrario verrai espulso.\n\ntest: questo è un esempio di template. Digita '/t test' per vederlo.\n\nwelcome: Benvenuto! Questa lobby utilizza Among Us Revamped {ModVersion} di MV. Buon divertimento!",
   "moderatorWelcome": "# In questo file puoi aggiungere i Moderatori tramite Codice Amico.\n# Se aggiungi qualcuno, otterrà un nome viola all'interno del gioco.\n# Vai su 'Impostazioni di sistema' nel gioco per personalizzare i permessi dei Moderatori. Di seguito è riportato un esempio di Codice Amico.\n\nfriendcode#0000",
@@ -273,7 +248,7 @@
   "emDesc": "Termina la riunione corrente.",
   "aurDesc": "Invia i link social di Among Us Revamped.",
   "sDesc": "Avvia il conto alla rovescia del gioco.",
-  "rDesc": "/r invia le abilità attive o la modalità di gioco corrente. /r {ability} invia le informazioni di un'abilità specifica",
+  "rDesc": "/r invia le abilità attive o la modalità di gioco corrente.",
   "rolesDesc": "Invia una panoramica di tutte le abilità/modalità di gioco.",
   "kickDesc": "Espelli un giocatore per nome.",
   "ckickDesc": "Espelli un giocatore per colore.",
@@ -296,12 +271,10 @@
   "pluginWarning": "<color=red><size=5><b>AVVISO:</color></b></size>\n<size=3><b>Hai 2 o più Plugin rilevati.</size></b>\nAmong Us Revamped non è compatibile con la maggior parte delle mod.\nSe riscontri dei bug, molto probabilmente sono dovuti all'incompatibilità.",
 
   "systemSettings": "Impostazioni di sistema",
-  "abilitySettings": "Impostazioni abilità",
   "gameplaySettings": "Impostazioni di gioco",
   "gamemodeSettings": "Impostazioni modalità di gioco",
 
   "systemSettingsDesc": "Impostazioni di qualità per migliorare il comfort e i test.",
-  "abilitySettingsDesc": "Impostazioni delle abilità per potenziare i ruoli base.",
   "gameplaySettingsDesc": "Impostazioni di gioco per migliorare l'esperienza in partita.",
   "gamemodeSettingsDesc": "Impostazioni situazionali da applicare per specifiche modalità di gioco.",
 

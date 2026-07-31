@@ -216,34 +216,9 @@
   "disableSubmitScan": "禁用“提交扫描”",
   "disableUploadData": "禁用“上传数据”",
 
-  "allCommandsFull": "<b>所有命令：</b>\n\n<b>/help</b>\n显示此帮助信息。\n<b>/aur, /socials</b>\n发送 Among Us Revamped 的社交链接。\n\n<b>/r, /gm</b>\n发送当前模式介绍或技能列表。\n<b>/r {ability}</b>\n发送指定技能的详细信息。\n<b>/l, /lastgame</b>\n发送上一局获胜者的信息。\n\n<b>/0kc, /0killcooldown</b>\n发送 0秒击杀冷却 模式介绍。\n<b>/sns, /shiftandseek</b>\n发送 变形与搜寻 模式介绍。\n<b>/sp, /speedrun</b>\n发送 速通 模式介绍。\n\n/<b>kick, /ban</b>\n通过名字踢出或封禁玩家。\n<b>/ckick, /cban</b>\n通过颜色踢出或封禁玩家。\n\n<b>/vip /moderator /admin</b>\n将玩家设为 VIP、管理员(Moderator) 或 超级管理员(Admin)。\n<b>/removevip, /removemoderator, /removeadmin</b>\n移除玩家的 VIP、管理员 或 超级管理员权限。\n\n<b>/eg, /endgame</b>\n结束当前游戏。\n<b>/em, /endmeeting</b>\n结束当前会议。\n<b>/s, /start</b>\n开始游戏开局倒计时。\n\n<b>/t {template}</b>\n发送 AUR-DATA/templates.txt 中的指定模板。\n\n<b>/col, /color, /colour</b>\n设置您的颜色，可用于绕过限制。",
+  "allCommandsFull": "<b>所有命令：</b>\n\n<b>/help</b>\n显示此帮助信息。\n<b>/aur, /socials</b>\n发送 Among Us Revamped 的社交链接。\n\n<b>/r, /gm</b>\n发送当前模式介绍或技能列表。\n<b>/l, /lastgame</b>\n发送上一局获胜者的信息。\n\n<b>/0kc, /0killcooldown</b>\n发送 0秒击杀冷却 模式介绍。\n<b>/sns, /shiftandseek</b>\n发送 变形与搜寻 模式介绍。\n<b>/sp, /speedrun</b>\n发送 速通 模式介绍。\n\n/<b>kick, /ban</b>\n通过名字踢出或封禁玩家。\n<b>/ckick, /cban</b>\n通过颜色踢出或封禁玩家。\n\n<b>/vip /moderator /admin</b>\n将玩家设为 VIP、管理员(Moderator) 或 超级管理员(Admin)。\n<b>/removevip, /removemoderator, /removeadmin</b>\n移除玩家的 VIP、管理员 或 超级管理员权限。\n\n<b>/eg, /endgame</b>\n结束当前游戏。\n<b>/em, /endmeeting</b>\n结束当前会议。\n<b>/s, /start</b>\n开始游戏开局倒计时。\n\n<b>/t {template}</b>\n发送 AUR-DATA/templates.txt 中的指定模板。\n\n<b>/col, /color, /colour</b>\n设置您的颜色，可用于绕过限制。",
 
   "translationReloaded": "您的文件已成功重置。\n要应用所有更改，请重启游戏。",
-
-  "tabGroupCrewmateAbilities": "船员技能设置",
-  "crewmateAbility": "船员（职业）技能",
-  "scientistAbility": "科学家技能",
-  "engineerAbility": "工程师技能",
-  "noisemakerAbility": "噪音制造者技能",
-  "trackerAbility": "追踪者技能",
-  "detectiveAbility": "侦探技能",
-
-  "extraVotesCrewmate": "市长额外票数",
-  "extraVotesPerTask": "老黄牛每项任务获得的额外票数",
-  "speedrunnerShortTasks": "任务达人的短任务",
-  "speedrunnerLongTasks": "任务达人的长任务",
-
-  "tabGroupImpostorAbilities": "内鬼技能设置",
-  "impostorAbility": "内鬼（职业）技能",
-  "shapeshifterAbility": "伪装者技能",
-  "phantomAbility": "魔魂技能",
-  "viperAbility": "蝰蛇技能",
-
-  "extraVotesImpostor": "暴君额外票数",
-  "extraVotesPerKill": "小偷每击杀获得的额外票数",
-  "killsNeededForJuggernaut": "主宰所需的击杀数",
-
-  "ability": "技能",
 
   "templateWelcome": "# 在此文件中，您可以添加模板，以便快捷复制粘贴。\n# 要创建新模板，请另起一行并使用与下方测试模板相同的格式。\n# 请注意，模板长度不能超过 120 个字符，且不能包含特殊字符，否则您会被踢出房间。\n\ntest: 这是一个示例模板。输入 '/t test' 即可查看。\n\nwelcome: 欢迎！本大厅使用的是由 MV 制作的 Among Us Revamped {ModVersion}。祝您玩得开心！",
   "moderatorWelcome": "# 在此文件中，您可以通过好友代码添加管理员 (Moderator)。\n# 添加后，他们在游戏内的名字将变为紫色。\n# 请前往游戏内的“系统设置”自定义管理员权限。下方为好友代码示例。\n\nfriendcode#0000",
@@ -273,7 +248,7 @@
   "emDesc": "结束当前会议。",
   "aurDesc": "发送 Among Us Revamped 社交链接。",
   "sDesc": "开始游戏倒计时。",
-  "rDesc": "/r 发送活跃技能或当前模式。/r {ability} 发送特定技能信息",
+  "rDesc": "/r 发送活跃技能或当前模式。",
   "rolesDesc": "发送所有技能/游戏模式总览。",
   "kickDesc": "通过名字踢出玩家。",
   "ckickDesc": "通过颜色踢出玩家。",
@@ -296,12 +271,10 @@
   "pluginWarning": "<color=red><size=5><b>警告：</color></b></size>\n<size=3><b>检测到您启用了 2 个或更多插件。</size></b>\nAmong Us Revamped 与大多数模组不兼容。\n如果遇到 Bug，极有可能是因为冲突所致。",
 
   "systemSettings": "系统设置",
-  "abilitySettings": "能力设置",
   "gameplaySettings": "游戏设置",
   "gamemodeSettings": "模式设置",
 
   "systemSettingsDesc": "用于提升舒适度与测试的画质/系统设置。",
-  "abilitySettingsDesc": "用于增强原版角色能力的设置。",
   "gameplaySettingsDesc": "用于改善游戏内体验的设置。",
   "gamemodeSettingsDesc": "适用于特定游戏模式的情境设置。",
 

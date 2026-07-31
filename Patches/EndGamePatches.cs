@@ -29,7 +29,7 @@ class NormalGameEndChecker
     public static bool Prefix()
     {
 
-        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 3 || Utils.HandlingGameEnd) return false;
+        if (Options.NoGameEnd.GetBool() || Options.Gamemode.GetValue() == 2 || Utils.HandlingGameEnd) return false;
 
         var allPlayers = PlayerControl.AllPlayerControls.ToArray();
 
@@ -50,27 +50,6 @@ class NormalGameEndChecker
         var impostorList = string.Join(", ", imps.Select(p => p.Data.PlayerName));
         
         if (!canUpdateWinnerText) return;
-        
-        if (Winner == "Jester")
-        {
-            LastWinReason = "Jester wins! (voted)\n\nImpostors: " + impostorList;
-            canUpdateWinnerText = false;
-            return;
-        }
-
-        if (Winner == "Juggernaut")
-        {
-            LastWinReason = $"Impostors win! (Juggernaut killed {Options.KillsNeededForJuggernaut.GetInt()} players)\n\nImpostors: " + impostorList;
-            canUpdateWinnerText = false;
-            return;
-        }
-
-        if (Winner == "Speedrunner")
-        {
-            LastWinReason = "Crewmates win! (Tasker finished tasks)\n\nImpostors: " + impostorList;
-            canUpdateWinnerText = false;
-            return;
-        }
 
         if (Winner == "SnSTimer")
         {
@@ -101,7 +80,7 @@ class NormalGameEndChecker
             LastWinReason = $"Crewmates Win! ({Options.TaskPercentNeededToWin.GetInt()}% tasks completed)\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
         }
-        else if (Options.Gamemode.GetValue() < 2 || Winner == "ImpostorSabotage")
+        else if (Options.Gamemode.GetValue() < 1 || Winner == "ImpostorSabotage")
         {
             LastWinReason = "Impostors Win! (Sabotage)\n\n Impostors: " + impostorList;
         }

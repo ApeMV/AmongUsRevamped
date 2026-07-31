@@ -119,6 +119,7 @@ public class GameStartManagerBeginGamePatch
     public static void Prefix(GameStartManager __instance)
     {
         if (Options.NoGameEnd.GetBool()) Logger.SendInGame(Translator.Get("noGameEndWarning"));
+        if (Main.GM.Value) Logger.SendInGame(Translator.Get("gameMasterWarningTwo"));
     }
 }
     

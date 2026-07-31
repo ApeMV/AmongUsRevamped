@@ -72,18 +72,10 @@ class FixedUpdateInGamePatch
 
         switch (gamemode)
         {
-            case 1: // 0Kc
-                if (Main.NormalOptions.KillCooldown != 0.01f)
-                    Main.NormalOptions.KillCooldown = 0.01f;
-
-                if (Options.NoKcdSettingsOverride.GetBool() && settingsLabel == null)
-                {
-                    Main.NormalOptions.EmergencyCooldown = 0;
-                    Main.NormalOptions.TaskBarMode = 0;
-                }
+            case 0:
                 break;
 
-            case 2: // SnS
+            case 1: // SnS
                 if (Main.NormalOptions.KillCooldown != 2.5f)
                     Main.NormalOptions.KillCooldown = 2.5f;
 
@@ -91,19 +83,14 @@ class FixedUpdateInGamePatch
                     Main.NormalOptions.TaskBarMode = 0;
                 break;
 
-            case 3: // Speedrun
-                break;
-
-            case 0: // Reset
-                if (Main.NormalOptions.KillCooldown <= 0.01f)
-                    Main.NormalOptions.KillCooldown = 25f;
+            case 2: // Speedrun
                 break;
         }
 
         if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance)
         {
-            // 2 = Shift and Seek
-            if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek && Options.CrewAutoWinsGameAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
+            // 1 = Shift and Seek
+            if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && Options.CrewAutoWinsGameAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
             {                        
                 if (Main.GameTimer > Options.CrewAutoWinsGameAfter.GetInt())
                 {
@@ -114,8 +101,8 @@ class FixedUpdateInGamePatch
                     NormalGameEndChecker.CheckWinnerText("SnSTimer");
                 }
             }
-            // 3 = Speedrun
-            if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek && Options.GameAutoEndsAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
+            // 2 = Speedrun
+            if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek && Options.GameAutoEndsAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
             {                        
                 if (Main.GameTimer > Options.GameAutoEndsAfter.GetInt())
                 {

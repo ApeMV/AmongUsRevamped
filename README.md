@@ -29,24 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.8.3):
-## <b> 🌟 Custom Abilities:</b>
-- Mayor (Crewmate)
-- The Mayor has a configurable amount of extra votes
-- Jester (Crewmate)
-- The Jester wins alone by getting ejected, can win with Crewmates
-- Tasker (Crewmate)
-- The Crewmates win if the Tasker completes tasks and is alive
-- Workhorse (Crewmate)
-- The Workhorse gains additional votes per completed task
-- Tyrant (Impostor)
-- The Tyrant has a configurable amount of extra votes
-- Stealer (Impostor)
-- The Stealer gains additional votes per kill
-- Juggernaut (Impostor)
-- The Impostors win if the Juggernaut gains a set amount of kills
-- For the enabled ability list, type /r
-- To check ability descriptions, type /r {ability}
+# 🎮 Features (v1.9.0):
 
 ## <b>♠️ Client Side settings:</b>
 - Game Master (Spectator)
@@ -84,7 +67,7 @@
 - All players have same tasks
 - Hide and Seek: Custom Seeker count
 ## <b>🏆 Custom Gamemodes:</b>
-- 0 Kill Cooldown
+- 0 Kill Cooldown -> Set Kill Cooldown to 0.01
 - Shift and Seek
 - Speedrun
 ## <b>❓ Other Improvements:</b>
@@ -103,6 +86,7 @@
 - Higher and more accurate Option ranges
 - Always visible lobby timer
 - Access experimental animation test scene
+- Manually set multiple Seekers in HnS
 - <b>🎉 And this all works in public lobbies!</b>
 
 ### Hotkeys

@@ -27,6 +27,7 @@ public static class BanManager
     public static string ModeratorListPath = $"{DataPath}/AUR-DATA/Moderator.txt";
     public static string AdminListPath = $"{DataPath}/AUR-DATA/Admin.txt";
     private static string TemplatePath = $"{DataPath}/AUR-DATA/Templates.txt";
+    private static string StartWordsPath = $"{DataPath}/AUR-DATA/Startwords.txt";
     public static Dictionary<string, string> Templates = new();
     public static List<string> TempBanWhiteList = [];
     public static void Init()
@@ -42,6 +43,7 @@ public static class BanManager
             CheckFile(ModeratorListPath, Translator.Get("moderatorWelcome"), "Moderator.txt");
             CheckFile(AdminListPath, Translator.Get("adminWelcome"), "Admin.txt");
             CheckFile(TemplatePath, Translator.Get("templateWelcome"), "Templates.txt");
+            CheckFile(StartWordsPath, Translator.Get("startWordsWelcome"), "StartWords.txt");
 
             LoadTemplates();
 
@@ -194,6 +196,33 @@ public static class BanManager
         else return false;
     }
 
+    public static bool IsStartWord(PlayerControl player, string input)
+    {
+        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0) return false;
+
+        int clientId = player.Data.ClientId;
+        var startWords = File.ReadAllLines(BanWordPath).Where(x => !x.StartsWith("#"));
+
+        if ((Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Equals(code, StringComparison.OrdinalIgnoreCase))))
+        {
+            if (!Main.SayStartTimes.ContainsKey(clientId))
+            {
+                Main.SayStartTimes.Add(clientId, 0);
+            }
+
+            Main.SayStartTimes[clientId]++;
+
+            if (Main.SayStartTimes[clientId] >= Options.AutoKickStartTimes.GetInt())
+            {
+                AmongUsClient.Instance.KickPlayer(clientId, false);
+                Logger.Info(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()), "StartWordKick");
+                Logger.SendInGame(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));    
+            }
+            return true;
+        }
+        else return false;
+    }
+
     [HarmonyPatch(typeof(BanMenu), nameof(BanMenu.Select))]
     class BanMenuSelectPatch
     {
@@ -249,13 +278,16 @@ public static class BanManager
     {
         Dictionary<string, string> variables = new()
         {
-            { "ModVersion", Main.ModVersion }
+            { "ModVersion", Main.ModVersion },
+            { "\\n", Environment.NewLine }
         };
 
         foreach (var kvp in variables)
         {
             text = text.Replace($"{{{kvp.Key}}}", kvp.Value);
         }
+
+        text = text.Replace("\\n", Environment.NewLine);
 
         return text;
     }

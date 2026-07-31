@@ -45,7 +45,7 @@ internal static class CommandHelper
         new Cmd { Name = new[] { "/s" }, Prompt = "/s", Description = Translator.Get("sDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/start" }, Prompt = "/start", Description = Translator.Get("sDesc"), HasVariable = false },
 
-        new Cmd { Name = new[] { "/r" }, Prompt = "/r {role}", Description = Translator.Get("rDesc"), HasVariable = true },
+        new Cmd { Name = new[] { "/r" }, Prompt = "/r", Description = Translator.Get("rDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/roles" }, Prompt = "/roles", Description = Translator.Get("rolesDesc"), HasVariable = false },
 
         new Cmd { Name = new[] { "/kick" }, Prompt = "/kick {name}", Description = Translator.Get("kickDesc"), HasVariable = true },
@@ -72,7 +72,11 @@ internal static class CommandHelper
 
         new Cmd { Name = new[] { "/lastgame" }, Prompt = "/lastgame", Description = Translator.Get("lastgameDesc"), HasVariable = false },
 
-        new Cmd { Name = new[] { "/t" }, Prompt = "/t {template}", Description = Translator.Get("templateDesc"), HasVariable = true }
+        new Cmd { Name = new[] { "/t" }, Prompt = "/t {template}", Description = Translator.Get("templateDesc"), HasVariable = true },
+
+        new Cmd { Name = new[] { "/seeker" }, Prompt = "/seeker {name}", Description = Translator.Get("seekerDesc"), HasVariable = true },
+        new Cmd { Name = new[] { "/seekers" }, Prompt = "/seekers", Description = Translator.Get("seekersDesc"), HasVariable = false },
+        new Cmd { Name = new[] { "/clearseeker" }, Prompt = "/clearseeker", Description = Translator.Get("clearSeekerDesc"), HasVariable = false }
     };
 
     [HarmonyPostfix]

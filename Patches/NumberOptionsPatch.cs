@@ -17,6 +17,17 @@ public static class NumberOption_Increase
 
         if (Utils.IsLobby)
         {
+            if (__instance.Title == StringNames.GameKillCooldown)
+            {
+                if (__instance.Value == 0.01f)
+                {
+                    __instance.Value = 0.5f;
+                    __instance.UpdateValue();
+                    __instance.OnValueChanged.Invoke(__instance);
+                    return false;
+                }
+            }
+
             if (__instance.Value <= __instance.ValidRange.min)
             {
                 return true;
@@ -103,6 +114,7 @@ public static class NumberOption_Initialize
 
             case StringNames.GameKillCooldown:
             __instance.Increment = 0.5f;
+            __instance.ValidRange = new FloatRange(0.01f, 900f);
             break;
 
             case StringNames.GamePlayerSpeed:

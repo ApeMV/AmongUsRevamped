@@ -73,8 +73,6 @@ public static class Utils
         {
             case TabGroup.SystemSettings:
                 return Translator.Get("systemSettings");
-            case TabGroup.AbilitySettings:
-                return Translator.Get("abilitySettings");
             case TabGroup.ModSettings:
                 return Translator.Get("gameplaySettings");
             case TabGroup.GamemodeSettings:
@@ -212,9 +210,7 @@ public static class Utils
         NormalGameEndChecker.ImpCheckComplete = false;
         CreateOptionsPickerPatch.SetDleks2 = false;
         CanCallMeetings = true;
-        AbilityManagement.HandlingRoleMessages = false;
         PlayerControlSetRolePatch.FirstAssign = true;
-        PlayerControlSetRolePatch.Jesters.Clear();
 
         PlayerControlCompleteTaskPatch.playerTasksCompleted.Clear();
         PlayerControlCompleteTaskPatch.tasksPerPlayer.Clear();
@@ -225,8 +221,8 @@ public static class Utils
         OnPlayerJoinedPatch.JoinNum = 0;
 
         PlayerControlSetRolePatch.Seekers.Clear();
-        PlayerControlSetRolePatch.Jesters.Clear();
         PlayerControlSetRolePatch.FirstAssign = true;
+        PlayerControlSetRolePatch.manualSeekers.Clear();
 
         OnGameStartPatch.ScheduleExile = false;
         CoShowIntroPatch.IntroInitiated = false;

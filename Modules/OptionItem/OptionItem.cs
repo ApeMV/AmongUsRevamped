@@ -215,7 +215,6 @@ namespace AmongUsRevamped
     {
         SystemSettings,
         //CustomRoleSettings,
-        AbilitySettings,
         ModSettings,
         GamemodeSettings,
 

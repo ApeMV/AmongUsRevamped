@@ -17,7 +17,7 @@ class ReportDeadBodyPatch
         if (!AmongUsClient.Instance.AmHost || __instance == null) return true;
         if (Utils.isHideNSeek) return false;
 
-        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && target == null && Options.Gamemode.GetValue() < 2)
+        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && target == null && Options.Gamemode.GetValue() < 1)
         {
             Logger.Info($" {__instance.Data.PlayerName} is calling a meeting too fast, attempt blocked", "ReportDeadBodyPatch");
             return false;
@@ -25,7 +25,7 @@ class ReportDeadBodyPatch
 
         // target == null means meeting
 
-        if (Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
+        if (Options.Gamemode.GetValue() == 1 || Options.Gamemode.GetValue() == 2)
         {
             if (target != null)
             {
@@ -81,15 +81,8 @@ internal static class MurderPlayerPatch
             }
         }
 
-        if (Options.Gamemode.GetValue() < 2 && AbilityManagement.IsJuggernaut(__instance) && killCount[__instance.PlayerId] >= Options.KillsNeededForJuggernaut.GetInt())
-        {
-            Logger.Info("Juggernaut win", "MurderPlayer");
-            Utils.ContinueEndGame((byte)GameOverReason.ImpostorsByVote);
-            NormalGameEndChecker.CheckWinnerText("Juggernaut");
-        }
-
         //2 = Shift and Seek
-        if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek)
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
         {
             if (!resultFlags.HasFlag(MurderResultFlags.Succeeded))
             return;
@@ -115,7 +108,7 @@ internal static class MurderPlayerPatch
                     new LateTask(() =>
                     {
                         __instance.isNew = false;
-                        if (!__instance.Data.IsDead) {__instance.RpcSetRole(RoleTypes.Shapeshifter, false);}
+                        if (!__instance.Data.IsDead && __instance != null) {__instance.RpcSetRole(RoleTypes.Shapeshifter, false);}
                     }, Options.CantKillTime.GetInt(), "SNSResetRole");
                 }
 
@@ -140,7 +133,7 @@ internal static class CheckShapeshiftPatch
         if (!AmongUsClient.Instance.AmHost) return true;
 
         // Canceling a Shapeshift freezes the player until they successfully Shapeshift again. Unavoidable game logic.
-        if (Options.Gamemode.GetValue() == 2 && !Utils.isHideNSeek && __instance.isNew)
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && __instance.isNew)
         {
             Logger.Info($" {__instance.Data.PlayerName} shapeshifted during misfire cooldown, making the game temporarily freeze them.", "SNSShapeshiftManager");
             Logger.SendInGame($" {__instance.Data.PlayerName} shapeshifted during misfire cooldown, making the game temporarily freeze them.");
@@ -166,11 +159,6 @@ class PlayerControlCompleteTaskPatch
 
         foreach (var p in PlayerControl.AllPlayerControls)
         {
-            if (AbilityManagement.IsJester(p) && !tasksInitiated)
-            {
-                ignoredTasks += p.Data.Tasks.Count;
-                tasksInitiated = true;
-            }
 
             if (!playerTasksCompleted.ContainsKey(p.PlayerId))
             {
@@ -181,26 +169,11 @@ class PlayerControlCompleteTaskPatch
 
         playerTasksCompleted[__instance.PlayerId]++;
 
-        if (AbilityManagement.IsJester(__instance))
-        {
-            ignoredCompletedTasks = playerTasksCompleted[__instance.PlayerId];
-        }
-
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");
 
-        if (Options.Gamemode.GetValue() < 2)
-        {
-            if (AbilityManagement.IsSpeedrunner(__instance) && !__instance.Data.IsDead && playerTasksCompleted[__instance.PlayerId] >= __instance.Data.Tasks.Count)
-            {
-                Logger.Info($"Speedrunner {__instance.Data.PlayerName} won", "TaskPatch");
-                Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
-                NormalGameEndChecker.CheckWinnerText("Speedrunner");
-            }
-        }
+        if (Options.Gamemode.GetValue() != 2) CalculateTaskWin();
 
-        if (Options.Gamemode.GetValue() != 3) CalculateTaskWin();
-
-        if (Options.Gamemode.GetValue() == 3)
+        if (Options.Gamemode.GetValue() == 2)
         {
             if (!__instance.Data.IsDead && playerTasksCompleted[__instance.PlayerId] >= __instance.Data.Tasks.Count)
             {

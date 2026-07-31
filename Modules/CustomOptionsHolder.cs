@@ -48,7 +48,7 @@ namespace AmongUsRevamped
 
         public static readonly string[] gameModes =
         {
-            "Standard", "0 Kill Cooldown", "Shift And Seek", "Speedrun"
+            "Standard", "Shift And Seek", "Speedrun"
         };
 
         public static readonly string[] accessLevels =
@@ -267,9 +267,6 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupHNS;
         public static OptionItem NumSeekers;
 
-        public static OptionItem TabGroup0Kcd;
-        public static OptionItem NoKcdSettingsOverride;
-
         public static OptionItem TabGroupSNS;
         public static OptionItem SNSSettingsOverride;
         public static OptionItem SNSChatInGame;
@@ -289,52 +286,6 @@ namespace AmongUsRevamped
         public static OptionItem SpeedrunSettingsOverride;
         public static OptionItem GameAutoEndsAfter;
         public static OptionItem EngineerMode;
-
-        // Abilities
-        public static OptionItem TabGroupCrewmate;
-
-        public static OptionItem OverrideCrewmate;
-        public static OptionItem CrewmateAbility;      
-
-        public static OptionItem OverrideScientist; 
-        public static OptionItem ScientistAbility;    
-
-        public static OptionItem OverrideEngineer;
-        public static OptionItem EngineerAbility;    
-
-        public static OptionItem OverrideNoisemaker; 
-        public static OptionItem NoisemakerAbility;    
-
-        public static OptionItem OverrideTracker;   
-        public static OptionItem TrackerAbility;    
-
-        public static OptionItem OverrideDetective;  
-        public static OptionItem DetectiveAbility;    
-
-        public static OptionItem TabGroupCrewmateAbilities;
-        public static OptionItem ExtraVotesCrewmate;
-        public static OptionItem ExtraVotesPerTask;
-        public static OptionItem SpeedrunnerShortTasks;
-        public static OptionItem SpeedrunnerLongTasks;
-
-        public static OptionItem TabGroupImpostor;
-  
-        public static OptionItem OverrideImpostor;  
-        public static OptionItem ImpostorAbility;  
-
-        public static OptionItem OverrideShapeshifter;
-        public static OptionItem ShapeshifterAbility;  
-
-        public static OptionItem OverridePhantom; 
-        public static OptionItem PhantomAbility;  
-
-        public static OptionItem OverrideViper;   
-        public static OptionItem ViperAbility; 
-
-        public static OptionItem TabGroupImpostorAbilities; 
-        public static OptionItem ExtraVotesImpostor;
-        public static OptionItem ExtraVotesPerKill;
-        public static OptionItem KillsNeededForJuggernaut;
 
         public static bool IsLoaded = false;
 
@@ -409,74 +360,12 @@ namespace AmongUsRevamped
             SlashEndMeetingCmd = StringOptionItem.Create(60407, Translator.Get("slashEndMeetingCmd"), accessLevels, 3, TabGroup.SystemSettings, false);
             SlashStartAndEndGameCmd = StringOptionItem.Create(60408, Translator.Get("slashStartAndEndGameCmd"), accessLevels, 3, TabGroup.SystemSettings, false);
 
-            // Ability settings
-            TabGroupCrewmate = TextOptionItem.Create(100000, Translator.Get("tabGroupCrewmate"), TabGroup.AbilitySettings)
-                .SetColor(CL.Hex("#8cffff"));
-
-            CrewmateAbility = StringOptionItem.Create(100001, Translator.Get("crewmateAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#8cffff"));
-
-            ScientistAbility = StringOptionItem.Create(100101, Translator.Get("scientistAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#8cffff"));
-
-            EngineerAbility = StringOptionItem.Create(100201, Translator.Get("engineerAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#8cffff"));
-
-            NoisemakerAbility = StringOptionItem.Create(100301, Translator.Get("noisemakerAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#8cffff"));
-
-            TrackerAbility = StringOptionItem.Create(100401, Translator.Get("trackerAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#8cffff"));
-
-            DetectiveAbility = StringOptionItem.Create(100501, Translator.Get("detectiveAbility"), crewmateAbilities, 4, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#8cffff"));
-                
-            TabGroupCrewmateAbilities = TextOptionItem.Create(101000, Translator.Get("tabGroupCrewmateAbilities"), TabGroup.AbilitySettings)
-                .SetColor(CL.Hex("#8cffff"));
-            ExtraVotesCrewmate = IntegerOptionItem.Create(101001, Translator.Get("extraVotesCrewmate"), new(1, 15, 1), 1, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-            ExtraVotesPerTask = FloatOptionItem.Create(101002, Translator.Get("extraVotesPerTask"), new(0.25f, 3f, 0.25f), 0.5f, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-            SpeedrunnerShortTasks = IntegerOptionItem.Create(101003, Translator.Get("speedrunnerShortTasks"), new(0, 15, 1), 4, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-            SpeedrunnerLongTasks = IntegerOptionItem.Create(101004, Translator.Get("speedrunnerLongTasks"), new(0, 15, 1), 3, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-
-            TabGroupImpostor = TextOptionItem.Create(102000, Translator.Get("tabGroupImpostor"), TabGroup.AbilitySettings)
-                .SetColor(CL.Hex("#ff1919"));
-
-            ImpostorAbility = StringOptionItem.Create(100002, Translator.Get("impostorAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#ff1919"));
-
-            ShapeshifterAbility = StringOptionItem.Create(102101, Translator.Get("shapeshifterAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#ff1919"));
-
-            PhantomAbility = StringOptionItem.Create(102201, Translator.Get("phantomAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#ff1919"));
-
-
-            ViperAbility = StringOptionItem.Create(102301, Translator.Get("viperAbility"), impostorAbilities, 3, TabGroup.AbilitySettings, false)
-                .SetColor(CL.Hex("#ff1919"));
-
-            TabGroupImpostorAbilities = TextOptionItem.Create(103000, Translator.Get("tabGroupImpostorAbilities"), TabGroup.AbilitySettings)
-                .SetColor(CL.Hex("#ff1919"));
-            ExtraVotesImpostor = IntegerOptionItem.Create(103001, Translator.Get("extraVotesImpostor"), new(1, 15, 1), 1, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-            ExtraVotesPerKill = FloatOptionItem.Create(103002, Translator.Get("extraVotesPerKill"), new(0.25f, 3f, 0.25f), 0.5f, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-            KillsNeededForJuggernaut = IntegerOptionItem.Create(103003, Translator.Get("killsNeededForJuggernaut"), new(3, 15, 1), 7, TabGroup.AbilitySettings, false)
-                .SetValueFormat(OptionFormat.Level);
-
             // Gamemode Settings
 
             TabGroupHNS = TextOptionItem.Create(70000, Translator.Get("tabGroupHNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
             NumSeekers = IntegerOptionItem.Create(70001, Translator.Get("numSeekers"), new(1, 15, 1), 1, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Level);
-
-            TabGroup0Kcd = TextOptionItem.Create(70025, Translator.Get("tabGroup0Kcd"), TabGroup.GamemodeSettings)
-                .SetColor(Color.red);
-            NoKcdSettingsOverride = BooleanOptionItem.Create(70026, Translator.Get("noKcdSettingsOverride"), true, TabGroup.GamemodeSettings, false);
 
             TabGroupSNS = TextOptionItem.Create(70050, Translator.Get("tabGroupSNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.yellow);

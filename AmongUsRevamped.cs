@@ -44,7 +44,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v1.8.4";
+    public const string ModVersion = "v1.9.0";
 
     public static float GameTimer;
 
@@ -110,7 +110,6 @@ public partial class Main : BasePlugin
     {
         public static void Prefix(ModManager __instance)
         {
-            __instance.ShowModStamp();
             LateTask.Update(Time.deltaTime);
         }
     }

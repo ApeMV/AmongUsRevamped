@@ -1,4 +1,5 @@
-﻿using Hazel;
+﻿using AmongUs.GameOptions;
+using Hazel;
 using InnerNet;
 using System;
 using System.IO;
@@ -323,45 +324,88 @@ internal static class SendChatPatch
             return false;
         }
 
-        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat || AbilityManagement.HandlingRoleMessages) return false;
+        if (text.StartsWith("/seeker "))
+        {
+            if (!Utils.IsLobby || !Utils.isHideNSeek)
+            {
+                __instance.freeChatField.textArea.Clear();
+                __instance.freeChatField.textArea.SetText(string.Empty);
+                return false;
+            }
+
+            string argSeeker = text.Substring(8).Trim();
+            bool found = false;
+
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data == null) continue;
+
+                if (p.Data.PlayerName.Equals(argSeeker, StringComparison.OrdinalIgnoreCase))
+                {
+                    found = true;
+                    PlayerControlSetRolePatch.manualSeekers.Add(p.PlayerId);
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                List<string> names = new();
+
+                foreach (PlayerControl pl in PlayerControl.AllPlayerControls)
+                {
+                    if (PlayerControlSetRolePatch.manualSeekers.Contains(pl.PlayerId)) names.Add(pl.Data.PlayerName);
+                }
+                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("seekers") + string.Join(", ", names));
+            }
+
+            if (!found)
+            {
+                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"Player '{argSeeker}' not found.");   
+            }
+
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;
+        }
+
+        if (text == "/clearseeker")
+        {
+            PlayerControlSetRolePatch.manualSeekers.Clear();
+            HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("clearedSeekers"));
+
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;
+        }
+
+        if (text == "/seekers")
+        {
+            List<string> n = new();
+
+            foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
+            {
+                if (PlayerControlSetRolePatch.manualSeekers.Contains(pc.PlayerId)) n.Add(pc.Data.PlayerName);
+            }
+            HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("seekers") + string.Join(", ", n));
+
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            return false;      
+        }
+
+        if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
 
         if (text == "/l" || text == "/lastgame")
         {
             if (string.IsNullOrEmpty(NormalGameEndChecker.LastWinReason) || Utils.InGame) return false;
             Utils.ChatCommand(__instance, $"{NormalGameEndChecker.LastWinReason}", "", false);
             return false;
-        }        
-        if (text == "/r jester"){
-            Utils.ChatCommand(__instance, "Jester:\n\nThe Jester is a Crewmate who can also win alone by getting voted.", "", false);
-            return false;}
-
-        if (text == "/r mayor"){
-            Utils.ChatCommand(__instance, $"Mayor:\n\nThe Mayor is a Crewmate with {Options.ExtraVotesCrewmate.GetInt()} additional vote(s). Use them wisely.", "", false);
-            return false;}
-
-        if (text == "/r tyrant"){
-            Utils.ChatCommand(__instance, $"Tyrant:\n\nThe Tyrant is an Impostor with {Options.ExtraVotesImpostor.GetInt()} additional vote(s). Use them wisely.", "", false);
-            return false;}
-
-        if (text == "/r workhorse"){
-            Utils.ChatCommand(__instance, $"Workhorse:\n\nThe Workhorse gains {Options.ExtraVotesPerTask.GetInt()} additional vote(s) per completed task. Votes are rounded down.", "", false);
-            return false;}
-
-        if (text == "/r stealer"){
-            Utils.ChatCommand(__instance, $"Stealer:\n\nThe Stealer gains {Options.ExtraVotesPerKill.GetInt()} additional vote(s) per killed player. Votes are rounded down.", "", false);
-            return false;}
-
-        if (text == "/r juggernaut"){
-            Utils.ChatCommand(__instance, $"Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {Options.KillsNeededForJuggernaut.GetInt()} kills.", "", false);
-            return false;}
-
-        if (text == "/r tasker"){
-            Utils.ChatCommand(__instance, "Tasker:\n\nThe Crewmates win if the Tasker completes tasks and is alive. The Tasker has more tasks.", "", false);
-            return false;}
+        }
 
         if (text == "/aur" || text == "/socials")
         {
-            Utils.ChatCommand(__instance, "AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya", "", false);
+            Utils.ChatCommand(__instance, "AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c о r d . g g /\n83Zhzhyhya", "", false);
             return false;
         }
 
@@ -379,7 +423,7 @@ internal static class SendChatPatch
             }
             else
             {
-                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
+                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
             }
             return false;
         }
@@ -395,25 +439,24 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                AbilityManagement.SendRoleList(__instance, AbilityManagement.RoleList(), false);
+                if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f)
+                {
+                    Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
+                }
                 break;
 
                 case 1:
-                Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
-                break;
-
-                case 2:
                 if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
                 {
                     Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
                 }
                 else
                 {
-                    Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
+                    Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
                 }          
                 break;
 
-                case 3:
+                case 2:
                 Utils.ChatCommand(__instance, $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                 break;
 
@@ -541,38 +584,54 @@ public static class RPCHandlerPatch
                 string text = msgtext.ToLower();
 
                 Logger.Info($" {__instance.Data.PlayerName}: {msgtext}", "SendChat");
-
-                string[] keywords = Options.AutoKickStartStrength.GetBool() ? new[] { "start", "begin", "commence" } : new[] { "start", "begin", "commence", "s t a r t", "go" };
-
-                bool c = false;
-
-                if (Options.AutoKickStartStrength.GetBool())
-                {
-                    c = keywords.Any(k => text.Contains(k));
-                }
-                else
-                {
-                    c = keywords.Any(k => text == k);
-                }
                 
-                if (c && Utils.CheckAccessLevel(__instance.Data.FriendCode) < 1 && Options.AutoKickStart.GetBool() && !Utils.InGame)
+                BanManager.IsStartWord(__instance, text);
+                BanManager.IsWordBanned(__instance, text);
+
+                if (text.StartsWith("/seeker ") && Utils.CheckAccessLevel(__instance.Data.FriendCode) >= Options.SlashEndMeetingCmd.GetValue())
                 {
-                    int clientId = __instance.Data.ClientId;
-
-                    if (!Main.SayStartTimes.ContainsKey(clientId))
-                    Main.SayStartTimes.Add(clientId, 0);
-                    Main.SayStartTimes[clientId]++;
-
-                    if (Main.SayStartTimes[clientId] >= Options.AutoKickStartTimes.GetInt())
+                    if (!Utils.IsLobby || !Utils.isHideNSeek)
                     {
-                        bool sBan = Options.AutoKickStartAsBan.GetBool();
-                        AmongUsClient.Instance.KickPlayer(clientId, sBan);
-                        Logger.Info($" {__instance.Data.PlayerName} was {(sBan ? "banned" : "kicked")} for saying start", "KickAnnoyingKids");
-                        Logger.SendInGame($" {__instance.Data.PlayerName} was {(sBan ? "banned" : "kicked")} for saying start");
+                        return;
+                    }
+
+                    string argSeeker = text.Substring(8).Trim();
+                    bool found = false;
+
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.Data == null) continue;
+
+                        if (p.Data.PlayerName.Equals(argSeeker, StringComparison.OrdinalIgnoreCase))
+                        {
+                            found = true;
+                            PlayerControlSetRolePatch.manualSeekers.Add(p.PlayerId);
+                            break;
+                        }
+                    }
+
+                    if (found)
+                    {
+                        List<string> names = new();
+
+                        foreach (PlayerControl pl in PlayerControl.AllPlayerControls)
+                        {
+                            if (PlayerControlSetRolePatch.manualSeekers.Contains(pl.PlayerId)) names.Add(pl.Data.PlayerName);
+                        }
+                        HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("seekers") + string.Join(", ", names));
+                    }
+
+                    if (!found)
+                    {
+                        HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"Player '{argSeeker}' not found.");   
                     }
                 }
 
-                BanManager.IsWordBanned(__instance, text);
+                if (text == "/clearseeker" && Utils.CheckAccessLevel(__instance.Data.FriendCode) >= Options.SlashEndMeetingCmd.GetValue())
+                {
+                    PlayerControlSetRolePatch.manualSeekers.Clear();
+                    HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("clearedSeekers"));
+                }
 
                 bool col1 = text.StartsWith("/col ");
                 bool col2  = text.StartsWith("/color ");
@@ -638,7 +697,7 @@ public static class RPCHandlerPatch
                     }
                 }
 
-                if (AbilityManagement.HandlingRoleMessages || OnGameJoinedPatch.WaitingForChat || GameStartManagerUpdatePatch.CountingDown) return;
+                if (OnGameJoinedPatch.WaitingForChat || GameStartManagerUpdatePatch.CountingDown) return;
 
                 if (text == "/eg" || text == "/endgame")
                 {
@@ -691,7 +750,8 @@ public static class RPCHandlerPatch
                     }
                     else
                     {
-                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
+                        
+                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", SendChatPatch.ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
                     }
                 }
 
@@ -707,25 +767,24 @@ public static class RPCHandlerPatch
                     switch (Options.Gamemode.GetValue())
                     {
                         case 0:
-                        AbilityManagement.SendRoleList(DestroyableSingleton<HudManager>.Instance.Chat, AbilityManagement.RoleList(), true);
+                        if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f)
+                        {
+                            Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
+                        }
                         break;
 
                         case 1:
-                        Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
-                        break;
-
-                        case 2:
                         if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
                         {
                             Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
                         }
                         else
                         {
-                            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide", true);
+                            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", SendChatPatch.ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
                         }         
                         break;
 
-                        case 3:
+                        case 2:
                         Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                         break;
 
@@ -733,27 +792,6 @@ public static class RPCHandlerPatch
                 }
 
                 if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                
-                if (text == "/r jester"){
-                    Utils.ModeratorChatCommand("Jester:\n\nThe Jester is a Crewmate who can also win alone by getting voted.", "", false);}
-
-                if (text == "/r mayor"){
-                    Utils.ModeratorChatCommand($"Mayor:\n\nThe Mayor is a Crewmate with {Options.ExtraVotesCrewmate.GetInt()} additional vote(s). Use them wisely.", "", false);}
-
-                if (text == "/r tyrant"){
-                    Utils.ModeratorChatCommand($"Tyrant:\n\nThe Tyrant is an Impostor with {Options.ExtraVotesImpostor.GetInt()} additional vote(s). Use them wisely.", "", false);}
-
-                if (text == "/r workhorse"){
-                    Utils.ModeratorChatCommand($"Workhorse:\n\nThe Workhorse gains {Options.ExtraVotesPerTask.GetInt()} additional vote(s) per completed task. Votes are rounded down.", "", false);}
-
-                if (text == "/r stealer"){
-                    Utils.ModeratorChatCommand($"Stealer:\n\nThe Stealer gains {Options.ExtraVotesPerKill.GetInt()} additional vote(s) per killed player. Votes are rounded down.", "", false);}
-
-                if (text == "/r juggernaut"){
-                    Utils.ModeratorChatCommand($"Juggernaut:\n\nThe Impostors instantly win if the Juggernaut gains {Options.KillsNeededForJuggernaut.GetInt()} kills.", "", false);}
-
-                if (text == "/r tasker"){
-                    Utils.ModeratorChatCommand("Tasker:\n\nThe Crewmates win if the Tasker completes tasks and is alive. The Tasker has more tasks.", "", false);}
 
                 if (text.StartsWith("/t "))
                 {

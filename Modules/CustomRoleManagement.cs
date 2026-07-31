@@ -7,9 +7,11 @@ using UnityEngine;
 namespace AmongUsRevamped;
 // It was a fun ride, but this won't last.
 // Edit: WE ARE SO BACK
+// Edit 2: Hello old friend. It's time to go again.
 
 public static class AbilityManagement
 {
+    /*
     public static bool IsMayor(PlayerControl player)
     {
         if (player.Data.RoleType == RoleTypes.Crewmate && Options.CrewmateAbility.GetValue() == 0 ||
@@ -179,7 +181,7 @@ public static class AbilityManagement
         }, 6.6f, "SendRoleMessage");
     }
 }
-/*
+
 public static class CustomRoleManagement
 {
     public static Dictionary<byte, string> PlayerRoles = new Dictionary<byte, string>();
@@ -380,5 +382,5 @@ public static class CustomRoleManagement
         }
         return string.Join("\n", lines);
     }
+    */
 }
-*/

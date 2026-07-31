@@ -163,12 +163,6 @@ internal static class RpcSetTasksPatch
         int numLongTasks = Main.NormalOptions.NumLongTasks;
         int numShortTasks = Main.NormalOptions.NumShortTasks;
 
-        if (AbilityManagement.IsSpeedrunner(pc))
-        {
-            numLongTasks = Options.SpeedrunnerLongTasks.GetInt();
-            numShortTasks = Options.SpeedrunnerShortTasks.GetInt();
-        }
-
         if (taskTypeIds.Length == 0) hasCommonTasks = false;
 
         switch (hasCommonTasks)

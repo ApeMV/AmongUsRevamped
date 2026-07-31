@@ -17,8 +17,6 @@ internal static class CoShowIntroPatch
         if (!AmongUsClient.Instance.AmHost) return;
 
         IntroInitiated = true;
-
-        AbilityManagement.SendRoleMessages();
         
         foreach (var p in PlayerControl.AllPlayerControls)
         {
@@ -31,8 +29,6 @@ internal static class CoShowIntroPatch
 
             Logger.Info($" {p.Data.PlayerName} -> {p.Data.RoleType}", "RoleInfo");
         }
-
-        if (!Utils.isHideNSeek && Options.Gamemode.GetValue() < 2) Logger.Info($" {AbilityManagement.RoleList()}", "AbilityInfo");
 
         if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.isHideNSeek)
         {

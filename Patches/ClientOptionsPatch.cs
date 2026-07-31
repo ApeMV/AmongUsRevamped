@@ -77,11 +77,13 @@ namespace AmongUsRevamped
         }
     }
 
+    // MY MODSTAMP IS FASTER THAN YOURS!!11!!!1
     [HarmonyPatch(typeof(SplashManager), nameof(SplashManager.Update))]
     internal class SplashLogoAnimatorPatch
     {
         public static void Prefix(SplashManager __instance)
         {
+            ModManager.Instance.ShowModStamp();
             __instance.sceneChanger.AllowFinishLoadingScene();
             __instance.startedSceneLoad = true;
         }

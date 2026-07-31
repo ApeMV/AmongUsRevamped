@@ -48,14 +48,6 @@ class ExileControllerWrapUpPatch
         }
 
         Logger.Info($" {ejectedPlayer.PlayerName} was ejected", "ExileController");
-
-        if (PlayerControlSetRolePatch.Jesters.Contains(exiledPlayer))
-        {
-            Logger.Info($"Jester {ejectedPlayer.PlayerName} wins", "ExilePatch");
-            Utils.CustomWinnerEndGame(exiledPlayer, 1);
-            NormalGameEndChecker.CheckWinnerText("Jester");
-            return;
-        }
     }
 
     [HarmonyPatch]

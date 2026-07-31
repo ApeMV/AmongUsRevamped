@@ -2,6 +2,8 @@
 
 namespace AmongUsRevamped;
 
+// Old patch for roles and abilities. Might use later.
+/*
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
 public static class CheckForEndVotingPatch
 {
@@ -36,12 +38,7 @@ public static class CheckForEndVotingPatch
             int extraVotesPerTask = (int)(Options.ExtraVotesPerTask.GetFloat()*PlayerControlCompleteTaskPatch.playerTasksCompleted[voterId]+0.1f);
             int extraVotesPerKill = (int)(Options.ExtraVotesPerKill.GetFloat()*MurderPlayerPatch.killCount[voterId]+0.1f);
 
-            if (!votes.TryGetValue(votedFor, out int currentVotes)) currentVotes = 0;
-
-            if (AbilityManagement.IsMayor(pc)) extraVotes += extraVotesCrewmate;               
-            if (AbilityManagement.IsTyrant(pc)) extraVotes += extraVotesImpostor;               
-            if (AbilityManagement.IsWorkhorse(pc)) extraVotes += extraVotesPerTask;               
-            if (AbilityManagement.IsStealer(pc)) extraVotes += extraVotesPerKill;               
+            if (!votes.TryGetValue(votedFor, out int currentVotes)) currentVotes = 0;            
 
             for (int i = 0; i < extraVotes; i++)
             {
@@ -59,6 +56,7 @@ public static class CheckForEndVotingPatch
         return false;
     }
 }
+*/
 
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
 class MeetingHudStartPatch
