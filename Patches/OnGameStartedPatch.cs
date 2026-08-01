@@ -45,12 +45,6 @@ class PlayerControlSetRolePatch
 
         canOverrideRole = false;
 
-        if (Main.GM.Value && __instance.PlayerId == PlayerControl.LocalPlayer.PlayerId)
-        {
-            roleType = RoleTypes.Crewmate;
-            OnGameStartPatch.ScheduleExile = true;
-        }
-
         if (Utils.isHideNSeek && Seekers.Count() == 0 && Options.NumSeekers.GetInt() > 0)
         {
             int seekersCount = Options.NumSeekers.GetInt();
@@ -115,7 +109,6 @@ class PlayerControlSetRolePatch
         {
             Seekers.Clear();
             ProcessedPlayers.Clear();
-            FirstAssign = false;
 
             Logger.Info("PCSRP successful", "RoleManaging");
         }
@@ -127,7 +120,6 @@ class PlayerControlSetRolePatch
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.OnGameStart))]
 internal static class OnGameStartPatch
 {
-    public static bool ScheduleExile;
     public static void Postfix()
     {
         if (AmongUsClient.Instance.AmHost && Options.Gamemode.GetValue() == 1 && Options.SNSChatInGame.GetBool())
@@ -136,11 +128,11 @@ internal static class OnGameStartPatch
             if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose();
         }
 
-        if (ScheduleExile)
+        if (Main.GM.Value)
         {
             Logger.Info($" Game Master Successful", "StartGame");
+            PlayerControl.LocalPlayer.Exiled();
             PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
-            ScheduleExile = false;
         }
 
         foreach (var p in PlayerControl.AllPlayerControls)

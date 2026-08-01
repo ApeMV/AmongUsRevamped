@@ -224,7 +224,6 @@ public static class Utils
         PlayerControlSetRolePatch.FirstAssign = true;
         PlayerControlSetRolePatch.manualSeekers.Clear();
 
-        OnGameStartPatch.ScheduleExile = false;
         CoShowIntroPatch.IntroInitiated = false;
     }
 

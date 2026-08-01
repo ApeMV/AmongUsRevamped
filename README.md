@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.9.0):
+# 🎮 Features (v1.9.1):
 
 ## <b>♠️ Client Side settings:</b>
 - Game Master (Spectator)
@@ -106,7 +106,6 @@
 | /help                                       | Show command help                                 |
 | /l<br>/lastgame                             | Send last game info                               |
 | /r                                          | Send current gamemode/roles description           |
-| /r {ability}                                | Send specific Ability info                        |
 | /0kc<br>/sns</br>/sp                        | Send respective gamemode description              |
 | /ban {name}                                 | Ban a player by name                              |
 | /kick {name}                                | Kick a player by name                             |
@@ -121,6 +120,9 @@
 | /s<br>/start                                | Start game countdown                              |
 | /vip<br>/moderator<br>/admin                | Add a user to respective list by name             |
 | /t {template}                               | Send a Template from Templates.txt                |
+| /seeker {name}                              | Manually adds someone as Seeker in HnS            |
+| /seekers                                    | Shows manual Seeker list in HnS                   |
+| /clearseekers                               | Clears manual Seeker list in HnS                  |
 ‎
 
 **Credit to these mods and their developers for their code:**

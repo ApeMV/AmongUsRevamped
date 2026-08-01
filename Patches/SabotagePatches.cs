@@ -43,7 +43,7 @@ public static class SabotageSystemTypeRepairDamagePatch
             Sabo == SystemTypes.Comms && Options.SNSDisableComms.GetBool() ||
             Sabo == SystemTypes.HeliSabotage && Options.SNSDisableHeli.GetBool() ||
             Sabo == SystemTypes.MushroomMixupSabotage && Options.SNSDisableMushroomMixup.GetBool() ||
-            Sabo == SystemTypes.Laboratory && Options.DisableReactor.GetBool() && msgReader != null ||
+            Sabo == SystemTypes.Laboratory && Options.SNSDisableReactor.GetBool() && msgReader != null ||
             player.Data.IsDead && !Options.DeadImpostorsCanSabotage.GetBool())
             {
                 Logger.Info($" Sabotage {Sabo} by: {player.Data.PlayerName} was blocked", "SnSSabotageCheck");
