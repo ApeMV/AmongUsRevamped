@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.9.1):
+# 🎮 Features (v1.9.2):
 
 ## <b>♠️ Client Side settings:</b>
 - Game Master (Spectator)
@@ -44,16 +44,15 @@
 - Denyword system
 - Banlist system
 - Denyname system
-- Multi layer moderator system
+- Advanced Moderator system
 - To add Admins, Moderators and VIP's, type the user's Friendcode in the designated files located in AUR-DATA
 - Enable No Game End
 - Custom starting countdown
 ## <b>♻️ Automation settings:</b>
-- Automatically start game
+- Full Autohost and Rehost support
 - Automatically rejoin lobby
 - Automatically send winner info
-- Enable (configurable) Welcome Messages
-- The Welcome Template is in Templates.txt
+- Enable (configurable) Welcome Messages from Templates.txt
 ## <b>🔧 Gameplay Settings:</b>
 - Dead impostors can sabotage
 - Disable critical sabotages (invividual)
@@ -70,8 +69,16 @@
 - 0 Kill Cooldown -> Set Kill Cooldown to 0.01
 - Shift and Seek
 - Speedrun
+## <b>👾 Custom Anticheat:</b>
+- Detect invalid sabotages
+- Detect malformed RPC's
+- Detect invalid venting
+- Detect Invalid animations
+- Detect Invalid task completions
+- Detect immortality cheats
+- These are all enabled by default
 ## <b>❓ Other Improvements:</b>
-- Among Us Revamped supports other languages
+- Lanuage support: English, Italian, Japanese, Russian, Simplified Chinese, Spanish
 - Select a language in Language/YourLanguage.txt
 - Preset system for mod settings
 - Command Helper
@@ -80,7 +87,6 @@
 - Ability to cancel starting countdown
 - Improved main menu
 - Faster startup time
-- Custom anticheat system
 - Zoom out in lobby or when dead
 - See player kill/task count and Role when dead
 - Higher and more accurate Option ranges
@@ -123,6 +129,8 @@
 | /seeker {name}                              | Manually adds someone as Seeker in HnS            |
 | /seekers                                    | Shows manual Seeker list in HnS                   |
 | /clearseekers                               | Clears manual Seeker list in HnS                  |
+| /mapvote                                    | Starts a vote for the map. Default maps only      |
+| /allmapvote                                 | Starts a vote for the map. Includes Eht Dleks     |
 ‎
 
 **Credit to these mods and their developers for their code:**

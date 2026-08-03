@@ -110,7 +110,7 @@ class FixedUpdateInGamePatch
 
                     Utils.CustomWinnerEndGame(PlayerControl.LocalPlayer, 0);
                     Logger.Info($" No one won because the game took longer than {Options.GameAutoEndsAfter.GetInt()}s", "SpeedrunManager");
-                    NormalGameEndChecker.CheckWinnerText("NoOneWin");
+                    NormalGameEndChecker.CheckWinnerText("NoOneWinsSpeedrun");
                 }
             }
         }

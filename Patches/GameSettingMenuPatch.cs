@@ -115,6 +115,9 @@ namespace AmongUsRevamped
                         case TabGroup.SystemSettings:
                             __instance.MenuDescriptionText.text = Translator.Get("systemSettingsDesc");
                             break;
+                        case TabGroup.ModerationSettings:
+                            __instance.MenuDescriptionText.text = Translator.Get("moderationSettingsDesc");
+                            break;
                         case TabGroup.ModSettings:
                             __instance.MenuDescriptionText.text = Translator.Get("gameplaySettingsDesc");
                             break;

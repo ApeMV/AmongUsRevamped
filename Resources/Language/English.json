@@ -19,38 +19,53 @@
   "language": "Language (Requires Restart)",
   "gamemode": "Gamemode",
   "tabGroupMain": "Moderation",
+  "tabGroupLevelKick": "Level Moderation",
+  "enableKickLowLevelPlayer": "Kick Low Level Players",
   "kickLowLevelPlayer": "Kick Players Under Level",
   "tempBanLowLevelPlayer": "Ban Instead Of Kick",
   "dontKickLevelOnes": "Don't Kick Lv.1 Players For Glitched Lobbies",
+  "tabGroupKickInvalidFriendCodes": "Invalid Friendcodes",
   "kickInvalidFriendCodes": "Kick Invalid (Empty) Friendcodes",
   "tempBanInvalidFriendCodes": "Ban Instead Of Kick",
   "deniedWordsToKick": "Sent Denied Words To Kick Player",
   "moderatorCanUseCommand": "Moderators can use commands",
+  "tabGroupAutoKickStart": "Start Words",
   "autoKickStart": "Kick Players Who Say Start",
   "autoKickStartAsBan": "Ban Instead Of Kick",
-  "autoKickStartTimes": "Start messages needed to kick",
+  "autoKickStartTimes": "Sent Start Words To Kick Player",
   "autoKickStartStrength": "Strict detection mode",
+
   "tabGroupAutomation": "Automation",
   "autoSendGameInfo": "Automatically send winner info",
   "autoRejoinLobby": "Auto Rejoin Lobby",
+
+  "tabGroupAutostart": "Autohost",
   "autoStartTimer": "Countdown For Auto Start",
   "waitAutoStart": "Auto Start After",
   "playerAutoStart": "Players Needed To Auto Start",
+  "rehost": "Automatically Recreate Lobby On Disconnect",
+  "public": "Automatically Publicize New Lobby",
   "enableJoinMessages": "Enable Welcome Messages",
   "messagePerPlayerNum": "Message Per Amount Of Joins",
-  "tabGroupMisc": "Miscelleneous",
+
+  "tabGroupMisc": "Experimental",
   "startCountdown": "Default Starting Countdown",
   "colorCommandLevel": "Who Can use Color Commands",
   "allowFortegreen": "Allow Fortegreen Color",
   "noGameEnd": "No Game End",
+  "mapVoteDuration": "Map Vote Duration",
+
+  "tabGroupDeniedWords": "Denied Words",
+  "enableDeniedWords": "Kick Players Who Say Denied Words",
 
   "tabGroupAccess": "Access Levels",
   "slashColorCmd": "Who Can Use /color",
   "slashRolesAndGamemodeCmd": "Who Can Use /r & Templates",
   "slashLastGameCmd": "Who Can Use /l & /aur",
+  "slashMapAndSeekerCmd": "Who Can Use /seeker & /mapvote",
   "slashKickCmd": "Who Can Use /kick & /ckick",
   "slashBanCmd": "Who Can Use /ban & /cban",
-  "slashEndMeetingCmd": "Who Can Use /endmeeting & /seeker",
+  "slashEndMeetingCmd": "Who Can Use /endmeeting",
   "slashStartAndEndGameCmd": "Who Can Use /startgame & /endgame",
 
   "tabGroupCrewmate": "Crewmate Roles",
@@ -65,6 +80,7 @@
   "noKcdSettingsOverride": "Auto Update Settings",
   "tabGroupSNS": "Shift and Seek",
   "snsChatInGame": "Chat during gameplay (experimental)",
+  "snsChatInGameExtend": "Send gamemode info after game start",
   "snsSettingsOverride": "Auto Update Settings",
   "cantKillTime": "After Misfiring, Can't kill for",
   "misfiresToSuicide": "Suicide After Amount Of Misfires",
@@ -270,17 +286,23 @@
   "seekerDesc": "Adds player as Seeker in HnS.",
   "seekersDesc": "Shows all manually selected Seekers.",
   "clearSeekerDesc": "Clears the manual Seeker list.",
+  "mapVoteDesc": "Starts a vote between the 5 core maps.",
+  "allMapVoteDesc": "Starts a vote between all 6 maps, including Eht Dleks.",
 
   "banWordKick": "{0} was kicked because they sent a word in DeniedWords.txt {1} time(s)",
   "startWordKick": "{0} was kicked because they sent a word in StartWords.txt {1} time(s)",
+  "banWordBan": "{0} was banned because they sent a word in DeniedWords.txt {1} time(s)",
+  "startWordBan": "{0} was banned because they sent a word in StartWords.txt {1} time(s)",
 
   "pluginWarning": "<color=red><size=5><b>WARNING:</color></b></size>\n<size=3><b>You have 2 or more detected Plugins.</size></b>\nAmong Us Revamped is not compatible with most mods.\nIf you find bugs, they are most likely due to incompatibility.",
 
   "systemSettings": "System Settings",
+  "moderationSettings": "Moderation Settings",
   "gameplaySettings": "Gameplay Settings",
   "gamemodeSettings": "Gamemode Settings",
 
   "systemSettingsDesc": "Quality settings to improve comfort and testing.",
+  "moderationSettingsDesc": "Moderation settings to combat toxicity and misconduct.",
   "gameplaySettingsDesc": "Gameplay settings to improve the in-game experience.",
   "gamemodeSettingsDesc": "Situational settings to apply for specific gamemodes.",
 
@@ -291,5 +313,7 @@
   "onlyYou": "Only You",
 
   "seekers": "Seekers: ",
-  "clearedSeekers": "Successfully cleared the manual Seeker list."
+  "clearedSeekers": "Successfully cleared the manual Seeker list.",
+
+  "rehostSuccess": "Successfully rehosted a lobby"
 }

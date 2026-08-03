@@ -214,6 +214,7 @@ namespace AmongUsRevamped
     public enum TabGroup
     {
         SystemSettings,
+        ModerationSettings,
         //CustomRoleSettings,
         ModSettings,
         GamemodeSettings,

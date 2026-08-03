@@ -25,7 +25,22 @@ class CreateOptionsPickerPatch
             isSkeldFlipped = value;
         }
     }
-    
+
+    public static void ApplyDleks(bool hideNSeek)
+    {
+        SetDleks = true;
+        FlippedSkeld = true;
+
+        if (!Utils.isHideNSeek) Main.NormalOptions.MapId = 0;
+        else Main.HideNSeekOptions.MapId = 0;
+    }
+
+    public static void ClearDleks()
+    {
+        SetDleks = false;
+        FlippedSkeld = false;
+    }
+
     private static MapSelectButton DleksButton;
     [HarmonyPatch]
     public static class GameOptionsMapPickerPatch

@@ -201,4 +201,25 @@ internal class EACR
             return true;
         }
     }
+
+    public static void VentCheat(PlayerControl player, Vent __instance)
+    {
+        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
+        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalid venting (cheating)");
+        Logger.Info($" {player.Data.PlayerName} was banned for invalid venting", "EACR");
+    }
+
+    public static void PlayAnimationCheat(PlayerControl player)
+    {
+        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
+        Logger.SendInGame($"{player.Data.PlayerName} was banned for an invalid animation (cheating)");
+        Logger.Info($" {player.Data.PlayerName} was banned for an invalid animation", "EACR");
+    }
+
+    public static void TaskCheat(PlayerControl player)
+    {
+        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
+        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly completing a task (cheating)");
+        Logger.Info($" {player.Data.PlayerName} was banned for invalidly completing a task", "EACR");
+    }
 }

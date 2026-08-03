@@ -72,32 +72,43 @@ namespace AmongUsRevamped
 
         public static OptionItem TabGroupMain;
 
+        public static OptionItem TabGroupLevelKick;
+        public static OptionItem EnableKickLowLevelPlayer;
         public static OptionItem KickLowLevelPlayer;
         public static OptionItem DontKickLevelOnes;
         public static OptionItem TempBanLowLevelPlayer;
 
+        public static OptionItem TabGroupKickInvalidFriendCodes;
         public static OptionItem KickInvalidFriendCodes;
         public static OptionItem TempBanInvalidFriendCodes;
 
+        public static OptionItem TabGroupDeniedWords;
+        public static OptionItem EnableDeniedWords;
         public static OptionItem DeniedWordsToKick;
+        public static OptionItem DeniedWordsAsBan;
+        public static OptionItem DeniedWordsStrength;
 
+        public static OptionItem TabGroupAutoKickStart;
         public static OptionItem AutoKickStart;
         public static OptionItem AutoKickStartAsBan;
         public static OptionItem AutoKickStartTimes;
         public static OptionItem AutoKickStartStrength;
 
         public static OptionItem TabGroupAutomation;
-
         public static OptionItem AutoSendGameInfo;
         public static OptionItem AutoRejoinLobby;
-        public static OptionItem AutoStartTimer;
-        public static OptionItem WaitAutoStart;
-        public static OptionItem PlayerAutoStart;
         public static OptionItem EnableJoinMessages;
         public static OptionItem MessagePerPlayerNum;
 
-        public static OptionItem TabGroupMisc;
+        public static OptionItem TabGroupAutostart;
+        public static OptionItem AutoStartTimer;
+        public static OptionItem WaitAutoStart;
+        public static OptionItem PlayerAutoStart;
+        public static OptionItem Rehost;
+        public static OptionItem Public;
 
+        public static OptionItem TabGroupMisc;
+        public static OptionItem MapVoteDuration;
         public static OptionItem StartCountdown;
         public static OptionItem ColorCommandLevel;
         public static OptionItem AllowFortegreen;
@@ -107,6 +118,7 @@ namespace AmongUsRevamped
         public static OptionItem SlashColorCmd;
         public static OptionItem SlashRolesAndGamemodeCmd;
         public static OptionItem SlashLastGameCmd;
+        public static OptionItem SlashMapAndSeekerCmd;
         public static OptionItem SlashKickCmd;
         public static OptionItem SlashBanCmd;
         public static OptionItem SlashEndMeetingCmd;
@@ -270,6 +282,7 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupSNS;
         public static OptionItem SNSSettingsOverride;
         public static OptionItem SNSChatInGame;
+        public static OptionItem SNSChatInGameExtend;
         public static OptionItem CrewAutoWinsGameAfter;
         public static OptionItem CantKillTime;
         public static OptionItem MisfiresToSuicide;
@@ -294,71 +307,95 @@ namespace AmongUsRevamped
             if (IsLoaded) return;
 
             _ = PresetOptionItem.Create(0, TabGroup.SystemSettings)
-                .SetColor(new Color32(204, 204, 0, 255))
+                .SetColor(Color.yellow)
                 .SetHeader(true);
 
             Gamemode = StringOptionItem.Create(1, Translator.Get("gamemode"), gameModes, 0, TabGroup.SystemSettings, false)
-                .SetColor(Color.green)
+                .SetColor(Color.yellow)
                 .SetHeader(true);
 
-            TabGroupMain = TextOptionItem.Create(60000, Translator.Get("tabGroupMain"), TabGroup.SystemSettings)
-                .SetColor(Color.blue);
-
-            DeniedWordsToKick = IntegerOptionItem.Create(60049, Translator.Get("deniedWordsToKick"), new(1, 5, 1), 1, TabGroup.SystemSettings, false)
+            TabGroupLevelKick = TextOptionItem.Create(60048, Translator.Get("tabGroupLevelKick"), TabGroup.ModerationSettings)
+                .SetColor(Color.red);
+            EnableKickLowLevelPlayer = BooleanOptionItem.Create(60049, Translator.Get("enableKickLowLevelPlayer"), false, TabGroup.ModerationSettings, false);
+            KickLowLevelPlayer = IntegerOptionItem.Create(60050, Translator.Get("kickLowLevelPlayer"), new(0, 100, 1), 0, TabGroup.ModerationSettings, false)
+                .SetParent(EnableKickLowLevelPlayer)
                 .SetValueFormat(OptionFormat.Level);
+            TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, Translator.Get("tempBanLowLevelPlayer"), false, TabGroup.ModerationSettings, false)
+                .SetParent(EnableKickLowLevelPlayer);
+            DontKickLevelOnes = BooleanOptionItem.Create(60052, Translator.Get("dontKickLevelOnes"), false, TabGroup.ModerationSettings, false)
+                .SetParent(EnableKickLowLevelPlayer);
 
-            KickLowLevelPlayer = IntegerOptionItem.Create(60050, Translator.Get("kickLowLevelPlayer"), new(0, 100, 1), 0, TabGroup.SystemSettings, false)
-                .SetValueFormat(OptionFormat.Level);
-            TempBanLowLevelPlayer = BooleanOptionItem.Create(60051, Translator.Get("tempBanLowLevelPlayer"), false, TabGroup.SystemSettings, false)
-                .SetParent(KickLowLevelPlayer);
-            DontKickLevelOnes = BooleanOptionItem.Create(60052, Translator.Get("dontKickLevelOnes"), false, TabGroup.SystemSettings, false)
-                .SetParent(KickLowLevelPlayer);
-
-            KickInvalidFriendCodes = BooleanOptionItem.Create(60080, Translator.Get("kickInvalidFriendCodes"), true, TabGroup.SystemSettings, false);
-            TempBanInvalidFriendCodes = BooleanOptionItem.Create(60081, Translator.Get("tempBanInvalidFriendCodes"), false, TabGroup.SystemSettings, false)
+            TabGroupKickInvalidFriendCodes = TextOptionItem.Create(60079, Translator.Get("tabGroupKickInvalidFriendCodes"), TabGroup.ModerationSettings)
+                .SetColor(Color.red);
+            KickInvalidFriendCodes = BooleanOptionItem.Create(60080, Translator.Get("kickInvalidFriendCodes"), true, TabGroup.ModerationSettings, false);
+            TempBanInvalidFriendCodes = BooleanOptionItem.Create(60081, Translator.Get("tempBanInvalidFriendCodes"), false, TabGroup.ModerationSettings, false)
                 .SetParent(KickInvalidFriendCodes);
 
-            AutoKickStart = BooleanOptionItem.Create(60123, Translator.Get("autoKickStart"), false, TabGroup.SystemSettings, false);
-            AutoKickStartAsBan = BooleanOptionItem.Create(60124, Translator.Get("autoKickStartAsBan"), false, TabGroup.SystemSettings, false)
+            TabGroupDeniedWords = TextOptionItem.Create(60082, Translator.Get("tabGroupDeniedWords"), TabGroup.ModerationSettings)
+                .SetColor(Color.red);
+            EnableDeniedWords = BooleanOptionItem.Create(60083, Translator.Get("enableDeniedWords"), false, TabGroup.ModerationSettings, false);
+            DeniedWordsAsBan = BooleanOptionItem.Create(60084, Translator.Get("autoKickStartAsBan"), false, TabGroup.ModerationSettings, false)
+                .SetParent(EnableDeniedWords);
+            DeniedWordsToKick = IntegerOptionItem.Create(60085, Translator.Get("deniedWordsToKick"), new(1, 5, 1), 1, TabGroup.ModerationSettings, false)
+                .SetParent(EnableDeniedWords)
+                .SetValueFormat(OptionFormat.Level);
+            DeniedWordsStrength = BooleanOptionItem.Create(60086, Translator.Get("autoKickStartStrength"), false, TabGroup.ModerationSettings, false)
+                .SetParent(EnableDeniedWords);
+
+            TabGroupAutoKickStart = TextOptionItem.Create(600122, Translator.Get("tabGroupAutoKickStart"), TabGroup.ModerationSettings)
+                .SetColor(Color.red);
+            AutoKickStart = BooleanOptionItem.Create(60123, Translator.Get("autoKickStart"), false, TabGroup.ModerationSettings, false);
+            AutoKickStartAsBan = BooleanOptionItem.Create(60124, Translator.Get("autoKickStartAsBan"), false, TabGroup.ModerationSettings, false)
                 .SetParent(AutoKickStart);
-            AutoKickStartTimes = IntegerOptionItem.Create(60125, Translator.Get("autoKickStartTimes"), new(1, 10, 1), 1, TabGroup.SystemSettings, false)
+            AutoKickStartTimes = IntegerOptionItem.Create(60125, Translator.Get("autoKickStartTimes"), new(1, 10, 1), 1, TabGroup.ModerationSettings, false)
                 .SetParent(AutoKickStart)
                 .SetValueFormat(OptionFormat.Times);
-            AutoKickStartStrength = BooleanOptionItem.Create(60126, Translator.Get("autoKickStartStrength"), false, TabGroup.SystemSettings, false)
+            AutoKickStartStrength = BooleanOptionItem.Create(60126, Translator.Get("autoKickStartStrength"), false, TabGroup.ModerationSettings, false)
                 .SetParent(AutoKickStart);
+
+            TabGroupAccess = TextOptionItem.Create(60127, Translator.Get("tabGroupAccess"), TabGroup.ModerationSettings)
+                .SetColor(Color.red);
+            SlashColorCmd = StringOptionItem.Create(60128, Translator.Get("slashColorCmd"), accessLevels, 1, TabGroup.ModerationSettings, false);
+            SlashRolesAndGamemodeCmd = StringOptionItem.Create(60129, Translator.Get("slashRolesAndGamemodeCmd"), accessLevels, 1, TabGroup.ModerationSettings, false);
+            SlashLastGameCmd = StringOptionItem.Create(60130, Translator.Get("slashLastGameCmd"), accessLevels, 1, TabGroup.ModerationSettings, false);
+            SlashMapAndSeekerCmd = StringOptionItem.Create(60131, Translator.Get("slashMapAndSeekerCmd"), accessLevels, 1, TabGroup.ModerationSettings, false);
+            SlashKickCmd = StringOptionItem.Create(60132, Translator.Get("slashKickCmd"), accessLevels, 2, TabGroup.ModerationSettings, false);
+            SlashBanCmd = StringOptionItem.Create(60133, Translator.Get("slashBanCmd"), accessLevels, 2, TabGroup.ModerationSettings, false);
+            SlashEndMeetingCmd = StringOptionItem.Create(60134, Translator.Get("slashEndMeetingCmd"), accessLevels, 3, TabGroup.ModerationSettings, false);
+            SlashStartAndEndGameCmd = StringOptionItem.Create(60135, Translator.Get("slashStartAndEndGameCmd"), accessLevels, 3, TabGroup.ModerationSettings, false);
 
             TabGroupAutomation = TextOptionItem.Create(60149, Translator.Get("tabGroupAutomation"), TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
-
             AutoSendGameInfo = BooleanOptionItem.Create(60150, Translator.Get("autoSendGameInfo"), true, TabGroup.SystemSettings, false);
-            AutoRejoinLobby = BooleanOptionItem.Create(60210, Translator.Get("autoRejoinLobby"), false, TabGroup.SystemSettings, false);
-            AutoStartTimer = IntegerOptionItem.Create(64420, Translator.Get("autoStartTimer"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
-                .SetValueFormat(OptionFormat.Seconds);
-            WaitAutoStart = IntegerOptionItem.Create(64421, Translator.Get("waitAutoStart"), new(10, 600, 10), 300, TabGroup.SystemSettings, false)
-                .SetValueFormat(OptionFormat.Seconds);
-            PlayerAutoStart = IntegerOptionItem.Create(64422, Translator.Get("playerAutoStart"), new(1, 15, 1), 1, TabGroup.SystemSettings, false);
-            EnableJoinMessages = BooleanOptionItem.Create(64423, Translator.Get("enableJoinMessages"), true, TabGroup.SystemSettings, false);
-            MessagePerPlayerNum = IntegerOptionItem.Create(64424, Translator.Get("messagePerPlayerNum"), new(1, 15, 1), 5, TabGroup.SystemSettings, false)
+            AutoRejoinLobby = BooleanOptionItem.Create(60151, Translator.Get("autoRejoinLobby"), false, TabGroup.SystemSettings, false);
+            EnableJoinMessages = BooleanOptionItem.Create(60152, Translator.Get("enableJoinMessages"), true, TabGroup.SystemSettings, false);
+            MessagePerPlayerNum = IntegerOptionItem.Create(60153, Translator.Get("messagePerPlayerNum"), new(1, 15, 1), 5, TabGroup.SystemSettings, false)
                 .SetParent(EnableJoinMessages);
 
-            TabGroupMisc = TextOptionItem.Create(60379, Translator.Get("tabGroupMisc"), TabGroup.SystemSettings)
-                .SetColor(Color.green);
-
-            StartCountdown = IntegerOptionItem.Create(60380, Translator.Get("startCountdown"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
+            TabGroupAutostart = TextOptionItem.Create(64425, Translator.Get("tabGroupAutostart"), TabGroup.SystemSettings)
+                .SetColor(Color.yellow);
+            AutoStartTimer = IntegerOptionItem.Create(64426, Translator.Get("autoStartTimer"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
-            AllowFortegreen = BooleanOptionItem.Create(60382, Translator.Get("allowFortegreen"), false, TabGroup.SystemSettings, false);
+            WaitAutoStart = IntegerOptionItem.Create(64427, Translator.Get("waitAutoStart"), new(10, 600, 10), 300, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            PlayerAutoStart = IntegerOptionItem.Create(64428, Translator.Get("playerAutoStart"), new(1, 15, 1), 1, TabGroup.SystemSettings, false);
+            Rehost = BooleanOptionItem.Create(64429, Translator.Get("rehost"), false, TabGroup.SystemSettings, false);
+            Public = BooleanOptionItem.Create(64430, Translator.Get("public"), false, TabGroup.SystemSettings, false)
+                .SetParent(Rehost);
+
+            TabGroupMisc = TextOptionItem.Create(60378, Translator.Get("tabGroupMisc"), TabGroup.SystemSettings)
+                .SetColor(Color.yellow);
+
+            MapVoteDuration = IntegerOptionItem.Create(60379, Translator.Get("mapVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetColor(Color.red);
+            StartCountdown = IntegerOptionItem.Create(60380, Translator.Get("startCountdown"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetColor(Color.red);
+            AllowFortegreen = BooleanOptionItem.Create(60382, Translator.Get("allowFortegreen"), false, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
             NoGameEnd = BooleanOptionItem.Create(60383, Translator.Get("noGameEnd"), false, TabGroup.SystemSettings, false)
                 .SetColor(Color.red);
-
-            TabGroupAccess = TextOptionItem.Create(60400, Translator.Get("tabGroupAccess"), TabGroup.SystemSettings)
-                .SetColor(Color.red);
-            SlashColorCmd = StringOptionItem.Create(60401, Translator.Get("slashColorCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
-            SlashRolesAndGamemodeCmd = StringOptionItem.Create(60402, Translator.Get("slashRolesAndGamemodeCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
-            SlashLastGameCmd = StringOptionItem.Create(60403, Translator.Get("slashLastGameCmd"), accessLevels, 1, TabGroup.SystemSettings, false);
-            SlashKickCmd = StringOptionItem.Create(60405, Translator.Get("slashKickCmd"), accessLevels, 2, TabGroup.SystemSettings, false);
-            SlashBanCmd = StringOptionItem.Create(60406, Translator.Get("slashBanCmd"), accessLevels, 2, TabGroup.SystemSettings, false);
-            SlashEndMeetingCmd = StringOptionItem.Create(60407, Translator.Get("slashEndMeetingCmd"), accessLevels, 3, TabGroup.SystemSettings, false);
-            SlashStartAndEndGameCmd = StringOptionItem.Create(60408, Translator.Get("slashStartAndEndGameCmd"), accessLevels, 3, TabGroup.SystemSettings, false);
 
             // Gamemode Settings
 
@@ -368,9 +405,11 @@ namespace AmongUsRevamped
                 .SetValueFormat(OptionFormat.Level);
 
             TabGroupSNS = TextOptionItem.Create(70050, Translator.Get("tabGroupSNS"), TabGroup.GamemodeSettings)
-                .SetColor(Color.yellow);
+                .SetColor(Color.green);
             SNSSettingsOverride = BooleanOptionItem.Create(70051, Translator.Get("snsSettingsOverride"), true, TabGroup.GamemodeSettings, false);
             SNSChatInGame = BooleanOptionItem.Create(70063, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
+            SNSChatInGameExtend = BooleanOptionItem.Create(70064, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
+                .SetParent(SNSChatInGame);
             CantKillTime = IntegerOptionItem.Create(70053, Translator.Get("cantKillTime"), new(0, 60, 5), 20, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             MisfiresToSuicide = IntegerOptionItem.Create(70052, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 2, TabGroup.GamemodeSettings, false);
@@ -400,7 +439,7 @@ namespace AmongUsRevamped
                 .SetColor(Color.red);
 
             TabGroupSpeedrun = TextOptionItem.Create(70075, Translator.Get("tabGroupSpeedrun"), TabGroup.GamemodeSettings)
-                .SetColor(Color.blue);
+                .SetColor(Color.green);
             SpeedrunSettingsOverride = BooleanOptionItem.Create(70076, Translator.Get("speedrunSettingsOverride"), true, TabGroup.GamemodeSettings, false);
             GameAutoEndsAfter = IntegerOptionItem.Create(70077, Translator.Get("gameAutoEndsAfter"), new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
@@ -408,7 +447,7 @@ namespace AmongUsRevamped
 
             // Gameplay Settings
             TabGroupSabotages = TextOptionItem.Create(60450, Translator.Get("tabGroupSabotages"), TabGroup.ModSettings)
-                .SetColor(Color.red);
+                .SetColor(Color.blue);
             DeadImpostorsCanSabotage = BooleanOptionItem.Create(60455, Translator.Get("deadImpostorsCanSabotage"), true, TabGroup.ModSettings, false)
                 .SetColor(Color.red);
             DisableSabotage = BooleanOptionItem.Create(60456, Translator.Get("disableSabotage"), false, TabGroup.ModSettings, false)
@@ -436,100 +475,77 @@ namespace AmongUsRevamped
 
             TabGroupGameplayGeneral = TextOptionItem.Create(60564, Translator.Get("tabGroupGameplayGeneral"), TabGroup.ModSettings)
                 .SetColor(Color.blue);
-            DisableAnnoyingMeetingCalls = BooleanOptionItem.Create(60565, Translator.Get("disableAnnoyingMeetingCalls"), false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+            DisableAnnoyingMeetingCalls = BooleanOptionItem.Create(60565, Translator.Get("disableAnnoyingMeetingCalls"), false, TabGroup.ModSettings, false);
 
-            ChangeDecontaminationTime = BooleanOptionItem.Create(60550, Translator.Get("changeDecontaminationTime"), false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+            ChangeDecontaminationTime = BooleanOptionItem.Create(60550, Translator.Get("changeDecontaminationTime"), false, TabGroup.ModSettings, false);
             DecontaminationTimeOnMiraHQ = FloatOptionItem.Create(60551, Translator.Get("decontaminationTimeOnMiraHQ"), new(0.5f, 10f, 0.25f), 3f, TabGroup.ModSettings, false)
                 .SetParent(ChangeDecontaminationTime)
-                .SetValueFormat(OptionFormat.Seconds)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+                .SetValueFormat(OptionFormat.Seconds);
             DecontaminationDoorOpenTimeOnMiraHQ = FloatOptionItem.Create(60552, Translator.Get("decontaminationDoorOpenTimeOnMiraHQ"), new(0.5f, 10f, 0.25f), 3f, TabGroup.ModSettings, false)
                 .SetParent(ChangeDecontaminationTime)
-                .SetValueFormat(OptionFormat.Seconds)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+                .SetValueFormat(OptionFormat.Seconds);
             DecontaminationTimeOnPolus = FloatOptionItem.Create(60553, Translator.Get("decontaminationTimeOnPolus"), new(0.5f, 10f, 0.25f), 3f, TabGroup.ModSettings, false)
                 .SetParent(ChangeDecontaminationTime)
-                .SetValueFormat(OptionFormat.Seconds)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+                .SetValueFormat(OptionFormat.Seconds);
             DecontaminationDoorOpenTimeOnPolus = FloatOptionItem.Create(60554, Translator.Get("decontaminationDoorOpenTimeOnPolus"), new(0.5f, 10f, 0.25f), 3f, TabGroup.ModSettings, false)
                 .SetParent(ChangeDecontaminationTime)
-                .SetValueFormat(OptionFormat.Seconds)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+                .SetValueFormat(OptionFormat.Seconds);
 
-            DisableSporeTrigger = BooleanOptionItem.Create(60558, Translator.Get("disableSporeTrigger"), false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+            DisableSporeTrigger = BooleanOptionItem.Create(60558, Translator.Get("disableSporeTrigger"), false, TabGroup.ModSettings, false);
 
-            DisableDevices = BooleanOptionItem.Create(22900, Translator.Get("disableDevices"), false, TabGroup.ModSettings, false)
-                .SetColor(Color.red);
+            DisableDevices = BooleanOptionItem.Create(22900, Translator.Get("disableDevices"), false, TabGroup.ModSettings, false);
 
             DisableSkeldDevices = BooleanOptionItem.Create(22905, Translator.Get("disableSkeldDevices"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableDevices)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisableSkeldAdmin = BooleanOptionItem.Create(22906, Translator.Get("disableSkeldAdmin"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableSkeldDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableSkeldDevices);
             DisableSkeldCamera = BooleanOptionItem.Create(22907, Translator.Get("disableSkeldCamera"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableSkeldDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableSkeldDevices);
 
             DisableMiraHQDevices = BooleanOptionItem.Create(22908, Translator.Get("disableMiraHQDevices"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableDevices)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisableMiraHQAdmin = BooleanOptionItem.Create(22909, Translator.Get("disableMiraHQAdmin"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableMiraHQDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableMiraHQDevices);
             DisableMiraHQDoorLog = BooleanOptionItem.Create(22910, Translator.Get("disableMiraHQDoorLog"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableMiraHQDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableMiraHQDevices);
 
             DisablePolusDevices = BooleanOptionItem.Create(22911, Translator.Get("disablePolusDevices"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableDevices)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisablePolusAdmin = BooleanOptionItem.Create(22912, Translator.Get("disablePolusAdmin"), false, TabGroup.ModSettings, false)
-                .SetParent(DisablePolusDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisablePolusDevices);
             DisablePolusCamera = BooleanOptionItem.Create(22913, Translator.Get("disablePolusCamera"), false, TabGroup.ModSettings, false)
-                .SetParent(DisablePolusDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisablePolusDevices);
             DisablePolusVital = BooleanOptionItem.Create(22914, Translator.Get("disablePolusVital"), false, TabGroup.ModSettings, false)
-                .SetParent(DisablePolusDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisablePolusDevices);
 
             DisableAirshipDevices = BooleanOptionItem.Create(22915, Translator.Get("disableAirshipDevices"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableDevices)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisableAirshipCockpitAdmin = BooleanOptionItem.Create(22916, Translator.Get("disableAirshipCockpitAdmin"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableAirshipDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableAirshipDevices);
             DisableAirshipRecordsAdmin = BooleanOptionItem.Create(22917, Translator.Get("disableAirshipRecordsAdmin"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableAirshipDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableAirshipDevices);
             DisableAirshipCamera = BooleanOptionItem.Create(22918, Translator.Get("disableAirshipCamera"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableAirshipDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableAirshipDevices);
             DisableAirshipVital = BooleanOptionItem.Create(22919, Translator.Get("disableAirshipVital"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableAirshipDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableAirshipDevices);
 
             DisableFungleDevices = BooleanOptionItem.Create(22925, Translator.Get("disableFungleDevices"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableDevices)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
 
             DisableFungleVital = BooleanOptionItem.Create(22927, Translator.Get("disableFungleVital"), false, TabGroup.ModSettings, false)
-                .SetParent(DisableFungleDevices)
-                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+                .SetParent(DisableFungleDevices);
 
             TabGroupTasks = TextOptionItem.Create(22995, Translator.Get("tabGroupTasks"), TabGroup.ModSettings)
-                .SetColor(Color.yellow);
+                .SetColor(Color.blue);
             TaskPercentNeededToWin = IntegerOptionItem.Create(22996, Translator.Get("taskPercentNeededToWin"), new(30, 100, 5), 100, TabGroup.ModSettings, false)
-                .SetColor(new Color32(255, 255, 153, byte.MaxValue))
                 .SetValueFormat(OptionFormat.Percent);
-            AllPlayersSameTasks = BooleanOptionItem.Create(22998, Translator.Get("allPlayersSameTasks"), false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(255, 255, 153, byte.MaxValue));
-            OverrideTaskSettings = BooleanOptionItem.Create(22999, Translator.Get("overrideTaskSettings"), false, TabGroup.ModSettings, false)
-                .SetColor(new Color32(255, 255, 153, byte.MaxValue));
+            AllPlayersSameTasks = BooleanOptionItem.Create(22998, Translator.Get("allPlayersSameTasks"), false, TabGroup.ModSettings, false);
+            OverrideTaskSettings = BooleanOptionItem.Create(22999, Translator.Get("overrideTaskSettings"), false, TabGroup.ModSettings, false);
 
             DisableMiraTasks = BooleanOptionItem.Create(23000, Translator.Get("disableMiraTasks"), false, TabGroup.ModSettings, false)
                 .SetColor(new Color32(173, 216, 230, byte.MaxValue))

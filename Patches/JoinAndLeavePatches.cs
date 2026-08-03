@@ -45,6 +45,12 @@ internal static class OnGameJoinedPatch
                 WaitingForChat = false;
             }, 5.2f, "AutoSendGameInfo2");
         }
+
+        if (Options.Public.GetBool() && DisconnectManager.Rehosting)
+        {
+            AmongUsClient.Instance.ChangeGamePublic(true);
+            DisconnectManager.Rehosting = false;
+        }
     }
 }
 
@@ -134,7 +140,7 @@ public static class SetLevelPatch
     public static List<PlayerControl> HandledLevelKicks = [];
     public static void Prefix(PlayerControl __instance, uint level)
     {
-        if (AmongUsClient.Instance.AmHost && level < Options.KickLowLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
+        if (AmongUsClient.Instance.AmHost && level < Options.KickLowLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId && Options.EnableKickLowLevelPlayer.GetBool())
         {
             if (level == 0 && Options.DontKickLevelOnes.GetBool()) return;
             if (HandledLevelKicks.Contains(__instance)) return;

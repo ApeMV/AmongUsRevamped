@@ -73,6 +73,8 @@ public static class Utils
         {
             case TabGroup.SystemSettings:
                 return Translator.Get("systemSettings");
+            case TabGroup.ModerationSettings:
+                return Translator.Get("moderationSettings");
             case TabGroup.ModSettings:
                 return Translator.Get("gameplaySettings");
             case TabGroup.GamemodeSettings:
@@ -206,7 +208,7 @@ public static class Utils
         MurderPlayerPatch.misfireCount.Clear();
         MurderPlayerPatch.killCount.Clear();
 
-        LateTask.Tasks.Clear(); 
+        LateTask.Tasks.RemoveAll(x => x.name != "RehostManager");
         NormalGameEndChecker.ImpCheckComplete = false;
         CreateOptionsPickerPatch.SetDleks2 = false;
         CanCallMeetings = true;
@@ -224,7 +226,7 @@ public static class Utils
         PlayerControlSetRolePatch.FirstAssign = true;
         PlayerControlSetRolePatch.manualSeekers.Clear();
 
-        CoShowIntroPatch.IntroInitiated = false;
+        OnGameStartPatch.PastStartScreen = false;
     }
 
     public static PlayerControl[] AllAlivePlayerControls
@@ -570,5 +572,95 @@ public static class Utils
             return $"<color=#ff1919>{p.Data.RoleType}</color>";
         }
         else return $"<color=#8cffff>{p.Data.RoleType}</color>";
+    }
+
+    public static int skeldVotes;
+    public static int miraVotes;
+    public static int polusVotes;
+    public static int airshipVotes;
+    public static int fungleVotes;
+    public static int dleksVotes;
+    public static bool MapVoteActive;
+    public static bool DleksEnabled;
+    public static readonly List<byte> HasVoted = [];
+    public static void MapVote(bool dleks, bool moderator)
+    {
+        if (MapVoteActive) return;
+
+        DleksEnabled = dleks;
+        MapVoteActive = true;
+
+        if (dleks && moderator) Utils.ModeratorChatCommand("A map vote is active!\n\nA: Skeld\nB: Mira\nC: Polus\nD: Airship\nE: Fungle\nF: Eht Dleks\n\nType /vote 'letter' to vote.", "", false);
+        else if (moderator) Utils.ModeratorChatCommand("A map vote is active!\n\nA: The Skeld\nB: Mira HQ\nC: Polus\nD: The Airship\nE: The Fungle\n\nType /vote 'letter' to vote.", "", false);
+
+        if (dleks && !moderator) Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "A map vote is active!\n\nA: Skeld\nB: Mira\nC: Polus\nD: Airship\nE: Fungle\nF: Eht Dleks\n\nType /vote 'letter' to vote.", "", false);
+        else if (!moderator) Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "A map vote is active!\n\nA: The Skeld\nB: Mira HQ\nC: Polus\nD: The Airship\nE: The Fungle\n\nType /vote 'letter' to vote.", "", false);
+
+        new LateTask(() =>
+        {
+            int highest = skeldVotes;
+            string winner = "Skeld";
+            byte mapId = 0;
+            bool tie = false;
+
+            void Check(int votes, string name, byte id)
+            {
+                if (votes > highest)
+                {
+                    highest = votes;
+                    winner = name;
+                    mapId = id;
+                    tie = false;
+                }
+                else if (votes == highest)
+                {
+                    tie = true;
+                }
+            }
+
+            Check(miraVotes, "Mira HQ", 1);
+            Check(polusVotes, "Polus", 2);
+            Check(airshipVotes, "Airship", 4);
+            Check(fungleVotes, "The Fungle", 5);
+            if (DleksEnabled) Check(dleksVotes, "Eht Dleks", 3);
+
+            string voteResults = $"Skeld: {skeldVotes}\n" + $"Mira: {miraVotes}\n" + $"Polus: {polusVotes}\n" + $"Airship: {airshipVotes}\n" + $"Fungle: {fungleVotes}";
+            if (DleksEnabled) voteResults += $"\nEht Dleks: {dleksVotes}";
+
+            if (highest == 0)
+            {
+                ModeratorChatCommand("Lol, no one voted. Hooray for democracy?", "", false);
+            }
+            else if (tie)
+            {
+                ModeratorChatCommand($"Map vote tied. No new map selected.\n\n{voteResults}", "", false);
+            }
+            else
+            {
+                ModeratorChatCommand(SendChatPatch.ConvertNum($"Winner: {winner} ({highest})\n\n{voteResults}"), "", false);
+
+                if (winner == "Eht Dleks")
+                {
+                    CreateOptionsPickerPatch.ApplyDleks(Utils.isHideNSeek);
+                }
+                else
+                {
+                    CreateOptionsPickerPatch.ClearDleks();
+
+                    if (!Utils.isHideNSeek) Main.NormalOptions.MapId = mapId;
+                    else Main.HideNSeekOptions.MapId = mapId;
+                }
+            }
+
+            skeldVotes = 0;
+            miraVotes = 0;
+            polusVotes = 0;
+            airshipVotes = 0;
+            fungleVotes = 0;
+            dleksVotes = 0;
+            HasVoted.Clear();
+
+            MapVoteActive = false;
+        }, Options.MapVoteDuration.GetInt(), "MapPoll");
     }
 }

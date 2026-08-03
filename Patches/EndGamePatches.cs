@@ -65,12 +65,12 @@ class NormalGameEndChecker
             return;
         }
 
-        if (Utils.AliveImpostors == 0 || Winner == "Crewmate") 
+        if ((Options.Gamemode.GetValue() != 2 && Utils.AliveImpostors == 0) || Winner == "Crewmate") 
         {
             LastWinReason = "Crewmates Win!\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;
         }
-        else if (Utils.AliveImpostors >= Utils.AliveCrewmates || Winner == "Impostor") 
+        else if ((Options.Gamemode.GetValue() != 2 && Utils.AliveImpostors >= Utils.AliveCrewmates) || Winner == "Impostor") 
         {
             LastWinReason = "Impostors Win!\n\nImpostors: " + impostorList;
             canUpdateWinnerText = false;

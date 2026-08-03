@@ -1,8 +1,7 @@
-﻿namespace AmongUsRevamped;
+﻿using AmongUs.GameOptions;
 
-//Old Patch for Mayor
+namespace AmongUsRevamped;
 
-/*
 [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
 class EnterVentPatch
 {
@@ -10,11 +9,19 @@ class EnterVentPatch
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
-        if (CustomRoleManagement.PlayerRoles.TryGetValue(pc.PlayerId, out var role) && role == "Mayor")
+        if (pc.Data.RoleType != RoleTypes.Impostor && 
+            pc.Data.RoleType != RoleTypes.Shapeshifter &&
+            pc.Data.RoleType != RoleTypes.Phantom &&
+            pc.Data.RoleType != RoleTypes.Viper &&
+            pc.Data.RoleType != RoleTypes.Engineer &&
+            !pc.Data.IsDead)
         {
-            pc.CmdReportDeadBody(null);
-            Logger.Info($" The Mayor, {pc.Data.PlayerName}, called a meeting by venting", "EnterVent");
+            EACR.VentCheat(pc, __instance);
+        }
+
+        if (__instance.Id > 15)
+        {
+            EACR.VentCheat(pc, __instance);
         }
     }
 }
-*/

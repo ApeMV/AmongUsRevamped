@@ -43,7 +43,7 @@ class PlayerControlSetRolePatch
 
         if (!ProcessedPlayers.Add(__instance.PlayerId)) return true;
 
-        canOverrideRole = false;
+        // canOverrideRole = false;
 
         if (Utils.isHideNSeek && Seekers.Count() == 0 && Options.NumSeekers.GetInt() > 0)
         {
@@ -110,7 +110,7 @@ class PlayerControlSetRolePatch
             Seekers.Clear();
             ProcessedPlayers.Clear();
 
-            Logger.Info("PCSRP successful", "RoleManaging");
+            Logger.Info(" PCSRP successful", "RoleManaging");
         }
     
         return true;
@@ -120,6 +120,7 @@ class PlayerControlSetRolePatch
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.OnGameStart))]
 internal static class OnGameStartPatch
 {
+    public static bool PastStartScreen;
     public static void Postfix()
     {
         if (AmongUsClient.Instance.AmHost && Options.Gamemode.GetValue() == 1 && Options.SNSChatInGame.GetBool())
@@ -139,5 +140,7 @@ internal static class OnGameStartPatch
         {
             Utils.StoredRoleText[p.PlayerId] = Utils.GetRoleText(p);
         }
+
+        PastStartScreen = true;
     }
 }

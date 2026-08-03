@@ -1,7 +1,7 @@
 {
   "LanguageID": "2",
 
-  "gameMaster": "游戏大师(Game Master)",
+  "gameMaster": "游戏主管(Game Master)",
   "showFPS": "显示帧率 (FPS)",
   "autoStart": "自动开始",
   "enableDarkTheme": "启用深色主题",
@@ -45,13 +45,13 @@
   "noGameEnd": "游戏永不结束",
 
   "tabGroupAccess": "权限等级",
-  "slashColorCmd": "谁可以使用 /color",
+  "slashColorCmd": "谁可以使用 /color 指令",
   "slashRolesAndGamemodeCmd": "谁可以使用 /r 和模板",
-  "slashLastGameCmd": "谁可以使用 /l 和 /aur",
-  "slashKickCmd": "谁可以使用 /kick 和 /ckick",
-  "slashBanCmd": "谁可以使用 /ban 和 /cban",
-  "slashEndMeetingCmd": "谁可以使用 /endmeeting",
-  "slashStartAndEndGameCmd": "谁可以使用 /startgame 和 /endgame",
+  "slashLastGameCmd": "谁可以使用 /l 和 /aur 指令",
+  "slashKickCmd": "谁可以使用 /kick 和 /ckick 指令",
+  "slashBanCmd": "谁可以使用 /ban 和 /cban 指令",
+  "slashEndMeetingCmd": "谁可以使用 /endmeeting 和 /seeker 指令",
+  "slashStartAndEndGameCmd": "谁可以使用 /startgame 和 /endgame 指令",
 
   "tabGroupCrewmate": "船员职业",
   "tabGroupNeutral": "中立职业",
@@ -282,5 +282,12 @@
   "vipAndAbove": "<color=yellow>VIP</color> 及以上",
   "moderatorAndAbove": "<color=purple>管理员</color> 及以上",
   "admin": "<color=red>管理员</color>",
-  "onlyYou": "仅自己"
+  "onlyYou": "仅自己",
+  "seekersDesc": "显示所有手动选择的搜寻者。",
+  "clearSeekerDesc": "清除手动搜寻者列表。",
+  "startWordsWelcome": "# 在此文件中，您可以设置检查发送 “Start” 并踢出该玩家的功能。\n# 严格检测关闭 = 消息必须完全匹配关键词。\n# 严格检测开启 = 消息只需包含关键词即可。\n# 也可以添加无关词语，仅用于大厅检测。\n\nstart\nbegin\ncommence",
+  "gameMasterWarningTwo": "警告：游戏主管已启用",
+  "startWordKick": "{0} 因发送 StartWords.txt 中的关键词被踢出，累计次数：{1} 次",
+  "seekers": "搜寻者：",
+  "clearedSeekers": "已成功清除手动搜寻者列表。"
 }

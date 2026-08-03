@@ -167,7 +167,20 @@ class PlayerControlCompleteTaskPatch
             tasksPerPlayer[p.PlayerId] = p.Data.Tasks.Count;
         }
 
+        if (__instance.Data.RoleType == RoleTypes.Impostor ||
+            __instance.Data.RoleType == RoleTypes.Shapeshifter ||
+            __instance.Data.RoleType == RoleTypes.Phantom ||
+            __instance.Data.RoleType == RoleTypes.Viper)
+        {
+            EACR.TaskCheat(__instance);
+        }
+
         playerTasksCompleted[__instance.PlayerId]++;
+
+        if (playerTasksCompleted[__instance.PlayerId] > __instance.Data.Tasks.Count)
+        {
+            EACR.TaskCheat(__instance);
+        }
 
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");
 
@@ -192,7 +205,7 @@ class PlayerControlCompleteTaskPatch
     
     public static void CalculateTaskWin()
     {
-        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek || Options.NoGameEnd.GetBool() || !CoShowIntroPatch.IntroInitiated) return;
+        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek || Options.NoGameEnd.GetBool() || !OnGameStartPatch.PastStartScreen) return;
 
         //Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
 
@@ -213,5 +226,65 @@ public static class PlayerControlCheckSporeTriggerPatch
 
         if (Options.DisableSporeTrigger.GetBool()) return false;
         else return true;
+    }
+}
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.PlayAnimation))]
+public static class PlayAnimationPatch
+{
+    public static void Prefix(PlayerControl __instance, byte animType)
+    {
+        if (!AmongUsClient.Instance.AmHost || __instance == PlayerControl.LocalPlayer) return;
+
+        var task = (TaskTypes)animType;
+
+        switch (task)
+        {
+            case TaskTypes.PrimeShields:
+            case TaskTypes.ClearAsteroids:
+            case TaskTypes.EmptyGarbage:
+            if (__instance.Data.RoleType == RoleTypes.Impostor ||
+                __instance.Data.RoleType == RoleTypes.Shapeshifter ||
+                __instance.Data.RoleType == RoleTypes.Phantom ||
+                __instance.Data.RoleType == RoleTypes.Viper)
+            {
+                EACR.PlayAnimationCheat(__instance);
+                return;
+            }
+            if (!GameManager.Instance.LogicOptions.GetVisualTasks())
+            {
+                {
+                    EACR.PlayAnimationCheat(__instance);
+                    return;
+                }
+            }
+            break;
+        }
+    }
+}
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetScanner))]
+public static class SetScannerPatch
+{
+    public static void Prefix(PlayerControl __instance)
+    {
+        if (!AmongUsClient.Instance.AmHost || __instance == PlayerControl.LocalPlayer) return;
+
+        if (__instance.Data.RoleType == RoleTypes.Impostor ||
+            __instance.Data.RoleType == RoleTypes.Shapeshifter ||
+            __instance.Data.RoleType == RoleTypes.Phantom ||
+            __instance.Data.RoleType == RoleTypes.Viper)
+        {
+            EACR.PlayAnimationCheat(__instance);
+            return;
+        }
+
+        if (!GameManager.Instance.LogicOptions.GetVisualTasks() && __instance != PlayerControl.LocalPlayer)
+        {
+            {
+                EACR.PlayAnimationCheat(__instance);
+                return;
+            }
+        }
     }
 }

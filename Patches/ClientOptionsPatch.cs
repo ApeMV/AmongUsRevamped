@@ -28,8 +28,7 @@ namespace AmongUsRevamped
 
                 static void GMButtonToggle()
                 {
-                    if (Main.GM.Value)
-                        HudManager.Instance.ShowPopUp(Translator.Get("gameMasterWarning"));
+                    if (Main.GM.Value && Utils.IsLobby) HudManager.Instance.ShowPopUp(Translator.Get("gameMasterWarning"));
                 }
             }
 

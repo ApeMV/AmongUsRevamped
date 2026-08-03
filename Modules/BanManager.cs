@@ -170,12 +170,12 @@ public static class BanManager
 
     public static bool IsWordBanned(PlayerControl player, string input)
     {
-        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0) return false;
+        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0 || !Options.EnableDeniedWords.GetBool()) return false;
 
         int clientId = player.Data.ClientId;
         var bannedWords = File.ReadAllLines(BanWordPath).Where(x => !x.StartsWith("#"));
 
-        if (bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase)))
+        if ((Options.DeniedWordsStrength.GetBool() && bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.DeniedWordsStrength.GetBool() && bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Equals(code, StringComparison.OrdinalIgnoreCase))))
         {
 
             if (!Main.SayDeniedWordTimes.ContainsKey(clientId))
@@ -187,9 +187,17 @@ public static class BanManager
 
             if (Main.SayDeniedWordTimes[clientId] >= Options.DeniedWordsToKick.GetInt())
             {
-                AmongUsClient.Instance.KickPlayer(clientId, false);
-                Logger.Info(Translator.Get("banWordKick", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt()), "DeniedWordKick");
-                Logger.SendInGame(Translator.Get("banWordKick", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt()));    
+                if (Options.DeniedWordsAsBan.GetBool())
+                {
+                    AmongUsClient.Instance.KickPlayer(clientId, true);
+                    Logger.SendInGame(Translator.Get("banWordBan", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt()));   
+                }
+                else
+                {
+                    AmongUsClient.Instance.KickPlayer(clientId, false);
+                    Logger.SendInGame(Translator.Get("banWordKick", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt())); 
+                }  
+                Logger.Info(Translator.Get("banWordKick", player.Data.PlayerName, Options.DeniedWordsToKick.GetInt()), "DeniedWordKick"); 
             }
             return true;
         }
@@ -198,10 +206,10 @@ public static class BanManager
 
     public static bool IsStartWord(PlayerControl player, string input)
     {
-        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0) return false;
+        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0 || !Options.AutoKickStart.GetBool()) return false;
 
         int clientId = player.Data.ClientId;
-        var startWords = File.ReadAllLines(BanWordPath).Where(x => !x.StartsWith("#"));
+        var startWords = File.ReadAllLines(StartWordsPath).Where(x => !x.StartsWith("#"));
 
         if ((Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Equals(code, StringComparison.OrdinalIgnoreCase))))
         {
@@ -214,9 +222,17 @@ public static class BanManager
 
             if (Main.SayStartTimes[clientId] >= Options.AutoKickStartTimes.GetInt())
             {
-                AmongUsClient.Instance.KickPlayer(clientId, false);
+                if (Options.AutoKickStartAsBan.GetBool()) 
+                {
+                    AmongUsClient.Instance.KickPlayer(clientId, true);
+                    Logger.SendInGame(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));    
+                }
+                else
+                {
+                    AmongUsClient.Instance.KickPlayer(clientId, false);
+                    Logger.SendInGame(Translator.Get("startWordBan", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));   
+                }
                 Logger.Info(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()), "StartWordKick");
-                Logger.SendInGame(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));    
             }
             return true;
         }

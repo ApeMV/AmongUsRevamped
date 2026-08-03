@@ -396,10 +396,44 @@ internal static class SendChatPatch
 
         if (__instance.timeSinceLastMessage < 3f || OnGameJoinedPatch.WaitingForChat) return false;
 
+        if (text == "/mapvote")
+        {
+            if (Utils.IsLobby)
+            {
+                Utils.MapVote(false, false);
+
+                __instance.freeChatField.textArea.Clear();
+                __instance.freeChatField.textArea.SetText(string.Empty);
+                return false;   
+            }
+        }
+
+        if (text == "/allmapvote")
+        {
+            if (Utils.IsLobby)
+            {
+                Utils.MapVote(true, false);
+
+                __instance.freeChatField.textArea.Clear();
+                __instance.freeChatField.textArea.SetText(string.Empty);
+                return false;   
+            }
+        }
+
+        if (text == "/vote a" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.skeldVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+        if (text == "/vote b" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.miraVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+        if (text == "/vote c" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.polusVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+        if (text == "/vote d" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.airshipVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+        if (text == "/vote e" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.fungleVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+        if (text == "/vote f" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId) && Utils.DleksEnabled) {Utils.dleksVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+
         if (text == "/l" || text == "/lastgame")
         {
             if (string.IsNullOrEmpty(NormalGameEndChecker.LastWinReason) || Utils.InGame) return false;
             Utils.ChatCommand(__instance, $"{NormalGameEndChecker.LastWinReason}", "", false);
+
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
             return false;
         }
 
@@ -588,7 +622,7 @@ public static class RPCHandlerPatch
                 BanManager.IsStartWord(__instance, text);
                 BanManager.IsWordBanned(__instance, text);
 
-                if (text.StartsWith("/seeker ") && Utils.CheckAccessLevel(__instance.Data.FriendCode) >= Options.SlashEndMeetingCmd.GetValue())
+                if (text.StartsWith("/seeker ") && Utils.CheckAccessLevel(__instance.Data.FriendCode) >= Options.SlashMapAndSeekerCmd.GetValue())
                 {
                     if (!Utils.IsLobby || !Utils.isHideNSeek)
                     {
@@ -627,8 +661,9 @@ public static class RPCHandlerPatch
                     }
                 }
 
-                if (text == "/clearseeker" && Utils.CheckAccessLevel(__instance.Data.FriendCode) >= Options.SlashEndMeetingCmd.GetValue())
+                if (text == "/clearseeker")
                 {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashMapAndSeekerCmd.GetValue()) return;
                     PlayerControlSetRolePatch.manualSeekers.Clear();
                     HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Translator.Get("clearedSeekers"));
                 }
@@ -697,8 +732,6 @@ public static class RPCHandlerPatch
                     }
                 }
 
-                if (OnGameJoinedPatch.WaitingForChat || GameStartManagerUpdatePatch.CountingDown) return;
-
                 if (text == "/eg" || text == "/endgame")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashStartAndEndGameCmd.GetValue()) return;
@@ -722,6 +755,33 @@ public static class RPCHandlerPatch
                     GameStartManager.Instance.BeginGame();
                 }
 
+                if (OnGameJoinedPatch.WaitingForChat || GameStartManagerUpdatePatch.CountingDown) return;
+
+                if (text == "/mapvote")
+                {
+                    if (Utils.IsLobby)
+                    {
+                        if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashMapAndSeekerCmd.GetValue()) return;
+                        Utils.MapVote(false, true);
+                    }
+                }
+
+                if (text == "/allmapvote")
+                {
+                    if (Utils.IsLobby)
+                    {
+                        if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashMapAndSeekerCmd.GetValue()) return;
+                        Utils.MapVote(true, true);
+                    }
+                }
+                
+                if (text == "/vote a" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.skeldVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+                if (text == "/vote b" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.miraVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+                if (text == "/vote c" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.polusVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+                if (text == "/vote d" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.airshipVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+                if (text == "/vote e" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.fungleVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+                if (text == "/vote f" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId) && Utils.DleksEnabled) {Utils.dleksVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+
                 if (text == "/l" || text == "/lastgame")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashLastGameCmd.GetValue()) return;
@@ -732,7 +792,7 @@ public static class RPCHandlerPatch
                 if (text == "/aur" || text == "/socials")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashLastGameCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand("AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c o r d . g g /\n83Zhzhyhya", "", false);
+                    Utils.ModeratorChatCommand("AUR socials:\n\ng i t h u b . c o m /\nApeMV/AmongUsRevamped\n\nd i s c о r d . g g /\n83Zhzhyhya", "", false);
                 }
 
                 if (text == "/0kc" || text == "/0killcooldown")
