@@ -29,7 +29,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.9.2):
+# 🎮 Features (v1.9.3):
 
 ## <b>♠️ Client Side settings:</b>
 - Game Master (Spectator)
@@ -38,12 +38,12 @@
 - Toggle Lobby Music
 - Show/Hide Info When Dead
 ## <b>⚙️ Technical settings:</b>
-- Kick/Ban players under a certain level
-- Kick/Ban invalid FriendCodes
+- Advanced AFK Detection system
+- Kick/Ban players under/above a certain level
+- Kick/Ban invalid (Empty) Friendcodes
 - Kick/Ban players who say "start"
-- Denyword system
 - Banlist system
-- Denyname system
+- Denyword and Denyname system
 - Advanced Moderator system
 - To add Admins, Moderators and VIP's, type the user's Friendcode in the designated files located in AUR-DATA
 - Enable No Game End
@@ -52,6 +52,7 @@
 - Full Autohost and Rehost support
 - Automatically rejoin lobby
 - Automatically send winner info
+- Automatically Send Map Votes
 - Enable (configurable) Welcome Messages from Templates.txt
 ## <b>🔧 Gameplay Settings:</b>
 - Dead impostors can sabotage
@@ -76,6 +77,7 @@
 - Detect Invalid animations
 - Detect Invalid task completions
 - Detect immortality cheats
+- Block attempted votekicks
 - These are all enabled by default
 ## <b>❓ Other Improvements:</b>
 - Lanuage support: English, Italian, Japanese, Russian, Simplified Chinese, Spanish

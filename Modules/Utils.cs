@@ -204,6 +204,8 @@ public static class Utils
         HandlingGameEnd = false;
         OnGameJoinedPatch.AutoStartCheck = false;
         Main.GameTimer = 0f;
+        Main.AfkTimer = 0f;
+        FixedUpdate.Position.Clear();
         NormalGameEndChecker.canUpdateWinnerText = true;
         MurderPlayerPatch.misfireCount.Clear();
         MurderPlayerPatch.killCount.Clear();

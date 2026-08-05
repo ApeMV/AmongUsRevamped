@@ -9,11 +9,27 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.FixedUpdate))]
 public static class FixedUpdate
 {
+    public static readonly Dictionary<string, Vector2> SpawnRange = new()
+    {
+        ["Skeld"] = new(-0.8f, 1.2f),
+        ["Mira"] = new(-4.4f, 2.4f),
+        ["MiraMeeting"] = new(23.9f, 2.6f),
+        ["Polus"] = new(16.6f, -1.1f),
+        ["PolusMeeting"] = new(19.5f, -16.9f),
+        ["AirshipMeeting"] = new(11f, 15.3f),
+        ["Fungle"] = new(-9.8f, 1.8f),
+        ["FungleMeetings"] = new(-3.1f, -1.3f)
+    };
+
+    public static float Range = 4f;
+
+    public static Dictionary<byte, Vector2> Position = new Dictionary<byte, Vector2>();
     public static void Postfix()
     {
         if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance)
         {
             Main.GameTimer += Time.fixedDeltaTime;
+            Main.AfkTimer += Time.fixedDeltaTime;
         }
 
         GameObject n = GameObject.Find("NewRequestInactive");
@@ -30,6 +46,77 @@ public static class FixedUpdate
 
         if (!AmongUsClient.Instance.AmHost) return;
         DisableDevice.FixedUpdate();
+
+        if (Main.AfkTimer >= Options.AfkTimer.GetInt())
+        {
+            Main.AfkTimer = 0;
+
+            if (!Options.EnableAfkDetection.GetBool()) return;
+
+            foreach (var p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data == null || p == PlayerControl.LocalPlayer) continue;
+                
+                Vector2 newPos = p.GetTruePosition();
+
+                if (Options.OnlyDetectSpawn.GetBool() && !IsSpawn(newPos))
+                {
+                    Position[p.PlayerId] = newPos;
+                    continue;
+                }
+
+                if (Position.TryGetValue(p.PlayerId, out Vector2 oldPos))
+                {
+                    if (Vector2.Distance(oldPos, newPos) < 0.05f)
+                    {
+                        switch (Options.AfkPenalty.GetValue())
+                        {
+                            case 0:
+                                AmongUsClient.Instance.KickPlayer(p.Data.ClientId, false);
+                                Logger.Info(Translator.Get("afkKick", p.Data.PlayerName, Options.AfkTimer.GetInt()), "AfkManagement");
+                                Logger.SendInGame(Translator.Get("afkKick", p.Data.PlayerName, Options.AfkTimer.GetInt()));
+                                break;
+
+                            case 1:
+                                AmongUsClient.Instance.KickPlayer(p.Data.ClientId, true);
+                                Logger.Info(Translator.Get("afkBan", p.Data.PlayerName, Options.AfkTimer.GetInt()), "AfkManagement");
+                                Logger.SendInGame(Translator.Get("afkBan", p.Data.PlayerName, Options.AfkTimer.GetInt()));
+                                break;
+
+                            case 2:
+                                Logger.Info(Translator.Get("afkNotify", p.Data.PlayerName, Options.AfkTimer.GetInt()), "AfkManagement");
+                                Logger.SendInGame(Translator.Get("afkNotify", p.Data.PlayerName, Options.AfkTimer.GetInt()));
+                                break;
+                        }
+                    }
+                }
+                Position[p.PlayerId] = p.GetTruePosition();
+            }
+        }
+    }
+
+    private static bool IsSpawn(Vector2 pos)
+    {
+        switch (Utils.GetActiveMapId())
+        {
+            case 0:
+                return Vector2.Distance(pos, SpawnRange["Skeld"]) <= Range;
+
+            case 1:
+                return Vector2.Distance(pos, SpawnRange["Mira"]) <= Range || Vector2.Distance(pos, SpawnRange["MiraMeeting"]) <= Range;
+
+            case 2:
+                return Vector2.Distance(pos, SpawnRange["Polus"]) <= Range || Vector2.Distance(pos, SpawnRange["PolusMeeting"]) <= Range;
+
+            case 4:
+                return Vector2.Distance(pos, SpawnRange["AirshipMeeting"]) <= Range;
+
+            case 5:
+                return Vector2.Distance(pos, SpawnRange["Fungle"]) <= Range || Vector2.Distance(pos, SpawnRange["FungleMeetings"]) <= Range;
+
+            default:
+                return true;
+        }
     }
 }
 

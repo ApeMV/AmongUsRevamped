@@ -23,6 +23,8 @@
   "enableKickLowLevelPlayer": "Kick Low Level Players",
   "kickLowLevelPlayer": "Kick Players Under Level",
   "tempBanLowLevelPlayer": "Ban Instead Of Kick",
+  "enableKickHighLevelPlayer": "Kick High Level Players",
+  "kickHighLevelPlayer": "Kick Players Above Level",
   "dontKickLevelOnes": "Don't Kick Lv.1 Players For Glitched Lobbies",
   "tabGroupKickInvalidFriendCodes": "Invalid Friendcodes",
   "kickInvalidFriendCodes": "Kick Invalid (Empty) Friendcodes",
@@ -315,5 +317,23 @@
   "seekers": "Seekers: ",
   "clearedSeekers": "Successfully cleared the manual Seeker list.",
 
-  "rehostSuccess": "Successfully rehosted a lobby"
+  "rehostSuccess": "Successfully rehosted a lobby",
+
+  "kick": "Kick",
+  "ban": "Ban",
+  "notifyMe": "Notify Me",
+
+  "tabGroupAfk": "AFK Detection",
+  "enableAfkDetection": "Enable AFK Detection",
+  "afkTimer": "Detection Threshold",
+  "afkPenalty": "AFK Penalty",
+  "onlyDetectSpawn": "Only Detect Players At Spawn",
+
+  "afkNotify": "{0} has been AFK for {1}s",
+  "afkKick": "{0} has been AFK for {1s}, kicking user",
+  "afkBan": "{0} has been AFK for {1}s, banning user",
+
+  "automaticMapPoll": "Automatic /mapvote After Rejoining",
+  "automaticAllMapPoll": "Automatic /allmapvote After Rejoining",
+  "timeBeforeMapPoll": "Time Before Poll Starts"
 }

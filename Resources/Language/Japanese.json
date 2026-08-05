@@ -28,7 +28,6 @@
   "moderatorCanUseCommand": "モデレーターのコマンド使用を許可",
   "autoKickStart": "「Start/開始」と発言したプレイヤーをキック",
   "autoKickStartAsBan": "キックの代わりにBAN",
-  "autoKickStartTimes": "キックに必要な催促メッセージ回数",
   "autoKickStartStrength": "厳格検出モード",
   "tabGroupAutomation": "自動化",
   "autoSendGameInfo": "勝者情報を自動送信",
@@ -227,10 +226,7 @@
   "banlistWelcome": "# このファイルにフレンドコードを記述することでプレイヤーをBANリストに追加できます。\n# ゲーム内でBANしたプレイヤーも自動的にここへ追加されます。以下は記述例です。\n\nfriendcode#0000\n",
   "banwordWelcome": "# このファイルではNGワードを設定できます。リスト内の単語を発言したプレイヤーは自動的にキックされます。\n# 単語ごとに改行して区切ってください。",
   "bannameWelcome": "# このファイルではNGネームを設定できます。リスト内の名前を使用しているプレイヤーは自動的にキックされます。\n# 名前ごとに改行して区切ってください。",
-  "startWordsWelcome": "# このファイルでは「『Start』と発言したプレイヤーをキック」に使用する判定単語を設定できます。\n# 「厳格検出モード」OFF = 完全一致で判定。「厳格検出モード」ON = 部分一致で判定。\n# ロビー内でのみ検知したい無関係な単語を入れることも可能です。\n\nstart\nbegin\ncommence",
-
   "noGameEndWarning": "警告: 「ゲーム終了なし」が有効になっています",
-  "gameMasterWarningTwo": "警告: 「ゲームマスター」が有効になっています",
 
   "tooLongTemplate": "テンプレートが120文字を超えているため、送信するとキックされます。文字数を減らしてください。",
 
@@ -268,11 +264,8 @@
   "lastgameDesc": "前回のゲーム情報を送信します。",
   "templateDesc": "AUR-DATA/templates.txt から指定のテンプレートを送信します。",
   "seekerDesc": "かくれんぼでプレイヤーを鬼(Seeker)に指定します。",
-  "seekersDesc": "手動選択された鬼のリストを表示します。",
-  "clearSeekerDesc": "手動選択された鬼のリストをクリアします。",
 
   "banWordKick": "{0} は DeniedWords.txt に登録されたNGワードを {1} 回送信したためキックされました",
-  "startWordKick": "{0} は StartWords.txt に登録された単語を {1} 回送信したためキックされました",
 
   "pluginWarning": "<color=red><size=5><b>警告:</color></b></size>\n<size=3><b>複数のプラグイン(Mod)が検出されました。</size></b>\nAmong Us Revamped は他の多くのMODと互換性がありません。\nバグが発生する場合、そのほとんどはMod間の競合によるものです。",
 
@@ -289,7 +282,39 @@
   "moderatorAndAbove": "<color=purple>モデレーター</color> 以上",
   "admin": "<color=red>管理人</color>",
   "onlyYou": "あなたのみ",
+  "seekersDesc": "手動で選択されたシーカーをすべて表示します。",
+  "clearSeekerDesc": "手動シーカーリストをクリアします。",
+  "startWordsWelcome": "# このファイルでは、「Start」と発言したプレイヤーをキックする機能で検出する単語を設定できます。\n# 「厳格検出モード」OFF = メッセージが単語と完全に一致する必要があります。\n# 「厳格検出モード」ON = メッセージに単語が含まれているだけで検出されます。\n# ロビー内でのみ検出したい無関係な単語を追加することもできます。\n\nstart\nbegin\ncommence",
+  "gameMasterWarningTwo": "警告：ゲームマスターが有効になっています",
+  "startWordKick": "{0} は StartWords.txt に設定された単語を送信したためキックされました（回数：{1}回）",
+  "seekers": "シーカー：",
+  "clearedSeekers": "手動シーカーリストを正常にクリアしました。",
+  "autoKickStartTimes": "StartWordsを送信した回数でキック",
+  
+  
+  
 
-  "seekers": "鬼(Seeker): ",
-  "clearedSeekers": "手動選択された鬼のリストを正常にクリアしました。"
+  "tabGroupLevelKick": "レベル管理",
+  "enableKickLowLevelPlayer": "低レベルのプレイヤーをキック",
+  "tabGroupKickInvalidFriendCodes": "無効なフレンドコード",
+  "tabGroupAutoKickStart": "StartWords",
+  "tabGroupAutostart": "自動ホスト",
+  "rehost": "切断時にロビーを自動で再作成",
+  "public": "新しいロビーを自動で公開",
+  "mapVoteDuration": "マップ投票時間",
+  "tabGroupDeniedWords": "禁止ワード",
+  "enableDeniedWords": "禁止ワードを送信したプレイヤーをキック",
+  "slashMapAndSeekerCmd": "/seeker と /mapvote を使用できる人",
+  "snsChatInGameExtend": "ゲーム開始後にゲームモード情報を送信",
+
+  "mapVoteDesc": "5つの通常マップで投票を開始します。",
+  "allMapVoteDesc": "Eht Dleks を含む全6マップで投票を開始します。",
+
+  "banWordBan": "{0} は DeniedWords.txt の単語を {1} 回送信したためBANされました",
+  "startWordBan": "{0} は StartWords.txt の単語を {1} 回送信したためBANされました",
+
+  "moderationSettings": "モデレーション設定",
+  "moderationSettingsDesc": "荒らしや迷惑行為を防止するための設定です。",
+
+  "rehostSuccess": "ロビーの再作成に成功しました"
 }

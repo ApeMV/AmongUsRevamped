@@ -56,14 +56,12 @@ namespace AmongUsRevamped
             Translator.Get("everyone"), Translator.Get("vipAndAbove"), Translator.Get("moderatorAndAbove"), Translator.Get("admin"), Translator.Get("onlyYou")
         };
 
-        public static readonly string[] crewmateAbilities =
+        public static readonly string[] afkPenalties =
         {
-            "Mayor", "Workhorse", "Jester", "Tasker", "None"
+            Translator.Get("kick"), Translator.Get("ban"), Translator.Get("notifyMe")
         };
-        public static readonly string[] impostorAbilities =
-        {
-            "Tyrant", "Stealer", "Juggernaut", "None"
-        };
+
+
 
         //System
         public static OptionItem Language;
@@ -77,6 +75,9 @@ namespace AmongUsRevamped
         public static OptionItem KickLowLevelPlayer;
         public static OptionItem DontKickLevelOnes;
         public static OptionItem TempBanLowLevelPlayer;
+        public static OptionItem EnableKickHighLevelPlayer;
+        public static OptionItem KickHighLevelPlayer;
+        public static OptionItem TempBanHighLevelPlayer;
 
         public static OptionItem TabGroupKickInvalidFriendCodes;
         public static OptionItem KickInvalidFriendCodes;
@@ -99,6 +100,10 @@ namespace AmongUsRevamped
         public static OptionItem AutoRejoinLobby;
         public static OptionItem EnableJoinMessages;
         public static OptionItem MessagePerPlayerNum;
+        public static OptionItem AutomaticMapPoll;
+        public static OptionItem TimeBeforeMapPoll;
+        public static OptionItem AutomaticAllMapPoll;
+        public static OptionItem TimeBeforeAllMapPoll;
 
         public static OptionItem TabGroupAutostart;
         public static OptionItem AutoStartTimer;
@@ -106,6 +111,13 @@ namespace AmongUsRevamped
         public static OptionItem PlayerAutoStart;
         public static OptionItem Rehost;
         public static OptionItem Public;
+
+        public static OptionItem TabGroupAfk;
+        public static OptionItem EnableAfkDetection;
+        public static OptionItem AfkTimer;
+        public static OptionItem AfkPenalty;
+        public static OptionItem OnlyDetectSpawn;
+
 
         public static OptionItem TabGroupMisc;
         public static OptionItem MapVoteDuration;
@@ -324,6 +336,12 @@ namespace AmongUsRevamped
                 .SetParent(EnableKickLowLevelPlayer);
             DontKickLevelOnes = BooleanOptionItem.Create(60052, Translator.Get("dontKickLevelOnes"), false, TabGroup.ModerationSettings, false)
                 .SetParent(EnableKickLowLevelPlayer);
+            EnableKickHighLevelPlayer = BooleanOptionItem.Create(60053, Translator.Get("enableKickHighLevelPlayer"), false, TabGroup.ModerationSettings, false);
+            KickHighLevelPlayer = IntegerOptionItem.Create(60054, Translator.Get("kickHighLevelPlayer"), new(100, 5000, 50), 1000, TabGroup.ModerationSettings, false)
+                .SetParent(EnableKickHighLevelPlayer)
+                .SetValueFormat(OptionFormat.Level);
+            TempBanHighLevelPlayer = BooleanOptionItem.Create(60055, Translator.Get("tempBanLowLevelPlayer"), false, TabGroup.ModerationSettings, false)
+                .SetParent(EnableKickHighLevelPlayer);
 
             TabGroupKickInvalidFriendCodes = TextOptionItem.Create(60079, Translator.Get("tabGroupKickInvalidFriendCodes"), TabGroup.ModerationSettings)
                 .SetColor(Color.red);
@@ -371,6 +389,14 @@ namespace AmongUsRevamped
             EnableJoinMessages = BooleanOptionItem.Create(60152, Translator.Get("enableJoinMessages"), true, TabGroup.SystemSettings, false);
             MessagePerPlayerNum = IntegerOptionItem.Create(60153, Translator.Get("messagePerPlayerNum"), new(1, 15, 1), 5, TabGroup.SystemSettings, false)
                 .SetParent(EnableJoinMessages);
+            AutomaticMapPoll = BooleanOptionItem.Create(60154, Translator.Get("automaticMapPoll"), false, TabGroup.SystemSettings, false);
+            TimeBeforeMapPoll = IntegerOptionItem.Create(60155, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 10, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(AutomaticMapPoll);
+            AutomaticAllMapPoll = BooleanOptionItem.Create(60156, Translator.Get("automaticAllMapPoll"), false, TabGroup.SystemSettings, false);
+            TimeBeforeAllMapPoll = IntegerOptionItem.Create(60157, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 10, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(AutomaticAllMapPoll);
 
             TabGroupAutostart = TextOptionItem.Create(64425, Translator.Get("tabGroupAutostart"), TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
@@ -383,9 +409,19 @@ namespace AmongUsRevamped
             Public = BooleanOptionItem.Create(64430, Translator.Get("public"), false, TabGroup.SystemSettings, false)
                 .SetParent(Rehost);
 
+            TabGroupAfk = TextOptionItem.Create(60370, Translator.Get("tabGroupAfk"), TabGroup.SystemSettings)
+                .SetColor(Color.yellow);
+            EnableAfkDetection = BooleanOptionItem.Create(60371, Translator.Get("enableAfkDetection"), false, TabGroup.SystemSettings, false);
+            AfkTimer = IntegerOptionItem.Create(60372, Translator.Get("afkTimer"), new(15, 120, 5), 30, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(EnableAfkDetection);
+            AfkPenalty = StringOptionItem.Create(60373, Translator.Get("afkPenalty"), afkPenalties, 0, TabGroup.SystemSettings, false)
+                .SetParent(EnableAfkDetection);
+            OnlyDetectSpawn = BooleanOptionItem.Create(60374, Translator.Get("onlyDetectSpawn"), true, TabGroup.SystemSettings, false)
+                .SetParent(EnableAfkDetection);
+
             TabGroupMisc = TextOptionItem.Create(60378, Translator.Get("tabGroupMisc"), TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
-
             MapVoteDuration = IntegerOptionItem.Create(60379, Translator.Get("mapVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetColor(Color.red);

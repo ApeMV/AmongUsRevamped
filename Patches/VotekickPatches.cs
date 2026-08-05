@@ -19,8 +19,8 @@ internal static class AddVotePatch
         {
             Logger.Info($" Kicked {target.Data.PlayerName}, {target.Data.FriendCode}", "KickPatch");
         }
-        return true;
-        
+        return false;
+
     }
 }
 

@@ -46,6 +46,21 @@ internal static class OnGameJoinedPatch
             }, 5.2f, "AutoSendGameInfo2");
         }
 
+        if (Options.AutomaticMapPoll.GetBool())
+        {
+            new LateTask(() =>
+            {        
+                Utils.MapVote(false, true);
+            }, Options.TimeBeforeMapPoll.GetInt(), "AutoMapPoll");
+        }
+        if (Options.AutomaticAllMapPoll.GetBool())
+        {
+            new LateTask(() =>
+            {        
+                Utils.MapVote(true, true);
+            }, Options.TimeBeforeAllMapPoll.GetInt(), "AutoMapPoll");
+        }
+
         if (Options.Public.GetBool() && DisconnectManager.Rehosting)
         {
             AmongUsClient.Instance.ChangeGamePublic(true);
@@ -158,7 +173,26 @@ public static class SetLevelPatch
                 Logger.SendInGame($" {__instance.Data.PlayerName} (level {level + 1}) was banned for being under level {Options.KickLowLevelPlayer.GetInt()}");
             }
             HandledLevelKicks.Add(__instance);
-        }  
+        }
+
+        if (AmongUsClient.Instance.AmHost && level > Options.KickHighLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId && Options.EnableKickHighLevelPlayer.GetBool())
+        {
+            if (HandledLevelKicks.Contains(__instance)) return;
+
+            if (!Options.TempBanHighLevelPlayer.GetBool() && Utils.CheckAccessLevel(__instance.Data.FriendCode) < 1) 
+            {
+                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
+                Logger.Info($" {__instance.Data.PlayerName} (level {level + 1}) was kicked for being above level {Options.KickHighLevelPlayer.GetInt()}", "KickHighLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} (level {level + 1}) was kicked for being above level {Options.KickHighLevelPlayer.GetInt()}");
+            }
+            else if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < 1)
+            {
+                AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, true);
+                Logger.Info($" {__instance.Data.PlayerName} (level {level + 1}) was banned for being above level {Options.KickHighLevelPlayer.GetInt()} ", "BanHighLevelPlayer");
+                Logger.SendInGame($" {__instance.Data.PlayerName} (level {level + 1}) was banned for being above level {Options.KickHighLevelPlayer.GetInt()}");
+            }
+            HandledLevelKicks.Add(__instance);
+        }
     }
 }
 

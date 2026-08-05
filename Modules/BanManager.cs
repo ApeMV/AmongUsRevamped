@@ -206,7 +206,7 @@ public static class BanManager
 
     public static bool IsStartWord(PlayerControl player, string input)
     {
-        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0 || !Options.AutoKickStart.GetBool()) return false;
+        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0 || !Options.AutoKickStart.GetBool() || !Utils.IsLobby) return false;
 
         int clientId = player.Data.ClientId;
         var startWords = File.ReadAllLines(StartWordsPath).Where(x => !x.StartsWith("#"));

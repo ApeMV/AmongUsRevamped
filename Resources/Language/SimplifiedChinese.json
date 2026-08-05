@@ -28,7 +28,6 @@
   "moderatorCanUseCommand": "管理人员可以使用命令",
   "autoKickStart": "自动踢出发送“Start”的玩家",
   "autoKickStartAsBan": "改为封禁而非踢出",
-  "autoKickStartTimes": "踢出所需的“Start”消息次数",
   "autoKickStartStrength": "严格检测模式",
   "tabGroupAutomation": "自动化",
   "autoSendGameInfo": "自动发送获胜者信息",
@@ -239,7 +238,6 @@
   "moderatorRemove": "已成功移除 {0} 的管理员 (Moderator) 权限。",
   "adminRemove": "已成功移除 {0} 的超级管理员 (Admin) 权限。",
   "permFail": "找不到用户 '{0}'。请检查拼写是否正确？",
-
   "helpDesc": "显示所有命令及其功能。",
   "snsDesc": "发送 变形与搜寻 (Shift and Seek) 游戏模式介绍。",
   "0kcDesc": "发送 0秒击杀冷却 (0 Kill Cooldown) 游戏模式介绍。",
@@ -265,15 +263,11 @@
   "removeAdminDesc": "移除用户的超级管理员 (Admin) 权限。",
   "lastgameDesc": "发送上一局游戏信息。",
   "templateDesc": "发送 AUR-DATA/templates.txt 中指定的模板。",
-
   "banWordKick": "{0} 因发送违禁词被踢出，累计次数：{1} 次",
-
   "pluginWarning": "<color=red><size=5><b>警告：</color></b></size>\n<size=3><b>检测到您启用了 2 个或更多插件。</size></b>\nAmong Us Revamped 与大多数模组不兼容。\n如果遇到 Bug，极有可能是因为冲突所致。",
-
   "systemSettings": "系统设置",
   "gameplaySettings": "游戏设置",
   "gamemodeSettings": "模式设置",
-
   "systemSettingsDesc": "用于提升舒适度与测试的画质/系统设置。",
   "gameplaySettingsDesc": "用于改善游戏内体验的设置。",
   "gamemodeSettingsDesc": "适用于特定游戏模式的情境设置。",
@@ -289,5 +283,25 @@
   "gameMasterWarningTwo": "警告：游戏主管已启用",
   "startWordKick": "{0} 因发送 StartWords.txt 中的关键词被踢出，累计次数：{1} 次",
   "seekers": "搜寻者：",
-  "clearedSeekers": "已成功清除手动搜寻者列表。"
+  "clearedSeekers": "已成功清除手动搜寻者列表。",
+  "autoKickStartTimes": "发送 StartWords 关键词达到此次数时踢出玩家",
+  "tabGroupLevelKick": "等级管理",
+  "enableKickLowLevelPlayer": "启用低等级玩家踢出",
+  "tabGroupKickInvalidFriendCodes": "无效好友代码",
+  "tabGroupAutoKickStart": "StartWords",
+  "tabGroupAutostart": "自动开房",
+  "rehost": "断线后自动重新创建大厅",
+  "public": "自动将新大厅设为公开",
+  "mapVoteDuration": "地图投票持续时间",
+  "tabGroupDeniedWords": "违禁词",
+  "enableDeniedWords": "踢出发送违禁词的玩家",
+  "slashMapAndSeekerCmd": "谁可以使用 /seeker 与 /mapvote",
+  "snsChatInGameExtend": "游戏开始后发送游戏模式介绍",
+  "mapVoteDesc": "发起包含 5 张官方地图的地图投票。",
+  "allMapVoteDesc": "发起包含全部 6 张地图（包括 Eht Dleks）的地图投票。",
+  "banWordBan": "{0} 因发送了 DeniedWords.txt 中的关键词，第 {1} 次违规，已被封禁。",
+  "startWordBan": "{0} 因发送了 StartWords.txt 中的关键词，第 {1} 次违规，已被封禁。",
+  "moderationSettings": "管理设置",
+  "moderationSettingsDesc": "用于防止恶意行为和不当行为的管理设置。",
+  "rehostSuccess": "已成功重新创建大厅。"
 }
