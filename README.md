@@ -9,6 +9,14 @@
 <a href="https://github.com/apemv/AmongUsRevamped/releases/latest" target="_blank"><img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/></a>
 </center>
 
+<a href="../../releases">
+  <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/total?style=for-the-badge&color=red">
+</a>
+
+<a href="../../releases/latest">
+  <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/latest/total?style=for-the-badge">
+</a>
+
 
 
 </p>
