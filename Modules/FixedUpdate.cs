@@ -55,7 +55,7 @@ public static class FixedUpdate
 
             foreach (var p in PlayerControl.AllPlayerControls)
             {
-                if (p.Data == null || p == PlayerControl.LocalPlayer) continue;
+                if (p.Data == null || p == PlayerControl.LocalPlayer || p.Data.IsDead) continue;
                 
                 Vector2 newPos = p.GetTruePosition();
 
