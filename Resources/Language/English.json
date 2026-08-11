@@ -331,7 +331,7 @@
   "onlyDetectSpawn": "Only Detect Players At Spawn",
 
   "afkNotify": "{0} has been AFK for {1}s",
-  "afkKick": "{0} has been AFK for {1s}, kicking user",
+  "afkKick": "{0} has been AFK for {1}s, kicking user",
   "afkBan": "{0} has been AFK for {1}s, banning user",
 
   "automaticMapPoll": "Automatic /mapvote After Rejoining",
