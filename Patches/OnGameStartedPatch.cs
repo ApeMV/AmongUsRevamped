@@ -83,7 +83,7 @@ class PlayerControlSetRolePatch
             foreach (var p in candidates)
             {
                 if (Seekers.Count >= seekersCount) break;
-
+                
                 Seekers.Add(p.PlayerId);
             }
         }
@@ -123,13 +123,19 @@ internal static class OnGameStartPatch
     public static bool PastStartScreen;
     public static void Postfix()
     {
-        if (AmongUsClient.Instance.AmHost && Options.Gamemode.GetValue() == 1 && Options.SNSChatInGame.GetBool())
+        if (AmongUsClient.Instance.AmHost && Options.Gamemode.GetValue() == 1 && Options.SNSChatInGame.GetBool() && !Utils.isHideNSeek)
         {
             PlayerControl.LocalPlayer.CmdReportDeadBody(null);
             if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose();
         }
 
-        if (Main.GM.Value)
+        if (AmongUsClient.Instance.AmHost && Options.Gamemode.GetValue() == 3 && Options.PNSChatInGame.GetBool() && !Utils.isHideNSeek)
+        {
+            PlayerControl.LocalPlayer.CmdReportDeadBody(null);
+            if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose();
+        }
+
+        if (AmongUsClient.Instance.AmHost && Main.GM.Value)
         {
             Logger.Info($" Game Master Successful", "StartGame");
             PlayerControl.LocalPlayer.Exiled();

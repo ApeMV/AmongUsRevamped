@@ -1,3 +1,4 @@
+using AmongUs.GameOptions;
 using System.Reflection;
 using Il2CppInterop.Runtime.InteropTypes;
 

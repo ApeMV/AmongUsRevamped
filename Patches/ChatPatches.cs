@@ -451,20 +451,19 @@ internal static class SendChatPatch
 
         if (text == "/sns" || text == "/shiftandseek")
         {
-            if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
-            {
-                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
-            }
-            else
-            {
-                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
-            }
+            Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);
             return false;
         }
 
         if (text == "/sr" || text == "/speedrun")
         {
             Utils.ChatCommand(__instance, $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
+            return false;
+        }
+
+        if (text == "/pns" || text == "/poofandseek")
+        {
+            Utils.ChatCommand(__instance, $"Poof and Seek:\n\nImpostors can only move while vanished\n Meetings & Reports = Off\nVisibly moving {Options.BadMoveTimeToSuicide.GetInt()}s as Phantom = Suicide", $"Crewmates win by doing tasks or surviving {Options.PNSCrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone", true);
             return false;
         }
 
@@ -480,20 +479,16 @@ internal static class SendChatPatch
                 break;
 
                 case 1:
-                if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
-                {
-                    Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
-                }
-                else
-                {
-                    Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
-                }          
+                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true); 
                 break;
 
                 case 2:
                 Utils.ChatCommand(__instance, $"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
                 break;
 
+                case 3:
+                Utils.ChatCommand(__instance, $"Poof and Seek:\n\nImpostors can only move while vanished\n Meetings & Reports = Off\nVisibly moving {Options.BadMoveTimeToSuicide.GetInt()}s as Phantom = Suicide", $"Crewmates win by doing tasks or surviving {Options.PNSCrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone", true);
+                break;
             }
             __instance.timeSinceLastMessage = 0.8f;
             __instance.freeChatField.textArea.Clear();
@@ -503,6 +498,8 @@ internal static class SendChatPatch
 
         if (text.StartsWith("/t "))
         {
+            BanManager.LoadTemplates();
+
             string templateName = text[3..].Trim().ToLower();
 
             if (BanManager.Templates.TryGetValue(templateName, out string templateMessage))
@@ -803,22 +800,19 @@ public static class RPCHandlerPatch
                 if (text == "/sns" || text == "/shiftandseek")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-
-                    if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
-                    {
-                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
-                    }
-                    else
-                    {
-                        
-                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", SendChatPatch.ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
-                    }
+                    Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);
                 }
 
                 if (text == "/sr" || text == "/speedrun")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
                     Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
+                }
+
+                if (text == "/pns" || text == "/poofandseek")
+                {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
+                    Utils.ModeratorChatCommand($"Poof and Seek:\n\nImpostors can only move while vanished\n Meetings & Reports = Off\nVisibly moving {Options.BadMoveTimeToSuicide.GetInt()}s as Phantom = Suicide", $"Crewmates win by doing tasks or surviving {Options.PNSCrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone", true);
                 }
 
                 if (text == "/r" || text == "/roles")
@@ -834,18 +828,15 @@ public static class RPCHandlerPatch
                         break;
 
                         case 1:
-                        if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
-                        {
-                            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
-                        }
-                        else
-                        {
-                            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", SendChatPatch.ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
-                        }         
+                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);           
                         break;
 
                         case 2:
                         Utils.ModeratorChatCommand($"Speedrun:\n\nEveryone is a crewmate. The 1st player to finish tasks wins the game. Game auto ends after {Options.GameAutoEndsAfter.GetInt()}s", "", false);
+                        break;
+
+                        case 3:
+                        Utils.ModeratorChatCommand($"Poof and Seek:\n\nImpostors can only move while vanished\n Meetings & Reports = Off\nVisibly moving {Options.BadMoveTimeToSuicide.GetInt()}s as Phantom = Suicide", $"Crewmates win by doing tasks or surviving {Options.PNSCrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone", true);
                         break;
 
                     }
@@ -855,6 +846,8 @@ public static class RPCHandlerPatch
 
                 if (text.StartsWith("/t "))
                 {
+                    BanManager.LoadTemplates();
+
                     string templateName = text[3..].Trim().ToLower();
 
                     if (BanManager.Templates.TryGetValue(templateName, out string templateMessage))

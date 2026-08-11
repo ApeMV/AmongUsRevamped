@@ -48,7 +48,7 @@ namespace AmongUsRevamped
 
         public static readonly string[] gameModes =
         {
-            "Standard", "Shift And Seek", "Speedrun"
+            "Standard", "Shift And Seek", "Speedrun", "Poof And Seek"
         };
 
         public static readonly string[] accessLevels =
@@ -292,11 +292,9 @@ namespace AmongUsRevamped
         public static OptionItem NumSeekers;
 
         public static OptionItem TabGroupSNS;
-        public static OptionItem SNSSettingsOverride;
         public static OptionItem SNSChatInGame;
         public static OptionItem SNSChatInGameExtend;
         public static OptionItem CrewAutoWinsGameAfter;
-        public static OptionItem CantKillTime;
         public static OptionItem MisfiresToSuicide;
         public static OptionItem SNSDisableSabotage;
         public static OptionItem SNSDisableReactor;
@@ -306,11 +304,26 @@ namespace AmongUsRevamped
         public static OptionItem SNSDisableHeli;
         public static OptionItem SNSDisableMushroomMixup;
         public static OptionItem SNSDisableCloseDoor;
+        public static OptionItem SNSImpostorsCanVent;
 
         public static OptionItem TabGroupSpeedrun;
-        public static OptionItem SpeedrunSettingsOverride;
         public static OptionItem GameAutoEndsAfter;
         public static OptionItem EngineerMode;
+
+        public static OptionItem TabGroupPNS;
+        public static OptionItem PNSChatInGame;
+        public static OptionItem PNSChatInGameExtend;
+        public static OptionItem PNSCrewAutoWinsGameAfter;
+        public static OptionItem BadMoveTimeToSuicide;
+        public static OptionItem PNSDisableSabotage;
+        public static OptionItem PNSDisableReactor;
+        public static OptionItem PNSDisableOxygen;
+        public static OptionItem PNSDisableLights;
+        public static OptionItem PNSDisableComms;
+        public static OptionItem PNSDisableHeli;
+        public static OptionItem PNSDisableMushroomMixup;
+        public static OptionItem PNSDisableCloseDoor;
+        public static OptionItem PNSImpostorsCanVent;
 
         public static bool IsLoaded = false;
 
@@ -442,14 +455,11 @@ namespace AmongUsRevamped
 
             TabGroupSNS = TextOptionItem.Create(70050, Translator.Get("tabGroupSNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
-            SNSSettingsOverride = BooleanOptionItem.Create(70051, Translator.Get("snsSettingsOverride"), true, TabGroup.GamemodeSettings, false);
             SNSChatInGame = BooleanOptionItem.Create(70063, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
             SNSChatInGameExtend = BooleanOptionItem.Create(70064, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSChatInGame);
-            CantKillTime = IntegerOptionItem.Create(70053, Translator.Get("cantKillTime"), new(0, 60, 5), 20, TabGroup.GamemodeSettings, false)
-                .SetValueFormat(OptionFormat.Seconds);
-            MisfiresToSuicide = IntegerOptionItem.Create(70052, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 2, TabGroup.GamemodeSettings, false);
-            CrewAutoWinsGameAfter = IntegerOptionItem.Create(70054, Translator.Get("crewAutoWinsGameAfter"), new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
+            MisfiresToSuicide = IntegerOptionItem.Create(70052, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 1, TabGroup.GamemodeSettings, false);
+            CrewAutoWinsGameAfter = IntegerOptionItem.Create(70054, Translator.Get("crewAutoWinsGameAfter"), new(60, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             SNSDisableSabotage = BooleanOptionItem.Create(70055, Translator.Get("snsDisableSabotage"), true, TabGroup.GamemodeSettings, false)
                 .SetColor(Color.red);
@@ -473,13 +483,46 @@ namespace AmongUsRevamped
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             SNSDisableCloseDoor = BooleanOptionItem.Create(70062, Translator.Get("snsDisableCloseDoor"), true, TabGroup.GamemodeSettings, false)
                 .SetColor(Color.red);
+            SNSImpostorsCanVent = BooleanOptionItem.Create(70063, Translator.Get("snsImpostorCanVent"), true, TabGroup.GamemodeSettings, false);
 
             TabGroupSpeedrun = TextOptionItem.Create(70075, Translator.Get("tabGroupSpeedrun"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
-            SpeedrunSettingsOverride = BooleanOptionItem.Create(70076, Translator.Get("speedrunSettingsOverride"), true, TabGroup.GamemodeSettings, false);
             GameAutoEndsAfter = IntegerOptionItem.Create(70077, Translator.Get("gameAutoEndsAfter"), new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             EngineerMode = BooleanOptionItem.Create(70078, Translator.Get("engineerMode"), false, TabGroup.GamemodeSettings, false);
+
+            TabGroupPNS = TextOptionItem.Create(70100, Translator.Get("tabGroupPNS"), TabGroup.GamemodeSettings)
+                .SetColor(Color.green);
+            PNSChatInGame = BooleanOptionItem.Create(70102, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
+            PNSChatInGameExtend = BooleanOptionItem.Create(70103, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSChatInGame);
+            BadMoveTimeToSuicide = IntegerOptionItem.Create(70104, Translator.Get("badMoveTimeToSuicide"), new(1, 30, 1), 3, TabGroup.GamemodeSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            PNSCrewAutoWinsGameAfter = IntegerOptionItem.Create(70105, Translator.Get("crewAutoWinsGameAfter"), new(60, 600, 10), 300, TabGroup.GamemodeSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            PNSDisableSabotage = BooleanOptionItem.Create(70106, Translator.Get("pnsDisableSabotage"), true, TabGroup.GamemodeSettings, false)
+                .SetColor(Color.red);
+            PNSDisableReactor = BooleanOptionItem.Create(70107, Translator.Get("snsDisableReactor"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSDisableSabotage)
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+            PNSDisableOxygen = BooleanOptionItem.Create(70108, Translator.Get("snsDisableOxygen"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSDisableSabotage)
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+            PNSDisableLights = BooleanOptionItem.Create(70109, Translator.Get("snsDisableLights"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSDisableSabotage)
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+            PNSDisableComms = BooleanOptionItem.Create(70110, Translator.Get("snsDisableComms"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSDisableSabotage)
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+            PNSDisableHeli = BooleanOptionItem.Create(70111, Translator.Get("snsDisableHeli"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSDisableSabotage)
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+            PNSDisableMushroomMixup = BooleanOptionItem.Create(70112, Translator.Get("snsDisableMushroomMixup"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSDisableSabotage)
+                .SetColor(new Color32(255, 153, 153, byte.MaxValue));
+            PNSDisableCloseDoor = BooleanOptionItem.Create(70113, Translator.Get("pnsDisableCloseDoor"), true, TabGroup.GamemodeSettings, false)
+                .SetColor(Color.red);
+            PNSImpostorsCanVent = BooleanOptionItem.Create(70114, Translator.Get("snsImpostorCanVent"), true, TabGroup.GamemodeSettings, false);
 
             // Gameplay Settings
             TabGroupSabotages = TextOptionItem.Create(60450, Translator.Get("tabGroupSabotages"), TabGroup.ModSettings)

@@ -316,6 +316,31 @@
   "startWordBan": "{0} Были забанены потому что они отправили слово из StartWords.txt {1} раз(а)",
   "moderationSettings": "Настройки Модерации",
   "moderationSettingsDesc": "Настройки Модерации чтобы бороться с токсичностью и плохим поведением.",
-  "rehostSuccess": "Лобби Было Успешно Пересоздано"
+  "rehostSuccess": "Лобби Было Успешно Пересоздано",
+  "enableKickHighLevelPlayer": "Кикать Игроков С Высоким Уровнем",
+  "kickHighLevelPlayer": "Кикать Игроков Больше Уровня",
+  "kick": "Кик",
+  "ban": "Бан",
+  "notifyMe": "Уведомить Меня",
+
+  "tabGroupAfk": "АФК Обнаружение",
+  "enableAfkDetection": "Включить АФК Обнаружение",
+  "afkTimer": "Порог Обнаружения",
+  "afkPenalty": "Наказание За АФК",
+  "onlyDetectSpawn": "Только Обнаруживать Игроков На Спавне",
+
+  "afkNotify": "{0} Был АФК {1}сек",
+  "afkKick": "{0} Был АФК {1}сек, кикаем игрока",
+  "afkBan": "{0} Был АФК {1}сек, баним игрока",
+
+  "automaticMapPoll": "Автоматический /mapvote После Перезахода",
+  "automaticAllMapPoll": "Автоматический /allmapvote После Перезахода",
+  "timeBeforeMapPoll": "Время До Начала Голосования За Карты",
+
+  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
+  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
+  "tabGroupPNS": "Poof and Seek",
+  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
+  "snsImpostorCanVent": "Impostors can vent"
 
 }

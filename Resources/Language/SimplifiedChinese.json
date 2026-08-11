@@ -37,7 +37,7 @@
   "playerAutoStart": "自动开始所需人数",
   "enableJoinMessages": "启用欢迎消息",
   "messagePerPlayerNum": "每达到指定加入人数发送消息",
-  "tabGroupMisc": "杂项设置",
+  "tabGroupMisc": "实验性",
   "startCountdown": "默认开始倒计时",
   "colorCommandLevel": "谁可以使用颜色命令",
   "allowFortegreen": "允许军绿色",
@@ -284,7 +284,7 @@
   "startWordKick": "{0} 因发送 StartWords.txt 中的关键词被踢出，累计次数：{1} 次",
   "seekers": "搜寻者：",
   "clearedSeekers": "已成功清除手动搜寻者列表。",
-  "autoKickStartTimes": "发送 StartWords 关键词达到此次数时踢出玩家",
+  "autoKickStartTimes": "发送 StartWords 文本关键词并在达到某个次数时踢出该玩家",
   "tabGroupLevelKick": "等级管理",
   "enableKickLowLevelPlayer": "启用低等级玩家踢出",
   "tabGroupKickInvalidFriendCodes": "无效好友代码",
@@ -303,5 +303,30 @@
   "startWordBan": "{0} 因发送了 StartWords.txt 中的关键词，第 {1} 次违规，已被封禁。",
   "moderationSettings": "管理设置",
   "moderationSettingsDesc": "用于防止恶意行为和不当行为的管理设置。",
-  "rehostSuccess": "已成功重新创建大厅。"
+  "rehostSuccess": "已成功重新创建大厅。",
+  "enableKickHighLevelPlayer": "启用踢出高等級玩家",
+"kickHighLevelPlayer": "踢出高于指定等級的玩家",
+"kick": "踢出",
+"ban": "封锁",
+"notifyMe": "通知我",
+
+"tabGroupAfk": "AFK 侦测",
+"enableAfkDetection": "启用 AFK 侦测",
+"afkTimer": "检测门槛",
+"afkPenalty": "AFK 处罚",
+"onlyDetectSpawn": "仅侦测出生点玩家",
+
+"afkNotify": "{0} 已 AFK {1} 秒",
+"afkKick": "{0} 已 AFK {1} 秒，正在踢出玩家",
+"afkBan": "{0} 已 AFK {1} 秒，正在封锁玩家",
+
+"automaticMapPoll": "重新加入后自发起起 /mapvote",
+"automaticAllMapPoll": "重新加入后自动发起 /allmapvote",
+"timeBeforeMapPoll": "投票开始前等待時間",
+
+  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
+  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
+  "tabGroupPNS": "Poof and Seek",
+  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
+  "snsImpostorCanVent": "Impostors can vent"
 }

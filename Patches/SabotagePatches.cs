@@ -51,6 +51,23 @@ public static class SabotageSystemTypeRepairDamagePatch
             }
             return true;
         }
+
+        if (Options.Gamemode.GetValue() == 3)
+        {
+            if (Sabo == SystemTypes.LifeSupp && Options.PNSDisableOxygen.GetBool() ||
+            Sabo == SystemTypes.Reactor && Options.PNSDisableReactor.GetBool() ||
+            Sabo == SystemTypes.Electrical && Options.PNSDisableLights.GetBool() ||
+            Sabo == SystemTypes.Comms && Options.PNSDisableComms.GetBool() ||
+            Sabo == SystemTypes.HeliSabotage && Options.PNSDisableHeli.GetBool() ||
+            Sabo == SystemTypes.MushroomMixupSabotage && Options.PNSDisableMushroomMixup.GetBool() ||
+            Sabo == SystemTypes.Laboratory && Options.PNSDisableReactor.GetBool() && msgReader != null ||
+            player.Data.IsDead && !Options.DeadImpostorsCanSabotage.GetBool())
+            {
+                Logger.Info($" Sabotage {Sabo} by: {player.Data.PlayerName} was blocked", "SnSSabotageCheck");
+                return false;
+            }
+            return true;
+        }
         else return true;
     }
 }
@@ -64,7 +81,7 @@ class ShipStatusCloseDoorsPatch
         
         Logger.Info($" Trying to close the door in: {room}", "DoorCheck");
 
-        if ((Options.DisableCloseDoor.GetBool() && Options.Gamemode.GetValue() == 0) || (Options.Gamemode.GetValue() == 1 && Options.SNSDisableCloseDoor.GetBool()))
+        if ((Options.DisableCloseDoor.GetBool() && Options.Gamemode.GetValue() == 0) || (Options.Gamemode.GetValue() == 1 && Options.SNSDisableCloseDoor.GetBool()) || (Options.Gamemode.GetValue() == 3 && Options.PNSDisableCloseDoor.GetBool()))
         {
             Logger.Info($" Door sabotage in: {room} was blocked", "DoorCheck");
             return false;

@@ -124,6 +124,8 @@ class OnPlayerJoinedPatch
             if (Options.EnableJoinMessages.GetBool())
             {
                 JoinNum++;
+                
+                BanManager.LoadTemplates();
                 BanManager.Templates.TryGetValue("welcome", out string msg);
 
                 if (JoinNum >= Options.MessagePerPlayerNum.GetInt())

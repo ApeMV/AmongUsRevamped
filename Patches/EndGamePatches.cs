@@ -12,7 +12,9 @@ public static class EndGameManagerPatch
     {
         Logger.Info(" -------- GAME ENDED --------", "EndGame");
         Utils.ClearLeftoverData();
-        
+
+        //OptionManager.RestoreOptions();
+
         EndGameNavigation navigation = __instance.Navigation;
         if (!AmongUsClient.Instance.AmHost || __instance == null || navigation == null || !Options.AutoRejoinLobby.GetBool()) return;
         navigation.NextGame();
@@ -52,6 +54,13 @@ class NormalGameEndChecker
         if (!canUpdateWinnerText) return;
 
         if (Winner == "SnSTimer")
+        {
+            LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)\n\n Impostors: " + impostorList;
+            canUpdateWinnerText = false;
+            return;
+        }
+
+        if (Winner == "PnSTimer")
         {
             LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)\n\n Impostors: " + impostorList;
             canUpdateWinnerText = false;

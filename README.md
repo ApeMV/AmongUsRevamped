@@ -37,7 +37,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.9.3):
+# 🎮 Features (v1.9.4):
 
 ## <b>♠️ Client Side settings:</b>
 - Game Master (Spectator)
@@ -77,6 +77,7 @@
 ## <b>🏆 Custom Gamemodes:</b>
 - 0 Kill Cooldown -> Set Kill Cooldown to 0.01
 - Shift and Seek
+- Poof and Seek
 - Speedrun
 ## <b>👾 Custom Anticheat:</b>
 - Detect invalid sabotages

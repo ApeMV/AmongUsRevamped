@@ -33,6 +33,9 @@ internal static class CommandHelper
         new Cmd { Name = new[] { "/sr" }, Prompt = "/sr", Description = Translator.Get("SrDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/speedrun" }, Prompt = "/speedrun", Description = Translator.Get("SrDesc"), HasVariable = false },
 
+        new Cmd { Name = new[] { "/pns" }, Prompt = "/pns", Description = Translator.Get("pnsDesc"), HasVariable = false },
+        new Cmd { Name = new[] { "/poofandseek" }, Prompt = "/poofandseek", Description = Translator.Get("pnsDesc"), HasVariable = false },
+
         new Cmd { Name = new[] { "/eg" }, Prompt = "/eg", Description = Translator.Get("egDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/endgame" }, Prompt = "/endgame", Description = Translator.Get("egDesc"), HasVariable = false },
 
@@ -100,6 +103,7 @@ internal static class CommandHelper
             HelperText.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
             HelperText.transform.localPosition = __instance.outputText.transform.localPosition;
             HelperText.enabled = false;
+            HelperText.fontSharedMaterial = new Material(__instance.outputText.fontSharedMaterial);
         }
 
         string t = __instance.text;

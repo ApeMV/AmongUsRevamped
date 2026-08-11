@@ -25,7 +25,7 @@ class ReportDeadBodyPatch
 
         // target == null means meeting
 
-        if (Options.Gamemode.GetValue() == 1 || Options.Gamemode.GetValue() == 2)
+        if (Options.Gamemode.GetValue() == 1 || Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
         {
             if (target != null)
             {
@@ -49,7 +49,7 @@ internal static class MurderPlayerPatch
     public static readonly Dictionary<byte, int> misfireCount = new();
     public static readonly Dictionary<byte, int> killCount = new();
 
-    public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] MurderResultFlags resultFlags, ref bool __state)
+    public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] MurderResultFlags resultFlags, ref bool __state)
     {
         if (!AmongUsClient.Instance.AmHost || !resultFlags.HasFlag(MurderResultFlags.Succeeded)) return;
 
@@ -60,32 +60,29 @@ internal static class MurderPlayerPatch
             killCount[playerId] = 0;
         }
 
-        if (!__instance.isNew)
-        {
-            killCount[playerId]++;
-            Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
 
-            if ((target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead) && !Main.DisableInfoWhenDead.Value)
+        killCount[playerId]++;
+        Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
+
+        if ((target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead) && !Main.DisableInfoWhenDead.Value)
+        {
+            foreach (var p in PlayerControl.AllPlayerControls)
             {
-                foreach (var p in PlayerControl.AllPlayerControls)
+                if (p.Data.Role.IsImpostor)
                 {
-                    if (p.Data.Role.IsImpostor)
-                    {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[p.Data.PlayerId]}†)</color> - {Utils.StoredRoleText[p.PlayerId]}";
-                    }
-                    else
-                    {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})</color> - {Utils.StoredRoleText[p.PlayerId]}";
-                    }
+                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[p.Data.PlayerId]}†)</color> - {Utils.StoredRoleText[p.PlayerId]}";
+                }
+                else
+                {
+                    p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=green><size=90%>({PlayerControlCompleteTaskPatch.playerTasksCompleted[p.PlayerId]}/{PlayerControlCompleteTaskPatch.tasksPerPlayer[p.PlayerId]})</color> - {Utils.StoredRoleText[p.PlayerId]}";
                 }
             }
         }
 
-        //2 = Shift and Seek
+        //1 = Shift and Seek
         if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
         {
-            if (!resultFlags.HasFlag(MurderResultFlags.Succeeded))
-            return;
+            if (!resultFlags.HasFlag(MurderResultFlags.Succeeded)) return;
 
             if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId)
             {
@@ -98,27 +95,12 @@ internal static class MurderPlayerPatch
 
                 misfireCount[playerId]++;
 
-                if (misfireCount[__instance.Data.PlayerId] < Options.MisfiresToSuicide.GetFloat())
-                {
-                    __instance.RpcSetRole(RoleTypes.Crewmate);
-                    __instance.isNew = true;
-                    Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName} incorrectly and can't kill for {Options.CantKillTime.GetInt()}s", "SNSKillManager");
-                    Logger.SendInGame($" {__instance.Data.PlayerName} killed {target.Data.PlayerName} incorrectly and can't kill for {Options.CantKillTime.GetInt()}s");
-
-                    new LateTask(() =>
-                    {
-                        __instance.isNew = false;
-                        if (!__instance.Data.IsDead && __instance != null) {__instance.RpcSetRole(RoleTypes.Shapeshifter, false);}
-                    }, Options.CantKillTime.GetInt(), "SNSResetRole");
-                }
-
                 if (misfireCount[__instance.Data.PlayerId] >= Options.MisfiresToSuicide.GetFloat())
                 {
                     __instance.RpcSetRole(RoleTypes.ImpostorGhost);
                     Logger.Info($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} time(s) and suicided", "SNSKillManager");
                     Logger.SendInGame($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} time(s) and suicided");
                 }
-
             }
         }
     }
@@ -127,7 +109,6 @@ internal static class MurderPlayerPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckShapeshift))]
 internal static class CheckShapeshiftPatch
 {
-
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
     {
         if (!AmongUsClient.Instance.AmHost) return true;
@@ -156,7 +137,7 @@ class PlayerControlCompleteTaskPatch
     public static void Postfix(PlayerControl __instance, uint idx)
     {
         if (!AmongUsClient.Instance.AmHost) return;
-
+        
         foreach (var p in PlayerControl.AllPlayerControls)
         {
 

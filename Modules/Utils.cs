@@ -229,6 +229,17 @@ public static class Utils
         PlayerControlSetRolePatch.manualSeekers.Clear();
 
         OnGameStartPatch.PastStartScreen = false;
+
+        FixedUpdate.BadMovementTimer.Clear();
+
+        skeldVotes = 0;
+        miraVotes = 0;
+        polusVotes = 0;
+        airshipVotes = 0;
+        fungleVotes = 0;
+        dleksVotes = 0;
+        HasVoted.Clear();
+        MapVoteActive = false;
     }
 
     public static PlayerControl[] AllAlivePlayerControls

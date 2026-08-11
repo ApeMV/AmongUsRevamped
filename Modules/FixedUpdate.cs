@@ -1,3 +1,4 @@
+using AmongUs.GameOptions;
 using Hazel;
 using System;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,7 @@ namespace AmongUsRevamped;
 [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.FixedUpdate))]
 public static class FixedUpdate
 {
+    public static Dictionary<byte, float> BadMovementTimer = new Dictionary<byte, float>();
     public static readonly Dictionary<string, Vector2> SpawnRange = new()
     {
         ["Skeld"] = new(-0.8f, 1.2f),
@@ -93,6 +95,79 @@ public static class FixedUpdate
                 Position[p.PlayerId] = p.GetTruePosition();
             }
         }
+
+        if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)
+        {
+            foreach (var p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data.RoleType == RoleTypes.Phantom && !p.PhantomFadeActive && !p.Data.IsDead && p.MyPhysics.GetVelocity() != new Vector2(0, 0) && OnGameStartPatch.PastStartScreen)
+                {
+                    if (!BadMovementTimer.ContainsKey(p.Data.PlayerId))
+                    {
+                        BadMovementTimer[p.Data.PlayerId] = 0f;
+                    }
+
+                    BadMovementTimer[p.Data.PlayerId] += Time.fixedDeltaTime;
+
+                    if (BadMovementTimer[p.Data.PlayerId] > Options.BadMoveTimeToSuicide.GetInt())
+                    {
+                        p.RpcSetRole(RoleTypes.ImpostorGhost);
+                        Logger.Info($" {p.Data.PlayerName} wrongfully moved for {Options.BadMoveTimeToSuicide.GetInt()}s and suicided", "SNSKillManager");
+                        Logger.SendInGame($" {p.Data.PlayerName} wrongfully moved for {Options.BadMoveTimeToSuicide.GetInt()}s and suicided");
+                    }
+                }
+            }
+        }
+
+        // We check if any SnS Shapshifter is currently nearby their correct target.
+        // If so, the global Kill Cooldown is set to 1 and all killing actions may proceed.
+        // If not, the global Kill Cooldown is set to 0.
+        // While this value is 0, the game stops the kill cooldown from decreasing.
+        // If the Kill Cooldown value is 0 by default (which it will be at the start of a match), Among Us does not allow kills at all.
+        // This means most of the time, we can successfully prevent invalid kills.
+        // The only problem is that if one Shapeshifter is nearby their correct target, while another is not, the second Shapeshifter can kill too.
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && !Utils.IsLobby)
+        {
+            bool shapeshifterNearTarget = false;
+
+            foreach (var p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data == null || p.Data.IsDead || p.shapeshiftTargetPlayerId == byte.MaxValue) continue;
+
+                PlayerControl shapeshiftTarget = null;
+
+                foreach (var t in PlayerControl.AllPlayerControls)
+                {
+                    if (t.Data == null || t.Data.IsDead) continue;
+
+                    if (t.Data.PlayerId == p.shapeshiftTargetPlayerId)
+                    {
+                        shapeshiftTarget = t;
+                        break;
+                    }
+                }
+
+                if (shapeshiftTarget == null) continue;
+
+                float distance = Vector2.Distance(p.GetTruePosition(), shapeshiftTarget.GetTruePosition());
+
+                if (distance <= 3f)
+                {
+                    shapeshifterNearTarget = true;
+                    break;
+                }
+            }
+            
+
+            float newCooldown = shapeshifterNearTarget ? 1f : 0f;
+
+            if (Main.NormalOptions.KillCooldown != newCooldown)
+            {
+                Main.NormalOptions.KillCooldown = newCooldown;
+                OptionManager.SyncGameOptions();
+            }
+            
+        }
     }
 
     private static bool IsSpawn(Vector2 pos)
@@ -127,10 +202,16 @@ class FixedUpdateInGamePatch
     private static float t;
     private static GameObject settingsLabel;
 
+    public static bool CanUseKillButton(PlayerControl pc)
+    {
+        pc.Data.Role.CanUseKillButton = false;
+        return false;
+    }
+
     public static void Postfix(PlayerControl __instance)
     {
         if (__instance == null || __instance.PlayerId == 255 || !AmongUsClient.Instance.AmHost) return;
-        
+
         t += Time.deltaTime;
         if (t < 0.2f) return;
         t = 0f;
@@ -159,18 +240,21 @@ class FixedUpdateInGamePatch
 
         switch (gamemode)
         {
+
             case 0:
                 break;
 
             case 1: // SnS
-                if (Main.NormalOptions.KillCooldown != 2.5f)
-                    Main.NormalOptions.KillCooldown = 2.5f;
-
-                if (Options.SNSSettingsOverride.GetBool() && settingsLabel == null)
-                    Main.NormalOptions.TaskBarMode = 0;
+                if (Utils.InGame) return;
+                if (Main.NormalOptions.KillCooldown != 1f) Main.NormalOptions.KillCooldown = 1f;
                 break;
 
             case 2: // Speedrun
+                break;
+
+            case 3: // PnS
+                if (Utils.InGame) return;
+                if (Main.NormalOptions.KillCooldown != 1f) Main.NormalOptions.KillCooldown = 1f;
                 break;
         }
 
@@ -198,6 +282,18 @@ class FixedUpdateInGamePatch
                     Utils.CustomWinnerEndGame(PlayerControl.LocalPlayer, 0);
                     Logger.Info($" No one won because the game took longer than {Options.GameAutoEndsAfter.GetInt()}s", "SpeedrunManager");
                     NormalGameEndChecker.CheckWinnerText("NoOneWinsSpeedrun");
+                }
+            }
+            // 3 = Poof and Seek
+            if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)
+            {
+                if (Main.GameTimer > Options.PNSCrewAutoWinsGameAfter.GetInt())
+                {
+                    Main.GameTimer = 0f;
+
+                    Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
+                    Logger.Info($" Crewmates won because the game took longer than {Options.PNSCrewAutoWinsGameAfter.GetInt()}s", "PNSManager");
+                    NormalGameEndChecker.CheckWinnerText("PnSTimer");
                 }
             }
         }

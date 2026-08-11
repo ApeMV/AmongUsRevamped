@@ -225,12 +225,12 @@ public static class BanManager
                 if (Options.AutoKickStartAsBan.GetBool()) 
                 {
                     AmongUsClient.Instance.KickPlayer(clientId, true);
-                    Logger.SendInGame(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));    
+                    Logger.SendInGame(Translator.Get("startWordBan", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));    
                 }
                 else
                 {
                     AmongUsClient.Instance.KickPlayer(clientId, false);
-                    Logger.SendInGame(Translator.Get("startWordBan", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));   
+                    Logger.SendInGame(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()));   
                 }
                 Logger.Info(Translator.Get("startWordKick", player.Data.PlayerName, Options.AutoKickStartTimes.GetInt()), "StartWordKick");
             }

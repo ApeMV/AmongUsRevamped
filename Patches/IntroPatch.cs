@@ -14,7 +14,9 @@ internal static class CoShowIntroPatch
         Logger.Info(" Intro initiated", "CoShowIntro");
 
         if (!AmongUsClient.Instance.AmHost) return;
-        
+
+        //OptionManager.CacheOptions();
+
         foreach (var p in PlayerControl.AllPlayerControls)
         {
             p.cosmetics.nameText.text = p.Data.PlayerName;
@@ -36,17 +38,52 @@ internal static class CoShowIntroPatch
             }, 33f, "MeetingEnabled");     
         }
 
-        if (Options.Gamemode.GetValue() == 1 && Options.SNSChatInGameExtend.GetBool())
+        if (Options.Gamemode.GetValue() == 1 && Options.SNSChatInGameExtend.GetBool() && !Utils.isHideNSeek)
         {
-            if (Options.MisfiresToSuicide.GetInt() == 1 || Options.CantKillTime.GetInt() == 0)
+            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);         
+        }
+
+        if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f))
+        {
+            Main.NormalOptions.KillCooldown = 8f;
+            OptionManager.SyncGameOptions();
+
+            _ = new LateTask(() =>
+            {       
+                Main.NormalOptions.KillCooldown = 0.01f;
+                OptionManager.SyncGameOptions();
+            }, 13f, "NoKcdEnabled");     
+        }
+
+        if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)
+        {
+            if (Options.PNSChatInGame.GetBool())
             {
-                Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);                
+                Main.NormalOptions.KillCooldown = 13f;
+                OptionManager.SyncGameOptions();
+
+                _ = new LateTask(() =>
+                {       
+                    Main.NormalOptions.KillCooldown = 0.01f;
+                    OptionManager.SyncGameOptions();
+                }, 18f, "NoKcdEnabled");
             }
             else
             {
-                        
-                Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nEmergency Meetings = Off", SendChatPatch.ConvertNum($"Crew wins by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImp wins by killing\nOne wrong kill = Can't kill for {Options.CantKillTime.GetInt()}s\n{Options.MisfiresToSuicide.GetInt()} wrong kills = suicide"), true);
-            }            
+                Main.NormalOptions.KillCooldown = 8f;
+                OptionManager.SyncGameOptions();
+
+                _ = new LateTask(() =>
+                {       
+                    Main.NormalOptions.KillCooldown = 0.01f;
+                    OptionManager.SyncGameOptions();
+                }, 13f, "NoKcdEnabled");
+            }          
+        }
+
+        if (Options.Gamemode.GetValue() == 3 && Options.PNSChatInGameExtend.GetBool() && !Utils.isHideNSeek)
+        {
+            Utils.ModeratorChatCommand($"Poof and Seek:\n\nImpostors can only move while vanished\n Meetings & Reports = Off\nVisibly moving {Options.BadMoveTimeToSuicide.GetInt()}s as Phantom = Suicide", $"Crewmates win by doing tasks or surviving {Options.PNSCrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone", true);
         }
     }
 }

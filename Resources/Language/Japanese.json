@@ -37,7 +37,7 @@
   "playerAutoStart": "自動スタートに必要な人数",
   "enableJoinMessages": "参加歓迎メッセージを有効化",
   "messagePerPlayerNum": "指定参加人数ごとの通知",
-  "tabGroupMisc": "その他",
+  "tabGroupMisc": "実験的",
   "startCountdown": "デフォルトのカウントダウン",
   "colorCommandLevel": "カラーコマンドの使用権限",
   "allowFortegreen": "フォルテグリーン色を許可",
@@ -316,5 +316,30 @@
   "moderationSettings": "モデレーション設定",
   "moderationSettingsDesc": "荒らしや迷惑行為を防止するための設定です。",
 
-  "rehostSuccess": "ロビーの再作成に成功しました"
+  "rehostSuccess": "ロビーの再作成に成功しました",
+  "enableKickHighLevelPlayer": "高レベルプレイヤーのキックを有効化",
+  "kickHighLevelPlayer": "指定レベル以上のプレイヤーをキック",
+  "kick": "キック",
+  "ban": "BAN",
+  "notifyMe": "通知する",
+
+  "tabGroupAfk": "AFK検知",
+  "enableAfkDetection": "AFK検知を有効化",
+  "afkTimer": "検知までの時間",
+  "afkPenalty": "AFK時のペナルティ",
+  "onlyDetectSpawn": "スポーン地点のプレイヤーのみ検知",
+
+  "afkNotify": "{0} は {1}秒間AFKです",
+  "afkKick": "{0} は {1}秒間AFKのため、キックします",
+  "afkBan": "{0} は {1}秒間AFKのため、BANします",
+
+  "automaticMapPoll": "再参加後に /mapvote を自動実行",
+  "automaticAllMapPoll": "再参加後に /allmapvote を自動実行",
+  "timeBeforeMapPoll": "投票開始までの待機時間",
+
+  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
+  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
+  "tabGroupPNS": "Poof and Seek",
+  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
+  "snsImpostorCanVent": "Impostors can vent"
 }

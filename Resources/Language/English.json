@@ -234,7 +234,7 @@
   "disableSubmitScan": "Disable Submit Scan",
   "disableUploadData": "Disable Upload Data",
 
-  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.",
+  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/pns, /poofandseek</b>\nSend Poof and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.\n\n<b>/seeker {name}</b>\nForce someone as Seeker in HnS.\n<b>/seekers</b>\nShow forced seeker list.\n<b>/clearseeker</b>\nClear forced seeker list.\n\n<b>/mapvote</b>\nStarts a map vote containing default maps.\n\n<b>/allmapvote</b>\nStarts a map vote that includes Eht Dleks.",
 
   "translationReloaded": "Your file has successfully been reset.\nTo apply all changes, restart your game.",
 
@@ -264,6 +264,7 @@
   "snsDesc": "Send Shift and Seek gamemode Description.",
   "0kcDesc": "Send 0 Kill Cooldown gamemode Description.",
   "SrDesc": "Send Speedrun gamemode Description.",
+  "pnsDesc": "Send Poof and Seek gamemode Description.",
   "egDesc": "End the current game.",
   "emDesc": "End the current meeting.",
   "aurDesc": "Send Among Us Revamped social links.",
@@ -335,5 +336,11 @@
 
   "automaticMapPoll": "Automatic /mapvote After Rejoining",
   "automaticAllMapPoll": "Automatic /allmapvote After Rejoining",
-  "timeBeforeMapPoll": "Time Before Poll Starts"
+  "timeBeforeMapPoll": "Time Before Poll Starts",
+
+  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
+  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
+  "tabGroupPNS": "Poof and Seek",
+  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
+  "snsImpostorCanVent": "Impostors can vent"
 }
