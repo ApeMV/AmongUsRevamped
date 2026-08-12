@@ -455,10 +455,10 @@ namespace AmongUsRevamped
 
             TabGroupSNS = TextOptionItem.Create(70050, Translator.Get("tabGroupSNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
-            SNSChatInGame = BooleanOptionItem.Create(70063, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
-            SNSChatInGameExtend = BooleanOptionItem.Create(70064, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
+            SNSChatInGame = BooleanOptionItem.Create(70051, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
+            SNSChatInGameExtend = BooleanOptionItem.Create(70052, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSChatInGame);
-            MisfiresToSuicide = IntegerOptionItem.Create(70052, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 1, TabGroup.GamemodeSettings, false);
+            MisfiresToSuicide = IntegerOptionItem.Create(70053, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 1, TabGroup.GamemodeSettings, false);
             CrewAutoWinsGameAfter = IntegerOptionItem.Create(70054, Translator.Get("crewAutoWinsGameAfter"), new(60, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             SNSDisableSabotage = BooleanOptionItem.Create(70055, Translator.Get("snsDisableSabotage"), true, TabGroup.GamemodeSettings, false)
