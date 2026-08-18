@@ -51,7 +51,7 @@ internal static class MurderPlayerPatch
 
     public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] MurderResultFlags resultFlags, ref bool __state)
     {
-        if (!AmongUsClient.Instance.AmHost || !resultFlags.HasFlag(MurderResultFlags.Succeeded)) return;
+        if (!AmongUsClient.Instance.AmHost) return;
 
         byte playerId = __instance.Data.PlayerId;
 
@@ -60,11 +60,25 @@ internal static class MurderPlayerPatch
             killCount[playerId] = 0;
         }
 
+        if (resultFlags.HasFlag(MurderResultFlags.Succeeded))
+        {
+            killCount[playerId]++;
+            Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
+            if (string.IsNullOrEmpty(NormalGameEndChecker.firstDeath)) 
+            {
+                NormalGameEndChecker.firstDeath = target.Data.PlayerName;
+                Utils.HasMurdered = true;
+            }
 
-        killCount[playerId]++;
-        Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
+            if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
+            {
+                if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId) return;
+                Logger.Info($" {__instance.Data.PlayerName} directly killed {target.Data.PlayerName} in SnS, forcing suicide. (Are they hacking?)", "MurderPlayer");
+                __instance.RpcSetRole(RoleTypes.ImpostorGhost); 
+            }
+        }
 
-        if ((target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead) && !Main.DisableInfoWhenDead.Value)
+        if ((target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead) && !Main.DisableInfoWhenDead.Value && resultFlags.HasFlag(MurderResultFlags.Succeeded))
         {
             foreach (var p in PlayerControl.AllPlayerControls)
             {
@@ -82,30 +96,26 @@ internal static class MurderPlayerPatch
         //1 = Shift and Seek
         if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
         {
-            if (!resultFlags.HasFlag(MurderResultFlags.Succeeded)) return;
-
             if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId)
             {
+                killCount[playerId]++;
                 Logger.Info($" {__instance.Data.PlayerName} correctly killed {target.Data.PlayerName} ", "SNSKillManager");
+                target.RpcSetRole(RoleTypes.CrewmateGhost);
+                if (string.IsNullOrEmpty(NormalGameEndChecker.firstDeath))
+                {
+                    NormalGameEndChecker.firstDeath = target.Data.PlayerName;
+                    Utils.HasMurdered = true;
+                }
             }
             else
             {
-                if (!misfireCount.ContainsKey(playerId))
-                misfireCount[playerId] = 0;
-
-                misfireCount[playerId]++;
-
-                if (misfireCount[__instance.Data.PlayerId] >= Options.MisfiresToSuicide.GetFloat())
-                {
-                    __instance.RpcSetRole(RoleTypes.ImpostorGhost);
-                    Logger.Info($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} time(s) and suicided", "SNSKillManager");
-                    Logger.SendInGame($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} time(s) and suicided");
-                }
+                Logger.Info($" {__instance.Data.PlayerName} misfired trying to kill {target.Data.PlayerName}. Blocking kill", "SNSKillManager");
             }
         }
     }
 }
 
+/*
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckShapeshift))]
 internal static class CheckShapeshiftPatch
 {
@@ -123,6 +133,7 @@ internal static class CheckShapeshiftPatch
         else return true;
     }
 }
+*/
 
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
 class PlayerControlCompleteTaskPatch

@@ -336,10 +336,10 @@
   "automaticMapPoll": "再参加後に /mapvote を自動実行",
   "automaticAllMapPoll": "再参加後に /allmapvote を自動実行",
   "timeBeforeMapPoll": "投票開始までの待機時間",
-
-  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
-  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
-  "tabGroupPNS": "Poof and Seek",
-  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
-  "snsImpostorCanVent": "Impostors can vent"
+  "pnsDesc": "Poof and Seekゲームモードの説明を送信します。",
+"pnsDisableSabotage": "PnSの重大なサボタージュを無効にする",
+"pnsDisableCloseDoor": "PnSのドア閉鎖サボタージュを無効にする",
+"tabGroupPNS": "Poof and Seek",
+"badMoveTimeToSuicide": "幻象師が明らかに移動した後、自殺するまでの時間",
+"snsImpostorCanVent": "インポスターはベントを使用できる"
 }

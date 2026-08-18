@@ -104,6 +104,8 @@ namespace AmongUsRevamped
         public static OptionItem TimeBeforeMapPoll;
         public static OptionItem AutomaticAllMapPoll;
         public static OptionItem TimeBeforeAllMapPoll;
+        public static OptionItem AutomaticModePoll;
+        public static OptionItem TimeBeforeModePoll;
 
         public static OptionItem TabGroupAutostart;
         public static OptionItem AutoStartTimer;
@@ -121,6 +123,7 @@ namespace AmongUsRevamped
 
         public static OptionItem TabGroupMisc;
         public static OptionItem MapVoteDuration;
+        public static OptionItem ModeVoteDuration;
         public static OptionItem StartCountdown;
         public static OptionItem ColorCommandLevel;
         public static OptionItem AllowFortegreen;
@@ -149,8 +152,9 @@ namespace AmongUsRevamped
         public static OptionItem DisableCloseDoor;
 
         public static OptionItem TabGroupGameplayGeneral;
+        public static OptionItem ShieldFirstDeath;
+        public static OptionItem ShieldFirstDeathDuration;
         public static OptionItem DisableAnnoyingMeetingCalls;
-
         public static OptionItem ChangeDecontaminationTime;
         public static OptionItem DecontaminationTimeOnMiraHQ;
         public static OptionItem DecontaminationDoorOpenTimeOnMiraHQ;
@@ -294,6 +298,8 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupSNS;
         public static OptionItem SNSChatInGame;
         public static OptionItem SNSChatInGameExtend;
+        public static OptionItem SNSChatInGameExtend2;
+        public static OptionItem SNSChatInGameFast;
         public static OptionItem CrewAutoWinsGameAfter;
         public static OptionItem MisfiresToSuicide;
         public static OptionItem SNSDisableSabotage;
@@ -313,6 +319,7 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupPNS;
         public static OptionItem PNSChatInGame;
         public static OptionItem PNSChatInGameExtend;
+        public static OptionItem PNSChatInGameFast;
         public static OptionItem PNSCrewAutoWinsGameAfter;
         public static OptionItem BadMoveTimeToSuicide;
         public static OptionItem PNSDisableSabotage;
@@ -410,6 +417,10 @@ namespace AmongUsRevamped
             TimeBeforeAllMapPoll = IntegerOptionItem.Create(60157, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 10, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetParent(AutomaticAllMapPoll);
+            AutomaticModePoll = BooleanOptionItem.Create(60158, Translator.Get("automaticModePoll"), false, TabGroup.SystemSettings, false);
+            TimeBeforeModePoll = IntegerOptionItem.Create(60159, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 20, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(AutomaticModePoll);
 
             TabGroupAutostart = TextOptionItem.Create(64425, Translator.Get("tabGroupAutostart"), TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
@@ -438,7 +449,10 @@ namespace AmongUsRevamped
             MapVoteDuration = IntegerOptionItem.Create(60379, Translator.Get("mapVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetColor(Color.red);
-            StartCountdown = IntegerOptionItem.Create(60380, Translator.Get("startCountdown"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
+            ModeVoteDuration = IntegerOptionItem.Create(60380, Translator.Get("modeVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetColor(Color.red);
+            StartCountdown = IntegerOptionItem.Create(60381, Translator.Get("startCountdown"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetColor(Color.red);
             AllowFortegreen = BooleanOptionItem.Create(60382, Translator.Get("allowFortegreen"), false, TabGroup.SystemSettings, false)
@@ -456,36 +470,40 @@ namespace AmongUsRevamped
             TabGroupSNS = TextOptionItem.Create(70050, Translator.Get("tabGroupSNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
             SNSChatInGame = BooleanOptionItem.Create(70051, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
-            SNSChatInGameExtend = BooleanOptionItem.Create(70052, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
+            SNSChatInGameExtend = BooleanOptionItem.Create(70052, Translator.Get("snsChatInGameExtend"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSChatInGame);
-            MisfiresToSuicide = IntegerOptionItem.Create(70053, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 1, TabGroup.GamemodeSettings, false);
-            CrewAutoWinsGameAfter = IntegerOptionItem.Create(70054, Translator.Get("crewAutoWinsGameAfter"), new(60, 600, 10), 300, TabGroup.GamemodeSettings, false)
+            SNSChatInGameExtend2 = BooleanOptionItem.Create(70053, Translator.Get("snsChatInGameExtendTwo"), true, TabGroup.GamemodeSettings, false)
+                .SetParent(SNSChatInGame);
+            SNSChatInGameFast = BooleanOptionItem.Create(70054, Translator.Get("snsChatInGameFast"), false, TabGroup.GamemodeSettings, false)
+                .SetParent(SNSChatInGame);
+            MisfiresToSuicide = IntegerOptionItem.Create(70055, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 1, TabGroup.GamemodeSettings, false);
+            CrewAutoWinsGameAfter = IntegerOptionItem.Create(70056, Translator.Get("crewAutoWinsGameAfter"), new(60, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
-            SNSDisableSabotage = BooleanOptionItem.Create(70055, Translator.Get("snsDisableSabotage"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableSabotage = BooleanOptionItem.Create(70057, Translator.Get("snsDisableSabotage"), true, TabGroup.GamemodeSettings, false)
                 .SetColor(Color.red);
-            SNSDisableReactor = BooleanOptionItem.Create(70056, Translator.Get("snsDisableReactor"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableReactor = BooleanOptionItem.Create(70058, Translator.Get("snsDisableReactor"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSDisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            SNSDisableOxygen = BooleanOptionItem.Create(70057, Translator.Get("snsDisableOxygen"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableOxygen = BooleanOptionItem.Create(70059, Translator.Get("snsDisableOxygen"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSDisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            SNSDisableLights = BooleanOptionItem.Create(70058, Translator.Get("snsDisableLights"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableLights = BooleanOptionItem.Create(70060, Translator.Get("snsDisableLights"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSDisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            SNSDisableComms = BooleanOptionItem.Create(70059, Translator.Get("snsDisableComms"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableComms = BooleanOptionItem.Create(70061, Translator.Get("snsDisableComms"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSDisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            SNSDisableHeli = BooleanOptionItem.Create(70060, Translator.Get("snsDisableHeli"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableHeli = BooleanOptionItem.Create(70062, Translator.Get("snsDisableHeli"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSDisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            SNSDisableMushroomMixup = BooleanOptionItem.Create(70061, Translator.Get("snsDisableMushroomMixup"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableMushroomMixup = BooleanOptionItem.Create(70063, Translator.Get("snsDisableMushroomMixup"), true, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSDisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            SNSDisableCloseDoor = BooleanOptionItem.Create(70062, Translator.Get("snsDisableCloseDoor"), true, TabGroup.GamemodeSettings, false)
+            SNSDisableCloseDoor = BooleanOptionItem.Create(70064, Translator.Get("snsDisableCloseDoor"), true, TabGroup.GamemodeSettings, false)
                 .SetColor(Color.red);
-            SNSImpostorsCanVent = BooleanOptionItem.Create(70063, Translator.Get("snsImpostorCanVent"), true, TabGroup.GamemodeSettings, false);
+            SNSImpostorsCanVent = BooleanOptionItem.Create(70065, Translator.Get("snsImpostorCanVent"), true, TabGroup.GamemodeSettings, false);
 
-            TabGroupSpeedrun = TextOptionItem.Create(70075, Translator.Get("tabGroupSpeedrun"), TabGroup.GamemodeSettings)
+            TabGroupSpeedrun = TextOptionItem.Create(70076, Translator.Get("tabGroupSpeedrun"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
             GameAutoEndsAfter = IntegerOptionItem.Create(70077, Translator.Get("gameAutoEndsAfter"), new(0, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
@@ -493,8 +511,10 @@ namespace AmongUsRevamped
 
             TabGroupPNS = TextOptionItem.Create(70100, Translator.Get("tabGroupPNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);
-            PNSChatInGame = BooleanOptionItem.Create(70102, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
-            PNSChatInGameExtend = BooleanOptionItem.Create(70103, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
+            PNSChatInGame = BooleanOptionItem.Create(70101, Translator.Get("snsChatInGame"), false, TabGroup.GamemodeSettings, false);
+            PNSChatInGameExtend = BooleanOptionItem.Create(70102, Translator.Get("snsChatInGameExtend"), false, TabGroup.GamemodeSettings, false)
+                .SetParent(PNSChatInGame);
+            PNSChatInGameFast = BooleanOptionItem.Create(70103, Translator.Get("snsChatInGameFast"), false, TabGroup.GamemodeSettings, false)
                 .SetParent(PNSChatInGame);
             BadMoveTimeToSuicide = IntegerOptionItem.Create(70104, Translator.Get("badMoveTimeToSuicide"), new(1, 30, 1), 3, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
@@ -554,7 +574,11 @@ namespace AmongUsRevamped
 
             TabGroupGameplayGeneral = TextOptionItem.Create(60564, Translator.Get("tabGroupGameplayGeneral"), TabGroup.ModSettings)
                 .SetColor(Color.blue);
-            DisableAnnoyingMeetingCalls = BooleanOptionItem.Create(60565, Translator.Get("disableAnnoyingMeetingCalls"), false, TabGroup.ModSettings, false);
+            ShieldFirstDeath = BooleanOptionItem.Create(60565, Translator.Get("shieldFirstDeath"), false, TabGroup.ModSettings, false);
+            ShieldFirstDeathDuration = IntegerOptionItem.Create(60566, Translator.Get("shieldFirstDeathDuration"), new(10, 120, 5), 30, TabGroup.ModSettings, false)
+                .SetParent(ShieldFirstDeath)
+                .SetValueFormat(OptionFormat.Seconds);
+            DisableAnnoyingMeetingCalls = BooleanOptionItem.Create(60567, Translator.Get("disableAnnoyingMeetingCalls"), false, TabGroup.ModSettings, false);
 
             ChangeDecontaminationTime = BooleanOptionItem.Create(60550, Translator.Get("changeDecontaminationTime"), false, TabGroup.ModSettings, false);
             DecontaminationTimeOnMiraHQ = FloatOptionItem.Create(60551, Translator.Get("decontaminationTimeOnMiraHQ"), new(0.5f, 10f, 0.25f), 3f, TabGroup.ModSettings, false)

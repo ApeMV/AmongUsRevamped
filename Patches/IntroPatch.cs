@@ -19,6 +19,29 @@ internal static class CoShowIntroPatch
 
         foreach (var p in PlayerControl.AllPlayerControls)
         {
+            p.protectedByGuardianId = -1;
+
+            if (NormalGameEndChecker.firstDeath != null && NormalGameEndChecker.firstDeath == p.Data.PlayerName && Options.ShieldFirstDeath.GetBool() && Options.Gamemode.GetValue() != 1)
+            {
+                if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
+                {
+                    var oldGA = GuardianAngelOptions.ImpostorsCanSeeProtect;
+                    var oldGAProt = GuardianAngelOptions.ProtectionDurationSeconds;
+                    GuardianAngelOptions.ProtectionDurationSeconds = Options.ShieldFirstDeathDuration.GetFloat();
+                    GuardianAngelOptions.ImpostorsCanSeeProtect = true;
+
+                    _ = new LateTask(() =>
+                    {   GuardianAngelOptions.ImpostorsCanSeeProtect = oldGA;
+                        GuardianAngelOptions.ProtectionDurationSeconds = oldGAProt + 6;
+                        OptionManager.SyncGameOptions();
+                    }, Options.ShieldFirstDeathDuration.GetFloat(), "RevertGAProtTime");  
+                }
+
+                OptionManager.SyncGameOptions();
+                p.RpcProtectPlayer(p, p.cosmetics.ColorId);
+                Logger.Info($" {p.Data.PlayerName} has been granted a shield for {Options.ShieldFirstDeathDuration.GetInt()}s", "RoleInfo");           
+            }
+
             p.cosmetics.nameText.text = p.Data.PlayerName;
 
             MurderPlayerPatch.killCount[p.PlayerId] = 0;
@@ -35,12 +58,28 @@ internal static class CoShowIntroPatch
             _ = new LateTask(() =>
             {       
                 Utils.CanCallMeetings = true;
-            }, 33f, "MeetingEnabled");     
+            }, 34f, "MeetingEnabled");     
         }
 
-        if (Options.Gamemode.GetValue() == 1 && Options.SNSChatInGameExtend.GetBool() && !Utils.isHideNSeek)
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
         {
-            Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);         
+            if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
+            {
+                GuardianAngelOptions.ProtectionDurationSeconds = 60f;
+            }
+            OptionManager.SyncGameOptions();
+
+            if (Options.SNSChatInGameExtend.GetBool())
+            {
+                Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);
+            }   
+            if (Options.SNSChatInGameExtend2.GetBool())
+            {
+                _ = new LateTask(() =>
+                {
+                    Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "Correctly killing a target will directly turn them into a ghost and leave no dead body", "", false);
+                }, 6.6f, "SNSChatInGameExtend2");    
+            }   
         }
 
         if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f))
@@ -59,7 +98,7 @@ internal static class CoShowIntroPatch
         {
             if (Options.PNSChatInGame.GetBool())
             {
-                Main.NormalOptions.KillCooldown = 13f;
+                Main.NormalOptions.KillCooldown = 8f;
                 OptionManager.SyncGameOptions();
 
                 _ = new LateTask(() =>
@@ -85,6 +124,8 @@ internal static class CoShowIntroPatch
         {
             Utils.ModeratorChatCommand($"Poof and Seek:\n\nImpostors can only move while vanished\n Meetings & Reports = Off\nVisibly moving {Options.BadMoveTimeToSuicide.GetInt()}s as Phantom = Suicide", $"Crewmates win by doing tasks or surviving {Options.PNSCrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone", true);
         }
+
+        NormalGameEndChecker.firstDeath = "";
     }
 }
 

@@ -26,6 +26,7 @@ internal static class CommandHelper
 
         new Cmd { Name = new[] { "/sns" }, Prompt = "/sns", Description = Translator.Get("snsDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/shiftandseek" }, Prompt = "/shiftandseek", Description = Translator.Get("snsDesc"), HasVariable = false },
+        new Cmd { Name = new[] { "/sns2" }, Prompt = "/sns2", Description = Translator.Get("snsTwoDesc"), HasVariable = false },
 
         new Cmd { Name = new[] { "/0kc" }, Prompt = "/0kc", Description = Translator.Get("0kcDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/0killcooldown" }, Prompt = "/0killcooldown", Description = Translator.Get("0kcDesc"), HasVariable = false },
@@ -82,7 +83,8 @@ internal static class CommandHelper
         new Cmd { Name = new[] { "/clearseeker" }, Prompt = "/clearseeker", Description = Translator.Get("clearSeekerDesc"), HasVariable = false },
 
         new Cmd { Name = new[] { "/mapvote" }, Prompt = "/mapvote", Description = Translator.Get("mapVoteDesc"), HasVariable = false },
-        new Cmd { Name = new[] { "/allmapvote" }, Prompt = "/allmapvote", Description = Translator.Get("allMapVoteDesc"), HasVariable = false }
+        new Cmd { Name = new[] { "/allmapvote" }, Prompt = "/allmapvote", Description = Translator.Get("allMapVoteDesc"), HasVariable = false },
+        new Cmd { Name = new[] { "/gmvote" }, Prompt = "/gmvote", Description = Translator.Get("modeVoteDesc"), HasVariable = false }
     };
 
     [HarmonyPostfix]

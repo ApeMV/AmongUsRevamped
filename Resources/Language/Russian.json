@@ -337,10 +337,10 @@
   "automaticAllMapPoll": "Автоматический /allmapvote После Перезахода",
   "timeBeforeMapPoll": "Время До Начала Голосования За Карты",
 
-  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
-  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
-  "tabGroupPNS": "Poof and Seek",
-  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
-  "snsImpostorCanVent": "Impostors can vent"
-
+  "pnsDisableSabotage": "Выключить Критические Саботажи В Режиме Фантомные Прятки",
+  "pnsDisableCloseDoor": "Выключить Саботажи Дверей В Режиме Фантомные Прятки",
+  "tabGroupPNS": "Фантомные Прятки",
+  "badMoveTimeToSuicide": "Файнтомы Самоубиваются После Видимого Движения После",
+  "snsImpostorCanVent": "Предатели могут уходить в люк",
+  "pnsDesc": "Отправляет информацию о Режиме Фантомных Прятках."
 }

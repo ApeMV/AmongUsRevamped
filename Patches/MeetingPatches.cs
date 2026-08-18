@@ -70,7 +70,7 @@ class MeetingHudStartPatch
             PlayerControl player = null;
             foreach (var pc in PlayerControl.AllPlayerControls)
             {
-                if (pc.PlayerId == playerState.TargetPlayerId)
+                if (pc.PlayerId == playerState.PlayerId)
                 {
                     player = pc;
                     break;
@@ -89,7 +89,7 @@ class MeetingHudStartPatch
             taskTextMeeting.text = taskText;
             taskTextMeeting.gameObject.name = "TaskTextMeeting";
             taskTextMeeting.enableWordWrapping = false;
-            taskTextMeeting.enabled = player.AmOwner || player.PlayerId == playerState.TargetPlayerId;
+            taskTextMeeting.enabled = player.AmOwner || player.PlayerId == playerState.PlayerId;
         }
     }
 

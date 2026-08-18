@@ -13,6 +13,12 @@ namespace AmongUsRevamped
         {
            Logger.Info($" Disconnected due to {reason}/{stringReason}, ping:{__instance.Ping})", "DisconnectManager");
 
+            if (!EOSManager.Instance.loginFlowFinished || EOSManager.Instance.authExpiredCallbackTriggered)
+            {
+                Logger.Info("Attempted to log in using EOS", "DisconnectManager");
+                EOSManager.Instance.AdultPermissionsFlow();
+            }
+
             if (!Options.Rehost.GetBool() || reason == DisconnectReasons.NewConnection || reason == DisconnectReasons.ConnectionLimit || reason == DisconnectReasons.ExitGame) return;
 
             _ = new LateTask(() =>

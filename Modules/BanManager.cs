@@ -29,7 +29,6 @@ public static class BanManager
     private static string TemplatePath = $"{DataPath}/AUR-DATA/Templates.txt";
     private static string StartWordsPath = $"{DataPath}/AUR-DATA/Startwords.txt";
     public static Dictionary<string, string> Templates = new();
-    public static List<string> TempBanWhiteList = [];
     public static void Init()
     {
         try
@@ -81,7 +80,7 @@ public static class BanManager
     public static void AddBanPlayer(ClientData player)
     {
         if (!AmongUsClient.Instance.AmHost || player == null) return;
-        if (!CheckBanList(player?.FriendCode, player?.GetHashedPuid()) && !TempBanWhiteList.Contains(player?.GetHashedPuid()))
+        if (!CheckBanList(player?.FriendCode, player?.GetHashedPuid()))
         {
             if (player?.GetHashedPuid() != "" && player?.GetHashedPuid() != null && player?.GetHashedPuid() != "e3b0cb855")
             {
@@ -104,13 +103,6 @@ public static class BanManager
         {
             AmongUsClient.Instance.KickPlayer(player.Id, true);
             Logger.Info($"{player.PlayerName} was in the BanList and has been banned", "BanListBan");
-            return;
-        }
-        if (TempBanWhiteList.Contains(player?.GetHashedPuid()))
-        {
-            AmongUsClient.Instance.KickPlayer(player.Id, true);
-            //This should not happen
-            Logger.Info($"{player.PlayerName} was in the Temporary BanList", "TempBan");
             return;
         }
     }

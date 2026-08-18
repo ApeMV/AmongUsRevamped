@@ -420,12 +420,92 @@ internal static class SendChatPatch
             }
         }
 
-        if (text == "/vote a" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.skeldVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
-        if (text == "/vote b" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.miraVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
-        if (text == "/vote c" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.polusVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
-        if (text == "/vote d" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.airshipVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
-        if (text == "/vote e" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) {Utils.fungleVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
-        if (text == "/vote f" && Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId) && Utils.DleksEnabled) {Utils.dleksVotes++; Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);}
+        if (text == "/gmvote")
+        {
+            if (Utils.IsLobby)
+            {
+                Utils.ModeVote(false);
+
+                __instance.freeChatField.textArea.Clear();
+                __instance.freeChatField.textArea.SetText(string.Empty);
+                return false;   
+            }
+        }
+
+        if (text == "/vote a")
+        {
+            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
+            if (Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId))
+            {
+                Utils.skeldVotes++;
+            }
+            if (Utils.ModeVoteActive)
+            {
+                Utils.standardVotes++;
+            }
+            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
+        }
+        if (text == "/vote b")
+        {
+            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
+            if (Utils.MapVoteActive)
+            {
+                Utils.miraVotes++;
+            }
+            if (Utils.ModeVoteActive)
+            {
+                Utils.noKillCooldownVotes++;
+            }
+            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
+        }
+        if (text == "/vote c")
+        {
+            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
+            if (Utils.MapVoteActive)
+            {
+                Utils.polusVotes++;
+            }
+            if (Utils.ModeVoteActive)
+            {
+                Utils.speedrunVotes++;
+            }
+            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
+        }
+        if (text == "/vote d")
+        {
+            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
+            if (Utils.MapVoteActive)
+            {
+                Utils.airshipVotes++;
+            }
+            if (Utils.ModeVoteActive)
+            {
+                Utils.shiftAndSeekVotes++;
+            }
+            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
+        }
+        if (text == "/vote e")
+        {
+            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
+            if (Utils.MapVoteActive)
+            {
+                Utils.fungleVotes++;
+            }
+            if (Utils.ModeVoteActive)
+            {
+                Utils.poofAndSeekVotes++;
+            }
+            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
+        }
+        if (text == "/vote f")
+        {
+            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
+            if (Utils.MapVoteActive && Utils.DleksEnabled)
+            {
+                Utils.dleksVotes++;
+            }
+            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
+        }
 
         if (text == "/l" || text == "/lastgame")
         {
@@ -451,7 +531,12 @@ internal static class SendChatPatch
 
         if (text == "/sns" || text == "/shiftandseek")
         {
-            Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);
+            Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);
+            return false;
+        }
+        if (text == "/sns2" || text == "/shiftandseek2")
+        {
+            Utils.ChatCommand(__instance, "Correctly killing a target will directly turn them into a ghost and leave no dead body", "", false);
             return false;
         }
 
@@ -479,7 +564,7 @@ internal static class SendChatPatch
                 break;
 
                 case 1:
-                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true); 
+                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true); 
                 break;
 
                 case 2:
@@ -771,13 +856,90 @@ public static class RPCHandlerPatch
                         Utils.MapVote(true, true);
                     }
                 }
+
+                if (text == "/gmvote")
+                {
+                    if (Utils.IsLobby)
+                    {
+                        if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashMapAndSeekerCmd.GetValue()) return;
+                        Utils.ModeVote(true);
+                    }
+                }
                 
-                if (text == "/vote a" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.skeldVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
-                if (text == "/vote b" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.miraVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
-                if (text == "/vote c" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.polusVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
-                if (text == "/vote d" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.airshipVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
-                if (text == "/vote e" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId)) {Utils.fungleVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
-                if (text == "/vote f" && Utils.MapVoteActive && !Utils.HasVoted.Contains(__instance.Data.PlayerId) && Utils.DleksEnabled) {Utils.dleksVotes++; Utils.HasVoted.Add(__instance.Data.PlayerId);}
+                if (text == "/vote a")
+                {
+                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
+                    if (Utils.MapVoteActive)
+                    {
+                        Utils.skeldVotes++;
+                    }
+                    if (Utils.ModeVoteActive)
+                    {
+                        Utils.standardVotes++;
+                    }
+                    Utils.HasVoted.Add(__instance.Data.PlayerId);
+                }
+                if (text == "/vote b")
+                {
+                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
+                    if (Utils.MapVoteActive)
+                    {
+                        Utils.miraVotes++;
+                    }
+                    if (Utils.ModeVoteActive)
+                    {
+                        Utils.noKillCooldownVotes++;
+                    }
+                    Utils.HasVoted.Add(__instance.Data.PlayerId);
+                }
+                if (text == "/vote c")
+                {
+                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
+                    if (Utils.MapVoteActive)
+                    {
+                        Utils.polusVotes++;
+                    }
+                    if (Utils.ModeVoteActive)
+                    {
+                        Utils.speedrunVotes++;
+                    }
+                    Utils.HasVoted.Add(__instance.Data.PlayerId);
+                }
+                if (text == "/vote d")
+                {
+                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
+                    if (Utils.MapVoteActive)
+                    {
+                        Utils.airshipVotes++;
+                    }
+                    if (Utils.ModeVoteActive)
+                    {
+                        Utils.shiftAndSeekVotes++;
+                    }
+                    Utils.HasVoted.Add(__instance.Data.PlayerId);
+                }
+                if (text == "/vote e")
+                {
+                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
+                    if (Utils.MapVoteActive)
+                    {
+                        Utils.fungleVotes++;
+                    }
+                    if (Utils.ModeVoteActive)
+                    {
+                        Utils.poofAndSeekVotes++;
+                    }
+                    Utils.HasVoted.Add(__instance.Data.PlayerId);
+                }
+                if (text == "/vote f")
+                {
+                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
+                    if (Utils.MapVoteActive && Utils.DleksEnabled)
+                    {
+                        Utils.dleksVotes++;
+                    }
+                    Utils.HasVoted.Add(__instance.Data.PlayerId);
+                }
 
                 if (text == "/l" || text == "/lastgame")
                 {
@@ -800,7 +962,12 @@ public static class RPCHandlerPatch
                 if (text == "/sns" || text == "/shiftandseek")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);
+                    Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);
+                }
+                if (text == "/sns2" || text == "/shiftandseek2")
+                {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
+                    Utils.ModeratorChatCommand("Correctly killing a target will directly turn them into a ghost and leave no dead body", "", false);
                 }
 
                 if (text == "/sr" || text == "/speedrun")
@@ -828,7 +995,7 @@ public static class RPCHandlerPatch
                         break;
 
                         case 1:
-                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by doing tasks or surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing everyone\n{Options.MisfiresToSuicide.GetInt()} wrong kill(s) = suicide", true);           
+                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);           
                         break;
 
                         case 2:

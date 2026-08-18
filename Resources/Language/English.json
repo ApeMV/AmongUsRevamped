@@ -56,6 +56,7 @@
   "allowFortegreen": "Allow Fortegreen Color",
   "noGameEnd": "No Game End",
   "mapVoteDuration": "Map Vote Duration",
+  "modeVoteDuration": "Gamemode Vote Duration",
 
   "tabGroupDeniedWords": "Denied Words",
   "enableDeniedWords": "Kick Players Who Say Denied Words",
@@ -64,7 +65,7 @@
   "slashColorCmd": "Who Can Use /color",
   "slashRolesAndGamemodeCmd": "Who Can Use /r & Templates",
   "slashLastGameCmd": "Who Can Use /l & /aur",
-  "slashMapAndSeekerCmd": "Who Can Use /seeker & /mapvote",
+  "slashMapAndSeekerCmd": "Who Can Use /seeker & Create Votes",
   "slashKickCmd": "Who Can Use /kick & /ckick",
   "slashBanCmd": "Who Can Use /ban & /cban",
   "slashEndMeetingCmd": "Who Can Use /endmeeting",
@@ -83,6 +84,8 @@
   "tabGroupSNS": "Shift and Seek",
   "snsChatInGame": "Chat during gameplay (experimental)",
   "snsChatInGameExtend": "Send gamemode info after game start",
+  "snsChatInGameExtendTwo": "Send extended info after game start",
+  "snsChatInGameFast": "Faster Meeting (experimental+)",
   "snsSettingsOverride": "Auto Update Settings",
   "cantKillTime": "After Misfiring, Can't kill for",
   "misfiresToSuicide": "Suicide After Amount Of Misfires",
@@ -112,6 +115,8 @@
   "disableCloseDoor": "Disable Door Sabotages",
 
   "tabGroupGameplayGeneral": "General",
+  "shieldFirstDeath": "Shield Player Who Died First",
+  "shieldFirstDeathDuration": "Shield Duration",
   "disableAnnoyingMeetingCalls": "Disable Meeting Calls First 30s",
   "disableReport": "Disable Body Reports",
   "changeDecontaminationTime": "Override Decontamination Time (Standard Only)",
@@ -234,7 +239,7 @@
   "disableSubmitScan": "Disable Submit Scan",
   "disableUploadData": "Disable Upload Data",
 
-  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/pns, /poofandseek</b>\nSend Poof and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.\n\n<b>/seeker {name}</b>\nForce someone as Seeker in HnS.\n<b>/seekers</b>\nShow forced seeker list.\n<b>/clearseeker</b>\nClear forced seeker list.\n\n<b>/mapvote</b>\nStarts a map vote containing default maps.\n\n<b>/allmapvote</b>\nStarts a map vote that includes Eht Dleks.",
+  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sns2</b>\nSend extended Shift and Seek mode description\n<b>/pns, /poofandseek</b>\nSend Poof and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.\n\n<b>/seeker {name}</b>\nForce someone as Seeker in HnS.\n<b>/seekers</b>\nShow forced seeker list.\n<b>/clearseeker</b>\nClear forced seeker list.\n\n<b>/mapvote</b>\nStarts a map vote containing default maps.\n<b>/allmapvote</b>\nStarts a map vote that includes Eht Dleks.\n<b>/gmvote</b>\nStarts a gamemode vote.",
 
   "translationReloaded": "Your file has successfully been reset.\nTo apply all changes, restart your game.",
 
@@ -262,6 +267,7 @@
 
   "helpDesc": "Show all commands and what they do.",
   "snsDesc": "Send Shift and Seek gamemode Description.",
+  "snsTwoDesc": "Send Shift and Seek extended Description.",
   "0kcDesc": "Send 0 Kill Cooldown gamemode Description.",
   "SrDesc": "Send Speedrun gamemode Description.",
   "pnsDesc": "Send Poof and Seek gamemode Description.",
@@ -291,6 +297,7 @@
   "clearSeekerDesc": "Clears the manual Seeker list.",
   "mapVoteDesc": "Starts a vote between the 5 core maps.",
   "allMapVoteDesc": "Starts a vote between all 6 maps, including Eht Dleks.",
+  "modeVoteDesc": "Starts a vote between all gamemodes.",
 
   "banWordKick": "{0} was kicked because they sent a word in DeniedWords.txt {1} time(s)",
   "startWordKick": "{0} was kicked because they sent a word in StartWords.txt {1} time(s)",
@@ -336,11 +343,12 @@
 
   "automaticMapPoll": "Automatic /mapvote After Rejoining",
   "automaticAllMapPoll": "Automatic /allmapvote After Rejoining",
-  "timeBeforeMapPoll": "Time Before Poll Starts",
+  "timeBeforeMapPoll": "Time Before Vote Starts",
+  "automaticModePoll": "Automatic /gmvote After Rejoining",
 
   "pnsDisableSabotage": "Disable PnS Critical Sabotages",
   "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
   "tabGroupPNS": "Poof and Seek",
   "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
-  "snsImpostorCanVent": "Impostors can vent"
+  "snsImpostorCanVent": "Impostors Can Vent"
 }

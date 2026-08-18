@@ -184,7 +184,7 @@ internal class EACR
             goto YesCheat;
         }
 
-        if (Utils.IsMeeting && MeetingHud.Instance.state != MeetingHud.VoteStates.Animating)
+        if (Utils.IsMeeting && MeetingHud.Instance.state != MeetingHud.MeetingStates.Animating)
         {
             Logger.SendInGame($"{player.Data.PlayerName} might have called an invalid sabotage (cheating)");
             Logger.Info($" {player.Data.PlayerName} might have called an invalid sabotage (cheating)", "EACR");

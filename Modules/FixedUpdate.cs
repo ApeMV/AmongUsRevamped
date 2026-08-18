@@ -119,54 +119,17 @@ public static class FixedUpdate
             }
         }
 
-        // We check if any SnS Shapshifter is currently nearby their correct target.
-        // If so, the global Kill Cooldown is set to 1 and all killing actions may proceed.
-        // If not, the global Kill Cooldown is set to 0.
-        // While this value is 0, the game stops the kill cooldown from decreasing.
-        // If the Kill Cooldown value is 0 by default (which it will be at the start of a match), Among Us does not allow kills at all.
-        // This means most of the time, we can successfully prevent invalid kills.
-        // The only problem is that if one Shapeshifter is nearby their correct target, while another is not, the second Shapeshifter can kill too.
         if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && !Utils.IsLobby)
         {
-            bool shapeshifterNearTarget = false;
-
             foreach (var p in PlayerControl.AllPlayerControls)
             {
-                if (p.Data == null || p.Data.IsDead || p.shapeshiftTargetPlayerId == byte.MaxValue) continue;
+                if (p.Data == null || p.Data.IsDead || p.Data.RoleType == RoleTypes.Shapeshifter) continue;
 
-                PlayerControl shapeshiftTarget = null;
-
-                foreach (var t in PlayerControl.AllPlayerControls)
+                if (p.protectedByGuardianId == -1)
                 {
-                    if (t.Data == null || t.Data.IsDead) continue;
-
-                    if (t.Data.PlayerId == p.shapeshiftTargetPlayerId)
-                    {
-                        shapeshiftTarget = t;
-                        break;
-                    }
-                }
-
-                if (shapeshiftTarget == null) continue;
-
-                float distance = Vector2.Distance(p.GetTruePosition(), shapeshiftTarget.GetTruePosition());
-
-                if (distance <= 3f)
-                {
-                    shapeshifterNearTarget = true;
-                    break;
+                    p.RpcProtectPlayer(p, p.cosmetics.ColorId);
                 }
             }
-            
-
-            float newCooldown = shapeshifterNearTarget ? 1f : 0f;
-
-            if (Main.NormalOptions.KillCooldown != newCooldown)
-            {
-                Main.NormalOptions.KillCooldown = newCooldown;
-                OptionManager.SyncGameOptions();
-            }
-            
         }
     }
 
@@ -246,7 +209,13 @@ class FixedUpdateInGamePatch
 
             case 1: // SnS
                 if (Utils.InGame) return;
-                if (Main.NormalOptions.KillCooldown != 1f) Main.NormalOptions.KillCooldown = 1f;
+                if (Main.NormalOptions.KillCooldown != 2.5f)
+                {
+                    Main.NormalOptions.KillCooldown = 2.5f;
+                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 3, 100);
+                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 0, 0);
+                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Viper, 0, 0);
+                }
                 break;
 
             case 2: // Speedrun
@@ -254,7 +223,13 @@ class FixedUpdateInGamePatch
 
             case 3: // PnS
                 if (Utils.InGame) return;
-                if (Main.NormalOptions.KillCooldown != 1f) Main.NormalOptions.KillCooldown = 1f;
+                if (Main.NormalOptions.KillCooldown != 1f)
+                {
+                    Main.NormalOptions.KillCooldown = 1f;
+                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
+                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 3, 100);
+                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Viper, 0, 0);
+                }
                 break;
         }
 

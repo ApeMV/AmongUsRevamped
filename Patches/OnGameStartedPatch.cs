@@ -1,4 +1,5 @@
 ﻿using AmongUs.GameOptions;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using System;
 using InnerNet;
 using UnityEngine;
@@ -148,5 +149,117 @@ internal static class OnGameStartPatch
         }
 
         PastStartScreen = true;
+    }
+
+    // All Patches below are for the speeded up Chat In Game.
+    // We force the complete intro to skip using 2 patches.
+    // Some PlayerData related things return null when you do this, so we have to set those all as well.
+    [HarmonyPatch(typeof(ShhhBehaviour), nameof(ShhhBehaviour.PlayAnimation))]
+    public static class ShhhBehaviourPlayAnimationPatch
+	{
+		static bool Prefix()
+		{
+            if (!AmongUsClient.Instance.AmHost) return true;
+
+            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+            {
+			    HudManager.Instance.shhhEmblem.gameObject.SetActive(false);
+			    return false;
+            }
+            else return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.CoBegin))]
+    public static class IntroCutsceneCoBeginPatch
+    {
+        public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+            {
+                __result = SkipIntro(__instance, __result).WrapToIl2Cpp();
+            }
+        }
+
+        private static System.Collections.IEnumerator SkipIntro(IntroCutscene i, Il2CppSystem.Collections.IEnumerator k)
+        {
+            int steps = 0;
+
+            while (k.MoveNext() && steps++ < 1024) {}
+
+            if (steps >= 1024)
+            {
+                if (i != null && i.gameObject != null) i.gameObject.SetActive(false);
+            }
+            yield break;
+        }
+    }
+
+    private static NamePlateViewData meetingNameplate;
+    [HarmonyPatch(typeof(CosmeticsCache), nameof(CosmeticsCache.GetNameplate))]
+    public static class CosmeticsCacheGetNameplatePatch
+    {
+        public static bool Prefix(ref NamePlateViewData __result)
+        {
+            if (!AmongUsClient.Instance.AmHost) return true;
+            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+            {
+                if (MeetingHud.Instance == null) return true;
+
+                if (meetingNameplate == null)
+                {
+                    meetingNameplate = ScriptableObject.CreateInstance<NamePlateViewData>();
+                    meetingNameplate.Image = null;
+                }
+
+                __result = meetingNameplate;
+                return false;
+            }
+            else return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(CosmeticsCache), nameof(CosmeticsCache.Destroy))]
+    public static class CosmeticsCacheDestroyPatch
+    {
+        public static void Postfix()
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+
+            if (meetingNameplate != null) Object.Destroy(meetingNameplate);
+            meetingNameplate = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(ShapeshifterPanel), nameof(ShapeshifterPanel.SetPlayer))]
+    public static class ShapeshifterPanelSetPlayerPatch
+    {
+        public static bool Prefix(ShapeshifterPanel __instance, int index, NetworkedPlayerInfo playerInfo, Il2CppSystem.Action onShift)
+        {
+            if (__instance == null || playerInfo == null || !AmongUsClient.Instance.AmHost) return true;
+
+           if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+           {
+                __instance.shapeshift = onShift;
+                __instance.PlayerIcon.SetFlipX(false);
+                __instance.PlayerIcon.ToggleName(false);
+
+                SpriteRenderer[] componentsInChildren = __instance.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var spriteRenderer in componentsInChildren)
+                {
+                    spriteRenderer.material.SetInt(PlayerMaterial.MaskLayer, index + 2);
+                }
+
+                __instance.PlayerIcon.SetMaskLayer(index + 2);
+                __instance.PlayerIcon.UpdateFromEitherPlayerDataOrCache(playerInfo, PlayerOutfitType.Default, PlayerMaterial.MaskType.ComplexUI, false, null);
+
+                __instance.NameText.text = playerInfo.PlayerName;
+                __instance.LevelNumberText.text = ProgressionManager.FormatVisualLevel(playerInfo.PlayerLevel);
+
+                return false;
+            }
+            else return true;
+        }
     }
 }

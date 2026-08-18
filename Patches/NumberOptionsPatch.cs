@@ -126,6 +126,11 @@ public static class NumberOption_Initialize
             __instance.Increment = 0.05f;
             break;
 
+            case StringNames.JudgeTaskRequirement:
+            __instance.Increment = 1f;
+            __instance.ValidRange = new FloatRange(0f, 100f);
+            break;
+
             default:
             __instance.Increment = 1f;
             break;

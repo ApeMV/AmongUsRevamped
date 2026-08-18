@@ -37,14 +37,15 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v1.9.4):
+# 🎮 Features (v2.0.0):
 
 ## <b>♠️ Client Side settings:</b>
-- Game Master (Spectator)
-- Show FPS
-- Dark Theme
+- Toggle Game Master (Spectator)
+- Toggle Show FPS
+- Toggle Dark Theme
 - Toggle Lobby Music
-- Show/Hide Info When Dead
+- Toggle Info When Dead
+- Toggle Command Helper
 ## <b>⚙️ Technical settings:</b>
 - Advanced AFK Detection system
 - Kick/Ban players under/above a certain level
@@ -53,7 +54,7 @@
 - Banlist system
 - Denyword and Denyname system
 - Advanced Moderator system
-- To add Admins, Moderators and VIP's, type the user's Friendcode in the designated files located in AUR-DATA
+- To add Admins/Moderators/VIP's, type the user's Friendcode in the designated files located in AUR-DATA
 - Enable No Game End
 - Custom starting countdown
 ## <b>♻️ Automation settings:</b>
@@ -73,6 +74,7 @@
 - % Tasks completed for Crewmates to win
 - Enable/Disable any task
 - All players have same tasks
+- Shield player who died first
 - Hide and Seek: Custom Seeker count
 ## <b>🏆 Custom Gamemodes:</b>
 - 0 Kill Cooldown -> Set Kill Cooldown to 0.01
@@ -92,18 +94,15 @@
 - Lanuage support: English, Italian, Japanese, Russian, Simplified Chinese, Spanish
 - Select a language in Language/YourLanguage.txt
 - Preset system for mod settings
-- Command Helper
 - Creatable and customizable Templates
 - Eht Dleks (Reverse Skeld) Map
 - Ability to cancel starting countdown
 - Improved main menu
 - Faster startup time
 - Zoom out in lobby or when dead
-- See player kill/task count and Role when dead
 - Higher and more accurate Option ranges
 - Always visible lobby timer
 - Access experimental animation test scene
-- Manually set multiple Seekers in HnS
 - <b>🎉 And this all works in public lobbies!</b>
 
 ### Hotkeys
@@ -142,6 +141,7 @@
 | /clearseekers                               | Clears manual Seeker list in HnS                  |
 | /mapvote                                    | Starts a vote for the map. Default maps only      |
 | /allmapvote                                 | Starts a vote for the map. Includes Eht Dleks     |
+| /gmvote                                     | Starts a vote for the gamemode                    |
 ‎
 
 **Credit to these mods and their developers for their code:**

@@ -42,6 +42,7 @@ public static class Utils
     public static bool HandlingGameEnd;
     public static byte CustomGameOverReason;
     public static bool CanCallMeetings;
+    public static bool HasMurdered;
 
     public static string ColorString(Color32 color, string str) => $"<#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}>{str}</color>";
     public static string ColorToHex(Color32 color) => $"#{color.r:x2}{color.g:x2}{color.b:x2}{color.a:x2}";
@@ -206,9 +207,11 @@ public static class Utils
         Main.GameTimer = 0f;
         Main.AfkTimer = 0f;
         FixedUpdate.Position.Clear();
+
         NormalGameEndChecker.canUpdateWinnerText = true;
         MurderPlayerPatch.misfireCount.Clear();
         MurderPlayerPatch.killCount.Clear();
+        HasMurdered = false;
 
         LateTask.Tasks.RemoveAll(x => x.name != "RehostManager");
         NormalGameEndChecker.ImpCheckComplete = false;
@@ -240,6 +243,13 @@ public static class Utils
         dleksVotes = 0;
         HasVoted.Clear();
         MapVoteActive = false;
+
+        standardVotes = 0;
+        noKillCooldownVotes = 0;
+        speedrunVotes = 0;
+        shiftAndSeekVotes = 0;
+        poofAndSeekVotes = 0;
+        ModeVoteActive = false;
     }
 
     public static PlayerControl[] AllAlivePlayerControls
@@ -598,7 +608,7 @@ public static class Utils
     public static readonly List<byte> HasVoted = [];
     public static void MapVote(bool dleks, bool moderator)
     {
-        if (MapVoteActive) return;
+        if (MapVoteActive || ModeVoteActive) return;
 
         DleksEnabled = dleks;
         MapVoteActive = true;
@@ -675,5 +685,79 @@ public static class Utils
 
             MapVoteActive = false;
         }, Options.MapVoteDuration.GetInt(), "MapPoll");
+    }
+
+    public static int standardVotes;
+    public static int noKillCooldownVotes;
+    public static int speedrunVotes;
+    public static int shiftAndSeekVotes;
+    public static int poofAndSeekVotes;
+    public static bool ModeVoteActive;
+    public static readonly List<byte> HasModeVoted = [];
+    public static void ModeVote(bool moderator)
+    {
+        if (ModeVoteActive || MapVoteActive) return;
+
+        ModeVoteActive = true;
+
+        if (moderator) Utils.ModeratorChatCommand("A Gamemode vote is active!\n\nA: None\nB: No Kill Cooldown\nC: Speedrun\nD: SnS\nE: PnS\n\nType /vote 'letter' to vote.", "", false);
+        else Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "A Gamemode vote is active!\n\nA: None\nB: No Kill Cooldown\nC: Speedrun\nD: SnS\nE: PnS\n\nType /vote 'letter' to vote.", "", false);
+
+        new LateTask(() =>
+        {
+            int highest = standardVotes;
+            string winner = "None";
+            byte modeId = 0;
+            bool tie = false;
+
+            void Check(int votes, string name, byte id)
+            {
+                if (votes > highest)
+                {
+                    highest = votes;
+                    winner = name;
+                    modeId = id;
+                    tie = false;
+                }
+                else if (votes == highest)
+                {
+                    tie = true;
+                }
+            }
+
+            Check(noKillCooldownVotes, "0 Kill Cooldown", 0);
+            Check(speedrunVotes, "Speedrun", 2);
+            Check(shiftAndSeekVotes, "Shift and Seek", 1);
+            Check(poofAndSeekVotes, "Poof and Seek", 3);
+
+            string voteResults = $"Standard: {standardVotes}\n" + $"No Kill Cooldown: {noKillCooldownVotes}\n" + $"Speedrun: {speedrunVotes}\n" + $"Shift and Seek: {shiftAndSeekVotes}\n" + $"Poof and Seek: {poofAndSeekVotes}";
+            if (highest == 0)
+            {
+                ModeratorChatCommand("We have a winner! Just kidding. No one voted.", "", false);
+            }
+            else if (tie)
+            {
+                ModeratorChatCommand($"Gamemode vote tied. No new mode selected.\n\n{voteResults}", "", false);
+            }
+            else
+            {
+                ModeratorChatCommand(SendChatPatch.ConvertNum($"Winner: {winner} ({highest})\n\n{voteResults}"), "", false);
+                Options.Gamemode.SetValue(modeId);
+                
+                if (winner == "0 Kill Cooldown")
+                {
+                    Main.NormalOptions.KillCooldown = 0.01f;
+                }
+
+            }
+            standardVotes = 0;
+            noKillCooldownVotes = 0;
+            speedrunVotes = 0;
+            shiftAndSeekVotes = 0;
+            poofAndSeekVotes = 0;
+            HasVoted.Clear();
+
+            ModeVoteActive = false;
+        }, Options.ModeVoteDuration.GetInt(), "ModePoll");
     }
 }

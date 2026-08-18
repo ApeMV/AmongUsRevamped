@@ -60,6 +60,13 @@ internal static class OnGameJoinedPatch
                 Utils.MapVote(true, true);
             }, Options.TimeBeforeAllMapPoll.GetInt(), "AutoMapPoll");
         }
+        if (Options.AutomaticModePoll.GetBool())
+        {
+            new LateTask(() =>
+            {        
+                Utils.ModeVote(true);
+            }, Options.TimeBeforeModePoll.GetInt(), "AutoModePoll");
+        }
 
         if (Options.Public.GetBool() && DisconnectManager.Rehosting)
         {
@@ -114,7 +121,6 @@ class OnPlayerJoinedPatch
                 }
                 else
                 {
-                    if (!BanManager.TempBanWhiteList.Contains(Client.GetHashedPuid())) BanManager.TempBanWhiteList.Add(Client.GetHashedPuid());
                     AmongUsClient.Instance.KickPlayer(Client.Id, true);
                     Logger.Info(Translator.Get("invalidFriendCodeBan", Client.PlayerName), "BanInvalidFriendCode");
                     Logger.SendInGame(Translator.Get("invalidFriendCodeBan", Client.PlayerName));
@@ -205,6 +211,40 @@ public static class ShowLobbyTimer_GameStartManager_Start_Postfix
     {
         if (__instance == null || !GameData.Instance || !AmongUsClient.Instance || AmongUsClient.Instance.NetworkMode == NetworkModes.LocalGame || !AmongUsClient.Instance.AmHost) return;
 
+        // Toes who nose
+        //Main.NormalOptions.MaxPlayers = 100;
+        //OptionManager.SyncGameOptions();
         HudManager.Instance.ShowLobbyTimer(600);
+    }
+}
+
+[HarmonyPatch(typeof(GameData), nameof(GameData.ShowNotification))]
+public static class ShowNotificationPatch
+{
+	static bool Prefix(string playerName, DisconnectReasons reason)
+	{
+        switch (reason)
+        {
+            case DisconnectReasons.ExitGame:
+                Logger.Info($" {playerName} left the game. ({reason})", "ShowNotificationPatch");
+                Logger.SendInGame($" {playerName} left the game. ({reason})");
+				return false;            
+
+            case DisconnectReasons.Sanctions:
+            case DisconnectReasons.Hacking:
+                Logger.Info($" {playerName} was banned from the game. ({reason})", "ShowNotificationPatch");
+                Logger.SendInGame($" {playerName} was banned from the game. ({reason})");
+				return false;
+
+            case DisconnectReasons.DuplicateConnectionDetected:
+            case DisconnectReasons.ClientTimeout:
+                Logger.Info($" {playerName} was kicked from the game. ({reason})", "ShowNotificationPatch");
+                Logger.SendInGame($" {playerName} was kicked from the game. ({reason})");
+				return false;
+
+            default:
+                Logger.Info($" {playerName} disconnected from the game. ({reason})", "ShowNotificationPatch");
+                return true;
+        }
     }
 }
