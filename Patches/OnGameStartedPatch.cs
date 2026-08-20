@@ -176,6 +176,7 @@ internal static class OnGameStartPatch
         public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
         {
             if (!AmongUsClient.Instance.AmHost) return;
+            
             if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
             {
                 __result = SkipIntro(__instance, __result).WrapToIl2Cpp();
@@ -203,6 +204,7 @@ internal static class OnGameStartPatch
         public static bool Prefix(ref NamePlateViewData __result)
         {
             if (!AmongUsClient.Instance.AmHost) return true;
+
             if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
             {
                 if (MeetingHud.Instance == null) return true;
@@ -227,8 +229,11 @@ internal static class OnGameStartPatch
         {
             if (!AmongUsClient.Instance.AmHost) return;
 
-            if (meetingNameplate != null) Object.Destroy(meetingNameplate);
-            meetingNameplate = null;
+            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+            {
+                if (meetingNameplate != null) Object.Destroy(meetingNameplate);
+                meetingNameplate = null;
+            }
         }
     }
 

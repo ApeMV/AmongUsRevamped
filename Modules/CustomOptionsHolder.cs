@@ -569,7 +569,7 @@ namespace AmongUsRevamped
             DisableMushroomMixup = BooleanOptionItem.Create(60462, Translator.Get("disableMushroomMixup"), false, TabGroup.ModSettings, false)
                 .SetParent(DisableSabotage)
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
-            DisableCloseDoor = BooleanOptionItem.Create(60566, Translator.Get("disableCloseDoor"), false, TabGroup.ModSettings, false)
+            DisableCloseDoor = BooleanOptionItem.Create(60463, Translator.Get("disableCloseDoor"), false, TabGroup.ModSettings, false)
                 .SetColor(Color.red);
 
             TabGroupGameplayGeneral = TextOptionItem.Create(60564, Translator.Get("tabGroupGameplayGeneral"), TabGroup.ModSettings)

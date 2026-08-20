@@ -323,10 +323,10 @@
 "automaticMapPoll": "重新加入后自发起起 /mapvote",
 "automaticAllMapPoll": "重新加入后自动发起 /allmapvote",
 "timeBeforeMapPoll": "投票开始前等待時間",
-
-  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
-  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
-  "tabGroupPNS": "Poof and Seek",
-  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
-  "snsImpostorCanVent": "Impostors can vent"
+"pnsDesc": "发送 Poof and Seek 幻象与躲藏 游戏模式说明。",
+"pnsDisableSabotage": "禁用 PnS 紧急破坏。",
+"pnsDisableCloseDoor": "禁用 PnS 关门破坏。",
+"tabGroupPNS": "Poof and Seek",
+"badMoveTimeToSuicide": "幻象师在明显移动后自杀的时间。",
+"snsImpostorCanVent": "内鬼可以使用通风管。"
 }

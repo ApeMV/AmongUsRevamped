@@ -232,12 +232,14 @@ public static class ShowNotificationPatch
 
             case DisconnectReasons.Sanctions:
             case DisconnectReasons.Hacking:
+            case DisconnectReasons.Banned:
                 Logger.Info($" {playerName} was banned from the game. ({reason})", "ShowNotificationPatch");
                 Logger.SendInGame($" {playerName} was banned from the game. ({reason})");
 				return false;
 
             case DisconnectReasons.DuplicateConnectionDetected:
             case DisconnectReasons.ClientTimeout:
+            case DisconnectReasons.Kicked:
                 Logger.Info($" {playerName} was kicked from the game. ({reason})", "ShowNotificationPatch");
                 Logger.SendInGame($" {playerName} was kicked from the game. ({reason})");
 				return false;

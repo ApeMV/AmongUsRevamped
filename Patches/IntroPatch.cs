@@ -65,7 +65,7 @@ internal static class CoShowIntroPatch
         {
             if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
             {
-                GuardianAngelOptions.ProtectionDurationSeconds = 60f;
+                GuardianAngelOptions.ProtectionDurationSeconds = 10f;
             }
             OptionManager.SyncGameOptions();
 
