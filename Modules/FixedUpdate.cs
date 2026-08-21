@@ -128,6 +128,7 @@ public static class FixedUpdate
                 if (p.protectedByGuardianId == -1)
                 {
                     p.RpcProtectPlayer(p, p.cosmetics.ColorId);
+                    p.Data.MarkDirty();
                 }
             }
         }
@@ -164,12 +165,6 @@ class FixedUpdateInGamePatch
     private static Dictionary<byte, string> LastColors = new();
     private static float t;
     private static GameObject settingsLabel;
-
-    public static bool CanUseKillButton(PlayerControl pc)
-    {
-        pc.Data.Role.CanUseKillButton = false;
-        return false;
-    }
 
     public static void Postfix(PlayerControl __instance)
     {
@@ -208,13 +203,15 @@ class FixedUpdateInGamePatch
                 break;
 
             case 1: // SnS
-                if (Utils.InGame) return;
-                if (Main.NormalOptions.KillCooldown != 2.5f)
+                if (!Utils.InGame)
                 {
-                    Main.NormalOptions.KillCooldown = 2.5f;
-                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 3, 100);
-                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 0, 0);
-                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Viper, 0, 0);
+                    if (Main.NormalOptions.KillCooldown != 2.5f)
+                    {
+                        Main.NormalOptions.KillCooldown = 2.5f;
+                        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 3, 100);
+                        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 0, 0);
+                        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Viper, 0, 0);
+                    }
                 }
                 break;
 
@@ -222,18 +219,20 @@ class FixedUpdateInGamePatch
                 break;
 
             case 3: // PnS
-                if (Utils.InGame) return;
-                if (Main.NormalOptions.KillCooldown != 1f)
+                if (!Utils.InGame)
                 {
-                    Main.NormalOptions.KillCooldown = 1f;
-                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
-                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 3, 100);
-                    Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Viper, 0, 0);
+                    if (Main.NormalOptions.KillCooldown != 1f)
+                    {
+                        Main.NormalOptions.KillCooldown = 1f;
+                        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
+                        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 3, 100);
+                        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Viper, 0, 0);
+                    }
                 }
                 break;
         }
 
-        if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance)
+        if (Utils.InGame && !Utils.IsMeeting && !ExileController.Instance && Main.GameTimer > 6)
         {
             // 1 = Shift and Seek
             if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && Options.CrewAutoWinsGameAfter.GetInt() != 0 && !Options.NoGameEnd.GetBool())
@@ -260,7 +259,7 @@ class FixedUpdateInGamePatch
                 }
             }
             // 3 = Poof and Seek
-            if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)
+            if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek && !Options.NoGameEnd.GetBool())
             {
                 if (Main.GameTimer > Options.PNSCrewAutoWinsGameAfter.GetInt())
                 {
@@ -269,6 +268,16 @@ class FixedUpdateInGamePatch
                     Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
                     Logger.Info($" Crewmates won because the game took longer than {Options.PNSCrewAutoWinsGameAfter.GetInt()}s", "PNSManager");
                     NormalGameEndChecker.CheckWinnerText("PnSTimer");
+                }
+            }
+
+            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+            {
+                if (Main.GM.Value && !Utils.IsDead)
+                {
+                    Logger.Info($" Game Master Successful", "StartGame");
+                    PlayerControl.LocalPlayer.Exiled();
+                    PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
                 }
             }
         }

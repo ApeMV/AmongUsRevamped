@@ -33,7 +33,7 @@ internal class CoStartGamePatch
 class PlayerControlSetRolePatch
 {
     public static bool FirstAssign;
-    private static readonly HashSet<byte> ProcessedPlayers = new();
+    public static readonly HashSet<byte> ProcessedPlayers = new();
     public static HashSet<byte> Seekers = new();
     public static HashSet<byte> manualSeekers = new();
     private static readonly System.Random rand = new System.Random();
@@ -101,16 +101,10 @@ class PlayerControlSetRolePatch
             else roleType = RoleTypes.Crewmate;
         }
 
-        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
-        {
-            if (roleType == RoleTypes.Impostor || roleType == RoleTypes.Phantom || roleType == RoleTypes.Viper) roleType = RoleTypes.Shapeshifter;
-        }
-
         if (ProcessedPlayers.Count >= PlayerControl.AllPlayerControls.Count)
         {
             Seekers.Clear();
-            ProcessedPlayers.Clear();
-
+            FirstAssign = false;
             Logger.Info(" PCSRP successful", "RoleManaging");
         }
     
@@ -136,19 +130,21 @@ internal static class OnGameStartPatch
             if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose();
         }
 
-        if (AmongUsClient.Instance.AmHost && Main.GM.Value)
-        {
-            Logger.Info($" Game Master Successful", "StartGame");
-            PlayerControl.LocalPlayer.Exiled();
-            PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
-        }
-
         foreach (var p in PlayerControl.AllPlayerControls)
         {
             Utils.StoredRoleText[p.PlayerId] = Utils.GetRoleText(p);
         }
 
         PastStartScreen = true;
+
+        if (AmongUsClient.Instance.AmHost && Main.GM.Value)
+        {
+            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3)) return;
+            
+            Logger.Info($" Game Master Successful", "StartGame");
+            PlayerControl.LocalPlayer.Exiled();
+            PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
+        }
     }
 
     // All Patches below are for the speeded up Chat In Game.

@@ -328,5 +328,13 @@
 "pnsDisableCloseDoor": "禁用 PnS 关门破坏。",
 "tabGroupPNS": "Poof and Seek",
 "badMoveTimeToSuicide": "幻象师在明显移动后自杀的时间。",
-"snsImpostorCanVent": "内鬼可以使用通风管。"
+"snsImpostorCanVent": "内鬼可以使用通风管。",
+"modeVoteDuration": "游戏模式投票时长",
+"snsChatInGameExtendTwo": "游戏开始后发送扩展信息",
+"snsChatInGameFast": "快速会议（实验性+）",
+"shieldFirstDeath": "护盾保护第一个死亡的玩家",
+"shieldFirstDeathDuration": "护盾持续时间",
+"snsTwoDesc": "发送 Shift and Seek 扩展说明。",
+"modeVoteDesc": "在所有游戏模式之间发起投票。",
+"automaticModePoll": "重新加入后自动执行 /gmvote"
 }

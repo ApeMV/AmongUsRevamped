@@ -294,10 +294,17 @@
   "moderatorAndAbove": "<color=purple>Moderador</color> o superior",
   "admin": "<color=red>Administrador</color>",
   "onlyYou": "Solo tú",
-
-  "pnsDisableSabotage": "Disable PnS Critical Sabotages",
-  "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
+  "pnsDisableSabotage": "Desactivar sabotajes críticos de PnS",
+  "pnsDisableCloseDoor": "Desactivar sabotajes de puertas de PnS",
   "tabGroupPNS": "Poof and Seek",
-  "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
-  "snsImpostorCanVent": "Impostors can vent"
+  "badMoveTimeToSuicide": "El Fantasma se suicida después de moverse visiblemente durante",
+  "snsImpostorCanVent": "Los impostores pueden usar conductos",
+  "modeVoteDuration": "Duración de la votación de modo de juego",
+  "snsChatInGameExtendTwo": "Enviar información ampliada al iniciar la partida",
+  "snsChatInGameFast": "Reunión más rápida (experimental+)",
+  "shieldFirstDeath": "    Proteger al primer jugador que murió",
+  "shieldFirstDeathDuration": "Duración de la protección",
+  "snsTwoDesc": "Enviar la descripción ampliada de Shift and Seek.",
+  "modeVoteDesc": "Inicia una votación entre todos los modos de juego.",
+  "automaticModePoll": "/gmvote automático al volver a la sala"
 }

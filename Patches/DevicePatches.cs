@@ -49,7 +49,7 @@ internal static class DisableDevice
 
     public static void FixedUpdate()
     {
-        if (!AmongUsClient.Instance.AmHost || ShipStatus.Instance == null || !Utils.GamePastRoleSelection) return;
+        if (!AmongUsClient.Instance.AmHost || ShipStatus.Instance == null || !OnGameStartPatch.PastStartScreen) return;
         frame = frame == 5 ? 0 : ++frame;
         if (frame != 0) return;
 

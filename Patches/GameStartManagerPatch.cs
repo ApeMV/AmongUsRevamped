@@ -20,12 +20,22 @@ public static class GameStartManagerUpdatePatch
 
         __instance.MinPlayers = 1;
 
+        if (!Utils.CheckValidData())
+        {
+            __instance.StartButton.gameObject.SetActive(false);
+        }
+        else if (__instance.startState != GameStartManager.StartingStates.Countdown)
+        {
+           __instance.StartButton.gameObject.SetActive(true); 
+        }
+
         if (Main.AutoStart.Value && OnGameJoinedPatch.AutoStartCheck && GameStartManager.InstanceExists && __instance.startState != GameStartManager.StartingStates.Countdown && GameData.Instance?.PlayerCount >= Options.PlayerAutoStart.GetInt())
         {
             __instance.startState = GameStartManager.StartingStates.Countdown;
             __instance.countDownTimer = Options.AutoStartTimer.GetFloat();
             __instance.StartButton.gameObject.SetActive(false);
             Autostarting = true;
+            return;
         }
 
         if (__instance.startState == GameStartManager.StartingStates.Countdown)

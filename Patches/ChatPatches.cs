@@ -525,7 +525,7 @@ internal static class SendChatPatch
 
         if (text == "/0kc" || text == "/0killcooldown")
         {
-            Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
+            Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, and can't kill after a game starts for 5 seconds", "", false);
             return false;
         }
 
@@ -559,7 +559,7 @@ internal static class SendChatPatch
                 case 0:
                 if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f)
                 {
-                    Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
+                    Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, and can't kill after a game starts for 5 seconds", "", false);
                 }
                 break;
 
@@ -957,7 +957,7 @@ public static class RPCHandlerPatch
                 if (text == "/0kc" || text == "/0killcooldown")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
+                    Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, and can't kill after a game starts for 5 seconds", "", false);
                 }
                 if (text == "/sns" || text == "/shiftandseek")
                 {
@@ -990,7 +990,7 @@ public static class RPCHandlerPatch
                         case 0:
                         if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f)
                         {
-                            Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, Crewmates have low tasks\nThink fast and pay attention!", "", false);
+                            Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, and can't kill after a game starts for 5 seconds", "", false);
                         }
                         break;
 

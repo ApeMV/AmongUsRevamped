@@ -14,7 +14,7 @@ internal static class OnGameJoinedPatch
     public static bool AutoStartCheck;
     public static void Postfix()
     {
-        Logger.Info(" -------- JOINED GAME --------", "OnGameJoined");
+        Logger.Info(" -------- GAME JOINED --------", "OnGameJoined");
 
         if (!AmongUsClient.Instance.AmHost) return;
 
@@ -100,7 +100,6 @@ class OnPlayerJoinedPatch
 
         return false;
     }
-
     static void Postfix([HarmonyArgument(0)] ClientData Client)
     {
         Logger.Info($" {Client.PlayerName} / {Client.FriendCode} / {Client.PlatformData.Platform}", "Joined The Game");

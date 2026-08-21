@@ -38,7 +38,6 @@ public static class Utils
 
     public static bool IsFreePlay => AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay;
     public static bool IsMeeting => InGame && (MeetingHud.Instance);
-    public static bool GamePastRoleSelection => Main.GameTimer > 10f;
     public static bool HandlingGameEnd;
     public static byte CustomGameOverReason;
     public static bool CanCallMeetings;
@@ -201,6 +200,8 @@ public static class Utils
 
     public static void ClearLeftoverData()
     {
+        Logger.Info(" Cleared Leftover Data", "Utils");
+
         RpcSetTasksPatch.GlobalTaskIds = null;
         HandlingGameEnd = false;
         OnGameJoinedPatch.AutoStartCheck = false;
@@ -217,7 +218,6 @@ public static class Utils
         NormalGameEndChecker.ImpCheckComplete = false;
         CreateOptionsPickerPatch.SetDleks2 = false;
         CanCallMeetings = true;
-        PlayerControlSetRolePatch.FirstAssign = true;
 
         PlayerControlCompleteTaskPatch.playerTasksCompleted.Clear();
         PlayerControlCompleteTaskPatch.tasksPerPlayer.Clear();
@@ -227,6 +227,7 @@ public static class Utils
 
         OnPlayerJoinedPatch.JoinNum = 0;
 
+        PlayerControlSetRolePatch.ProcessedPlayers.Clear();
         PlayerControlSetRolePatch.Seekers.Clear();
         PlayerControlSetRolePatch.FirstAssign = true;
         PlayerControlSetRolePatch.manualSeekers.Clear();
@@ -759,5 +760,21 @@ public static class Utils
 
             ModeVoteActive = false;
         }, Options.ModeVoteDuration.GetInt(), "ModePoll");
+    }
+
+    // As of v2026.8.18, Innersloth bans the host for hacking if the start game button is pressed when any player is not Serialized (or something similar).
+    // CheckValidData serves as an emergency blockage to prevent this and stop host from being kicked.
+    public static bool CheckValidData()
+    {
+        if (!AmongUsClient.Instance.AmHost) return true;
+
+        foreach (var p in PlayerControl.AllPlayerControls)
+        {
+            if (p == null || !p.hasBeenSerialized)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

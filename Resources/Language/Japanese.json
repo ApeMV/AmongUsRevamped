@@ -341,5 +341,13 @@
 "pnsDisableCloseDoor": "PnSのドア閉鎖サボタージュを無効にする",
 "tabGroupPNS": "Poof and Seek",
 "badMoveTimeToSuicide": "幻象師が明らかに移動した後、自殺するまでの時間",
-"snsImpostorCanVent": "インポスターはベントを使用できる"
+"snsImpostorCanVent": "インポスターはベントを使用できる",
+"modeVoteDuration": "ゲームモード投票時間",
+"snsChatInGameExtendTwo": "ゲーム開始後に拡張情報を送信",
+"snsChatInGameFast": "高速会議（実験的+）",
+"shieldFirstDeath": "最初に死亡したプレイヤーをシールドで保護",
+"shieldFirstDeathDuration": "シールド持続時間",
+"snsTwoDesc": "Shift and Seekの拡張説明を送信。",
+"modeVoteDesc": "すべてのゲームモードから投票を開始します。",
+"automaticModePoll": "再参加後に自動で /gmvote を実行"
 }

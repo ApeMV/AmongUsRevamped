@@ -39,6 +39,7 @@ internal static class CoShowIntroPatch
 
                 OptionManager.SyncGameOptions();
                 p.RpcProtectPlayer(p, p.cosmetics.ColorId);
+                p.Data.MarkDirty();
                 Logger.Info($" {p.Data.PlayerName} has been granted a shield for {Options.ShieldFirstDeathDuration.GetInt()}s", "RoleInfo");           
             }
 
@@ -65,9 +66,16 @@ internal static class CoShowIntroPatch
         {
             if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
             {
-                GuardianAngelOptions.ProtectionDurationSeconds = 10f;
+                GuardianAngelOptions.ProtectionDurationSeconds = 254f;
             }
             OptionManager.SyncGameOptions();
+            
+            foreach (var p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data == null || p.Data.IsDead || p.Data.RoleType == RoleTypes.Shapeshifter) continue;
+                p.RpcProtectPlayer(p, p.cosmetics.ColorId);
+                p.Data.MarkDirty();
+            }
 
             if (Options.SNSChatInGameExtend.GetBool())
             {
@@ -84,7 +92,7 @@ internal static class CoShowIntroPatch
 
         if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f))
         {
-            Main.NormalOptions.KillCooldown = 8f;
+            Main.NormalOptions.KillCooldown = 5f;
             OptionManager.SyncGameOptions();
 
             _ = new LateTask(() =>
@@ -98,7 +106,7 @@ internal static class CoShowIntroPatch
         {
             if (Options.PNSChatInGame.GetBool())
             {
-                Main.NormalOptions.KillCooldown = 8f;
+                Main.NormalOptions.KillCooldown = 5f;
                 OptionManager.SyncGameOptions();
 
                 _ = new LateTask(() =>

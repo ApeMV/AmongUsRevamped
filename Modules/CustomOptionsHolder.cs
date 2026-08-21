@@ -301,7 +301,6 @@ namespace AmongUsRevamped
         public static OptionItem SNSChatInGameExtend2;
         public static OptionItem SNSChatInGameFast;
         public static OptionItem CrewAutoWinsGameAfter;
-        public static OptionItem MisfiresToSuicide;
         public static OptionItem SNSDisableSabotage;
         public static OptionItem SNSDisableReactor;
         public static OptionItem SNSDisableOxygen;
@@ -476,7 +475,6 @@ namespace AmongUsRevamped
                 .SetParent(SNSChatInGame);
             SNSChatInGameFast = BooleanOptionItem.Create(70054, Translator.Get("snsChatInGameFast"), false, TabGroup.GamemodeSettings, false)
                 .SetParent(SNSChatInGame);
-            MisfiresToSuicide = IntegerOptionItem.Create(70055, Translator.Get("misfiresToSuicide"), new(1, 10, 1), 1, TabGroup.GamemodeSettings, false);
             CrewAutoWinsGameAfter = IntegerOptionItem.Create(70056, Translator.Get("crewAutoWinsGameAfter"), new(60, 600, 10), 300, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             SNSDisableSabotage = BooleanOptionItem.Create(70057, Translator.Get("snsDisableSabotage"), true, TabGroup.GamemodeSettings, false)
