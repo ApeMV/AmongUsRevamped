@@ -128,8 +128,8 @@ public static class FixedUpdate
                 if (p.protectedByGuardianId == -1)
                 {
                     p.RpcProtectPlayer(p, p.cosmetics.ColorId);
-                    p.Data.MarkDirty();
                 }
+                p.Data.MarkDirty();
             }
         }
     }
@@ -268,16 +268,6 @@ class FixedUpdateInGamePatch
                     Utils.ContinueEndGame((byte)GameOverReason.CrewmatesByVote);
                     Logger.Info($" Crewmates won because the game took longer than {Options.PNSCrewAutoWinsGameAfter.GetInt()}s", "PNSManager");
                     NormalGameEndChecker.CheckWinnerText("PnSTimer");
-                }
-            }
-
-            if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
-            {
-                if (Main.GM.Value && !Utils.IsDead)
-                {
-                    Logger.Info($" Game Master Successful", "StartGame");
-                    PlayerControl.LocalPlayer.Exiled();
-                    PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
                 }
             }
         }

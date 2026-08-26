@@ -17,6 +17,10 @@
   <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/latest/total?style=for-the-badge">
 </a>
 
+<a href="https://ko-fi.com/apemv">
+  <img src="https://img.shields.io/badge/Donate-Ko--fi-ff5f5f?style=flat&logo=ko-fi" alt="Ko-fi">
+</a>
+
 
 
 </p>
@@ -37,7 +41,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v2.0.2):
+# 🎮 Features (v2.0.3):
 
 ## <b>♠️ Client Side settings:</b>
 - Toggle Game Master (Spectator)

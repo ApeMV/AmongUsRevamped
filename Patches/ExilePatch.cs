@@ -20,6 +20,17 @@ class ExileControllerWrapUpPatch
     public static void AfterExile(NetworkedPlayerInfo ejectedPlayer)
     {
         if (!AmongUsClient.Instance.AmHost) return;
+
+        if ((Options.SNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 1) || (Options.PNSChatInGameFast.GetBool() && Options.Gamemode.GetValue() == 3))
+        {
+            if (Main.GM.Value && !Utils.IsDead)
+            {
+                Logger.Info($" Game Master Successful", "StartGame");
+                PlayerControl.LocalPlayer.Exiled();
+                PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
+            } 
+        }
+        
         if (ejectedPlayer == null) return;
 
         PlayerControl pc = null;

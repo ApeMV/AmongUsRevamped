@@ -11,9 +11,9 @@ public static class EndGameManagerPatch
     public static void Postfix(EndGameManager __instance)
     {
         Logger.Info(" -------- GAME ENDED --------", "EndGame");
-        Utils.ClearLeftoverData();
 
-        //OptionManager.RestoreOptions();
+        Utils.ClearLeftoverData();
+        OptionManager.RestoreOptions();
 
         EndGameNavigation navigation = __instance.Navigation;
         if (!AmongUsClient.Instance.AmHost || __instance == null || navigation == null || !Options.AutoRejoinLobby.GetBool()) return;

@@ -62,19 +62,21 @@ internal static class MurderPlayerPatch
 
         if (resultFlags.HasFlag(MurderResultFlags.Succeeded))
         {
-            killCount[playerId]++;
-            Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
-            if (string.IsNullOrEmpty(NormalGameEndChecker.firstDeath)) 
-            {
-                NormalGameEndChecker.firstDeath = target.Data.PlayerName;
-                Utils.HasMurdered = true;
-            }
-
             if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
             {
                 if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId) return;
                 Logger.Info($" {__instance.Data.PlayerName} directly killed {target.Data.PlayerName} in SnS, forcing suicide. (Are they hacking?)", "MurderPlayer");
                 __instance.RpcSetRole(RoleTypes.ImpostorGhost); 
+            }
+            else
+            {
+                killCount[playerId]++;
+                Logger.Info($" {__instance.Data.PlayerName} killed {target.Data.PlayerName}", "MurderPlayer");
+                if (string.IsNullOrEmpty(NormalGameEndChecker.firstDeath)) 
+                {
+                    NormalGameEndChecker.firstDeath = target.Data.PlayerName;
+                    Utils.HasMurdered = true;
+                }
             }
         }
 
@@ -94,7 +96,7 @@ internal static class MurderPlayerPatch
         }
 
         //1 = Shift and Seek
-        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && !resultFlags.HasFlag(MurderResultFlags.Succeeded))
         {
             if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId)
             {

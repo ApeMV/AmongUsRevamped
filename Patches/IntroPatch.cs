@@ -15,7 +15,7 @@ internal static class CoShowIntroPatch
 
         if (!AmongUsClient.Instance.AmHost) return;
 
-        //OptionManager.CacheOptions();
+        OptionManager.CacheOptions();
 
         foreach (var p in PlayerControl.AllPlayerControls)
         {

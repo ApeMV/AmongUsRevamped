@@ -7,7 +7,8 @@ namespace AmongUsRevamped;
 
 public static class OptionManager
 {
-    private static OptionBackupData CachedOptions;
+    private static float OldKillCooldown;
+
     public static void SyncGameOptions()
     {
         if (!AmongUsClient.Instance.AmHost) return;
@@ -29,17 +30,19 @@ public static class OptionManager
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
-        CachedOptions = new OptionBackupData(GameOptionsManager.Instance.CurrentGameOptions);
+        OldKillCooldown = Main.NormalOptions.KillCooldown;
     }
 
     public static void RestoreOptions()
     {
-        if (!AmongUsClient.Instance.AmHost || CachedOptions == null) return;
+        if (!AmongUsClient.Instance.AmHost) return;
 
-        var restored = CachedOptions.Restore(GameOptionsManager.Instance.CurrentGameOptions);
-
-        GameOptionsManager.Instance.CurrentGameOptions = restored;
-
+        if (Main.NormalOptions.KillCooldown != OldKillCooldown)
+        {
+            Main.NormalOptions.KillCooldown = OldKillCooldown;
+            Logger.Info("Force overrided Kill Cooldown back to original", "RestoreOptions");
+        }
+        
         SyncGameOptions();
     }
 }
