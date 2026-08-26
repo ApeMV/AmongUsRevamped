@@ -1,4 +1,6 @@
+<p align="center">
 # Welcome to Among Us Revamped!
+</p>
 <br>
 
 </p>
@@ -6,11 +8,8 @@
   <a href="https://discord.gg/83Zhzhyhya" target="_blank">
     <img src="https://img.shields.io/badge/Discord%20-%231DA1F2.svg?&style=for-the-badge&logo=discord&logoColor=white&color=5662f6"/>
   </a>
-  <a href="https://github.com/ApeMV/AmongUsRevamped/releases/latest" target="_blank">
-    <img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/>
-  </a>
   <a href="https://ko-fi.com/apemv">
-    <img src="https://img.shields.io/Donate-Ko--fi-ff5f5f?&logo=ko-fi" alt="Ko-fi"/>
+    <img src="https://img.shields.io/badge/Donate%20on-Ko--fi-ff5f5f?style=for-the-badge&logo=ko-fi&logoColor=white">
   </a>
 </p>
 
