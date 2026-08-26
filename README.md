@@ -3,26 +3,24 @@
 
 </p>
 <p align="center">
+  <a href="https://discord.gg/83Zhzhyhya" target="_blank">
+    <img src="https://img.shields.io/badge/Discord%20-%231DA1F2.svg?&style=for-the-badge&logo=discord&logoColor=white&color=5662f6"/>
+  </a>
+  <a href="https://github.com/ApeMV/AmongUsRevamped/releases/latest" target="_blank">
+    <img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/>
+  </a>
+  <a href="https://ko-fi.com/apemv">
+    <img src="https://img.shields.io/Donate-Ko--fi-ff5f5f?&logo=ko-fi" alt="Ko-fi"/>
+  </a>
+</p>
 
-<center>
-<a href="https://discord.gg/83Zhzhyhya" target="_blank"><img src="https://img.shields.io/badge/Discord%20-%231DA1F2.svg?&style=for-the-badge&logo=discord&logoColor=white&color=5662f6"/></a>
-<a href="https://github.com/apemv/AmongUsRevamped/releases/latest" target="_blank"><img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/></a>
-</center>
-
-<a href="../../releases">
-  <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/total?style=for-the-badge&color=red">
-</a>
-
-<a href="../../releases/latest">
-  <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/latest/total?style=for-the-badge">
-</a>
-
-<a href="https://ko-fi.com/apemv">
-  <img src="https://img.shields.io/badge/Donate-Ko--fi-ff5f5f?style=flat&logo=ko-fi" alt="Ko-fi">
-</a>
-
-
-
+<p align="center">
+  <a href="https://github.com/ApeMV/AmongUsRevamped/releases">
+    <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/total?style=for-the-badge&color=red"/>
+  </a>
+  <a href="https://github.com/ApeMV/AmongUsRevamped/releases/latest">
+    <img src="https://img.shields.io/github/downloads/ApeMV/AmongUsRevamped/latest/total?style=for-the-badge"/>
+  </a>
 </p>
 
 # 💡 How To Install:
