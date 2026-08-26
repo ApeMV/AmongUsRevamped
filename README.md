@@ -1,6 +1,4 @@
-<p align="center">
-# Welcome to Among Us Revamped!
-</p>
+<h1 align="center">Welcome to Among Us Revamped!</h1>
 <br>
 
 </p>
