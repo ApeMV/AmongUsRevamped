@@ -1,0 +1,42 @@
+name: Suggestion
+description: Create a suggestion for Among Us Revamped
+labels: ["type: suggestion"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Note**
+        - Please share as much detail as you can.
+        - Please consider that Among Us Revamped is a Host-Only mod.
+
+  - type: textarea
+    id: suggestiondescription
+    attributes:
+      label: Description
+      description: Describe the suggestion in detail.
+      placeholder: |
+        A clear and concise description of what the suggestion is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestionrelevancy
+    attributes:
+      label: Reason
+      description: Describe what makes the suggestion relevant.
+      placeholder: |
+        A clear and concise description of what makes the suggestion relevant.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: suggestionverification
+    attributes:
+      label: Verification
+      description: Make sure that you have checked the following before submitting your suggestion
+      options:
+        - label: I confirm that this suggestion is not a previously denied duplicate.
+          required: true
+        - label: I confirm that this feature does not exist yet.
+          required: true

@@ -1,0 +1,32 @@
+name: Support
+description: Ask support for Among Us Revamped
+labels: ["type: support"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Attachments**
+        - Please join our Discord for support if possible, as giving it is easier there.
+        - Please only ask support related to Among Us Revamped.
+
+  - type: textarea
+    id: supportdescription
+    attributes:
+      label: Description
+      description: Describe the question in detail.
+      placeholder: |
+        A clear and concise description of what the question is.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: supportverification
+    attributes:
+      label: Verification
+      description: Make sure that you have checked the following before submitting your question
+      options:
+        - label: I confirm that my question isn't answered on the GitHub main page.
+          required: true
+        - label: I confirm that I have searched for answers before asking here.
+          required: true

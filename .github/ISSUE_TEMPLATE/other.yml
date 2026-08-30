@@ -1,0 +1,29 @@
+name: Other
+description: For anything outside the main categories
+labels: ["type: other"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Attachments**
+        - Please don't use this issue category to bypass requirements.
+
+  - type: textarea
+    id: otherdescription
+    attributes:
+      label: Description
+      description: Describe your issue in detail.
+      placeholder: |
+        A clear and concise description of your issue.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: otherverification
+    attributes:
+      label: Verification
+      description: Make sure that you have checked the following before submitting your issue
+      options:
+        - label: I confirm that this issue does not fall under any other categories.
+          required: true
