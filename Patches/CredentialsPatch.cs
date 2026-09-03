@@ -263,7 +263,7 @@ namespace AmongUsRevamped
                     new(0, 165, 0, byte.MaxValue),
                     new(100, 220, 100, byte.MaxValue),
                     () => OnUpdatesButtonClick(),
-                    "Updates");
+                    "Update");
             }
 
             if (animationSceneButton == null)
@@ -502,7 +502,7 @@ namespace AmongUsRevamped
                 if (remoteVer > currentVer)
                 {
                     DisconnectPopup.Instance._textArea.text =
-                        $"Update found: v{remoteVer}\nDownloading...";
+                        $"Update available: v{remoteVer}\nSee the changelog on GitHub\n\nDownloading... 0%";
 
                     string pluginsPath = Path.Combine(
                         Environment.CurrentDirectory, "BepInEx", "plugins");
@@ -510,8 +510,36 @@ namespace AmongUsRevamped
                     string newDll = Path.Combine(pluginsPath, $"AUR.v{remoteVer}.dll");
                     string newDllName = $"AUR.v{remoteVer}.dll";
 
-                    var bytes = await http.GetByteArrayAsync(assetUrl);
-                    await File.WriteAllBytesAsync(tempFile, bytes);
+                    using var response = await http.GetAsync(assetUrl, HttpCompletionOption.ResponseHeadersRead);
+                    response.EnsureSuccessStatusCode();
+
+                    long? totalBytes = response.Content.Headers.ContentLength;
+                    using var contentStream = await response.Content.ReadAsStreamAsync();
+                    using var fileStream = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+
+                    byte[] buffer = new byte[8192];
+                    long totalRead = 0;
+                    int bytesRead;
+                    int lastPercent = -1;
+
+                    while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    {
+                        await fileStream.WriteAsync(buffer, 0, bytesRead);
+                        totalRead += bytesRead;
+
+                        if (totalBytes.HasValue && totalBytes.Value > 0)
+                        {
+                            int percent = (int)(totalRead * 100 / totalBytes.Value);
+                            if (percent != lastPercent)
+                            {
+                                lastPercent = percent;
+                                DisconnectPopup.Instance._textArea.text =
+                                    $"Update available: v{remoteVer}\nSee the changelog on GitHub\n\nDownloading... {percent}%";
+                            }
+                        }
+                    }
+
+                    fileStream.Close();
 
                     if (File.Exists(newDll)) File.Delete(newDll);
                     File.Move(tempFile, newDll);
@@ -545,7 +573,7 @@ namespace AmongUsRevamped
                     DisconnectPopup.Instance._textArea.text =
                         $"Update v{remoteVer} downloaded!\n\nPlease restart Among Us to apply the update.";
 
-                    Logger.Info($"Update v{remoteVer} downloaded successfully ({bytes.Length} bytes)", "Updater");
+                    Logger.Info($"Update v{remoteVer} downloaded successfully ({totalRead} bytes)", "Updater");
 
                     SetUpdatesButtonDisabled();
                 }
