@@ -1,6 +1,9 @@
 ﻿using BepInEx.Unity.IL2CPP;
 using System;
+using System.IO;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using TMPro;
 using UnityEngine;
@@ -34,7 +37,7 @@ namespace AmongUsRevamped
             text.alignment = TextAlignmentOptions.Top;
 
             Instance = new ErrorText
-           {
+            {
                 Text = text
             };
         }
@@ -54,6 +57,8 @@ namespace AmongUsRevamped
     {
         private static void Postfix(VersionShower __instance)
         {
+            CleanupOldUpdates();
+
             Utils.ClearLeftoverData();
             NormalGameEndChecker.LastWinReason = "";
 
@@ -69,6 +74,37 @@ namespace AmongUsRevamped
             if (Main.HasArgumentException && ErrorText.Instance != null)
             {
                 ErrorText.Instance.AddError(ErrorCode.Main_DictionaryError);
+            }
+        }
+
+        private static void CleanupOldUpdates()
+        {
+            try
+            {
+                string pluginsPath = Path.Combine(Environment.CurrentDirectory, "BepInEx", "plugins");
+                if (!Directory.Exists(pluginsPath)) return;
+
+                foreach (string file in Directory.GetFiles(pluginsPath, "*.dll.old"))
+                {
+                    string fileName = Path.GetFileName(file);
+                    if (fileName.IndexOf("AUR", StringComparison.OrdinalIgnoreCase) >= 0
+                        || fileName.IndexOf("AmongUsRevamped", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        try
+                        {
+                            File.Delete(file);
+                            Logger.Info($"Cleaned up old update: {fileName}", "Updater");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Info($"Could not delete {fileName}: {ex.Message}", "Updater");
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Exception(e, "CleanupOldUpdates");
             }
         }
     }
@@ -181,8 +217,11 @@ namespace AmongUsRevamped
         private static PassiveButton template;
         private static PassiveButton discordButton;
         private static PassiveButton gitHubButton;
+        private static PassiveButton updatesButton;
         private static PassiveButton animationSceneButton;
         private static Transform buttonParent;
+        private static bool updateDownloaded = false;
+
         public static void Postfix(MainMenuManager __instance)
         {
             if (__instance == null) return;
@@ -190,12 +229,13 @@ namespace AmongUsRevamped
             if (template == null) return;
 
             if (buttonParent == null) buttonParent = template.transform.parent;
+
             if (discordButton == null)
             {
                 discordButton = CreateButton(
                     __instance,
                     "DiscordButton",
-                    new(2.1f, 4.05f, 1f),
+                    new(1.5f, 4.05f, 1f),
                     new(88, 101, 242, byte.MaxValue),
                     new(148, 161, byte.MaxValue, byte.MaxValue),
                     () => Application.OpenURL("https://discord.gg/83Zhzhyhya"),
@@ -207,11 +247,23 @@ namespace AmongUsRevamped
                 gitHubButton = CreateButton(
                     __instance,
                     "GitHubButton",
-                    new(3.8f, 4.05f, 1f),
+                    new(2.7f, 4.05f, 1f),
                     new(153, 153, 153, byte.MaxValue),
                     new(209, 209, 209, byte.MaxValue),
                     () => Application.OpenURL("https://github.com/ApeMV/AmongUsRevamped"),
                     "GitHub");
+            }
+
+            if (updatesButton == null)
+            {
+                updatesButton = CreateButton(
+                    __instance,
+                    "UpdatesButton",
+                    new(3.9f, 4.05f, 1f),
+                    new(0, 165, 0, byte.MaxValue),
+                    new(100, 220, 100, byte.MaxValue),
+                    () => OnUpdatesButtonClick(),
+                    "Update");
             }
 
             if (animationSceneButton == null)
@@ -262,7 +314,6 @@ namespace AmongUsRevamped
                 Object.Destroy(h2);
             }
 
-
             Transform tintTrans = __instance.transform.Find("MainUI/Tint");
             var tint = tintTrans.gameObject;
             if (tint != null)
@@ -275,7 +326,7 @@ namespace AmongUsRevamped
             DisableComponent("MaskedBlackScreen");
 
             Transform playTransform = __instance.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/PlayButton/FontPlacer/Text_TMP");
-            if (playTransform != null) 
+            if (playTransform != null)
             {
                 var playbutton = playTransform.gameObject;
                 if (playbutton != null)
@@ -290,7 +341,7 @@ namespace AmongUsRevamped
                     }
                 }
             }
-            
+
             static void DisableObject(string name)
             {
                 var obj = GameObject.Find(name);
@@ -313,6 +364,35 @@ namespace AmongUsRevamped
             }
         }
 
+        private static void OnUpdatesButtonClick()
+        {
+            if (updateDownloaded)
+            {
+                DisconnectPopup.Instance.gameObject.SetActive(true);
+                DisconnectPopup.Instance._textArea.enableWordWrapping = true;
+                DisconnectPopup.Instance._textArea.text =
+                    "Latest update already installed!\n\nPlease restart Among Us to apply the update.";
+                return;
+            }
+
+            _ = CheckForUpdatesAsync();
+        }
+
+        private static void SetUpdatesButtonDisabled()
+        {
+            if (updatesButton == null) return;
+
+            updateDownloaded = true;
+
+            var normalSprite = updatesButton.inactiveSprites.GetComponent<SpriteRenderer>();
+            var hoverSprite = updatesButton.activeSprites.GetComponent<SpriteRenderer>();
+            if (normalSprite != null) normalSprite.color = new Color32(100, 100, 100, byte.MaxValue);
+            if (hoverSprite != null) hoverSprite.color = new Color32(130, 130, 130, byte.MaxValue);
+
+            var buttonText = updatesButton.transform.Find("FontPlacer/Text_TMP").GetComponent<TMP_Text>();
+            if (buttonText != null) buttonText.color = new Color32(160, 160, 160, byte.MaxValue);
+        }
+
         private static PassiveButton CreateButton(MainMenuManager menu, string name, Vector3 localPosition, Color32 normalColor, Color32 hoverColor, Action action, string label)
         {
             var parent = menu.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons");
@@ -322,9 +402,10 @@ namespace AmongUsRevamped
             button.name = name;
 
             button.transform.localPosition = localPosition;
-            if (name == "GitHubButton" || name == "DiscordButton")
+
+            if (name == "GitHubButton" || name == "DiscordButton" || name == "UpdatesButton")
             {
-                button.transform.localScale = new Vector3(0.8f, 1f, 1f);
+                button.transform.localScale = new Vector3(0.6f, 0.8f, 1f);
             }
             else
             {
@@ -355,6 +436,191 @@ namespace AmongUsRevamped
             button.gameObject.SetActive(true);
             return button;
         }
+
+        private static async Task CheckForUpdatesAsync()
+        {
+#if ANDROID
+            return;
+#else
+            DisconnectPopup.Instance.gameObject.SetActive(true);
+            DisconnectPopup.Instance._textArea.enableWordWrapping = true;
+            DisconnectPopup.Instance._textArea.text = "Searching for updates...";
+
+            try
+            {
+                using var http = new HttpClient();
+                http.DefaultRequestHeaders.UserAgent.ParseAdd("AmongUsRevamped-Updater");
+
+                var json = await http.GetStringAsync(
+                    "https://api.github.com/repos/ApeMV/AmongUsRevamped/releases/latest");
+
+                string tag = ExtractJsonString(json, "tag_name")?.TrimStart('v') ?? "";
+                string assetUrl = "";
+
+                int assetsIndex = json.IndexOf("\"assets\"", StringComparison.Ordinal);
+                if (assetsIndex >= 0)
+                {
+                    string assetsSection = json.Substring(assetsIndex);
+                    int searchFrom = 0;
+
+                    while (true)
+                    {
+                        string name = ExtractJsonString(assetsSection, "name", searchFrom);
+                        if (name == null) break;
+
+                        if (name.StartsWith("AUR.v", StringComparison.OrdinalIgnoreCase)
+                            && name.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+                        {
+                            int namePos = assetsSection.IndexOf($"\"{name}\"", searchFrom, StringComparison.Ordinal);
+                            if (namePos < 0) break;
+
+                            string afterName = assetsSection.Substring(namePos, Math.Min(1500, assetsSection.Length - namePos));
+                            assetUrl = ExtractJsonString(afterName, "browser_download_url") ?? "";
+
+                            Logger.Info($"UpdateCheck: found DLL '{name}', url='{assetUrl}'", "Updater");
+                            break;
+                        }
+
+                        int nextPos = assetsSection.IndexOf($"\"{name}\"", searchFrom, StringComparison.Ordinal);
+                        searchFrom = nextPos >= 0 ? nextPos + name.Length + 2 : assetsSection.Length;
+                    }
+                }
+
+                Logger.Info($"UpdateCheck: tag='{tag}', assetUrl='{assetUrl}'", "Updater");
+
+                if (string.IsNullOrEmpty(tag) || string.IsNullOrEmpty(assetUrl))
+                {
+                    DisconnectPopup.Instance._textArea.text = "No updates found!";
+                    return;
+                }
+
+                var currentVer = Version.Parse(Main.ModVersion.TrimStart('v'));
+                var remoteVer = Version.Parse(tag);
+
+                Logger.Info($"UpdateCheck: current={currentVer}, remote={remoteVer}", "Updater");
+
+                if (remoteVer > currentVer)
+                {
+                    DisconnectPopup.Instance._textArea.text =
+                        $"Update available: v{remoteVer}\nSee the changelog on GitHub\n\nDownloading... 0%";
+
+                    string pluginsPath = Path.Combine(
+                        Environment.CurrentDirectory, "BepInEx", "plugins");
+                    string tempFile = Path.Combine(pluginsPath, $"AUR.v{remoteVer}.dll.tmp");
+                    string newDll = Path.Combine(pluginsPath, $"AUR.v{remoteVer}.dll");
+                    string newDllName = $"AUR.v{remoteVer}.dll";
+
+                    using var response = await http.GetAsync(assetUrl, HttpCompletionOption.ResponseHeadersRead);
+                    response.EnsureSuccessStatusCode();
+
+                    long? totalBytes = response.Content.Headers.ContentLength;
+                    using var contentStream = await response.Content.ReadAsStreamAsync();
+                    using var fileStream = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+
+                    byte[] buffer = new byte[8192];
+                    long totalRead = 0;
+                    int bytesRead;
+                    int lastPercent = -1;
+
+                    while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    {
+                        await fileStream.WriteAsync(buffer, 0, bytesRead);
+                        totalRead += bytesRead;
+
+                        if (totalBytes.HasValue && totalBytes.Value > 0)
+                        {
+                            int percent = (int)(totalRead * 100 / totalBytes.Value);
+                            if (percent != lastPercent)
+                            {
+                                lastPercent = percent;
+                                DisconnectPopup.Instance._textArea.text =
+                                    $"Update available: v{remoteVer}\nSee the changelog on GitHub\n\nDownloading... {percent}%";
+                            }
+                        }
+                    }
+
+                    fileStream.Close();
+
+                    if (File.Exists(newDll)) File.Delete(newDll);
+                    File.Move(tempFile, newDll);
+
+                    foreach (string file in Directory.GetFiles(pluginsPath, "*.dll"))
+                    {
+                        string fileName = Path.GetFileName(file);
+
+                        if (fileName.Equals(newDllName, StringComparison.OrdinalIgnoreCase))
+                            continue;
+
+                        bool isAurDll = fileName.IndexOf("AUR", StringComparison.OrdinalIgnoreCase) >= 0
+                                     || fileName.IndexOf("AmongUsRevamped", StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        if (isAurDll)
+                        {
+                            try
+                            {
+                                string backupPath = file + ".old";
+                                if (File.Exists(backupPath)) File.Delete(backupPath);
+                                File.Move(file, backupPath);
+                                Logger.Info($"Renamed old DLL: {fileName} -> {fileName}.old", "Updater");
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Info($"Could not rename {fileName}: {ex.Message}", "Updater");
+                            }
+                        }
+                    }
+
+                    DisconnectPopup.Instance._textArea.text =
+                        $"Update v{remoteVer} downloaded!\n\nPlease restart Among Us to apply the update.";
+
+                    Logger.Info($"Update v{remoteVer} downloaded successfully ({totalRead} bytes)", "Updater");
+
+                    SetUpdatesButtonDisabled();
+                }
+                else
+                {
+                    DisconnectPopup.Instance._textArea.text = "No updates found!";
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Exception(e, "UpdateCheck");
+                DisconnectPopup.Instance._textArea.text =
+                    $"Update check failed:\n{e.Message}";
+            }
+#endif
+        }
+
+        private static string ExtractJsonString(string json, string key, int startIndex = 0)
+        {
+            string keyPattern = $"\"{key}\"";
+            int keyPos = json.IndexOf(keyPattern, startIndex, StringComparison.Ordinal);
+            if (keyPos < 0) return null;
+
+            int colonPos = json.IndexOf(':', keyPos + keyPattern.Length);
+            if (colonPos < 0) return null;
+
+            int quoteStart = json.IndexOf('"', colonPos + 1);
+            if (quoteStart < 0) return null;
+
+            int valueStart = quoteStart + 1;
+            int pos = valueStart;
+            while (pos < json.Length)
+            {
+                if (json[pos] == '\\' && pos + 1 < json.Length)
+                {
+                    pos += 2;
+                    continue;
+                }
+                if (json[pos] == '"')
+                {
+                    return json.Substring(valueStart, pos - valueStart);
+                }
+                pos++;
+            }
+
+            return null;
+        }
     }
 
     [HarmonyPatch(typeof(SignInStatusComponent), nameof(SignInStatusComponent.SetOnline))]
@@ -369,7 +635,7 @@ namespace AmongUsRevamped
             {
                 DisconnectPopup.Instance.gameObject.SetActive(true);
                 DisconnectPopup.Instance._textArea.enableWordWrapping = false;
-                DisconnectPopup.Instance._textArea.text = Translator.Get("pluginWarning");                
+                DisconnectPopup.Instance._textArea.text = Translator.Get("pluginWarning");
             }
         }
     }
