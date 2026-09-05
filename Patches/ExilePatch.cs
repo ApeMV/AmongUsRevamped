@@ -30,6 +30,16 @@ class ExileControllerWrapUpPatch
                 PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.CrewmateGhost);
             } 
         }
+
+        if (Options.Gamemode.GetValue() == 1)
+        {
+            foreach (var p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data == null || p.Data.IsDead || p.Data.RoleType == RoleTypes.Shapeshifter) continue;
+                p.RpcProtectPlayer(p, p.cosmetics.ColorId);
+                p.Data.MarkDirty();
+            }
+        }
         
         if (ejectedPlayer == null) return;
 

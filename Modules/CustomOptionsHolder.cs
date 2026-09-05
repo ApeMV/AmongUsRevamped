@@ -151,6 +151,18 @@ namespace AmongUsRevamped
         public static OptionItem DisableMushroomMixup;
         public static OptionItem DisableCloseDoor;
 
+        public static OptionItem TabGroupCustomizeSabotages;
+        public static OptionItem CustomizeSabotages;
+        public static OptionItem SabotageCooldown;
+        public static OptionItem SkeldReactorDuration;
+        public static OptionItem SkeldO2Duration;
+        public static OptionItem MiraReactorDuration;
+        public static OptionItem MiraO2Duration;
+        public static OptionItem PolusReactorDuration;
+        public static OptionItem AirshipReactorDuration;
+        public static OptionItem FungleReactorDuration;
+        public static OptionItem FungleMushroomMixupDuration;
+
         public static OptionItem TabGroupGameplayGeneral;
         public static OptionItem ShieldFirstDeath;
         public static OptionItem ShieldFirstDeathDuration;
@@ -569,6 +581,44 @@ namespace AmongUsRevamped
                 .SetColor(new Color32(255, 153, 153, byte.MaxValue));
             DisableCloseDoor = BooleanOptionItem.Create(60463, Translator.Get("disableCloseDoor"), false, TabGroup.ModSettings, false)
                 .SetColor(Color.red);
+
+
+            TabGroupCustomizeSabotages = TextOptionItem.Create(60500, Translator.Get("tabGroupCustomizeSabotages"), TabGroup.ModSettings)
+                .SetColor(Color.blue);
+            CustomizeSabotages = BooleanOptionItem.Create(60501, Translator.Get("customizeSabotages"), false, TabGroup.ModSettings, false);
+
+            SabotageCooldown = IntegerOptionItem.Create(60502, Translator.Get("sabotageCooldown"), new(5, 60, 5), 30, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+
+            SkeldReactorDuration = IntegerOptionItem.Create(60503, Translator.Get("skeldReactorDuration"), new(15, 60, 5), 30, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+            SkeldO2Duration = IntegerOptionItem.Create(60504, Translator.Get("skeldO2Duration"), new(15, 60, 5), 30, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+
+            MiraReactorDuration = IntegerOptionItem.Create(60505, Translator.Get("miraReactorDuration"), new(15, 90, 5), 45, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+            MiraO2Duration = IntegerOptionItem.Create(60506, Translator.Get("miraO2Duration"), new(15, 90, 5), 45, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+
+            PolusReactorDuration = IntegerOptionItem.Create(60507, Translator.Get("polusReactorDuration"), new(20, 90, 5), 60, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+
+            AirshipReactorDuration = IntegerOptionItem.Create(60508, Translator.Get("airshipReactorDuration"), new(30, 90, 5), 90, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+
+            FungleReactorDuration = IntegerOptionItem.Create(60509, Translator.Get("fungleReactorDuration"), new(15, 90, 5), 60, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
+            FungleMushroomMixupDuration = IntegerOptionItem.Create(60510, Translator.Get("fungleMushroomMixupDuration"), new(5, 30, 5), 10, TabGroup.ModSettings, false)
+                .SetValueFormat(OptionFormat.Seconds)
+                .SetParent(CustomizeSabotages);
 
             TabGroupGameplayGeneral = TextOptionItem.Create(60564, Translator.Get("tabGroupGameplayGeneral"), TabGroup.ModSettings)
                 .SetColor(Color.blue);

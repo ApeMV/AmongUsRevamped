@@ -76,6 +76,19 @@
   "snsDisableHeli": "禁用坠机危机破坏",
   "snsDisableMushroomMixup": "禁用迷幻蘑菇破坏",
   "snsDisableCloseDoor": "禁用 SnS 关门破坏",
+
+  "tabGroupCustomizeSabotages": "Customize Sabotages",
+  "customizeSabotages": "Enable Sabotage Customizations",
+  "sabotageCooldown": "Critical Sabotage Cooldown",
+  "skeldReactorDuration": "Skeld Reactor Duration",
+  "skeldO2Duration": "Skeld O2 Duration",
+  "miraReactorDuration": "Mira Reactor Duration",
+  "miraO2Duration": "Mira O2 Duration",
+  "polusReactorDuration": "Polus Reactor Duration",
+  "airshipReactorDuration": "Airship Reactor Duration",
+  "fungleReactorDuration": "Fungle Reactor Duration",
+  "fungleMushroomMixupDuration": "Fungle Mixup Duration",
+
   "tabGroupSpeedrun": "速通模式 (Speedrun)",
   "speedrunSettingsOverride": "自动更新设置",
   "gameAutoEndsAfter": "游戏在此时间后自动结束",
@@ -336,5 +349,8 @@
 "shieldFirstDeathDuration": "护盾持续时间",
 "snsTwoDesc": "发送 Shift and Seek 扩展说明。",
 "modeVoteDesc": "在所有游戏模式之间发起投票。",
-"automaticModePoll": "重新加入后自动执行 /gmvote"
+"automaticModePoll": "重新加入后自动执行 /gmvote",
+
+  "privateDesc": "Changes lobby visibility to private.",
+  "publicDesc": "Changes lobby visibility to public."
 }

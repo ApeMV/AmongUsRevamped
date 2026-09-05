@@ -36,7 +36,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v2.0.3):
+# 🎮 Features (v2.0.4):
 
 ## <b>♠️ Client Side settings:</b>
 - Toggle Game Master (Spectator)
@@ -63,6 +63,7 @@
 - Automatically Send Map Votes
 - Enable (configurable) Welcome Messages from Templates.txt
 ## <b>🔧 Gameplay Settings:</b>
+- Change sabotage cooldown and durations
 - Dead impostors can sabotage
 - Disable critical sabotages (invividual)
 - Disable door sabotages
@@ -84,8 +85,9 @@
 - Detect invalid sabotages
 - Detect malformed RPC's
 - Detect invalid venting
-- Detect Invalid animations
-- Detect Invalid task completions
+- Detect invalid animations
+- Detect invalid task completions
+- Detect invalid kills
 - Detect immortality cheats
 - Block attempted votekicks
 - These are all enabled by default
@@ -141,6 +143,8 @@
 | /mapvote                                    | Starts a vote for the map. Default maps only      |
 | /allmapvote                                 | Starts a vote for the map. Includes Eht Dleks     |
 | /gmvote                                     | Starts a vote for the gamemode                    |
+| /private                                    | Sets lobby to private                             |
+| /public                                     | Sets lobby to public                              |
 ‎
 
 **Credit to these mods and their developers for their code:**

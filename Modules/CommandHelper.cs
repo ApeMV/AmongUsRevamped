@@ -84,7 +84,10 @@ internal static class CommandHelper
 
         new Cmd { Name = new[] { "/mapvote" }, Prompt = "/mapvote", Description = Translator.Get("mapVoteDesc"), HasVariable = false },
         new Cmd { Name = new[] { "/allmapvote" }, Prompt = "/allmapvote", Description = Translator.Get("allMapVoteDesc"), HasVariable = false },
-        new Cmd { Name = new[] { "/gmvote" }, Prompt = "/gmvote", Description = Translator.Get("modeVoteDesc"), HasVariable = false }
+        new Cmd { Name = new[] { "/gmvote" }, Prompt = "/gmvote", Description = Translator.Get("modeVoteDesc"), HasVariable = false },
+
+        new Cmd { Name = new[] { "/private" }, Prompt = "/private", Description = Translator.Get("privateDesc"), HasVariable = false },
+        new Cmd { Name = new[] { "/public" }, Prompt = "/public", Description = Translator.Get("publicDesc"), HasVariable = false }
     };
 
     [HarmonyPostfix]

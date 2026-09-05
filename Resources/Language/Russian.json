@@ -73,6 +73,19 @@
   "snsDisableHeli": "Выключить Сабботаж Столкновения",
   "snsDisableMushroomMixup": "Выключить Сабботаж Грибного Переполоха",
   "snsDisableCloseDoor": "Выключить Сабботаж Дверей в Режиме Клона",
+
+  "tabGroupCustomizeSabotages": "Customize Sabotages",
+  "customizeSabotages": "Enable Sabotage Customizations",
+  "sabotageCooldown": "Critical Sabotage Cooldown",
+  "skeldReactorDuration": "Skeld Reactor Duration",
+  "skeldO2Duration": "Skeld O2 Duration",
+  "miraReactorDuration": "Mira Reactor Duration",
+  "miraO2Duration": "Mira O2 Duration",
+  "polusReactorDuration": "Polus Reactor Duration",
+  "airshipReactorDuration": "Airship Reactor Duration",
+  "fungleReactorDuration": "Fungle Reactor Duration",
+  "fungleMushroomMixupDuration": "Fungle Mixup Duration",
+
   "tabGroupSpeedrun": "Спидран",
   "speedrunSettingsOverride": "Автоматически Обновлять Настройки",
   "gameAutoEndsAfter": "Игра автоматически заканчивается после",
@@ -350,5 +363,8 @@
   "shieldFirstDeathDuration": "Длительность Щита",
   "snsTwoDesc": "Отправить Увеличенное Описание Клона.",
   "modeVoteDesc": "Начать Голосование между всеми режимами.",
-  "automaticModePoll": "Автоматический /gmvote После Перезахода"
+  "automaticModePoll": "Автоматический /gmvote После Перезахода",
+
+  "privateDesc": "Changes lobby visibility to private.",
+  "publicDesc": "Changes lobby visibility to public."
 }

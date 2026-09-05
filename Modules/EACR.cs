@@ -107,7 +107,42 @@ internal class EACR
                         return true;
                     }
                     break;
-                }
+                case 202: // SMC
+                    try
+                    {
+                        AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
+                        Logger.SendInGame($"{pc.Data.PlayerName} was banned for MMC CallId (cheating)");
+                        Logger.Info($" {pc.Data.PlayerName} was banned for MMC CallId (cheating)", "EACR");
+                        return true;
+                    }
+                    catch
+                    {
+
+                    }
+                    break;
+                case 201:
+                    try
+                    {
+                        var firstString = sr.ReadString();
+                        var secondString = sr.ReadString();
+                        sr.ReadInt32();
+
+                        var flag = string.IsNullOrEmpty(firstString) && string.IsNullOrEmpty(secondString);
+
+                        if (!flag)
+                        {
+                            AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
+                            Logger.SendInGame($"{pc.Data.PlayerName} was banned for MMC chat CallId (cheating)");
+                            Logger.Info($" {pc.Data.PlayerName} was banned for MMC chat CallId (cheating)", "EACR");
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    break;
+            }
         }
         catch (Exception e)
         {
@@ -221,5 +256,19 @@ internal class EACR
         AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
         Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly completing a task (cheating)");
         Logger.Info($" {player.Data.PlayerName} was banned for invalidly completing a task", "EACR");
+    }
+
+    public static void MurderCheat(PlayerControl player)
+    {
+        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
+        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly murdering a player (cheating)");
+        Logger.Info($" {player.Data.PlayerName} was banned for invalidly murdering a player", "EACR");
+    }
+    
+    public static void MeetingCheat(PlayerControl player)
+    {
+        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
+        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly calling a meeting (cheating)");
+        Logger.Info($" {player.Data.PlayerName} was banned for invalidly calling a meeting", "EACR");
     }
 }

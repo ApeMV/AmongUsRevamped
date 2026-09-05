@@ -94,6 +94,19 @@
   "snsDisableHeli": "Desactivar sabotaje de Crash Course",
   "snsDisableMushroomMixup": "Desactivar sabotaje de mezcla de hongos",
   "snsDisableCloseDoor": "Desactivar sabotajes de puertas de SnS",
+
+  "tabGroupCustomizeSabotages": "Customize Sabotages",
+  "customizeSabotages": "Enable Sabotage Customizations",
+  "sabotageCooldown": "Critical Sabotage Cooldown",
+  "skeldReactorDuration": "Skeld Reactor Duration",
+  "skeldO2Duration": "Skeld O2 Duration",
+  "miraReactorDuration": "Mira Reactor Duration",
+  "miraO2Duration": "Mira O2 Duration",
+  "polusReactorDuration": "Polus Reactor Duration",
+  "airshipReactorDuration": "Airship Reactor Duration",
+  "fungleReactorDuration": "Fungle Reactor Duration",
+  "fungleMushroomMixupDuration": "Fungle Mixup Duration",
+
   "tabGroupSpeedrun": "Speedrun",
   "speedrunSettingsOverride": "Actualizar configuración automáticamente",
   "gameAutoEndsAfter": "La partida termina automáticamente después de",
@@ -306,5 +319,8 @@
   "shieldFirstDeathDuration": "Duración de la protección",
   "snsTwoDesc": "Enviar la descripción ampliada de Shift and Seek.",
   "modeVoteDesc": "Inicia una votación entre todos los modos de juego.",
-  "automaticModePoll": "/gmvote automático al volver a la sala"
+  "automaticModePoll": "/gmvote automático al volver a la sala",
+
+  "privateDesc": "Changes lobby visibility to private.",
+  "publicDesc": "Changes lobby visibility to public."
 }

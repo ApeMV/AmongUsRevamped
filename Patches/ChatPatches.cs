@@ -147,6 +147,24 @@ internal static class SendChatPatch
             return false;
         }
 
+        if (text == "/private")
+        {
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            
+            if (Utils.InGame) return false;
+            AmongUsClient.Instance.ChangeGamePublic(false);
+        }
+
+        if (text == "/public")
+        {
+            __instance.freeChatField.textArea.Clear();
+            __instance.freeChatField.textArea.SetText(string.Empty);
+            
+            if (Utils.InGame) return false;
+            AmongUsClient.Instance.ChangeGamePublic(true);
+        }
+
         if (text.StartsWith("/vip "))
         {
             PlayerControl target = null;
@@ -829,6 +847,18 @@ public static class RPCHandlerPatch
                         if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashEndMeetingCmd.GetValue()) return;
                         MeetingHud.Instance.RpcClose();
                     }
+                }
+
+                if (text == "/private")
+                {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashStartAndEndGameCmd.GetValue() || Utils.InGame) return;
+                    AmongUsClient.Instance.ChangeGamePublic(false);
+                }
+
+                if (text == "/public")
+                {
+                    if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashStartAndEndGameCmd.GetValue() || Utils.InGame) return;
+                    AmongUsClient.Instance.ChangeGamePublic(true);
                 }
 
                 if (text == "/s" || text == "/start")

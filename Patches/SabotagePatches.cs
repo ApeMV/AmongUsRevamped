@@ -70,6 +70,14 @@ public static class SabotageSystemTypeRepairDamagePatch
         }
         else return true;
     }
+
+    public static void Postfix(SabotageSystemType __instance)
+    {
+        if (!Options.CustomizeSabotages.GetBool() || !AmongUsClient.Instance.AmHost) return;
+
+        __instance.Timer = Options.SabotageCooldown.GetInt();
+        __instance.IsDirty = true;
+    }
 }
 
 [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CloseDoorsOfType))]
@@ -112,5 +120,156 @@ public static class MessageReaderUpdateSystemPatch
             return false;
         }
         else return true;
+    }
+}
+
+[HarmonyPatch(typeof(ReactorSystemType))]
+public static class ReactorSystemTypePatch
+{
+    private static bool SetDuration = true;
+
+    [HarmonyPatch(nameof(ReactorSystemType.Deteriorate))]
+    [HarmonyPrefix]
+    public static void Deteriorate_Prefix(ReactorSystemType __instance)
+    {
+        if (!AmongUsClient.Instance.AmHost || Main.NormalOptions.MapId == 4 || !Options.CustomizeSabotages.GetBool()) return;
+
+        if (!__instance.IsActive || !ShipStatus.Instance || !SetDuration)
+        {
+            if (!SetDuration && !__instance.IsActive) SetDuration = true;
+            return;
+        }
+
+        Logger.Info($" {ShipStatus.Instance.Type} - {SetDuration}", "ReactorSystemTypePatch");
+        SetDuration = false;
+
+        switch (ShipStatus.Instance.Type)
+        {
+            case ShipStatus.MapType.Ship:
+                __instance.Countdown = Options.SkeldReactorDuration.GetFloat();
+                return;
+            case ShipStatus.MapType.Hq:
+                __instance.Countdown = Options.MiraReactorDuration.GetFloat();
+                return;
+            case ShipStatus.MapType.Pb:
+                __instance.Countdown = Options.PolusReactorDuration.GetFloat();
+                return;
+            case ShipStatus.MapType.Fungle:
+                __instance.Countdown = Options.FungleReactorDuration.GetFloat();
+                return;
+            default:
+                return;
+        }
+    }
+    [HarmonyPatch(nameof(ReactorSystemType.Deteriorate))]
+    [HarmonyPostfix]
+    public static void Deteriorate_Postfix(ReactorSystemType __instance)
+    {
+        if (__instance.IsActive && __instance.Countdown <= 0 && !Utils.HandlingGameEnd)
+        {
+            Utils.ContinueEndGame((byte)GameOverReason.ImpostorsBySabotage);
+            NormalGameEndChecker.CheckWinnerText("ImpostorSabotage");
+        }
+    }
+}
+
+[HarmonyPatch(typeof(HeliSabotageSystem))]
+public static class HeliSabotageSystemPatch
+{
+    private static bool SetDuration = true;
+
+    [HarmonyPatch(nameof(HeliSabotageSystem.Deteriorate))]
+    [HarmonyPrefix]
+    public static void Deteriorate_Prefix(HeliSabotageSystem __instance)
+    {
+        if (!AmongUsClient.Instance.AmHost || Main.NormalOptions.MapId != 4 || !Options.CustomizeSabotages.GetBool()) return;
+
+        if (!__instance.IsActive || !ShipStatus.Instance || !SetDuration)
+        {
+            if (!SetDuration && !__instance.IsActive) SetDuration = true;
+            return;
+        }
+
+        Logger.Info($" {ShipStatus.Instance.Type} - {SetDuration}", "HeliSabotageSystemPatch");
+        SetDuration = false;
+
+        __instance.Countdown = Options.AirshipReactorDuration.GetFloat();
+    }
+    [HarmonyPatch(nameof(HeliSabotageSystem.Deteriorate))]
+    [HarmonyPostfix]
+    public static void Deteriorate_Postfix(HeliSabotageSystem __instance)
+    {
+        if (__instance.IsActive && __instance.Countdown <= 0 && !Utils.HandlingGameEnd)
+        {
+            Utils.ContinueEndGame((byte)GameOverReason.ImpostorsBySabotage);
+            NormalGameEndChecker.CheckWinnerText("ImpostorSabotage");
+        }
+    }
+}
+
+[HarmonyPatch(typeof(LifeSuppSystemType))]
+public static class LifeSuppSystemTypePatch
+{
+    private static bool SetDuration = true;
+
+    [HarmonyPatch(nameof(LifeSuppSystemType.Deteriorate))]
+    [HarmonyPrefix]
+    public static void Deteriorate_Prefix(LifeSuppSystemType __instance)
+    {
+        if (!AmongUsClient.Instance.AmHost || Main.NormalOptions.MapId == 2 || Main.NormalOptions.MapId == 4 || Main.NormalOptions.MapId == 5 || !Options.CustomizeSabotages.GetBool()) return;
+
+        if (!__instance.IsActive || !ShipStatus.Instance || !SetDuration)
+        {
+            if (!SetDuration && !__instance.IsActive) SetDuration = true;
+            return;
+        }
+
+        Logger.Info($" {ShipStatus.Instance.Type} - {SetDuration}", "LifeSuppSystemType");
+        SetDuration = false;
+
+        switch (ShipStatus.Instance.Type)
+        {
+            case ShipStatus.MapType.Ship:
+                __instance.Countdown = Options.SkeldO2Duration.GetFloat();
+                return;
+            case ShipStatus.MapType.Hq:
+                __instance.Countdown = Options.MiraO2Duration.GetFloat();
+                return;
+            default:
+                return;
+        }
+    }
+    [HarmonyPatch(nameof(LifeSuppSystemType.Deteriorate))]
+    [HarmonyPostfix]
+    public static void Deteriorate_Postfix(LifeSuppSystemType __instance)
+    {
+        if (__instance.IsActive && __instance.Countdown <= 0 && !Utils.HandlingGameEnd)
+        {
+            Utils.ContinueEndGame((byte)GameOverReason.ImpostorsBySabotage);
+            NormalGameEndChecker.CheckWinnerText("ImpostorSabotage");
+        }
+    }
+}
+
+[HarmonyPatch(typeof(MushroomMixupSabotageSystem), nameof(MushroomMixupSabotageSystem.Deteriorate))]
+public static class MushroomMixupSabotageSystemPatch
+{
+    private static bool SetDuration = true;
+    public static void Prefix(MushroomMixupSabotageSystem __instance, ref bool __state)
+    {
+        __state = __instance.IsActive;
+
+        if (!AmongUsClient.Instance.AmHost || Main.NormalOptions.MapId != 5 || !Options.CustomizeSabotages.GetBool()) return;
+
+        if (!__instance.IsActive || !ShipStatus.Instance || !SetDuration)
+        {
+            if (!SetDuration && !__instance.IsActive) SetDuration = true;
+            return;
+        }
+
+        Logger.Info($" {ShipStatus.Instance.Type} - {SetDuration}", "MushroomMixupSabotageSystem");
+        SetDuration = false;
+
+        __instance.currentSecondsUntilHeal = Options.FungleMushroomMixupDuration.GetFloat();
     }
 }

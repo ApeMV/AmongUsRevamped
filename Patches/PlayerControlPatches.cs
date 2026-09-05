@@ -23,6 +23,12 @@ class ReportDeadBodyPatch
             return false;
         }
 
+        if (!OnGameStartPatch.PastStartScreen && __instance != PlayerControl.LocalPlayer)
+        {
+            EACR.MeetingCheat(__instance);
+            return false;
+        }
+
         // target == null means meeting
 
         if (Options.Gamemode.GetValue() == 1 || Options.Gamemode.GetValue() == 2 || Options.Gamemode.GetValue() == 3)
@@ -78,6 +84,16 @@ internal static class MurderPlayerPatch
                     Utils.HasMurdered = true;
                 }
             }
+
+            if (target.Data.RoleType == RoleTypes.Impostor ||
+            target.Data.RoleType == RoleTypes.Shapeshifter ||
+            target.Data.RoleType == RoleTypes.Phantom ||
+            target.Data.RoleType == RoleTypes.Viper ||
+            target.Data.IsDead)
+            {
+                if (__instance != PlayerControl.LocalPlayer) return;
+                EACR.MurderCheat(__instance);
+            }
         }
 
         if ((target == PlayerControl.LocalPlayer || PlayerControl.LocalPlayer.Data.IsDead) && !Main.DisableInfoWhenDead.Value && resultFlags.HasFlag(MurderResultFlags.Succeeded))
@@ -96,7 +112,7 @@ internal static class MurderPlayerPatch
         }
 
         //1 = Shift and Seek
-        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && !resultFlags.HasFlag(MurderResultFlags.Succeeded))
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && resultFlags.HasFlag(MurderResultFlags.FailedProtected))
         {
             if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId)
             {

@@ -28,7 +28,7 @@ class NormalGameEndChecker
     public static string LastWinReason = "";
     public static List<PlayerControl> imps = new List<PlayerControl>();
     public static string firstDeath;
-    public static string firstDeathString => firstDeath != null ? $"\n\nFirst death: {firstDeath}" : "";
+    public static string firstDeathString => firstDeath != "" ? $"\n\nFirst death: {firstDeath}" : "";
 
     public static bool Prefix()
     {
@@ -50,20 +50,21 @@ class NormalGameEndChecker
     public static string customRoles { get; set; }
     public static void CheckWinnerText(string Winner)
     {
-        var impostorList = string.Join(", ", imps.Select(p => p.Data.PlayerName));
+        string impostorList = string.Join(", ", imps.Select(p => p.Data.PlayerName));
+        string impostorString = impostorList != "" ? $"\n\n Impostors: {impostorList}" : "";
         
         if (!canUpdateWinnerText) return;
 
         if (Winner == "SnSTimer")
         {
-            LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)\n\n Impostors: " + impostorList + firstDeathString;
+            LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)" + impostorString + firstDeathString;
             canUpdateWinnerText = false;
             return;
         }
 
         if (Winner == "PnSTimer")
         {
-            LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)\n\n Impostors: " + impostorList + firstDeathString;
+            LastWinReason = $"Crewmates Win! (Survived {Options.CrewAutoWinsGameAfter.GetInt()}s)" + impostorString + firstDeathString;
             canUpdateWinnerText = false;
             return;
         }
@@ -77,22 +78,22 @@ class NormalGameEndChecker
 
         if ((Options.Gamemode.GetValue() != 2 && Utils.AliveImpostors == 0) || Winner == "Crewmate") 
         {
-            LastWinReason = "Crewmates Win!\n\nImpostors: " + impostorList + firstDeathString;
+            LastWinReason = "Crewmates Win!" + impostorString + firstDeathString;
             canUpdateWinnerText = false;
         }
         else if ((Options.Gamemode.GetValue() != 2 && Utils.AliveImpostors >= Utils.AliveCrewmates) || Winner == "Impostor") 
         {
-            LastWinReason = "Impostors Win!\n\nImpostors: " + impostorList + firstDeathString;
+            LastWinReason = "Impostors Win!" + impostorString + firstDeathString;
             canUpdateWinnerText = false;
         }
         else if (GameData.Instance != null && GameData.Instance.TotalTasks > 0 && GameData.Instance.CompletedTasks >= GameData.Instance.TotalTasks || Winner == "CrewmateTasks")
         {
-            LastWinReason = $"Crewmates Win! ({Options.TaskPercentNeededToWin.GetInt()}% tasks completed)\n\nImpostors: " + impostorList + firstDeathString;
+            LastWinReason = $"Crewmates Win! ({Options.TaskPercentNeededToWin.GetInt()}% tasks completed)" + impostorString + firstDeathString;
             canUpdateWinnerText = false;
         }
         else if (Options.Gamemode.GetValue() < 1 || Winner == "ImpostorSabotage")
         {
-            LastWinReason = "Impostors Win! (Sabotage)\n\n Impostors: " + impostorList + firstDeathString;
+            LastWinReason = "Impostors Win! (Sabotage)" + impostorString + firstDeathString;
         }
     }
 }
