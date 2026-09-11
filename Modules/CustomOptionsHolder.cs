@@ -61,6 +61,11 @@ namespace AmongUsRevamped
             Translator.Get("kick"), Translator.Get("ban"), Translator.Get("notifyMe")
         };
 
+        public static readonly string[] cheatingPenalties =
+        {
+            Translator.Get("ban"), Translator.Get("kick"), Translator.Get("notifyMe")
+        };
+
 
 
         //System
@@ -102,8 +107,6 @@ namespace AmongUsRevamped
         public static OptionItem MessagePerPlayerNum;
         public static OptionItem AutomaticMapPoll;
         public static OptionItem TimeBeforeMapPoll;
-        public static OptionItem AutomaticAllMapPoll;
-        public static OptionItem TimeBeforeAllMapPoll;
         public static OptionItem AutomaticModePoll;
         public static OptionItem TimeBeforeModePoll;
 
@@ -123,11 +126,36 @@ namespace AmongUsRevamped
 
         public static OptionItem TabGroupMisc;
         public static OptionItem MapVoteDuration;
+        public static OptionItem CustomizeMapVote;
+        public static OptionItem IncludeSkeld;
+        public static OptionItem IncludeMira;
+        public static OptionItem IncludePolus;
+        public static OptionItem IncludeAirship;
+        public static OptionItem IncludeFungle;
+        public static OptionItem IncludeDleks;
+
         public static OptionItem ModeVoteDuration;
+        public static OptionItem CustomizeModeVote;
+        public static OptionItem IncludeStandard;
+        public static OptionItem IncludeNoKillCooldown;
+        public static OptionItem IncludeShiftAndSeek;
+        public static OptionItem IncludePoofAndSeek;
+        public static OptionItem IncludeSpeedrun;
+
         public static OptionItem StartCountdown;
         public static OptionItem ColorCommandLevel;
         public static OptionItem AllowFortegreen;
         public static OptionItem NoGameEnd;
+
+        public static OptionItem TabGroupAnticheat;
+        public static OptionItem HackingPunishment;
+        public static OptionItem DetectBadRPC;
+        public static OptionItem DetectBadSabotage;
+        public static OptionItem DetectBadVent;
+        public static OptionItem DetectBadTask;
+        public static OptionItem DetectBadKill;
+        public static OptionItem DetectBadAnimation;
+        public static OptionItem DetectBadMeeting;
 
         public static OptionItem TabGroupAccess;
         public static OptionItem SlashColorCmd;
@@ -167,6 +195,8 @@ namespace AmongUsRevamped
         public static OptionItem ShieldFirstDeath;
         public static OptionItem ShieldFirstDeathDuration;
         public static OptionItem DisableAnnoyingMeetingCalls;
+
+        public static OptionItem TabGroupGameplayMapModifications;
         public static OptionItem ChangeDecontaminationTime;
         public static OptionItem DecontaminationTimeOnMiraHQ;
         public static OptionItem DecontaminationDoorOpenTimeOnMiraHQ;
@@ -424,18 +454,14 @@ namespace AmongUsRevamped
             TimeBeforeMapPoll = IntegerOptionItem.Create(60155, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 10, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetParent(AutomaticMapPoll);
-            AutomaticAllMapPoll = BooleanOptionItem.Create(60156, Translator.Get("automaticAllMapPoll"), false, TabGroup.SystemSettings, false);
-            TimeBeforeAllMapPoll = IntegerOptionItem.Create(60157, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 10, TabGroup.SystemSettings, false)
-                .SetValueFormat(OptionFormat.Seconds)
-                .SetParent(AutomaticAllMapPoll);
-            AutomaticModePoll = BooleanOptionItem.Create(60158, Translator.Get("automaticModePoll"), false, TabGroup.SystemSettings, false);
-            TimeBeforeModePoll = IntegerOptionItem.Create(60159, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 20, TabGroup.SystemSettings, false)
+            AutomaticModePoll = BooleanOptionItem.Create(60156, Translator.Get("automaticModePoll"), false, TabGroup.SystemSettings, false);
+            TimeBeforeModePoll = IntegerOptionItem.Create(60157, Translator.Get("timeBeforeMapPoll"), new(10, 300, 5), 20, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetParent(AutomaticModePoll);
 
             TabGroupAutostart = TextOptionItem.Create(64425, Translator.Get("tabGroupAutostart"), TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
-            AutoStartTimer = IntegerOptionItem.Create(64426, Translator.Get("autoStartTimer"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
+            AutoStartTimer = IntegerOptionItem.Create(64426, Translator.Get("autoStartTimer"), new(2, 5, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
             WaitAutoStart = IntegerOptionItem.Create(64427, Translator.Get("waitAutoStart"), new(10, 600, 10), 300, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds);
@@ -457,19 +483,64 @@ namespace AmongUsRevamped
 
             TabGroupMisc = TextOptionItem.Create(60378, Translator.Get("tabGroupMisc"), TabGroup.SystemSettings)
                 .SetColor(Color.yellow);
+
             MapVoteDuration = IntegerOptionItem.Create(60379, Translator.Get("mapVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            CustomizeMapVote = BooleanOptionItem.Create(60380, Translator.Get("customizeMapVote"), false, TabGroup.SystemSettings, false);
+            IncludeSkeld = BooleanOptionItem.Create(60381, Translator.Get("includeSkeld"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeMapVote);
+            IncludeMira = BooleanOptionItem.Create(60382, Translator.Get("includeMira"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeMapVote);
+            IncludePolus = BooleanOptionItem.Create(60383, Translator.Get("includePolus"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeMapVote);
+            IncludeAirship = BooleanOptionItem.Create(60384, Translator.Get("includeAirship"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeMapVote);
+            IncludeFungle = BooleanOptionItem.Create(60385, Translator.Get("includeFungle"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeMapVote);
+            IncludeDleks = BooleanOptionItem.Create(60386, Translator.Get("includeDleks"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeMapVote);
+
+            ModeVoteDuration = IntegerOptionItem.Create(60389, Translator.Get("modeVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
+                .SetValueFormat(OptionFormat.Seconds);
+            CustomizeModeVote = BooleanOptionItem.Create(60390, Translator.Get("customizeModeVote"), false, TabGroup.SystemSettings, false);
+            IncludeStandard = BooleanOptionItem.Create(60391, Translator.Get("includeStandard"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeModeVote);
+            IncludeNoKillCooldown = BooleanOptionItem.Create(60392, Translator.Get("includeNoKillCooldown"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeModeVote);
+            IncludeShiftAndSeek = BooleanOptionItem.Create(60393, Translator.Get("includeShiftAndSeek"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeModeVote);
+            IncludePoofAndSeek = BooleanOptionItem.Create(60394, Translator.Get("includePoofAndSeek"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeModeVote);
+            IncludeSpeedrun = BooleanOptionItem.Create(60395, Translator.Get("includeSpeedrun"), true, TabGroup.SystemSettings, false)
+                .SetParent(CustomizeModeVote);
+            StartCountdown = IntegerOptionItem.Create(60396, Translator.Get("startCountdown"), new(2, 5, 1), 5, TabGroup.SystemSettings, false)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetColor(Color.red);
-            ModeVoteDuration = IntegerOptionItem.Create(60380, Translator.Get("modeVoteDuration"), new(5, 60, 5), 20, TabGroup.SystemSettings, false)
-                .SetValueFormat(OptionFormat.Seconds)
+            AllowFortegreen = BooleanOptionItem.Create(60397, Translator.Get("allowFortegreen"), false, TabGroup.SystemSettings, false)
                 .SetColor(Color.red);
-            StartCountdown = IntegerOptionItem.Create(60381, Translator.Get("startCountdown"), new(1, 5, 1), 5, TabGroup.SystemSettings, false)
-                .SetValueFormat(OptionFormat.Seconds)
+            NoGameEnd = BooleanOptionItem.Create(60398, Translator.Get("noGameEnd"), false, TabGroup.SystemSettings, false)
                 .SetColor(Color.red);
-            AllowFortegreen = BooleanOptionItem.Create(60382, Translator.Get("allowFortegreen"), false, TabGroup.SystemSettings, false)
+
+            TabGroupAnticheat = TextOptionItem.Create(60400, Translator.Get("tabGroupAnticheat"), TabGroup.SystemSettings)
+                .SetColor(Color.yellow);
+            HackingPunishment = StringOptionItem.Create(60401, Translator.Get("hackingPunishment"), cheatingPenalties, 0, TabGroup.SystemSettings, false)
                 .SetColor(Color.red);
-            NoGameEnd = BooleanOptionItem.Create(60383, Translator.Get("noGameEnd"), false, TabGroup.SystemSettings, false)
+            DetectBadRPC = BooleanOptionItem.Create(60402, Translator.Get("detectBadRPC"), true, TabGroup.SystemSettings, false)
                 .SetColor(Color.red);
+            DetectBadSabotage = BooleanOptionItem.Create(60403, Translator.Get("detectBadSabotage"), true, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
+            DetectBadVent = BooleanOptionItem.Create(60404, Translator.Get("detectBadVent"), true, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
+            DetectBadTask = BooleanOptionItem.Create(60405, Translator.Get("detectBadTask"), true, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
+            DetectBadKill = BooleanOptionItem.Create(60406, Translator.Get("detectBadKill"), true, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
+            DetectBadAnimation = BooleanOptionItem.Create(60407, Translator.Get("detectBadAnimation"), true, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
+            DetectBadMeeting = BooleanOptionItem.Create(60408, Translator.Get("detectBadMeeting"), true, TabGroup.SystemSettings, false)
+                .SetColor(Color.red);
+
+
 
             // Gamemode Settings
 
@@ -628,6 +699,8 @@ namespace AmongUsRevamped
                 .SetValueFormat(OptionFormat.Seconds);
             DisableAnnoyingMeetingCalls = BooleanOptionItem.Create(60567, Translator.Get("disableAnnoyingMeetingCalls"), false, TabGroup.ModSettings, false);
 
+            TabGroupGameplayMapModifications = TextOptionItem.Create(60549, Translator.Get("tabGroupGameplayMapModifications"), TabGroup.ModSettings)
+                .SetColor(Color.blue);
             ChangeDecontaminationTime = BooleanOptionItem.Create(60550, Translator.Get("changeDecontaminationTime"), false, TabGroup.ModSettings, false);
             DecontaminationTimeOnMiraHQ = FloatOptionItem.Create(60551, Translator.Get("decontaminationTimeOnMiraHQ"), new(0.5f, 10f, 0.25f), 3f, TabGroup.ModSettings, false)
                 .SetParent(ChangeDecontaminationTime)

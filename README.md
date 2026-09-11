@@ -36,7 +36,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v2.0.4):
+# 🎮 Features (v2.1.0):
 
 ## <b>♠️ Client Side settings:</b>
 - Toggle Game Master (Spectator)
@@ -45,6 +45,7 @@
 - Toggle Lobby Music
 - Toggle Info When Dead
 - Toggle Command Helper
+- Toggle Chat Modifications
 ## <b>⚙️ Technical settings:</b>
 - Advanced AFK Detection system
 - Kick/Ban players under/above a certain level
@@ -77,7 +78,7 @@
 - Shield player who died first
 - Hide and Seek: Custom Seeker count
 ## <b>🏆 Custom Gamemodes:</b>
-- 0 Kill Cooldown -> Set Kill Cooldown to 0.01
+- 0Kcd -> Set Kill Cooldown to 0.0
 - Shift and Seek
 - Poof and Seek
 - Speedrun
@@ -90,7 +91,6 @@
 - Detect invalid kills
 - Detect immortality cheats
 - Block attempted votekicks
-- These are all enabled by default
 ## <b>❓ Other Improvements:</b>
 - Lanuage support: English, Italian, Japanese, Russian, Simplified Chinese, Spanish
 - Select a language in Language/YourLanguage.txt
@@ -104,6 +104,8 @@
 - Higher and more accurate Option ranges
 - Always visible lobby timer
 - Access experimental animation test scene
+- Faster chat cooldown (2.2s)
+- 120 character chat limit, copy pasting
 - <b>🎉 And this all works in public lobbies!</b>
 
 ### Hotkeys
@@ -151,10 +153,10 @@
 ### :star: [AUnlocker](https://github.com/astra1dev/AUnlocker)
 > - Original NumberOptionsPatch
 > - Always Show Lobby Timer
+> - Copy Pasting & Character Increase
 ### :star: [EHR (Formerly TOHE+)](https://github.com/Gurge44/EndlessHostRoles)
 > - Task Patching
 ### :star: [TOH](https://github.com/tukasa0001/TownOfHost) :
-> - Ban Manager
 > - OptionHolder & ClientOptionItem
 ### :star: [Super New Roles](https://github.com/ykundesu/SuperNewRoles) (SNR):
 > - Credentials menu

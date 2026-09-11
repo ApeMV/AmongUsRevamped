@@ -39,7 +39,7 @@
 
   "tabGroupAutomation": "Automation",
   "autoSendGameInfo": "Automatically send winner info",
-  "autoRejoinLobby": "Auto Rejoin Lobby",
+  "autoRejoinLobby": "Automatically Rejoin Lobby",
 
   "tabGroupAutostart": "Autohost",
   "autoStartTimer": "Countdown For Auto Start",
@@ -159,7 +159,7 @@
   "disableFungleVital": "Disable Fungle Vitals",
 
   "tabGroupTasks": "Tasks",
-  "allPlayersSameTasks": "Everyone has same tasks",
+  "allPlayersSameTasks": "Everyone Has Same Tasks",
   "overrideTaskSettings": "Disable Tasks",
   "taskPercentNeededToWin": "% Tasks completed for crewmates to win",
 
@@ -252,7 +252,7 @@
   "disableSubmitScan": "Disable Submit Scan",
   "disableUploadData": "Disable Upload Data",
 
-  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r, /gm</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sns2</b>\nSend extended Shift and Seek mode description\n<b>/pns, /poofandseek</b>\nSend Poof and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip, /removemoderator, /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.\n\n<b>/seeker {name}</b>\nForce someone as Seeker in HnS.\n<b>/seekers</b>\nShow forced seeker list.\n<b>/clearseeker</b>\nClear forced seeker list.\n\n<b>/mapvote</b>\nStarts a map vote containing default maps.\n<b>/allmapvote</b>\nStarts a map vote that includes Eht Dleks.\n<b>/gmvote</b>\nStarts a gamemode vote.",
+  "allCommandsFull": "<b>ALL COMMANDS:</b>\n\n<b>/help</b>\nShow this message.\n<b>/aur, /socials</b>\nSend Among Us Revamped social links.\n\n<b>/r</b>\nSend current mode description.\n<b>/l, /lastgame</b>\nSend last winner info.\n\n<b>/0kc, /0killcooldown</b>\nSend 0 Kill Cooldown mode description.\n<b>/sns, /shiftandseek</b>\nSend Shift and Seek mode description.\n<b>/sns2</b>\nSend extended Shift and Seek mode description\n<b>/pns, /poofandseek</b>\nSend Poof and Seek mode description.\n<b>/sp, /speedrun</b>\nSend Speedrun mode description.\n\n/<b>kick, /ban</b>\nKick or ban a player by name.\n<b>/ckick, /cban</b>\nKick or ban a player by color.\n\n<b>/vip /moderator /admin</b>\nAdd a player as VIP, Moderator, or Admin.\n<b>/removevip /removemoderator /removeadmin</b>\nRemove VIP, Moderator, or Admin from a player.\n\n<b>/eg, /endgame</b>\nEnd the current game.\n<b>/em, /endmeeting</b>\nEnd the current meeting.\n<b>/s, /start</b>\nBegin the game starting countdown.\n\n<b>/t {template}</b>\nSend a template from AUR-DATA/templates.txt.\n\n<b>/col, /color, /colour</b>\nSet your color, can be used to bypass limits.\n\n<b>/seeker {name}</b>\nForce someone as Seeker in HnS.\n<b>/seekers</b>\nShow forced Seeker list.\n<b>/clearseeker</b>\nClear forced Seeker list.\n\n<b>/mapvote</b>\nStarts a customizable map vote maps.\n<b>/gmvote</b>\nStarts a customizable gamemode vote.\n\n<b>/private</b>\nSets lobby to private.\n<b>/public</b>\nSets lobby to public.",
 
   "translationReloaded": "Your file has successfully been reset.\nTo apply all changes, restart your game.",
 
@@ -308,9 +308,9 @@
   "seekerDesc": "Adds player as Seeker in HnS.",
   "seekersDesc": "Shows all manually selected Seekers.",
   "clearSeekerDesc": "Clears the manual Seeker list.",
-  "mapVoteDesc": "Starts a vote between the 5 core maps.",
+  "mapVoteDesc": "Starts a vote between selected maps.",
   "allMapVoteDesc": "Starts a vote between all 6 maps, including Eht Dleks.",
-  "modeVoteDesc": "Starts a vote between all gamemodes.",
+  "modeVoteDesc": "Starts a vote between selected gamemodes.",
   "privateDesc": "Changes lobby visibility to private.",
   "publicDesc": "Changes lobby visibility to public.",
 
@@ -365,5 +365,35 @@
   "pnsDisableCloseDoor": "Disable PnS Door Sabotages",
   "tabGroupPNS": "Poof and Seek",
   "badMoveTimeToSuicide": "Phantom Suicides After Visibly Moving For",
-  "snsImpostorCanVent": "Impostors Can Vent"
+  "snsImpostorCanVent": "Impostors Can Vent",
+
+  "tabGroupAnticheat": "Anticheat",
+  "hackingPunishment": "Hacking Punishment",
+  "detectBadRPC": "Detect Invalid RPC's",
+  "detectBadSabotage": "Detect Invalid Sabotages",
+  "detectBadVent": "Detect Invalid Venting",
+  "detectBadTask": "Detect Invalid Task Completions",
+  "detectBadKill": "Detect Invalid Kills",
+  "detectBadAnimation": "Detect Invalid Animations",
+  "detectBadMeeting": "Detect Invalid Meetings",
+
+  "customizeMapVote": "Customize Map Votes",
+  "includeSkeld": "Include Skeld",
+  "includeMira": "Include Mira",
+  "includePolus": "Include Polus",
+  "includeAirship": "Include Airship",
+  "includeFungle": "Include Fungle",
+  "includeDleks": "Include Dleks",
+
+  "customizeModeVote": "Customize Gamemode Votes",
+  "includeStandard": "Include Standard",
+  "includeNoKillCooldown": "Include 0 Kill Cooldown",
+  "includeShiftAndSeek": "Include Shift And Seek",
+  "includePoofAndSeek": "Include Poof And Seek",
+  "includeSpeedrun": "Include Speedrun",
+
+  "tabGroupGameplayMapModifications": "Map Modifications",
+
+  "disableChatModifier": "Disable Chat Modifications"
+
 }

@@ -62,7 +62,7 @@ namespace AmongUsRevamped
             var credentials = UnityEngine.Object.Instantiate(__instance.text);
             credentials.text = Main.CredentialsText;
             credentials.alignment = TextAlignmentOptions.Right;
-            credentials.transform.position = new Vector3(1f, 2.67f, -2f);
+            credentials.transform.position = new Vector3(-4.1f, -2.68f, -2f);
             credentials.fontSize = credentials.fontSizeMax = credentials.fontSizeMin = 2f;
 
             ErrorText.Create(__instance.text);
@@ -181,6 +181,7 @@ namespace AmongUsRevamped
         private static PassiveButton template;
         private static PassiveButton discordButton;
         private static PassiveButton gitHubButton;
+        private static PassiveButton latestButton;
         private static PassiveButton animationSceneButton;
         private static Transform buttonParent;
         public static void Postfix(MainMenuManager __instance)
@@ -195,7 +196,7 @@ namespace AmongUsRevamped
                 discordButton = CreateButton(
                     __instance,
                     "DiscordButton",
-                    new(2.1f, 4.05f, 1f),
+                    new(2.3f, 4.05f, 1f),
                     new(88, 101, 242, byte.MaxValue),
                     new(148, 161, byte.MaxValue, byte.MaxValue),
                     () => Application.OpenURL("https://discord.gg/83Zhzhyhya"),
@@ -207,11 +208,23 @@ namespace AmongUsRevamped
                 gitHubButton = CreateButton(
                     __instance,
                     "GitHubButton",
-                    new(3.8f, 4.05f, 1f),
+                    new(4.0f, 4.05f, 1f),
                     new(153, 153, 153, byte.MaxValue),
                     new(209, 209, 209, byte.MaxValue),
                     () => Application.OpenURL("https://github.com/ApeMV/AmongUsRevamped"),
                     "GitHub");
+            }
+
+            if (latestButton == null)
+            {
+                latestButton = CreateButton(
+                    __instance,
+                    "LatestButton",
+                    new(5.7f, 4.05f, 1f),
+                    new(255, 215, 0, byte.MaxValue),
+                    new(255, 255, 30, byte.MaxValue),
+                    () => Application.OpenURL("https://github.com/ApeMV/AmongUsRevamped/releases/latest"),
+                    "Latest");
             }
 
             if (animationSceneButton == null)
@@ -322,7 +335,7 @@ namespace AmongUsRevamped
             button.name = name;
 
             button.transform.localPosition = localPosition;
-            if (name == "GitHubButton" || name == "DiscordButton")
+            if (name == "GitHubButton" || name == "DiscordButton" || name == "LatestButton")
             {
                 button.transform.localScale = new Vector3(0.8f, 1f, 1f);
             }

@@ -90,14 +90,14 @@ internal static class CoShowIntroPatch
             }   
         }
 
-        if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f))
+        if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.001f))
         {
             Main.NormalOptions.KillCooldown = 5f;
             OptionManager.SyncGameOptions();
 
             _ = new LateTask(() =>
             {       
-                Main.NormalOptions.KillCooldown = 0.01f;
+                Main.NormalOptions.KillCooldown = 0.001f;
                 OptionManager.SyncGameOptions();
             }, 13f, "NoKcdEnabled");     
         }
@@ -111,7 +111,7 @@ internal static class CoShowIntroPatch
 
                 _ = new LateTask(() =>
                 {       
-                    Main.NormalOptions.KillCooldown = 0.01f;
+                    Main.NormalOptions.KillCooldown = 0.001f;
                     OptionManager.SyncGameOptions();
                 }, 18f, "NoKcdEnabled");
             }
@@ -122,7 +122,7 @@ internal static class CoShowIntroPatch
 
                 _ = new LateTask(() =>
                 {       
-                    Main.NormalOptions.KillCooldown = 0.01f;
+                    Main.NormalOptions.KillCooldown = 0.001f;
                     OptionManager.SyncGameOptions();
                 }, 13f, "NoKcdEnabled");
             }          

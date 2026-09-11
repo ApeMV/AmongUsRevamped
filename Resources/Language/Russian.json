@@ -73,19 +73,6 @@
   "snsDisableHeli": "Выключить Сабботаж Столкновения",
   "snsDisableMushroomMixup": "Выключить Сабботаж Грибного Переполоха",
   "snsDisableCloseDoor": "Выключить Сабботаж Дверей в Режиме Клона",
-
-  "tabGroupCustomizeSabotages": "Customize Sabotages",
-  "customizeSabotages": "Enable Sabotage Customizations",
-  "sabotageCooldown": "Critical Sabotage Cooldown",
-  "skeldReactorDuration": "Skeld Reactor Duration",
-  "skeldO2Duration": "Skeld O2 Duration",
-  "miraReactorDuration": "Mira Reactor Duration",
-  "miraO2Duration": "Mira O2 Duration",
-  "polusReactorDuration": "Polus Reactor Duration",
-  "airshipReactorDuration": "Airship Reactor Duration",
-  "fungleReactorDuration": "Fungle Reactor Duration",
-  "fungleMushroomMixupDuration": "Fungle Mixup Duration",
-
   "tabGroupSpeedrun": "Спидран",
   "speedrunSettingsOverride": "Автоматически Обновлять Настройки",
   "gameAutoEndsAfter": "Игра автоматически заканчивается после",
@@ -364,7 +351,18 @@
   "snsTwoDesc": "Отправить Увеличенное Описание Клона.",
   "modeVoteDesc": "Начать Голосование между всеми режимами.",
   "automaticModePoll": "Автоматический /gmvote После Перезахода",
+  "tabGroupCustomizeSabotages": "Кастомизировать Саботажи",
+  "customizeSabotages": "Включить Кастомизацию Сабботажей",
+  "sabotageCooldown": "Перезарядка Критических Сабботажей",
+  "skeldReactorDuration": "Длительность Сабботажа Реактора на Skeld",
+  "skeldO2Duration": "Длительность Сабботажа O2 на Skeld",
+  "miraReactorDuration": "Длительность Сабботажа Реактора на Mira",
+  "miraO2Duration": "Длительность Сабботажа O2 на Mira",
+  "polusReactorDuration": "Длительность Сабботажа Реактора на Polus",
+  "airshipReactorDuration": "Длительность Сабботажа Реактора на Airship",
+  "fungleReactorDuration": "Длительность Сабботажа Реактора на Fungle",
+  "fungleMushroomMixupDuration": "Длительность Сабботажа Грибного Переполоха",
 
-  "privateDesc": "Changes lobby visibility to private.",
-  "publicDesc": "Changes lobby visibility to public."
+  "privateDesc": "Изменяет Публичность Лобби на Приватный.",
+  "publicDesc": "Изменяет Публичность Лобби на Публичный."
 }

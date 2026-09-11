@@ -36,6 +36,24 @@ internal static class ChatControllerUpdatePatch
             __instance.quickChatField.background.color = Color.white;
             __instance.quickChatField.text.color = Color.black;
         }
+
+        if (Main.DisableChatModifier.Value && !__instance.freeChatField.textArea.allowAllCharacters)
+        {
+            __instance.freeChatField.textArea.AllowSymbols = false;
+            __instance.freeChatField.textArea.AllowEmail = false;
+            __instance.freeChatField.textArea.characterLimit = 100;
+        }
+        if (!Main.DisableChatModifier.Value)
+        {
+            if (__instance.timeSinceLastMessage < 0.9f)
+            {
+                __instance.timeSinceLastMessage = 0.9f;
+            }
+
+            __instance.freeChatField.textArea.AllowSymbols = true;
+            __instance.freeChatField.textArea.AllowEmail = true;
+            __instance.freeChatField.textArea.characterLimit = 120;            
+        }
     }
 }
 
@@ -418,19 +436,7 @@ internal static class SendChatPatch
         {
             if (Utils.IsLobby)
             {
-                Utils.MapVote(false, false);
-
-                __instance.freeChatField.textArea.Clear();
-                __instance.freeChatField.textArea.SetText(string.Empty);
-                return false;   
-            }
-        }
-
-        if (text == "/allmapvote")
-        {
-            if (Utils.IsLobby)
-            {
-                Utils.MapVote(true, false);
+                Utils.MapVote(false);
 
                 __instance.freeChatField.textArea.Clear();
                 __instance.freeChatField.textArea.SetText(string.Empty);
@@ -452,77 +458,87 @@ internal static class SendChatPatch
 
         if (text == "/vote a")
         {
-            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
-            if (Utils.MapVoteActive && !Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId))
+            if (Utils.MapVoteActive)
             {
+                if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.skeldVotes++;
+                Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            if (Utils.ModeVoteActive)
+            else if (Utils.ModeVoteActive)
             {
+                if (Utils.HasModeVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.standardVotes++;
+                Utils.HasModeVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
         }
         if (text == "/vote b")
         {
-            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
             if (Utils.MapVoteActive)
             {
+                if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.miraVotes++;
+                Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            if (Utils.ModeVoteActive)
+            else if (Utils.ModeVoteActive)
             {
+                if (Utils.HasModeVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.noKillCooldownVotes++;
+                Utils.HasModeVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
         }
         if (text == "/vote c")
         {
-            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
             if (Utils.MapVoteActive)
             {
+                if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.polusVotes++;
+                Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            if (Utils.ModeVoteActive)
+            else if (Utils.ModeVoteActive)
             {
+                if (Utils.HasModeVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.speedrunVotes++;
+                Utils.HasModeVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
         }
         if (text == "/vote d")
         {
-            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
             if (Utils.MapVoteActive)
             {
+                if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.airshipVotes++;
+                Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            if (Utils.ModeVoteActive)
+            else if (Utils.ModeVoteActive)
             {
+                if (Utils.HasModeVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.shiftAndSeekVotes++;
+                Utils.HasModeVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
         }
         if (text == "/vote e")
         {
-            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
             if (Utils.MapVoteActive)
             {
+                if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.fungleVotes++;
+                Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            if (Utils.ModeVoteActive)
+            else if (Utils.ModeVoteActive)
             {
+                if (Utils.HasModeVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.poofAndSeekVotes++;
+                Utils.HasModeVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
         }
         if (text == "/vote f")
         {
-            if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
-            if (Utils.MapVoteActive && Utils.DleksEnabled)
+            if (Utils.MapVoteActive)
             {
+                if (Utils.HasVoted.Contains(PlayerControl.LocalPlayer.Data.PlayerId)) return true;
                 Utils.dleksVotes++;
+                Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
             }
-            Utils.HasVoted.Add(PlayerControl.LocalPlayer.Data.PlayerId);
         }
 
         if (text == "/l" || text == "/lastgame")
@@ -575,7 +591,7 @@ internal static class SendChatPatch
             switch (Options.Gamemode.GetValue())
             {
                 case 0:
-                if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f)
+                if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.001f)
                 {
                     Utils.ChatCommand(__instance, "0 Kill Cooldown:\n\nImpostors have no kill cooldown, and can't kill after a game starts for 5 seconds", "", false);
                 }
@@ -874,16 +890,7 @@ public static class RPCHandlerPatch
                     if (Utils.IsLobby)
                     {
                         if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashMapAndSeekerCmd.GetValue()) return;
-                        Utils.MapVote(false, true);
-                    }
-                }
-
-                if (text == "/allmapvote")
-                {
-                    if (Utils.IsLobby)
-                    {
-                        if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashMapAndSeekerCmd.GetValue()) return;
-                        Utils.MapVote(true, true);
+                        Utils.MapVote(true);
                     }
                 }
 
@@ -895,80 +902,90 @@ public static class RPCHandlerPatch
                         Utils.ModeVote(true);
                     }
                 }
-                
+
                 if (text == "/vote a")
                 {
-                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                     if (Utils.MapVoteActive)
                     {
+                        if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.skeldVotes++;
+                        Utils.HasVoted.Add(__instance.Data.PlayerId);
                     }
-                    if (Utils.ModeVoteActive)
+                    else if (Utils.ModeVoteActive)
                     {
+                        if (Utils.HasModeVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.standardVotes++;
+                        Utils.HasModeVoted.Add(__instance.Data.PlayerId);
                     }
-                    Utils.HasVoted.Add(__instance.Data.PlayerId);
                 }
                 if (text == "/vote b")
                 {
-                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                     if (Utils.MapVoteActive)
                     {
+                        if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.miraVotes++;
+                        Utils.HasVoted.Add(__instance.Data.PlayerId);
                     }
-                    if (Utils.ModeVoteActive)
+                    else if (Utils.ModeVoteActive)
                     {
+                        if (Utils.HasModeVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.noKillCooldownVotes++;
+                        Utils.HasModeVoted.Add(__instance.Data.PlayerId);
                     }
-                    Utils.HasVoted.Add(__instance.Data.PlayerId);
                 }
                 if (text == "/vote c")
                 {
-                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                     if (Utils.MapVoteActive)
                     {
+                        if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.polusVotes++;
+                        Utils.HasVoted.Add(__instance.Data.PlayerId);
                     }
-                    if (Utils.ModeVoteActive)
+                    else if (Utils.ModeVoteActive)
                     {
+                        if (Utils.HasModeVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.speedrunVotes++;
+                        Utils.HasModeVoted.Add(__instance.Data.PlayerId);
                     }
-                    Utils.HasVoted.Add(__instance.Data.PlayerId);
                 }
                 if (text == "/vote d")
                 {
-                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                     if (Utils.MapVoteActive)
                     {
+                        if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.airshipVotes++;
+                        Utils.HasVoted.Add(__instance.Data.PlayerId);
                     }
-                    if (Utils.ModeVoteActive)
+                    else if (Utils.ModeVoteActive)
                     {
+                        if (Utils.HasModeVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.shiftAndSeekVotes++;
+                        Utils.HasModeVoted.Add(__instance.Data.PlayerId);
                     }
-                    Utils.HasVoted.Add(__instance.Data.PlayerId);
                 }
                 if (text == "/vote e")
                 {
-                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                     if (Utils.MapVoteActive)
                     {
+                        if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.fungleVotes++;
+                        Utils.HasVoted.Add(__instance.Data.PlayerId);
                     }
-                    if (Utils.ModeVoteActive)
+                    else if (Utils.ModeVoteActive)
                     {
+                        if (Utils.HasModeVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.poofAndSeekVotes++;
+                        Utils.HasModeVoted.Add(__instance.Data.PlayerId);
                     }
-                    Utils.HasVoted.Add(__instance.Data.PlayerId);
                 }
                 if (text == "/vote f")
                 {
-                    if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
-                    if (Utils.MapVoteActive && Utils.DleksEnabled)
+                    if (Utils.MapVoteActive)
                     {
+                        if (Utils.HasVoted.Contains(__instance.Data.PlayerId)) return;
                         Utils.dleksVotes++;
+                        Utils.HasVoted.Add(__instance.Data.PlayerId);
                     }
-                    Utils.HasVoted.Add(__instance.Data.PlayerId);
                 }
 
                 if (text == "/l" || text == "/lastgame")
@@ -1018,7 +1035,7 @@ public static class RPCHandlerPatch
                     switch (Options.Gamemode.GetValue())
                     {
                         case 0:
-                        if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.01f)
+                        if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.001f)
                         {
                             Utils.ModeratorChatCommand("0 Kill Cooldown:\n\nImpostors have no kill cooldown, and can't kill after a game starts for 5 seconds", "", false);
                         }
@@ -1060,6 +1077,45 @@ public static class RPCHandlerPatch
                     }
                 }
                 break;
+            }
+        }
+    }
+}
+
+[HarmonyPatch(typeof(FreeChatInputField), nameof(FreeChatInputField.UpdateCharCount))]
+public static class FreeChatInputFieldUpdateCharCountPatch
+{
+    public static void Postfix(FreeChatInputField __instance)
+    {
+        if (!Main.DisableChatModifier.Value)
+        {
+            __instance.charCountText.SetText($"{__instance.textArea.text.Length}/120");            
+        }
+    }
+}
+
+// https://github.com/astra1dev/AUnlocker/blob/main/src/Patches/ChatPatches.cs
+[HarmonyPatch(typeof(TextBoxTMP), nameof(TextBoxTMP.Update))]
+public static class TextBoxTMPUpdatePatch
+{
+    public static void Postfix(TextBoxTMP __instance)
+    {
+        if (!Main.DisableChatModifier.Value && __instance.hasFocus)
+        {
+            if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl)) return;
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                GUIUtility.systemCopyBuffer = __instance.text;
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+             __instance.SetText(__instance.text + GUIUtility.systemCopyBuffer);
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                GUIUtility.systemCopyBuffer = __instance.text;
+                __instance.SetText("");
             }
         }
     }

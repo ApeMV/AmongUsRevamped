@@ -50,15 +50,8 @@ internal static class OnGameJoinedPatch
         {
             new LateTask(() =>
             {        
-                Utils.MapVote(false, true);
+                Utils.MapVote(true);
             }, Options.TimeBeforeMapPoll.GetInt(), "AutoMapPoll");
-        }
-        if (Options.AutomaticAllMapPoll.GetBool())
-        {
-            new LateTask(() =>
-            {        
-                Utils.MapVote(true, true);
-            }, Options.TimeBeforeAllMapPoll.GetInt(), "AutoMapPoll");
         }
         if (Options.AutomaticModePoll.GetBool())
         {

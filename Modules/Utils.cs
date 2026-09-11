@@ -605,25 +605,30 @@ public static class Utils
     public static int fungleVotes;
     public static int dleksVotes;
     public static bool MapVoteActive;
-    public static bool DleksEnabled;
     public static readonly List<byte> HasVoted = [];
-    public static void MapVote(bool dleks, bool moderator)
+    public static void MapVote(bool moderator)
     {
         if (MapVoteActive || ModeVoteActive) return;
 
-        DleksEnabled = dleks;
         MapVoteActive = true;
 
-        if (dleks && moderator) Utils.ModeratorChatCommand("A map vote is active!\n\nA: Skeld\nB: Mira\nC: Polus\nD: Airship\nE: Fungle\nF: Eht Dleks\n\nType /vote 'letter' to vote.", "", false);
-        else if (moderator) Utils.ModeratorChatCommand("A map vote is active!\n\nA: The Skeld\nB: Mira HQ\nC: Polus\nD: The Airship\nE: The Fungle\n\nType /vote 'letter' to vote.", "", false);
+        string voteMessage = "A map vote is active!\n\n";
+        if (!Options.CustomizeMapVote.GetBool()) voteMessage += "A: Skeld\nB: Mira\nC: Polus\nD: Airship\nE: Fungle\nF: Dleks\n";
+        if (Options.IncludeSkeld.GetBool()) voteMessage += "A: Skeld\n";
+        if (Options.IncludeMira.GetBool()) voteMessage += "B: Mira\n";
+        if (Options.IncludePolus.GetBool()) voteMessage += "C: Polus\n";
+        if (Options.IncludeAirship.GetBool()) voteMessage += "D: Airship\n";
+        if (Options.IncludeFungle.GetBool()) voteMessage += "E: Fungle\n";
+        if (Options.IncludeDleks.GetBool()) voteMessage += "F: Dleks\n";
+        voteMessage += "\nType /vote 'letter' to vote.";
 
-        if (dleks && !moderator) Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "A map vote is active!\n\nA: Skeld\nB: Mira\nC: Polus\nD: Airship\nE: Fungle\nF: Eht Dleks\n\nType /vote 'letter' to vote.", "", false);
-        else if (!moderator) Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "A map vote is active!\n\nA: The Skeld\nB: Mira HQ\nC: Polus\nD: The Airship\nE: The Fungle\n\nType /vote 'letter' to vote.", "", false);
+        if (moderator) Utils.ModeratorChatCommand(voteMessage, "", false);
+        else Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, voteMessage, "", false);
 
         new LateTask(() =>
         {
-            int highest = skeldVotes;
-            string winner = "Skeld";
+            int highest = -1;
+            string winner = "";
             byte mapId = 0;
             bool tie = false;
 
@@ -642,16 +647,47 @@ public static class Utils
                 }
             }
 
-            Check(miraVotes, "Mira HQ", 1);
-            Check(polusVotes, "Polus", 2);
-            Check(airshipVotes, "Airship", 4);
-            Check(fungleVotes, "The Fungle", 5);
-            if (DleksEnabled) Check(dleksVotes, "Eht Dleks", 3);
+            if (!Options.CustomizeMapVote.GetBool())
+            {
+                Check(skeldVotes, "Skeld", 0);
+                Check(miraVotes, "Mira", 1);
+                Check(polusVotes, "Polus", 2);
+                Check(airshipVotes, "Airship", 4);
+                Check(fungleVotes, "Fungle", 5);
+                Check(dleksVotes, "Dleks", 3);
+            }
+            else
+            {
+                if (Options.IncludeSkeld.GetBool()) Check(skeldVotes, "Skeld", 0);
+                if (Options.IncludeMira.GetBool()) Check(miraVotes, "Mira", 1);
+                if (Options.IncludePolus.GetBool()) Check(polusVotes, "Polus", 2);
+                if (Options.IncludeAirship.GetBool()) Check(airshipVotes, "Airship", 4);
+                if (Options.IncludeFungle.GetBool()) Check(fungleVotes, "Fungle", 5);
+                if (Options.IncludeDleks.GetBool()) Check(dleksVotes, "Dleks", 3);
+            }
 
-            string voteResults = $"Skeld: {skeldVotes}\n" + $"Mira: {miraVotes}\n" + $"Polus: {polusVotes}\n" + $"Airship: {airshipVotes}\n" + $"Fungle: {fungleVotes}";
-            if (DleksEnabled) voteResults += $"\nEht Dleks: {dleksVotes}";
+            string voteResults = "";
+            if (!Options.CustomizeMapVote.GetBool())
+            {
+                voteResults += $"Skeld: {skeldVotes}\n";
+                voteResults += $"Mira: {miraVotes}\n";
+                voteResults += $"Polus: {polusVotes}\n";
+                voteResults += $"Airship: {airshipVotes}\n";
+                voteResults += $"Fungle: {fungleVotes}\n";
+                voteResults += $"Dleks: {dleksVotes}\n";
+            }
+            else
+            {
+                if (Options.IncludeSkeld.GetBool()) voteResults += $"Skeld: {skeldVotes}\n";
+                if (Options.IncludeMira.GetBool()) voteResults += $"Mira: {miraVotes}\n";
+                if (Options.IncludePolus.GetBool()) voteResults += $"Polus: {polusVotes}\n";
+                if (Options.IncludeAirship.GetBool()) voteResults += $"Airship: {airshipVotes}\n";
+                if (Options.IncludeFungle.GetBool()) voteResults += $"Fungle: {fungleVotes}\n";
+                if (Options.IncludeDleks.GetBool()) voteResults += $"Dleks: {dleksVotes}\n";
+            }
+            voteResults = voteResults.TrimEnd();
 
-            if (highest == 0)
+            if (highest <= 0)
             {
                 ModeratorChatCommand("Lol, no one voted. Hooray for democracy?", "", false);
             }
@@ -663,7 +699,7 @@ public static class Utils
             {
                 ModeratorChatCommand(SendChatPatch.ConvertNum($"Winner: {winner} ({highest})\n\n{voteResults}"), "", false);
 
-                if (winner == "Eht Dleks")
+                if (winner == "Dleks")
                 {
                     CreateOptionsPickerPatch.ApplyDleks(Utils.isHideNSeek);
                 }
@@ -701,13 +737,22 @@ public static class Utils
 
         ModeVoteActive = true;
 
-        if (moderator) Utils.ModeratorChatCommand("A Gamemode vote is active!\n\nA: None\nB: No Kill Cooldown\nC: Speedrun\nD: SnS\nE: PnS\n\nType /vote 'letter' to vote.", "", false);
-        else Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "A Gamemode vote is active!\n\nA: None\nB: No Kill Cooldown\nC: Speedrun\nD: SnS\nE: PnS\n\nType /vote 'letter' to vote.", "", false);
+        string voteMessage = "A Gamemode vote is active!\n\n";
+        if (!Options.CustomizeModeVote.GetBool()) voteMessage += "A: None\nB: No Kill Cooldown\nC: Speedrun\nD: SnS\nE: PnS\n";
+        if (Options.IncludeStandard.GetBool()) voteMessage += "A: None\n";
+        if (Options.IncludeNoKillCooldown.GetBool()) voteMessage += "B: No Kill Cooldown\n";
+        if (Options.IncludeSpeedrun.GetBool()) voteMessage += "C: Speedrun\n";
+        if (Options.IncludeShiftAndSeek.GetBool()) voteMessage += "D: SnS\n";
+        if (Options.IncludePoofAndSeek.GetBool()) voteMessage += "E: PnS\n";
+        voteMessage += "\nType /vote 'letter' to vote.";
+
+        if (moderator) Utils.ModeratorChatCommand(voteMessage, "", false);
+        else Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, voteMessage, "", false);
 
         new LateTask(() =>
         {
-            int highest = standardVotes;
-            string winner = "None";
+            int highest = -1;
+            string winner = "";
             byte modeId = 0;
             bool tie = false;
 
@@ -726,13 +771,43 @@ public static class Utils
                 }
             }
 
-            Check(noKillCooldownVotes, "0 Kill Cooldown", 0);
-            Check(speedrunVotes, "Speedrun", 2);
-            Check(shiftAndSeekVotes, "Shift and Seek", 1);
-            Check(poofAndSeekVotes, "Poof and Seek", 3);
+            if (!Options.CustomizeModeVote.GetBool())
+            {
+                Check(standardVotes, "None", 0);
+                Check(noKillCooldownVotes, "0 Kill Cooldown", 0);
+                Check(speedrunVotes, "Speedrun", 2);
+                Check(shiftAndSeekVotes, "Shift and Seek", 1);
+                Check(poofAndSeekVotes, "Poof and Seek", 3);
+            }
+            else
+            {
+                if (Options.IncludeStandard.GetBool()) Check(standardVotes, "None", 0);
+                if (Options.IncludeNoKillCooldown.GetBool()) Check(noKillCooldownVotes, "0 Kill Cooldown", 0);
+                if (Options.IncludeSpeedrun.GetBool()) Check(speedrunVotes, "Speedrun", 2);
+                if (Options.IncludeShiftAndSeek.GetBool()) Check(shiftAndSeekVotes, "Shift and Seek", 1);
+                if (Options.IncludePoofAndSeek.GetBool()) Check(poofAndSeekVotes, "Poof and Seek", 3);
+            }
 
-            string voteResults = $"Standard: {standardVotes}\n" + $"No Kill Cooldown: {noKillCooldownVotes}\n" + $"Speedrun: {speedrunVotes}\n" + $"Shift and Seek: {shiftAndSeekVotes}\n" + $"Poof and Seek: {poofAndSeekVotes}";
-            if (highest == 0)
+            string voteResults = "";
+            if (!Options.CustomizeModeVote.GetBool())
+            {
+                voteResults += $"Standard: {standardVotes}\n";
+                voteResults += $"No Kill Cooldown: {noKillCooldownVotes}\n";
+                voteResults += $"Speedrun: {speedrunVotes}\n";
+                voteResults += $"Shift and Seek: {shiftAndSeekVotes}\n";
+                voteResults += $"Poof and Seek: {poofAndSeekVotes}\n";
+            }
+            else
+            {
+                if (Options.IncludeStandard.GetBool()) voteResults += $"Standard: {standardVotes}\n";
+                if (Options.IncludeNoKillCooldown.GetBool()) voteResults += $"No Kill Cooldown: {noKillCooldownVotes}\n";
+                if (Options.IncludeSpeedrun.GetBool()) voteResults += $"Speedrun: {speedrunVotes}\n";
+                if (Options.IncludeShiftAndSeek.GetBool()) voteResults += $"Shift and Seek: {shiftAndSeekVotes}\n";
+                if (Options.IncludePoofAndSeek.GetBool()) voteResults += $"Poof and Seek: {poofAndSeekVotes}\n";
+            }
+            voteResults = voteResults.TrimEnd();
+
+            if (highest <= 0)
             {
                 ModeratorChatCommand("We have a winner! Just kidding. No one voted.", "", false);
             }
@@ -744,10 +819,10 @@ public static class Utils
             {
                 ModeratorChatCommand(SendChatPatch.ConvertNum($"Winner: {winner} ({highest})\n\n{voteResults}"), "", false);
                 Options.Gamemode.SetValue(modeId);
-                
+
                 if (winner == "0 Kill Cooldown")
                 {
-                    Main.NormalOptions.KillCooldown = 0.01f;
+                    Main.NormalOptions.KillCooldown = 0.001f;
                 }
 
             }
@@ -756,7 +831,7 @@ public static class Utils
             speedrunVotes = 0;
             shiftAndSeekVotes = 0;
             poofAndSeekVotes = 0;
-            HasVoted.Clear();
+            HasModeVoted.Clear();
 
             ModeVoteActive = false;
         }, Options.ModeVoteDuration.GetInt(), "ModePoll");

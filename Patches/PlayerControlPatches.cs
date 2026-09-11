@@ -182,14 +182,20 @@ class PlayerControlCompleteTaskPatch
             __instance.Data.RoleType == RoleTypes.Phantom ||
             __instance.Data.RoleType == RoleTypes.Viper)
         {
-            EACR.TaskCheat(__instance);
+            if (__instance != PlayerControl.LocalPlayer)
+            {
+                EACR.TaskCheat(__instance);
+            }
         }
 
         playerTasksCompleted[__instance.PlayerId]++;
 
         if (playerTasksCompleted[__instance.PlayerId] > __instance.Data.Tasks.Count)
         {
-            EACR.TaskCheat(__instance);
+            if (__instance != PlayerControl.LocalPlayer)
+            {
+                EACR.TaskCheat(__instance);
+            }
         }
 
         Logger.Info($" {__instance.Data.PlayerName} completed {idx}", "TaskPatch");

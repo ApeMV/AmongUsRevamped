@@ -51,7 +51,7 @@ class NormalGameEndChecker
     public static void CheckWinnerText(string Winner)
     {
         string impostorList = string.Join(", ", imps.Select(p => p.Data.PlayerName));
-        string impostorString = impostorList != "" ? $"\n\n Impostors: {impostorList}" : "";
+        string impostorString = impostorList != "" ? $"\n\nImpostors: {impostorList}" : "";
         
         if (!canUpdateWinnerText) return;
 

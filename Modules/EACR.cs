@@ -8,23 +8,22 @@ internal class EACR
 {
     public static bool PlayerControlReceiveRpc(PlayerControl pc, byte callId, MessageReader reader)
     {
-        if (!AmongUsClient.Instance.AmHost) return false;
-        if (pc == null || reader == null) return false;
+        if (!AmongUsClient.Instance.AmHost || pc == null || reader == null) return false;
 
         try
         {
             MessageReader sr = MessageReader.Get(reader);
             var rpc = (RpcCalls)callId;
+
             switch (rpc)
             {
                 case RpcCalls.StartMeeting:
                 {
-                    AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                    Logger.SendInGame($"{pc.Data.PlayerName} was banned for being calling an invalid meeting (cheating)");
-                    Logger.Info($" {pc.Data.PlayerName} was banned for being calling an invalid meeting (cheating)", "EACR");
+                    MeetingCheat(pc);
                     return true;
                 }
             }
+
             switch (callId)
             {
                 case 101: // Aum Chat
@@ -38,9 +37,7 @@ internal class EACR
 
                         if (!flag)
                         {
-                            AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                            Logger.SendInGame($"{pc.Data.PlayerName} was banned for AUM chat CallId (cheating)");
-                            Logger.Info($" {pc.Data.PlayerName} was banned for AUM chat CallId (cheating)", "EACR");
+                            RPCCheat(pc, "Among Us Menu Chat");
                             return true;
                         }
                     }
@@ -56,9 +53,7 @@ internal class EACR
 
                         if (aumid == pc.PlayerId)
                         {
-                            AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                            Logger.SendInGame($"{pc.Data.PlayerName} was banned for AUM CallId (cheating)");
-                            Logger.Info($" {pc.Data.PlayerName} was banned for AUM CallId (cheating)", "EACR");
+                            RPCCheat(pc, "Among Us Menu");
                             return true;
                         }
                     }
@@ -78,9 +73,7 @@ internal class EACR
 
                         if (!flag)
                         {
-                            AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                            Logger.SendInGame($"{pc.Data.PlayerName} was banned for KN chat CallId (cheating)");
-                            Logger.Info($" {pc.Data.PlayerName} was banned for KN chat CallId (cheating)", "EACR");
+                            RPCCheat(pc, "KillNetwork Chat");
                             return true;
                         }
                     }
@@ -92,27 +85,14 @@ internal class EACR
                 case 250: // KN
                     if (sr.BytesRemaining == 0)
                     {
-                        AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                        Logger.SendInGame($"{pc.Data.PlayerName} was banned for KN CallId (cheating)");
-                        Logger.Info($" {pc.Data.PlayerName} was banned for KN CallId (cheating)", "EACR");
+                        RPCCheat(pc, "KillNetwork");
                         return true;
                     }
                     break;
                 case unchecked((byte)420): // 164 Sicko
-                    if (sr.BytesRemaining == 0)
-                    {
-                        AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                        Logger.SendInGame($"{pc.Data.PlayerName} was banned for Sickomenu RPC (cheating)");
-                        Logger.Info($" {pc.Data.PlayerName} was banned for Sickomenu RPC (cheating)", "EACR");
-                        return true;
-                    }
-                    break;
-                case 202: // SMC
                     try
                     {
-                        AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                        Logger.SendInGame($"{pc.Data.PlayerName} was banned for MMC CallId (cheating)");
-                        Logger.Info($" {pc.Data.PlayerName} was banned for MMC CallId (cheating)", "EACR");
+                        RPCCheat(pc, "SickoMenu");
                         return true;
                     }
                     catch
@@ -120,7 +100,18 @@ internal class EACR
 
                     }
                     break;
-                case 201:
+                case 202: // SMC
+                    try
+                    {
+                        RPCCheat(pc, "SlopMenuCrew");
+                        return true;
+                    }
+                    catch
+                    {
+
+                    }
+                    break;
+                case 201: // SMC Chat
                     try
                     {
                         var firstString = sr.ReadString();
@@ -131,9 +122,7 @@ internal class EACR
 
                         if (!flag)
                         {
-                            AmongUsClient.Instance.KickPlayer(pc.Data.ClientId, true);
-                            Logger.SendInGame($"{pc.Data.PlayerName} was banned for MMC chat CallId (cheating)");
-                            Logger.Info($" {pc.Data.PlayerName} was banned for MMC chat CallId (cheating)", "EACR");
+                            RPCCheat(pc, "SlopMenuCrew Chat");
                             return true;
                         }
                     }
@@ -150,6 +139,7 @@ internal class EACR
         }
         return false;
     }
+
     public static bool RpcUpdateSystemCheck(PlayerControl player, SystemTypes systemType, byte amount)
     {
         var Mapid = Utils.GetActiveMapId();
@@ -167,108 +157,131 @@ internal class EACR
 
         if (systemType == SystemTypes.Sabotage)
         {
-            if (!player.Data.Role.IsImpostor && !player.isNew)
+            if (!player.Data.Role.IsImpostor)
             {
-                AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-                Logger.SendInGame($"{player.Data.PlayerName} was banned for invalid sabotage (cheating)");
-                Logger.Info($" {player.Data.PlayerName} was banned for invalid sabotage", "EACR");                
+                SabotageCheat(player);            
             }
         }
         else if (systemType == SystemTypes.LifeSupp)
         {
-            if (Mapid != 0 && Mapid != 1 && Mapid != 3) goto YesCheat;
-            else if (amount != 64 && amount != 65) goto YesCheat;
+            if (Mapid != 0 && Mapid != 1 && Mapid != 3) SabotageCheat(player); 
+            else if (amount != 64 && amount != 65) SabotageCheat(player); 
         }
         else if (systemType == SystemTypes.Comms)
         {
             if (amount == 0)
             {
-                if (Mapid == 1 || Mapid == 5) goto YesCheat;
+                if (Mapid == 1 || Mapid == 5) SabotageCheat(player); 
             }
             else if (amount == 64 || amount == 65 || amount == 32 || amount == 33 || amount == 16 || amount == 17)
             {
-                if (!(Mapid == 1 || Mapid == 5)) goto YesCheat;
+                if (!(Mapid == 1 || Mapid == 5)) SabotageCheat(player); 
             }
-            else goto YesCheat;
+            else SabotageCheat(player); 
         }
         else if (systemType == SystemTypes.Electrical)
         {
-            if (Mapid == 5) goto YesCheat;
-            if (amount >= 5)
-            {
-                goto YesCheat;
-            }
+            if (Mapid == 5 || amount >= 5) SabotageCheat(player); 
         }
         else if (systemType == SystemTypes.Laboratory)
         {
-            if (Mapid != 2) goto YesCheat;
-            else if (!(amount == 64 || amount == 65 || amount == 32 || amount == 33)) goto YesCheat;
+            if (Mapid != 2) SabotageCheat(player); 
+            else if (!(amount == 64 || amount == 65 || amount == 32 || amount == 33)) SabotageCheat(player); 
         }
         else if (systemType == SystemTypes.Reactor)
         {
-            if (Mapid == 2 || Mapid == 4) goto YesCheat;
-            else if (!(amount == 64 || amount == 65 || amount == 32 || amount == 33)) goto YesCheat;
+            if (Mapid == 2 || Mapid == 4) SabotageCheat(player); 
+            else if (!(amount == 64 || amount == 65 || amount == 32 || amount == 33)) SabotageCheat(player); 
         }
         else if (systemType == SystemTypes.HeliSabotage)
         {
-            if (Mapid != 4) goto YesCheat;
-            else if (!(amount == 64 || amount == 65 || amount == 16 || amount == 17 || amount == 32 || amount == 33)) goto YesCheat;
+            if (Mapid != 4) SabotageCheat(player); 
+            else if (!(amount == 64 || amount == 65 || amount == 16 || amount == 17 || amount == 32 || amount == 33)) SabotageCheat(player); 
         }
         else if (systemType == SystemTypes.MushroomMixupSabotage)
         {
-            goto YesCheat;
+            SabotageCheat(player); 
         }
 
         if (Utils.IsMeeting && MeetingHud.Instance.state != MeetingHud.MeetingStates.Animating)
         {
-            Logger.SendInGame($"{player.Data.PlayerName} might have called an invalid sabotage (cheating)");
-            Logger.Info($" {player.Data.PlayerName} might have called an invalid sabotage (cheating)", "EACR");
+            SabotageCheat(player);
             return true;
         }
 
     return false;
 
-    YesCheat:
+    }
+
+    public static void RPCCheat(PlayerControl player, string input)
+    {
+        if (Options.DetectBadRPC.GetBool())
         {
-            AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-            Logger.SendInGame($"{player.Data.PlayerName} was banned for an invalid sabotage (cheating)");
-            Logger.Info($" {player.Data.PlayerName} was banned for an invalid sabotage", "EACR");     
-            return true;
+            HackingPunishment(player, $"{player.Data.PlayerName} Sent invalid RPC: {input} (hacking)");
+        }
+    }
+
+    public static void SabotageCheat(PlayerControl player)
+    {
+        if (Options.DetectBadSabotage.GetBool())
+        {
+            HackingPunishment(player, $"{player.Data.PlayerName} invalidly sabotaged (hacking)");
         }
     }
 
     public static void VentCheat(PlayerControl player, Vent __instance)
     {
-        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalid venting (cheating)");
-        Logger.Info($" {player.Data.PlayerName} was banned for invalid venting", "EACR");
+        if (Options.DetectBadVent.GetBool())
+        {
+            HackingPunishment(player, $"{player.Data.PlayerName} invalidly vented (hacking)");
+        }
     }
 
     public static void PlayAnimationCheat(PlayerControl player)
     {
-        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-        Logger.SendInGame($"{player.Data.PlayerName} was banned for an invalid animation (cheating)");
-        Logger.Info($" {player.Data.PlayerName} was banned for an invalid animation", "EACR");
+        if (Options.DetectBadAnimation.GetBool())
+        {
+            HackingPunishment(player, $"{player.Data.PlayerName} sent an invalid animation (hacking)");
+        }
     }
 
     public static void TaskCheat(PlayerControl player)
     {
-        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly completing a task (cheating)");
-        Logger.Info($" {player.Data.PlayerName} was banned for invalidly completing a task", "EACR");
+        if (Options.DetectBadTask.GetBool())
+        {
+            HackingPunishment(player, $"{player.Data.PlayerName} invalidly completed a task (hacking)");
+        }
     }
 
     public static void MurderCheat(PlayerControl player)
     {
-        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly murdering a player (cheating)");
-        Logger.Info($" {player.Data.PlayerName} was banned for invalidly murdering a player", "EACR");
+        if (Options.DetectBadKill.GetBool())
+        {
+            HackingPunishment(player, $"{player.Data.PlayerName} invalidly murdered a player (hacking)");
+        }
     }
     
     public static void MeetingCheat(PlayerControl player)
     {
-        AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);
-        Logger.SendInGame($"{player.Data.PlayerName} was banned for invalidly calling a meeting (cheating)");
-        Logger.Info($" {player.Data.PlayerName} was banned for invalidly calling a meeting", "EACR");
+        if (Options.DetectBadMeeting.GetBool())
+        {
+            HackingPunishment(player, $"{player.Data.PlayerName} invalidly called a meeting (hacking)");
+        }
+    }
+
+    public static void HackingPunishment(PlayerControl player, string input)
+    {
+        if (Options.HackingPunishment.GetValue() == 0)
+        {
+            AmongUsClient.Instance.KickPlayer(player.Data.ClientId, true);            
+        }
+
+        if (Options.HackingPunishment.GetValue() == 1)
+        {
+            AmongUsClient.Instance.KickPlayer(player.Data.ClientId, false);
+        }
+
+        Logger.SendInGame($"{input}");
+        Logger.Info($" {input}", "EACR");
     }
 }
