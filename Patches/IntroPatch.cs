@@ -64,30 +64,34 @@ internal static class CoShowIntroPatch
 
         if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
         {
-            if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
-            {
-                GuardianAngelOptions.ProtectionDurationSeconds = 254f;
-            }
-            OptionManager.SyncGameOptions();
-            
-            foreach (var p in PlayerControl.AllPlayerControls)
-            {
-                if (p.Data == null || p.Data.IsDead || p.Data.RoleType == RoleTypes.Shapeshifter) continue;
-                p.RpcProtectPlayer(p, p.cosmetics.ColorId);
-                p.Data.MarkDirty();
-            }
-
             if (Options.SNSChatInGameExtend.GetBool())
             {
-                Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);
-            }   
-            if (Options.SNSChatInGameExtend2.GetBool())
+                Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing Crewmates", true);
+            }
+
+            if (!Options.SNSSuicideMode.GetBool())
             {
-                _ = new LateTask(() =>
+                if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
                 {
-                    Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "Correctly killing a target will directly turn them into a ghost and leave no dead body", "", false);
-                }, 6.6f, "SNSChatInGameExtend2");    
-            }   
+                    GuardianAngelOptions.ProtectionDurationSeconds = 254f;
+                }
+                OptionManager.SyncGameOptions();
+            
+                foreach (var p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.Data == null || p.Data.IsDead || p.Data.RoleType == RoleTypes.Shapeshifter) continue;
+                    p.RpcProtectPlayer(p, p.cosmetics.ColorId);
+                    p.Data.MarkDirty();
+                }
+
+                if (Options.SNSChatInGameExtend2.GetBool())
+                {
+                    _ = new LateTask(() =>
+                    {
+                        Utils.ChatCommand(DestroyableSingleton<HudManager>.Instance.Chat, "Correctly killing a target will directly turn them into a ghost and leave no dead body", "", false);
+                    }, 6.6f, "SNSChatInGameExtend2");    
+                }
+            }
         }
 
         if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.001f))

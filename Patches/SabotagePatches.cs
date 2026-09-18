@@ -113,17 +113,16 @@ public static class MessageReaderUpdateSystemPatch
         if (player.Data.ClientId == AmongUsClient.Instance.HostId) return true;
 
         // Thanks to D1GQ for finding.
-        if (systemType == SystemTypes.Ventilation)
+        if (systemType is SystemTypes.Ventilation)
         {
             _ = reader.ReadUInt16();
             var operation = (VentilationSystem.Operation)reader.ReadByte();
             if (operation == VentilationSystem.Operation.BootImpostors)
             {
+                Logger.Info($"BLOCKED: {operation}, {player}", "s");
                 return false;
             }
-
-        return true;
-
+            return false;
         }
         else
         {

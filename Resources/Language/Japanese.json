@@ -363,5 +363,36 @@
 "fungleMushroomMixupDuration": "Fungle キノコ幻覚の持続時間",
 
 "privateDesc": "ロビーを非公開に設定します。",
-"publicDesc": "ロビーを公開に設定します。"
+"publicDesc": "ロビーを公開に設定します。",
+"mapVoteDesc": "選択したマップの中から投票を開始します。",
+"modeVoteDesc": "選択したゲームモードの中から投票を開始します。",
+
+"tabGroupAnticheat": "アンチチート",
+"hackingPunishment": "チートへの処罰",
+"detectBadRPC": "無効な RPC を検出",
+"detectBadSabotage": "無効なサボタージュを検出",
+"detectBadVent": "無効なベントを検出",
+"detectBadTask": "無効なタスク完了を検出",
+"detectBadKill": "無効なキルを検出",
+"detectBadAnimation": "無効なアニメーションを検出",
+"detectBadMeeting": "無効な会議を検出",
+
+"customizeMapVote": "マップ投票をカスタマイズ",
+"includeSkeld": "Skeld を含める",
+"includeMira": "Mira を含める",
+"includePolus": "Polus を含める",
+"includeAirship": "Airship を含める",
+"includeFungle": "Fungle を含める",
+"includeDleks": "Dleks を含める",
+
+"customizeModeVote": "ゲームモード投票をカスタマイズ",
+"includeStandard": "スタンダードを含める",
+"includeNoKillCooldown": "キルクールダウン 0 を含める",
+"includeShiftAndSeek": "Shift And Seek を含める",
+"includePoofAndSeek": "Poof And Seek を含める",
+"includeSpeedrun": "Speedrun を含める",
+
+"tabGroupGameplayMapModifications": "マップの変更",
+
+"disableChatModifier": "チャット変更を無効化"
 }

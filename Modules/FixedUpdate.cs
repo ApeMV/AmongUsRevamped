@@ -119,7 +119,7 @@ public static class FixedUpdate
             }
         }
 
-        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && !Utils.IsLobby)
+        if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && !Utils.IsLobby && !Options.SNSSuicideMode.GetBool())
         {
             foreach (var p in PlayerControl.AllPlayerControls)
             {

@@ -68,11 +68,11 @@ internal static class MurderPlayerPatch
 
         if (resultFlags.HasFlag(MurderResultFlags.Succeeded))
         {
-            if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek)
+            if (Options.Gamemode.GetValue() == 1 && !Utils.isHideNSeek && target.Data.PlayerId != __instance.shapeshiftTargetPlayerId)
             {
-                if (target.Data.PlayerId == __instance.shapeshiftTargetPlayerId) return;
-                Logger.Info($" {__instance.Data.PlayerName} directly killed {target.Data.PlayerName} in SnS, forcing suicide. (Are they hacking?)", "MurderPlayer");
-                __instance.RpcSetRole(RoleTypes.ImpostorGhost); 
+                Logger.SendInGame($"{__instance.Data.PlayerName} directly misfired, forcing suicide");
+                Logger.Info($" {__instance.Data.PlayerName} directly misfired, forcing suicide", "MurderPlayer");
+                __instance.RpcSetRole(RoleTypes.ImpostorGhost);
             }
             else
             {

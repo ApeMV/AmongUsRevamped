@@ -36,7 +36,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v2.1.0):
+# 🎮 Features (v2.1.1):
 
 ## <b>♠️ Client Side settings:</b>
 - Toggle Game Master (Spectator)
@@ -66,7 +66,7 @@
 ## <b>🔧 Gameplay Settings:</b>
 - Change sabotage cooldown and durations
 - Dead impostors can sabotage
-- Disable critical sabotages (invividual)
+- Disable critical sabotages (individual)
 - Disable door sabotages
 - Disable meeting calls first 30s
 - Disable devices (per map, individual)

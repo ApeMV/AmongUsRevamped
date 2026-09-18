@@ -31,7 +31,7 @@ class ExileControllerWrapUpPatch
             } 
         }
 
-        if (Options.Gamemode.GetValue() == 1)
+        if (Options.Gamemode.GetValue() == 1 && !Options.SNSSuicideMode.GetBool())
         {
             foreach (var p in PlayerControl.AllPlayerControls)
             {

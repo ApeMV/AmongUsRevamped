@@ -394,6 +394,8 @@
 
   "tabGroupGameplayMapModifications": "Map Modifications",
 
-  "disableChatModifier": "Disable Chat Modifications"
+  "disableChatModifier": "Disable Chat Modifications",
+
+  "snsSuicideMode": "Disable Shield System"
 
 }

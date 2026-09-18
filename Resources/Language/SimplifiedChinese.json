@@ -350,5 +350,36 @@
 "fungleMushroomMixupDuration": "Fungle 蘑菇幻觉持续时间",
 
 "privateDesc": "将房间改为私人。",
-"publicDesc": "将房间改为公开。"
+"publicDesc": "将房间改为公开。",
+"mapVoteDesc": "在选定的地图之间发起投票。",
+"modeVoteDesc": "在选定的游戏模式之间发起投票。",
+
+"tabGroupAnticheat": "反作弊",
+"hackingPunishment": "作弊惩罚",
+"detectBadRPC": "检测无效 RPC",
+"detectBadSabotage": "检测无效破坏",
+"detectBadVent": "检测无效钻管",
+"detectBadTask": "检测无效任务完成",
+"detectBadKill": "检测无效击杀",
+"detectBadAnimation": "检测无效动画",
+"detectBadMeeting": "检测无效会议",
+
+"customizeMapVote": "自定义地图投票",
+"includeSkeld": "包含 Skeld",
+"includeMira": "包含 Mira",
+"includePolus": "包含 Polus",
+"includeAirship": "包含 Airship",
+"includeFungle": "包含 Fungle",
+"includeDleks": "包含 Dleks",
+
+"customizeModeVote": "自定义游戏模式投票",
+"includeStandard": "包含标准模式",
+"includeNoKillCooldown": "包含 0 击杀冷却",
+"includeShiftAndSeek": "包含SnS",
+"includePoofAndSeek": "包含PnS",
+"includeSpeedrun": "包含速通",
+
+"tabGroupGameplayMapModifications": "地图修改",
+
+"disableChatModifier": "禁用聊天修改"
 }

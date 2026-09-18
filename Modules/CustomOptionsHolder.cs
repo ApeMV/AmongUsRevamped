@@ -352,6 +352,7 @@ namespace AmongUsRevamped
         public static OptionItem SNSDisableMushroomMixup;
         public static OptionItem SNSDisableCloseDoor;
         public static OptionItem SNSImpostorsCanVent;
+        public static OptionItem SNSSuicideMode;
 
         public static OptionItem TabGroupSpeedrun;
         public static OptionItem GameAutoEndsAfter;
@@ -583,6 +584,7 @@ namespace AmongUsRevamped
             SNSDisableCloseDoor = BooleanOptionItem.Create(70064, Translator.Get("snsDisableCloseDoor"), true, TabGroup.GamemodeSettings, false)
                 .SetColor(Color.red);
             SNSImpostorsCanVent = BooleanOptionItem.Create(70065, Translator.Get("snsImpostorCanVent"), true, TabGroup.GamemodeSettings, false);
+            SNSSuicideMode = BooleanOptionItem.Create(70066, Translator.Get("snsSuicideMode"), false, TabGroup.GamemodeSettings, false);
 
             TabGroupSpeedrun = TextOptionItem.Create(70076, Translator.Get("tabGroupSpeedrun"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);

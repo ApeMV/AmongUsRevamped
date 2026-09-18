@@ -364,5 +364,33 @@
   "fungleMushroomMixupDuration": "Длительность Сабботажа Грибного Переполоха",
 
   "privateDesc": "Изменяет Публичность Лобби на Приватный.",
-  "publicDesc": "Изменяет Публичность Лобби на Публичный."
+  "publicDesc": "Изменяет Публичность Лобби на Публичный.",
+  "tabGroupAnticheat": "Античит",
+  "hackingPunishment": "Наказание за Читерство",
+  "detectBadRPC": "Обнаруживать Неправильные RPC",
+  "detectBadSabotage": "Обнаруживать Неправильные Sabotages",
+  "detectBadVent": "Обнаруживать Неправильные Уходы в Люк",
+  "detectBadTask": "Обнаруживать Неправильные Выполнения Заданий",
+  "detectBadKill": "Обнаруживать Неправильные Убийства",
+  "detectBadAnimation": "Обнаруживать Неправильные Анимации",
+  "detectBadMeeting": "Обнаруживать Неправильные Собрания",
+
+  "customizeMapVote": "Кастомизировать Голосование За Карты",
+  "includeSkeld": "Включить Skeld",
+  "includeMira": "Включить Mira",
+  "includePolus": "Включить Polus",
+  "includeAirship": "Включить Airship",
+  "includeFungle": "Включить Fungle",
+  "includeDleks": "Включить Dleks",
+
+  "customizeModeVote": "Кастомизировать Голосование За Режим",
+  "includeStandard": "Включить Стандарт",
+  "includeNoKillCooldown": "Включить 0 Перезарядка Убийств",
+  "includeShiftAndSeek": "Включить Клона",
+  "includePoofAndSeek": "Включить Фантомные Прятки",
+  "includeSpeedrun": "Включить Спидран",
+
+  "tabGroupGameplayMapModifications": "Модификации Карт",
+
+  "disableChatModifier": "Выключить Модификации Чата"
 }

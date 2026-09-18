@@ -565,7 +565,7 @@ internal static class SendChatPatch
 
         if (text == "/sns" || text == "/shiftandseek")
         {
-            Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);
+            Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing Crewmates", true);
             return false;
         }
         if (text == "/sns2" || text == "/shiftandseek2")
@@ -598,7 +598,7 @@ internal static class SendChatPatch
                 break;
 
                 case 1:
-                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true); 
+                Utils.ChatCommand(__instance, "Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing Crewmates", true); 
                 break;
 
                 case 2:
@@ -1009,7 +1009,7 @@ public static class RPCHandlerPatch
                 if (text == "/sns" || text == "/shiftandseek")
                 {
                     if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashRolesAndGamemodeCmd.GetValue()) return;
-                    Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);
+                    Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing Crewmates", true);
                 }
                 if (text == "/sns2" || text == "/shiftandseek2")
                 {
@@ -1042,7 +1042,7 @@ public static class RPCHandlerPatch
                         break;
 
                         case 1:
-                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing\nWrong kills are blocked. Kill animations are off", true);           
+                        Utils.ModeratorChatCommand("Shift and Seek:\n\nImpostors can only kill someone while shapeshifted as them\nMeetings & Reports = Off", $"Crewmates win by tasks/surviving {Options.CrewAutoWinsGameAfter.GetInt()}s\nImpostors win by killing Crewmates", true);           
                         break;
 
                         case 2:

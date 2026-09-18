@@ -287,7 +287,8 @@ public static class BanManager
         Dictionary<string, string> variables = new()
         {
             { "ModVersion", Main.ModVersion },
-            { "\\n", Environment.NewLine }
+            { "\\n", Environment.NewLine },
+            { "FirstDeath", NormalGameEndChecker.firstDeath }
         };
 
         foreach (var kvp in variables)
