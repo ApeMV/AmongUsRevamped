@@ -66,7 +66,7 @@
 ## <b>🔧 Gameplay Settings:</b>
 - Change sabotage cooldown and durations
 - Dead impostors can sabotage
-- Disable critical sabotages (invividual)
+- Disable critical sabotages (individual)
 - Disable door sabotages
 - Disable meeting calls first 30s
 - Disable devices (per map, individual)
