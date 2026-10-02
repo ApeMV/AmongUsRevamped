@@ -394,5 +394,8 @@
 
 "tabGroupGameplayMapModifications": "マップの変更",
 
-"disableChatModifier": "チャット変更を無効化"
+"disableChatModifier": "チャット変更を無効化",
+"snsSuicideMode": "シールドシステムを無効化",
+"tabGroupNoKcd": "キルクールダウン0秒",
+"disablePeacePeriod": "5秒間の平和時間を無効化"
 }

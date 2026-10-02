@@ -36,7 +36,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v2.1.1):
+# 🎮 Features (v2.2.0):
 
 ## <b>♠️ Client Side settings:</b>
 - Toggle Game Master (Spectator)

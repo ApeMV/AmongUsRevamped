@@ -392,5 +392,8 @@
 
   "tabGroupGameplayMapModifications": "Модификации Карт",
 
-  "disableChatModifier": "Выключить Модификации Чата"
+  "disableChatModifier": "Выключить Модификации Чата",
+  "snsSuicideMode": "Выключить Систему Щитов",
+  "tabGroupNoKcd": "0 Перезарядка Убийств",
+  "disablePeacePeriod": "Выключить Мирный Период Первые 5 секунд"
 }

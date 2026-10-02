@@ -381,5 +381,8 @@
 
 "tabGroupGameplayMapModifications": "地图修改",
 
-"disableChatModifier": "禁用聊天修改"
+"disableChatModifier": "禁用聊天修改",
+"snsSuicideMode": "禁用护盾系统",
+"tabGroupNoKcd": "0 秒击杀冷却",
+"disablePeacePeriod": "禁用 5 秒和平期"
 }

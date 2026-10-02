@@ -23,7 +23,7 @@ internal static class CoShowIntroPatch
 
             if (NormalGameEndChecker.firstDeath != null && NormalGameEndChecker.firstDeath == p.Data.PlayerName && Options.ShieldFirstDeath.GetBool() && Options.Gamemode.GetValue() != 1)
             {
-                if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
+                if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV12>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
                 {
                     var oldGA = GuardianAngelOptions.ImpostorsCanSeeProtect;
                     var oldGAProt = GuardianAngelOptions.ProtectionDurationSeconds;
@@ -71,7 +71,7 @@ internal static class CoShowIntroPatch
 
             if (!Options.SNSSuicideMode.GetBool())
             {
-                if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV11>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
+                if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV12>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
                 {
                     GuardianAngelOptions.ProtectionDurationSeconds = 254f;
                 }
