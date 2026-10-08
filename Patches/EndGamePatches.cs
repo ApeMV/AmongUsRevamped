@@ -50,8 +50,8 @@ class NormalGameEndChecker
     public static string customRoles { get; set; }
     public static void CheckWinnerText(string Winner)
     {
-        string impostorList = string.Join(", ", imps.Select(p => p.Data.PlayerName));
-        string impostorString = impostorList != "" ? $"\n\nImpostors: {impostorList}" : "";
+        string impostorList = string.Join("\n", imps.Select(p => $"{p.Data.PlayerName} {p.Data.ColorName} - {p.Data.RoleType}"));
+        string impostorString = impostorList != "" ? $"\n\n{impostorList}" : "";
         
         if (!canUpdateWinnerText) return;
 

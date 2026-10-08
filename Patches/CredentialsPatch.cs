@@ -1,4 +1,5 @@
-﻿using BepInEx.Unity.IL2CPP;
+﻿using AmongUs.Data.Player;
+using BepInEx.Unity.IL2CPP;
 using System;
 using System.Text;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
@@ -384,6 +385,16 @@ namespace AmongUsRevamped
                 DisconnectPopup.Instance._textArea.enableWordWrapping = false;
                 DisconnectPopup.Instance._textArea.text = Translator.Get("pluginWarning");                
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerBanData), nameof(PlayerBanData.BanMinutesLeft), MethodType.Getter)]
+    public static class PlayerBanDataGetterPatch
+    {
+        public static void Postfix(PlayerBanData __instance, ref int __result)
+        {
+            __instance.BanPoints = 0f;
+            __result = 0;
         }
     }
 }

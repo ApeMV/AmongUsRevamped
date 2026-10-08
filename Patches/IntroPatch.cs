@@ -94,7 +94,7 @@ internal static class CoShowIntroPatch
             }
         }
 
-        if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.001f))
+        if ((GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) == 0.001f) && !Options.DisablePeacePeriod.GetBool())
         {
             Main.NormalOptions.KillCooldown = 5f;
             OptionManager.SyncGameOptions();

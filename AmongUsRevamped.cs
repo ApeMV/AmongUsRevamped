@@ -45,7 +45,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v2.2.0";
+    public const string ModVersion = "v2.2.1";
 
     public static float GameTimer;
     public static float AfkTimer;

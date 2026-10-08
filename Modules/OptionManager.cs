@@ -8,6 +8,7 @@ namespace AmongUsRevamped;
 public static class OptionManager
 {
     private static float OldKillCooldown;
+    private static float OldGuardianCooldown;
 
     public static void SyncGameOptions()
     {
@@ -31,6 +32,10 @@ public static class OptionManager
         if (!AmongUsClient.Instance.AmHost) return;
 
         OldKillCooldown = Main.NormalOptions.KillCooldown;
+        if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV12>(RoleTypes.GuardianAngel, out var GuardianAngelOptions))
+        {
+            OldGuardianCooldown = GuardianAngelOptions.ProtectionDurationSeconds;
+        }
     }
 
     public static void RestoreOptions()
@@ -41,6 +46,11 @@ public static class OptionManager
         {
             Main.NormalOptions.KillCooldown = OldKillCooldown;
             Logger.Info("Force overrided Kill Cooldown back to original", "RestoreOptions");
+        }
+        if (Main.NormalOptions.roleOptions.TryGetRoleOptions<GuardianAngelRoleOptionsV12>(RoleTypes.GuardianAngel, out var GuardianAngelOptions) && GuardianAngelOptions.ProtectionDurationSeconds != OldGuardianCooldown)
+        {
+            GuardianAngelOptions.ProtectionDurationSeconds = OldGuardianCooldown;
+            Logger.Info("Force overrided Guardian Angel Cooldown back to original", "RestoreOptions");
         }
         
         SyncGameOptions();

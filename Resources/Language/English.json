@@ -395,7 +395,9 @@
   "tabGroupGameplayMapModifications": "Map Modifications",
 
   "disableChatModifier": "Disable Chat Modifications",
+  "snsSuicideMode": "Disable Shield System",
 
-  "snsSuicideMode": "Disable Shield System"
+  "tabGroupNoKcd": "0 Kill Cooldown",
+  "disablePeacePeriod": "Disable 5s Peace Period"
 
 }

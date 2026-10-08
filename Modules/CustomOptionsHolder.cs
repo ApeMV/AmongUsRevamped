@@ -337,6 +337,9 @@ namespace AmongUsRevamped
         public static OptionItem TabGroupHNS;
         public static OptionItem NumSeekers;
 
+        public static OptionItem TabGroupNoKcd;
+        public static OptionItem DisablePeacePeriod;
+
         public static OptionItem TabGroupSNS;
         public static OptionItem SNSChatInGame;
         public static OptionItem SNSChatInGameExtend;
@@ -549,6 +552,10 @@ namespace AmongUsRevamped
                 .SetColor(Color.green);
             NumSeekers = IntegerOptionItem.Create(70001, Translator.Get("numSeekers"), new(1, 15, 1), 1, TabGroup.GamemodeSettings, false)
                 .SetValueFormat(OptionFormat.Level);
+
+            TabGroupNoKcd = TextOptionItem.Create(70010, Translator.Get("tabGroupNoKcd"), TabGroup.GamemodeSettings)
+                .SetColor(Color.green);
+            DisablePeacePeriod = BooleanOptionItem.Create(70011, Translator.Get("disablePeacePeriod"), false, TabGroup.GamemodeSettings, false);
 
             TabGroupSNS = TextOptionItem.Create(70050, Translator.Get("tabGroupSNS"), TabGroup.GamemodeSettings)
                 .SetColor(Color.green);

@@ -112,4 +112,16 @@ class MeetingHudStartPatch
             return $"<color=red>({MurderPlayerPatch.killCount[player.Data.PlayerId]}†)</color> - {Utils.GetRoleText(player)}";
         }
     }
+
+    [HarmonyPatch(typeof(LogicOptionsNormal), nameof(LogicOptionsNormal.GetAnonymousVotes))]
+    public static class LogicOptionsNormalGetAnonymousVotesPatch
+    {
+        public static void Postfix(ref bool __result)
+        {
+            if (Utils.IsDead)
+            {
+                __result = false;
+            }
+        }
+    }
 }

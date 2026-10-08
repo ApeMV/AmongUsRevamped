@@ -104,7 +104,8 @@ public static class MessageReaderUpdateSystemPatch
     public static bool Prefix(ShipStatus __instance, [HarmonyArgument(0)] SystemTypes systemType, [HarmonyArgument(1)] PlayerControl player, [HarmonyArgument(2)] MessageReader reader)
     {
         if (systemType is
-            SystemTypes.Security
+            SystemTypes.Ventilation
+            or SystemTypes.Security
             or SystemTypes.Decontamination
             or SystemTypes.Decontamination2
             or SystemTypes.Decontamination3
@@ -112,28 +113,13 @@ public static class MessageReaderUpdateSystemPatch
 
         if (player.Data.ClientId == AmongUsClient.Instance.HostId) return true;
 
-        // Thanks to D1GQ for finding.
-        if (systemType is SystemTypes.Ventilation)
+        var amount = MessageReader.Get(reader).ReadByte();
+        if (EACR.RpcUpdateSystemCheck(player, systemType, amount))
         {
-            _ = reader.ReadUInt16();
-            var operation = (VentilationSystem.Operation)reader.ReadByte();
-            if (operation == VentilationSystem.Operation.BootImpostors)
-            {
-                Logger.Info($"BLOCKED: {operation}, {player}", "s");
-                return false;
-            }
+            Logger.Info("EACR patched Sabotage RPC", "MessageReaderUpdateSystemPatch");
             return false;
         }
-        else
-        {
-            var amount = MessageReader.Get(reader).ReadByte();
-            if (EACR.RpcUpdateSystemCheck(player, systemType, amount))
-            {
-                Logger.Info("EACR patched Sabotage RPC", "MessageReaderUpdateSystemPatch");
-                return false;
-            }
-            else return true;
-        }
+        else return true;
     }
 }
 
