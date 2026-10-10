@@ -28,7 +28,7 @@ class NormalGameEndChecker
     public static string LastWinReason = "";
     public static List<PlayerControl> imps = new List<PlayerControl>();
     public static string firstDeath;
-    public static string firstDeathString => firstDeath != "" ? $"\n\nFirst death: {firstDeath}" : "";
+    public static string firstDeathString => firstDeath != "" ? $"\n\n1st death: {firstDeath}" : "";
 
     public static bool Prefix()
     {
@@ -50,7 +50,7 @@ class NormalGameEndChecker
     public static string customRoles { get; set; }
     public static void CheckWinnerText(string Winner)
     {
-        string impostorList = string.Join("\n", imps.Select(p => $"{p.Data.PlayerName} {p.Data.ColorName} - {p.Data.RoleType}"));
+        string impostorList = string.Join("\n", imps.Select(p => $"{p.Data.PlayerName} {p.Data.ColorName}"));
         string impostorString = impostorList != "" ? $"\n\n{impostorList}" : "";
         
         if (!canUpdateWinnerText) return;

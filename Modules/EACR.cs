@@ -15,15 +15,6 @@ internal class EACR
             MessageReader sr = MessageReader.Get(reader);
             var rpc = (RpcCalls)callId;
 
-            switch (rpc)
-            {
-                case RpcCalls.StartMeeting:
-                {
-                    MeetingCheat(pc);
-                    return true;
-                }
-            }
-
             switch (callId)
             {
                 case 101: // Aum Chat
