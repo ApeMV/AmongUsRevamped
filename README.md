@@ -92,7 +92,7 @@
 - Detect immortality cheats
 - Block attempted votekicks
 ## <b>❓ Other Improvements:</b>
-- Lanuage support: English, Italian, Japanese, Russian, Simplified Chinese, Spanish
+- Language support: English, Italian, Japanese, Russian, Simplified Chinese, Spanish
 - Select a language in Language/YourLanguage.txt
 - Preset system for mod settings
 - Creatable and customizable Templates
