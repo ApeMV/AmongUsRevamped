@@ -162,6 +162,14 @@ internal static class SendChatPatch
             
             if ( !Utils.InGame || !Utils.IsMeeting) return false;
             MeetingHud.Instance.RpcClose();
+
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                if (p.Data.RoleType == RoleTypes.Shapeshifter)
+                {
+                    p.CmdCheckRevertShapeshift(false);
+                }
+            }
             return false;
         }
 
@@ -862,6 +870,14 @@ public static class RPCHandlerPatch
                     {
                         if (Utils.CheckAccessLevel(__instance.Data.FriendCode) < Options.SlashEndMeetingCmd.GetValue()) return;
                         MeetingHud.Instance.RpcClose();
+
+                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                        {
+                            if (p.Data.RoleType == RoleTypes.Shapeshifter)
+                            {
+                                p.CmdCheckRevertShapeshift(false);
+                            }
+                        }
                     }
                 }
 

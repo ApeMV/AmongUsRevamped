@@ -36,7 +36,7 @@
 <img src="https://github.com/astra1dev/AUnlocker/assets/90265231/14226f03-a003-4efc-b27b-6df53fb394d6" width=410 height=240>****
 ‎ 
 
-# 🎮 Features (v2.2.2):
+# 🎮 Features (v2.2.3):
 
 ## <b>♠️ Client Side settings:</b>
 - Toggle Game Master (Spectator)
@@ -46,6 +46,7 @@
 - Toggle Info When Dead
 - Toggle Command Helper
 - Toggle Chat Modifications
+- Toggle Lobby Info
 ## <b>⚙️ Technical settings:</b>
 - Advanced AFK Detection system
 - Kick/Ban players under/above a certain level

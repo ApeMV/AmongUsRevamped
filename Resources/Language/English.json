@@ -398,6 +398,7 @@
   "snsSuicideMode": "Disable Shield System",
 
   "tabGroupNoKcd": "0 Kill Cooldown",
-  "disablePeacePeriod": "Disable 5s Peace Period"
+  "disablePeacePeriod": "Disable 5s Peace Period",
+  "disableLobbyInfo": "Disable Lobby Info"
 
 }

@@ -38,6 +38,7 @@ public partial class Main : BasePlugin
     public static ConfigEntry<bool> DisableCommandHelper { get; private set; }
     public static ConfigEntry<bool> DisableCompatibilityWarning { get; private set; }
     public static ConfigEntry<bool> DisableChatModifier { get; private set; }
+    public static ConfigEntry<bool> DisableLobbyInfo { get; private set; }
 
     public static NormalGameOptionsV12 NormalOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentNormalGameOptions : null;
     public static HideNSeekGameOptionsV12 HideNSeekOptions => GameOptionsManager.Instance != null ? GameOptionsManager.Instance.currentHideNSeekGameOptions : null;
@@ -45,7 +46,7 @@ public partial class Main : BasePlugin
 
     public static bool HasArgumentException;
     public static string CredentialsText;
-    public const string ModVersion = "v2.2.2";
+    public const string ModVersion = "v2.2.3";
 
     public static float GameTimer;
     public static float AfkTimer;
@@ -98,6 +99,7 @@ public partial class Main : BasePlugin
         DisableCommandHelper = Config.Bind("Client Options", "Disable Command Helper", false);
         DisableCompatibilityWarning = Config.Bind("Client Options", "Disable Compatibility Warning", false);
         DisableChatModifier = Config.Bind("Client Options", "Disable Chat Modifications", false);
+        DisableLobbyInfo = Config.Bind("Client Options", "Disable Lobby Info", false);
 
         Translator.Init();
         Translator.Reload();

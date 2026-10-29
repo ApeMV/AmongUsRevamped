@@ -321,5 +321,6 @@
   "fungleReactorDuration": "Durata Sabotaggio Reattore su Fungle",
   "fungleMushroomMixupDuration": "Durata Sabotaggio Mixup Fungo",
   "privateDesc": "Cambia la Visibilità della Lobby in Privata. ",
-  "publicDesc": "Cambia la Visibilità della Lobby in Pubblica. "
+  "publicDesc": "Cambia la Visibilità della Lobby in Pubblica. ",
+  "disableLobbyInfo": "Disable Lobby Info"
 }

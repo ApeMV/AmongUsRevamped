@@ -18,6 +18,7 @@ namespace AmongUsRevamped
         private static ClientOptionItem DisableCommandHelper;
         private static ClientOptionItem DisableCompatibilityWarning;
         private static ClientOptionItem DisableChatModifier;
+        private static ClientOptionItem DisableLobbyInfo;
 
         public static void Postfix(OptionsMenuBehaviour __instance)
         {
@@ -68,6 +69,9 @@ namespace AmongUsRevamped
 
             if (DisableChatModifier == null || DisableChatModifier.ToggleButton == null)
                 DisableChatModifier = ClientOptionItem.Create(Translator.Get("disableChatModifier"), Main.DisableChatModifier, __instance);
+
+            if (DisableLobbyInfo == null || DisableLobbyInfo.ToggleButton == null)
+                DisableLobbyInfo = ClientOptionItem.Create(Translator.Get("disableLobbyInfo"), Main.DisableLobbyInfo, __instance);
         }
     }
 

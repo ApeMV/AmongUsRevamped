@@ -193,6 +193,24 @@ public static class SetLevelPatch
             }
             HandledLevelKicks.Add(__instance);
         }
+/*
+        int access = Utils.CheckAccessLevel(__instance.Data.FriendCode);
+        string color = access switch
+        {
+            1 => "yellow",
+            2 => "purple",
+            3 => "red",
+            _ => "white"
+        };
+
+        if (Main.DisableLobbyInfo.Value)
+        {
+            __instance.cosmetics.nameText.text = $"<color={color}>{__instance.Data.PlayerName}</color>";
+        }
+        else
+        {
+            __instance.cosmetics.nameText.text = $"<size=70%><color=#00ffff>Lv.{level}</color> | <color=yellow>{AmongUsClient.Instance.GetClientFromCharacter(__instance).PlatformData.Platform}</size>\n<color={color}>{__instance.Data.PlayerName}</color>";
+        }*/
     }
 }
 

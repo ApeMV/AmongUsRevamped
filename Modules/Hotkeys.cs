@@ -1,4 +1,5 @@
 ﻿using AmongUs.Data;
+using AmongUs.GameOptions;
 using Hazel;
 using InnerNet;
 using UnityEngine;
@@ -37,6 +38,14 @@ internal class Hotkeys
             if (Utils.IsMeeting)
             {
                 MeetingHud.Instance.RpcClose();
+
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.Data.RoleType == RoleTypes.Shapeshifter)
+                    {
+                        p.CmdCheckRevertShapeshift(false);
+                    }
+                }
             }
         }
 

@@ -168,12 +168,11 @@ class FixedUpdateInGamePatch
 
     public static void Postfix(PlayerControl __instance)
     {
-        if (__instance == null || __instance.PlayerId == 255 || !AmongUsClient.Instance.AmHost) return;
+        if (__instance == null || __instance.PlayerId == 255) return;
 
         t += Time.deltaTime;
         if (t < 0.2f) return;
         t = 0f;
-
         if (Utils.IsLobby)
         {
             int access = Utils.CheckAccessLevel(__instance.Data.FriendCode);
@@ -185,12 +184,21 @@ class FixedUpdateInGamePatch
                 _ => "white"
             };
 
-            if (!LastColors.TryGetValue(__instance.PlayerId, out var lastColor) || lastColor != color || !__instance.cosmetics.nameText.text.Contains($"<color={color}>"))
+            //if (!LastColors.TryGetValue(__instance.PlayerId, out var lastColor) || lastColor != color || !__instance.cosmetics.nameText.text.Contains($"<color={color}>"))
             {
-                __instance.cosmetics.nameText.text = $"<color={color}>{__instance.Data.PlayerName}</color>";
+                if (Main.DisableLobbyInfo.Value && __instance.cosmetics.nameText.text != $"<color={color}>{__instance.Data.PlayerName}</color>")
+                {
+                    __instance.cosmetics.nameText.text = $"<color={color}>{__instance.Data.PlayerName}</color>";
+                }
+                if ( !Main.DisableLobbyInfo.Value && __instance.cosmetics.nameText.text != $"<size=70%><color=#00ffff>Lv.{__instance.Data.PlayerLevel}</color> | <color=yellow>{AmongUsClient.Instance.GetClientFromCharacter(__instance).PlatformData.Platform}</size>\n<color={color}>{__instance.Data.PlayerName}</color>")
+                {
+                    __instance.cosmetics.nameText.text = $"<size=70%><color=#00ffff>Lv.{__instance.Data.PlayerLevel}</color> | <color=yellow>{AmongUsClient.Instance.GetClientFromCharacter(__instance).PlatformData.Platform}</size>\n<color={color}>{__instance.Data.PlayerName}</color>";
+                }
                 LastColors[__instance.PlayerId] = color;
             }
         }
+
+        if (!AmongUsClient.Instance.AmHost) return;
 
         if (settingsLabel == null) settingsLabel = GameObject.Find("GameSettingsLabel");
 

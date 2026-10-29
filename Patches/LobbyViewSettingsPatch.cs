@@ -9,29 +9,13 @@ namespace AmongUsRevamped
     public class LobbyViewPatch
     {
         private static Dictionary<TabGroup, GameObject> ViewSettingsButtons = new();
-        private static float num;
         
         [HarmonyPatch(nameof(LobbyViewSettingsPane.Awake))]
         [HarmonyPostfix]
         public static void AwakePostfix(LobbyViewSettingsPane __instance)
         {
             __instance.gameModeText.DestroyTranslator();
-            
-            var OverviewButton = __instance.taskTabButton.gameObject;
-            OverviewButton.transform.localScale = new Vector3(0.4f, 1f, 1f);
-            OverviewButton.transform.localPosition += new Vector3(-1.1f, 0f, 0f);
-
-            var RolesButton = __instance.rolesTabButton.gameObject;
-            RolesButton.transform.localScale = new Vector3(0.4f, 1f, 1f);
-            num = 1.4f;
-            RolesButton.transform.localPosition = OverviewButton.transform.localPosition + Vector3.right * num * 1f;
-            var label = RolesButton.transform.Find("FontPlacer").GetComponentInChildren<TextMeshPro>();
-            label.DestroyTranslator();
-            label.text = "Vanilla Roles";
-
             ViewSettingsButtons = new();
-            num = 2.8f;
-
         }
 
         [HarmonyPatch(nameof(LobbyViewSettingsPane.ChangeTab))]
@@ -139,14 +123,6 @@ namespace AmongUsRevamped
             foreach (var button in ViewSettingsButtons.Values)
                 Object.Destroy(button.gameObject);
             ViewSettingsButtons = new();
-            var OverviewButton = __instance.taskTabButton.gameObject;
-            var RolesButton = __instance.rolesTabButton.gameObject;
-            OverviewButton.transform.localScale = new Vector3(0.4f, 1f, 1f);
-            RolesButton.transform.localScale = new Vector3(0.4f, 1f, 1f);
-            num = 1.4f;
-            RolesButton.transform.localPosition = OverviewButton.transform.localPosition + Vector3.right * num * 1f;
-            num = 2.8f;
-
         }
 
         [HarmonyPatch(nameof(LobbyViewSettingsPane.OnEnable))]

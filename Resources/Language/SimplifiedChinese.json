@@ -297,8 +297,6 @@
   "enableDeniedWords": "踢出发送违禁词的玩家",
   "slashMapAndSeekerCmd": "谁可以使用 /seeker 与 /mapvote",
   "snsChatInGameExtend": "游戏开始后发送游戏模式介绍",
-  "mapVoteDesc": "发起包含 5 张官方地图的地图投票。",
-  "allMapVoteDesc": "发起包含全部 6 张地图（包括 Eht Dleks）的地图投票。",
   "banWordBan": "{0} 因发送了 DeniedWords.txt 中的关键词，第 {1} 次违规，已被封禁。",
   "startWordBan": "{0} 因发送了 StartWords.txt 中的关键词，第 {1} 次违规，已被封禁。",
   "moderationSettings": "管理设置",
@@ -335,7 +333,6 @@
 "shieldFirstDeath": "护盾保护第一个死亡的玩家",
 "shieldFirstDeathDuration": "护盾持续时间",
 "snsTwoDesc": "发送 Shift and Seek 扩展说明。",
-"modeVoteDesc": "在所有游戏模式之间发起投票。",
 "automaticModePoll": "重新加入后自动执行 /gmvote",
 "tabGroupCustomizeSabotages": "自定义破坏",
 "customizeSabotages": "启用自定义破坏",
@@ -384,5 +381,6 @@
 "disableChatModifier": "禁用聊天修改",
 "snsSuicideMode": "禁用护盾系统",
 "tabGroupNoKcd": "0 秒击杀冷却",
-"disablePeacePeriod": "禁用 5 秒和平期"
+"disablePeacePeriod": "禁用 5 秒和平期",
+"disableLobbyInfo": "Disable Lobby Info"
 }

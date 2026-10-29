@@ -162,12 +162,13 @@ public static class BanManager
 
     public static bool IsWordBanned(PlayerControl player, string input)
     {
+
         if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0 || !Options.EnableDeniedWords.GetBool()) return false;
 
         int clientId = player.Data.ClientId;
-        var bannedWords = File.ReadAllLines(BanWordPath).Where(x => !x.StartsWith("#"));
+        var bannedWords = File.ReadAllLines(BanWordPath).Select(l => l.Trim()).Where(l => l.Length > 0 && !l.StartsWith("#"));
 
-        if ((Options.DeniedWordsStrength.GetBool() && bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.DeniedWordsStrength.GetBool() && bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Equals(code, StringComparison.OrdinalIgnoreCase))))
+        if ((Options.DeniedWordsStrength.GetBool() && bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => Utils.RemoveDiacritics(input).Trim().Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.DeniedWordsStrength.GetBool() && bannedWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => Utils.RemoveDiacritics(input).Trim().Equals(code, StringComparison.OrdinalIgnoreCase))))
         {
 
             if (!Main.SayDeniedWordTimes.ContainsKey(clientId))
@@ -201,9 +202,9 @@ public static class BanManager
         if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0 || !Options.AutoKickStart.GetBool() || !Utils.IsLobby) return false;
 
         int clientId = player.Data.ClientId;
-        var startWords = File.ReadAllLines(StartWordsPath).Where(x => !x.StartsWith("#"));
+        var startWords = File.ReadAllLines(StartWordsPath).Select(l => l.Trim()).Where(l => l.Length > 0 && !l.StartsWith("#"));
 
-        if ((Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => input.Equals(code, StringComparison.OrdinalIgnoreCase))))
+        if ((Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => Utils.RemoveDiacritics(input).Trim().Contains(code, StringComparison.OrdinalIgnoreCase))) || (!Options.AutoKickStartStrength.GetBool() && startWords.Where(code => !string.IsNullOrWhiteSpace(code)).Any(code => Utils.RemoveDiacritics(input).Trim().Equals(code, StringComparison.OrdinalIgnoreCase))))
         {
             if (!Main.SayStartTimes.ContainsKey(clientId))
             {

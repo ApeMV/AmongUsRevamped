@@ -19,7 +19,7 @@ namespace AmongUsRevamped
                 EOSManager.Instance.AdultPermissionsFlow();
             }
 
-            if (!Options.Rehost.GetBool() || reason == DisconnectReasons.NewConnection || reason == DisconnectReasons.ConnectionLimit || reason == DisconnectReasons.ExitGame) return;
+            if (!Options.Rehost.GetBool() || reason == DisconnectReasons.NewConnection || reason == DisconnectReasons.ConnectionLimit || reason == DisconnectReasons.ExitGame || reason == DisconnectReasons.GameFull || reason == DisconnectReasons.GameStarted) return;
 
             _ = new LateTask(() =>
             {
